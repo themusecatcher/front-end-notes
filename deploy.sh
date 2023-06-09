@@ -15,7 +15,7 @@ git add .
 git commit -m 'deploy'
 
 # 部署到 https://<username>.github.io/<repo>
-git push -f git@github.com:themusecatcher/vue-amazing-ui.git master:github-pages
+git push -f git@github.com:themusecatcher/front-end-notes.git master:github-pages
 
 # 提交所有代码到github
 cd ../../../
