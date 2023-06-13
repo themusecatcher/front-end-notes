@@ -14,13 +14,13 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /guide/started
+      link: /vue2/started
     - theme: alt
       text: View on GitHub
       link: https://github.com/themusecatcher/front-end-notes
 ---
 
-<script setup>
+<script setup lang="ts">
 import { onMounted } from 'vue'
 import { fetchVersion } from './.vitepress/utils/fetchVersion'
 

@@ -32,9 +32,15 @@ export default defineConfig({
       // }
     ],
 
-    search: {
-      provider: 'local' // vitepress内置search
+    search: { // vitepress 内置 search
+      provider: 'local'
     },
+
+    // algolia: { // algolia 搜索服务 与 内置 search 可二选一
+    //   appId: '36MXAHDMBI',
+    //   apiKey: 'c8aba8279918a26d214a611394fab81e',
+    //   indexName: 'front-end-notes'
+    // },
 
     footer: {
       message: 'Released under the MIT License.',
@@ -42,7 +48,8 @@ export default defineConfig({
     },
 
     nav: [
-      { text: 'notes', link: '/guide/started', activeMatch: '/guide/' },
+      { text: 'Vue2 Notes', link: '/vue2/note-1', activeMatch: '/vue2/' },
+      { text: 'Vue3 Notes', link: '/vue3/note-1', activeMatch: '/vue3/' },
       {
         text: 'links',
         items: [
@@ -51,8 +58,36 @@ export default defineConfig({
           {
             items: [
               {
-                text: 'vue',
-                link: 'https://cn.vuejs.org/',
+                text: 'Vue 2 Docs',
+                link: 'https://v2.cn.vuejs.org/v2/guide/',
+              },
+              {
+                text: 'Vue 3 Docs',
+                link: 'https://cn.vuejs.org/guide/introduction.html',
+              },
+              {
+                text: 'TypeScript Docs',
+                link: 'https://www.tslang.cn/docs/home.html',
+              },
+              {
+                text: 'MDN Web Docs',
+                link: 'https://developer.mozilla.org/zh-CN/',
+              }
+            ]
+          },
+          {
+            items: [
+              {
+                text: 'npm',
+                link: 'https://www.npmjs.com/',
+              },
+              {
+                text: 'vite',
+                link: 'https://cn.vitejs.dev/',
+              },
+              {
+                text: 'markdown',
+                link: 'https://markdown.com.cn/',
               },
               {
                 text: 'vitepress',
@@ -65,38 +100,86 @@ export default defineConfig({
     ],
 
     sidebar: {
-      '/guide/': [
+      '/vue2/': [
         {
           text: '指引',
           items: [
             {
               text: '开始',
-              link: '/guide/started'
+              link: '/vue2/started'
             }
           ]
         },
         {
-          text: 'web',
+          text: 'Vue2 Notes',
           items: [
             {
-              text: 'note 1',
-              link: '/guide/web/note-1'
+              text: 'note-1',
+              link: '/vue2/note-1'
+            },
+            {
+              text: 'note-2',
+              link: '/vue2/note-2'
+            },
+            {
+              text: 'note-3',
+              link: '/vue2/note-3'
+            },
+            {
+              text: 'note-4',
+              link: '/vue2/note-4'
+            },
+            {
+              text: 'note-5',
+              link: '/vue2/note-5'
+            },
+            {
+              text: 'note-6',
+              link: '/vue2/note-6'
+            }
+          ]
+        }
+      ],
+      '/vue3/': [
+        {
+          text: '指引',
+          items: [
+            {
+              text: '开始',
+              link: '/vue3/started'
+            }
+          ]
+        },
+        {
+          text: 'Vue3 Notes',
+          items: [
+            {
+              text: 'note-1',
+              link: '/vue3/note-1'
+            },
+            {
+              text: 'note-2',
+              link: '/vue3/note-2'
+            },
+            {
+              text: 'note-3',
+              link: '/vue3/note-3'
+            },
+            {
+              text: 'note-4',
+              link: '/vue3/note-4'
+            },
+            {
+              text: 'note-5',
+              link: '/vue3/note-5'
+            },
+            {
+              text: 'note-6',
+              link: '/vue3/note-6'
             }
           ]
         }
       ]
     }
-    //   '/utils/': [
-    //     {
-    //       text: '指引',
-    //       items: [
-    //         {
-    //           text: '快速上手',
-    //           link: '/utils/started'
-    //         }
-    //       ]
-    //     }
-    //   ]
-    // }
   }
 })
