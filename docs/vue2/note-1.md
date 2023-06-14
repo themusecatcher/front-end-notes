@@ -82,16 +82,18 @@ mounted () {
 }
 ```
 
-## 使用 v-html 时限制内容图片最大宽度
+## `v-html` 使用方式
 
 - `v-html`：更新元素的 innerHTML
 - `v-text`：更新元素的内部文本
+
+### 使用 `v-html` 并限制内容图片最大宽度
 
 ```html
 <div class="content" v-html="content"></div>
 ```
 
-### ① 去掉scoped
+1. 去掉scoped
 
 ```less
 <style lang="less">
@@ -104,7 +106,7 @@ mounted () {
 </style>
 ```
 
-### ② 使用 >>>
+2. 使用 >>>
 
 ```less
 <style scoped>
@@ -112,11 +114,13 @@ mounted () {
 </style>
 ```
 
-### ③ 字符串全局替换 replace <Badge type="tip" text="推荐" />
+3. 字符串全局替换 replace <Badge type="tip" text="推荐" />
 
 ```js
 // 全局替换 <img 为 <img class="u-img"
 this.content = this.content.replace(/\<img/gi,'<img class="u-img"')
+// 或者 全局替换 <img 为 <img style="max-width:100%;"
+this.content = this.content.replace(/<img/gi, '<img style="max-width:100%;"')
 ```
 
 ```less
@@ -125,12 +129,7 @@ this.content = this.content.replace(/\<img/gi,'<img class="u-img"')
 }
 ```
 
-```js
-// 全局替换 <img 为 <img style="max-width:100%;"
-this.content = this.content.replace(/<img/gi, '<img style="max-width:100%;"')
-```
-
-### ④ deep 样式穿透 <Badge type="tip" text="较简单" />
+4. deep 样式穿透 <Badge type="tip" text="较简单" />
 
 ```less
 <style lang="less" scoped>
@@ -140,6 +139,17 @@ this.content = this.content.replace(/<img/gi, '<img style="max-width:100%;"')
   }
 }
 </style>
+```
+
+### 使用 `v-html` 对关键字进行标注
+
+```js
+// 关键字标蓝
+const reg = new RegExp(this.keyword, 'g')
+for (const data of this.resultData) {
+  data.name = data.name.replace(reg, `<span class="blue">${key}</span>`)
+  console.log('data:', data)
+}
 ```
 
 ## 题目和题干类样式
