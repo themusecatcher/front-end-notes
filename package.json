@@ -2,7 +2,7 @@
   "name": "front-end-notes",
   "version": "0.0.1",
   "scripts": {
-    "docs:dev": "vitepress dev docs --open",
+    "docs:dev": "vitepress dev docs --port 1000 --open",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "docs:deploy": "sh deploy.sh"

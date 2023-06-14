@@ -15,7 +15,7 @@ css: {
       // 等价于
       // globalVars: {
       // 可以带单引号也可以不带
-      //  mainColor: '#D93844'
+      //  themeColor: '#D93844'
       // },
       // DO NOT REMOVE THIS LINE
       javascriptEnabled: true
