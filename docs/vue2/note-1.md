@@ -82,7 +82,7 @@ mounted () {
 }
 ```
 
-## `v-html` 使用方式
+## `v-html` 使用
 
 - `v-html`：更新元素的 innerHTML
 - `v-text`：更新元素的内部文本
@@ -93,7 +93,7 @@ mounted () {
 <div class="content" v-html="content"></div>
 ```
 
-1. 去掉scoped
+1. 去掉 `scoped`
 
 ```less
 <style lang="less">
@@ -106,7 +106,7 @@ mounted () {
 </style>
 ```
 
-2. 使用 >>>
+2. 使用 `>>>`
 
 ```less
 <style scoped>
@@ -129,7 +129,7 @@ this.content = this.content.replace(/<img/gi, '<img style="max-width:100%;"')
 }
 ```
 
-4. deep 样式穿透 <Badge type="tip" text="较简单" />
+4. `deep` 样式穿透 <Badge type="tip" text="较简单" />
 
 ```less
 <style lang="less" scoped>
