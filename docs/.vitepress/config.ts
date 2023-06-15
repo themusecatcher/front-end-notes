@@ -56,6 +56,9 @@ export default defineConfig({
           { text: 'My Github', link: 'https://github.com/themusecatcher' },
           { text: 'My CSDN', link: 'https://blog.csdn.net/Dandrose?type=blog' },
           { text: 'Amazing UI', link: 'https://themusecatcher.github.io/vue-amazing-ui/' },
+          { text: 'Naive UI', link: 'https://www.naiveui.com/zh-CN/' },
+          { text: 'Ant Design', link: 'https://www.antdv.com/docs/vue/introduce-cn' },
+          { text: 'Element Plus', link: 'https://element-plus.org/zh-CN/' },
           {
             items: [
               {
@@ -81,6 +84,10 @@ export default defineConfig({
               {
                 text: 'npm',
                 link: 'https://www.npmjs.com/',
+              },
+              {
+                text: 'pnpm',
+                link: 'https://www.pnpm.cn/',
               },
               {
                 text: 'vite',
