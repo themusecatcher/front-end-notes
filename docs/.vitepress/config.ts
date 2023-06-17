@@ -51,31 +51,31 @@ export default defineConfig({
       { text: 'Vue2 Notes', link: '/vue2/note-1', activeMatch: '/vue2/' },
       { text: 'Vue3 Notes', link: '/vue3/note-1', activeMatch: '/vue3/' },
       {
-        text: 'links',
+        text: 'Links',
         items: [
           { text: 'My Github', link: 'https://github.com/themusecatcher' },
           { text: 'My CSDN', link: 'https://blog.csdn.net/Dandrose?type=blog' },
           { text: 'Amazing UI', link: 'https://themusecatcher.github.io/vue-amazing-ui/' },
-          { text: 'Naive UI', link: 'https://www.naiveui.com/zh-CN/' },
+          { text: 'Naive UI', link: 'https://www.naiveui.com/zh-CN/dark' },
           { text: 'Ant Design', link: 'https://www.antdv.com/docs/vue/introduce-cn' },
           { text: 'Element Plus', link: 'https://element-plus.org/zh-CN/' },
           {
             items: [
               {
                 text: 'Vue 2 Docs',
-                link: 'https://v2.cn.vuejs.org/v2/guide/',
+                link: 'https://v2.cn.vuejs.org/v2/guide/'
               },
               {
                 text: 'Vue 3 Docs',
-                link: 'https://cn.vuejs.org/guide/introduction.html',
+                link: 'https://cn.vuejs.org/guide/introduction.html'
               },
               {
                 text: 'TypeScript Docs',
-                link: 'https://www.tslang.cn/docs/home.html',
+                link: 'https://www.tslang.cn/docs/home.html'
               },
               {
                 text: 'MDN Web Docs',
-                link: 'https://developer.mozilla.org/zh-CN/',
+                link: 'https://developer.mozilla.org/zh-CN/'
               }
             ]
           },
@@ -83,23 +83,27 @@ export default defineConfig({
             items: [
               {
                 text: 'npm',
-                link: 'https://www.npmjs.com/',
+                link: 'https://www.npmjs.com/'
               },
               {
                 text: 'pnpm',
-                link: 'https://www.pnpm.cn/',
+                link: 'https://www.pnpm.cn/'
               },
               {
-                text: 'vite',
-                link: 'https://cn.vitejs.dev/',
+                text: 'Vite',
+                link: 'https://cn.vitejs.dev/'
               },
               {
-                text: 'markdown',
-                link: 'https://markdown.com.cn/',
+                text: 'Markdown',
+                link: 'https://markdown.com.cn/'
               },
               {
-                text: 'vitepress',
-                link: 'https://vitepress.dev/',
+                text: 'VitePress',
+                link: 'https://vitepress.dev/'
+              },
+              {
+                text: 'VueUse',
+                link: 'https://vueuse.org/'
               }
             ]
           }

@@ -25,10 +25,18 @@ console.log(values) // [1, 2, 3, 4]
 }
 ```
 
-## $nextTick()
+## `$nextTick()`
 
 - 在下次 DOM 更新循环结束之后执行延迟回调。**在修改数据之后立即使用这个方法，获取更新后的 DOM**。
 - 将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新。它跟全局方法 Vue.nextTick 一样，不同的是回调的 this 自动绑定到调用它的实例上。
+
+::: tip 提示
+Vue 实现响应式并不是数据发生变化之后 DOM 立即变化，而是按一定的策略进行 DOM 的更新
+简单来说，Vue 在修改数据后，视图不会立刻更新，而是等同一事件循环中的所有数据变化完成之后，再统一进行视图更新。
+Vue 中 data 的数据变化是同步的，更新完就能拿到；但是 dom 的更新是异步的，需要用nextTick 去即时获取
+
+因为 Vue 是异步执行 DOM 更新的，想立即操作更新后的 DOM 就需要使用 $nextTick
+:::
 
 ```js
 // 修改数据
@@ -39,7 +47,20 @@ this.$nextTick(() => {
   // `this` 绑定到当前实例
   this.doSomethingElse()
 })
+
+mounted () {
+  this.$nextTick(() => {
+    // Code that will run only after the
+    // entire view has been rendered
+  })
+}
 ```
+
+::: tip 用途
+在 created 和 mounted 阶段，如果需要操作渲染后的视图，也要使用 nextTick 方法。<br>
+官方文档说明：<br>
+**注意 mounted 不会承诺所有的子组件也都一起被挂载。如果你希望等到整个视图都渲染完毕，可以用 vm.$nextTick 替换掉 mounted**
+:::
 
 ### 异步更新队列
 
