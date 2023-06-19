@@ -335,3 +335,51 @@ i {
   -webkit-transform: rotate(45deg);
 }
 ```
+
+## 表格`<table>`标签设置`height`属性无效
+
+```html
+<!-- 添加 display: block / inline-block; -->
+<table :style="`display: block; height: 600px; overflow: hidden;`" cellspacing="0"></table>
+```
+
+## `flex` 布局各种水平等分居中排列
+
+[justify-content MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/justify-content)
+
+- 均匀排列每个元素，**每个元素周围分配相同的空间**
+
+```css
+display: flex;
+justify-content: space-around;
+```
+
+![Alt text](image-7.png)
+
+- 均匀排列每个元素，**首个元素放置于起点，末尾元素放置于终点**
+
+```css
+display: flex;
+justify-content: space-between;
+```
+
+![Alt text](image-8.png)
+
+- 均匀排列每个元素，**每个元素之间的间隔相等**
+
+```css
+display: flex;
+justify-content: space-evenly;
+```
+
+![Alt text](image-9.png)
+
+## `Vue.use(plugin)`
+
+- 参数：{Object | Function} plugin
+- 用法：安装 Vue.js 插件。如果**插件是一个对象，必须提供 install 方法**。如果**插件是一个函数，它会被作为 install 方法**。install 方法调用时，会将 Vue 作为参数传入。
+
+::: tip 提示
+该方法需要在调用 new Vue() 之前被调用。
+**当 install 方法被同一个插件多次调用，插件将只会被安装一次**。
+:::
