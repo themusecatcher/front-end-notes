@@ -179,7 +179,7 @@ countDown (target) {
 
 ```html
 <div class="p-img">
-`<img class="c-img" src="…" />
+  <img class="c-img" src="…" />
 </div>
 ```
 

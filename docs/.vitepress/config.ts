@@ -32,15 +32,15 @@ export default defineConfig({
       // }
     ],
 
-    // search: { // vitepress 内置 search
-    //   provider: 'local'
-    // },
-
-    algolia: { // algolia 搜索服务 与 内置 search 可二选一
-      appId: 'LPTNA0E8HM',
-      apiKey: '8f1b68dfab6b0320adef728a1c3a77cc',
-      indexName: 'themusecatcher_front-end'
+    search: { // vitepress 内置 search
+      provider: 'local'
     },
+
+    // algolia: { // algolia 搜索服务 与 内置 search 可二选一
+    //   appId: 'LPTNA0E8HM',
+    //   apiKey: '8f1b68dfab6b0320adef728a1c3a77cc',
+    //   indexName: 'themusecatcher_front-end'
+    // },
 
     footer: {
       message: 'Released under the MIT License.',
@@ -70,12 +70,20 @@ export default defineConfig({
                 link: 'https://cn.vuejs.org/guide/introduction.html'
               },
               {
+                text: 'VueUse',
+                link: 'https://vueuse.org/'
+              },
+              {
                 text: 'TypeScript Docs',
                 link: 'https://www.tslang.cn/docs/home.html'
               },
               {
                 text: 'MDN Web Docs',
                 link: 'https://developer.mozilla.org/zh-CN/'
+              },
+              {
+                text: 'Less Docs',
+                link: 'https://less.bootcss.com/'
               }
             ]
           },
@@ -94,16 +102,12 @@ export default defineConfig({
                 link: 'https://cn.vitejs.dev/'
               },
               {
-                text: 'Markdown',
-                link: 'https://markdown.com.cn/'
-              },
-              {
                 text: 'VitePress',
                 link: 'https://vitepress.dev/'
               },
               {
-                text: 'VueUse',
-                link: 'https://vueuse.org/'
+                text: 'Markdown',
+                link: 'https://markdown.com.cn/'
               }
             ]
           }
