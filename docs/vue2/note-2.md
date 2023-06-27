@@ -2,7 +2,7 @@
 
 ## 定义全局 CSS 变量
 
-*vue.config.js*
+*`vue.config.js`*
 
 ```js
 css: {
