@@ -57,8 +57,11 @@ export default defineConfig({
           { text: 'My CSDN', link: 'https://blog.csdn.net/Dandrose?type=blog' },
           { text: 'Amazing UI', link: 'https://themusecatcher.github.io/vue-amazing-ui/' },
           { text: 'Naive UI', link: 'https://www.naiveui.com/zh-CN/dark' },
-          { text: 'Ant Design', link: 'https://www.antdv.com/docs/vue/introduce-cn' },
+          { text: 'Naive Admin', link: 'https://www.naiveadmin.com/' },
+          { text: 'Naive Ui Admin', link: 'https://docs.naiveadmin.com/' },
+          { text: 'Ant Design Vue', link: 'https://www.antdv.com/docs/vue/introduce-cn' },
           { text: 'Element Plus', link: 'https://element-plus.org/zh-CN/' },
+          { text: 'Arco Design Vue', link: 'https://arco.design/vue/docs/start' },
           {
             items: [
               {
@@ -152,6 +155,14 @@ export default defineConfig({
             {
               text: 'note-6',
               link: '/vue2/note-6'
+            },
+            {
+              text: 'note-7',
+              link: '/vue2/note-7'
+            },
+            {
+              text: 'note-8',
+              link: '/vue2/note-8'
             }
           ]
         }
