@@ -4,11 +4,19 @@
 
 - 方法一：监听 `visibilitychange` 事件
 
-[visibilitychange](https://developer.mozilla.org/zh-CN/docs/Web/API/Document/visibilitychange_event)
+[`visibilitychange` 参考文档](https://developer.mozilla.org/zh-CN/docs/Web/API/Document/visibilitychange_event)
 
-`Document.onvisibilitychange` 是一个事件处理方法，它将在该对象的 visibilitychange事件被触发时调用。
+> 当其选项卡的内容变得可见或被隐藏时，会在文档上触发 `visibilitychange` (能见度更改) 事件。<br>该事件不包括文档的更新的可见性状态，但是您可以从文档的 `visibilityState` 属性中获取该信息。
+
+::: tip 注意：
+- 当 `visibleStateState` 属性的值转换为 `hidden` `时，Safari` 不会按预期触发 `visibilitychange`；因此，在这种情况下，您还需要包含代码以侦听 `pagehide` 事件。（**经测试目前最新版已无该问题**）
+- 出于兼容性原因，请确保使用 `document.addEventListener` 而不是 `window.addEventListener` 来注册回调。Safari <14.0 仅支持前者。
+:::
+
+`Document.onvisibilitychange` 是一个事件处理方法，它将在该对象的 `visibilitychange` 事件被触发时调用。
 
 ```js
+// 本示例在文档可见时开始播放音乐曲目，在文档不再可见时暂停音乐。
 document.addEventListener('visibilitychange', function () {
   console.log('visibilityState', document.visibilityState)
 })

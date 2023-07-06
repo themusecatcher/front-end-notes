@@ -278,3 +278,125 @@ endCallback () {
 }
 ```
 
+## 向DOM树中添加元素（标签）
+
+- [`Node.appendChild`](https://developer.mozilla.org/zh-CN/docs/Web/API/Node/appendChild)
+
+  `Node.appendChild()` 方法将一个节点附加到指定父节点的子节点列表的末尾处。如果将被插入的节点已经存在于当前文档的文档树中，那么 `appendChild()` 只会将它从原先的位置移动到新的位置（不需要事先移除要移动的节点）。
+
+  这意味着，一个节点不可能同时出现在文档的不同位置。所以，如果某个节点已经拥有父节点，在被传递给此方法后，它首先会被移除，再被插入到新的位置。若要保留已在文档中的节点，可以先使用 `Node.cloneNode()` 方法来为它创建一个副本，再将副本附加到目标父节点下。请注意，用 `cloneNode` 制作的副本不会自动保持同步。
+  如果给定的子节点是 `DocumentFragment`，那么 `DocumentFragment` 的全部内容将转移到指定父节点的子节点列表中。
+
+  - 语法：`element.appendChild(aChild)` // achild：要追加给父节点（通常为一个元素）的节点。
+  - 返回值：返回追加后的子节点（`aChild`），除非 `aChild` 是一个文档片段（DocumentFragment），这种情况下将返回空文档片段（`DocumentFragment`）。
+  
+  示例：
+
+  ```js
+  // 创建一个新的段落元素 <p>，然后添加到 <body> 的最尾部
+  var p = document.createElement('p')
+  document.body.appendChild(p)
+  ```
+
+- [`element.innerHTML`](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/innerHTML)（**常用于替换内容**）
+
+  `Element.innerHTML` 属性设置或获取 `HTML` 语法表示的元素的后代
+
+  ::: tip
+  备注： 如果一个 `<div>`, `<span>`, 或 `<noembed>` 节点有一个文本子节点，该节点包含字符 (&), (<), 或 (>), innerHTML 将这些字符分别返回为 &amp;, &lt; 和 &gt;。使用Node.textContent 可获取一个这些文本节点内容的正确副本。
+  :::
+
+- [`element.insertAdjacentHTML`](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/insertAdjacentHTML)
+
+  `insertAdjacentHTML()` 方法将指定的文本解析为 `Element` 元素，并将结果节点插入到 `DOM` 树中的指定位置。它不会重新解析它正在使用的元素，因此它不会破坏元素内的现有元素。这避免了额外的序列化步骤，使其比直接使用 `innerHTML` 操作更快。
+
+  - 语法：`element.insertAdjacentHTML(position, text);`
+  - `position`
+
+    一个 DOMString，表示插入内容相对于元素的位置，并且必须是以下字符串之一：
+    - `beforebegin`：元素自身的前面。
+    - `afterbegin`：插入元素内部的第一个子节点之前。
+    - `beforeend`：插入元素内部的最后一个子节点之后。
+    - `afterend`：元素自身的后面。
+  - `text`
+  
+    是要被解析为 HTML 或 XML 元素，并插入到 DOM 树中的 DOMString。
+
+  ### 位置名称的可视化：
+
+  ```html
+  <!-- beforebegin -->
+  <p>
+    <!-- afterbegin -->
+    foo
+    <!-- beforeend -->
+  </p>
+  <!-- afterend -->
+  ```
+
+  示例：
+
+  ```js
+  // 原为 <div id="one">one</div>
+  var d1 = document.getElementById('one');
+  d1.insertAdjacentHTML('afterend', '<div id="two">two</div>')
+  // 此时，新结构变成：
+  // <div id="one">one</div><div id="two">two</div>
+  ```
+
+  ::: warning
+  安全问题
+  使用 `insertAdjacentHTML` 插入用户输入的 `HTML` 内容的时候，需要转义之后才能使用。
+  如果只是为了插入文本内容（而不是 `HTML` 节点），不建议使用这个方法，建议使用 `node.textContent` 或者 `node.insertAdjacentText()`。因为这样不需要经过 `HTML` 解释器的转换，性能会好一点。
+  :::
+
+- [`Element.insertAdjacentText()`](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/insertAdjacentText)
+
+  `insertAdjacentText()` 方法将一个给定的文本节点插入在相对于被调用的元素给定的位置。
+  句法：element.insertAdjacentText(position, element);
+
+- [`Element.insertAdjacentElement()`](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/insertAdjacentElement)
+
+  `insertAdjacentElement()` 方法将一个给定的元素节点插入到相对于被调用的元素的给定的一个位置。
+  语法：`element.insertAdjacentElement(position, element);`
+  参数：
+  - `position`
+
+    DOMString 表示相对于该元素的位置；必须是以下字符串之一：
+    - `beforebegin`: 在该元素本身的前面。
+    - `afterbegin`:只在该元素当中，在该元素第一个子孩子前面。
+    - `beforeend`:只在该元素当中，在该元素最后一个子孩子后面。
+    - `afterend`: 在该元素本身的后面。
+
+  - `element`
+  要插入到树中的元素。
+  - 返回值：插入的元素，插入失败则返回 null.
+  
+  位置名称的可视化展示：
+
+  ```html
+  <!-- beforebegin -->
+  <p>
+  <!-- afterbegin -->
+  foo
+  <!-- beforeend -->
+  </p>
+  <!-- afterend -->
+  ```
+
+  示例：
+
+  ```js
+  beforeBtn.addEventListener('click', function () {
+    var tempDiv = document.createElement('div')
+    tempDiv.style.backgroundColor = randomColor()
+    activeElem.insertAdjacentElement('beforebegin', tempDiv)
+    setListener(tempDiv)
+  })
+  afterBtn.addEventListener('click', function () {
+    var tempDiv = document.createElement('div')
+    tempDiv.style.backgroundColor = randomColor()
+    activeElem.insertAdjacentElement('afterend', tempDiv)
+    setListener(tempDiv)
+  })
+  ```
