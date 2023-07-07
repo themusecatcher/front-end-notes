@@ -5,7 +5,8 @@
     "docs:dev": "vitepress dev docs --port 8888 --open",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "docs:deploy": "sh deploy.sh"
+    "docs:deploy": "sh deploy.sh",
+    "push": "sh push.sh"
   },
   "devDependencies": {
     "less": "^4.1.3",
