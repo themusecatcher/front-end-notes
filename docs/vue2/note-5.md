@@ -324,6 +324,14 @@ formatContent (value) {
 }
 ```
 
+## 只能输入正整数，且数字不能以0开头
+
+<input type="text" class="u-input" placeholder="请输入" oninput="value=value.replace(/^(0+)|[^\d]+/g,'')" />
+
+```html
+<input type="text" placeholder="请输入" oninput="value=value.replace(/^(0+)|[^\d]+/g,'')" />
+```
+
 ## 只能输入数字和字母，并且小写字母自动转大写
 
 <input type="text" class="u-input" placeholder="请输入" oninput="value=value.toUpperCase().replace(/[\W]/g,'')" />
@@ -339,26 +347,6 @@ formatContent (value) {
 
 ```html
 <input type="text" placeholder="请输入" oninput="value=value.toUpperCase().replace(/[\W]/g,'')" />
-```
-
-## 路由中传递对象或数组参数
-
-- 传递对象参数：
-
-```js
-const player = {
-  name: 'curry',
-  age: 30
-}
-
-// 或只使用JSON.stringify()转化为字符串即可
-this.$router.push({ path: '/user/login', query: { player: encodeURIComponent(JSON.stringify(player)) } })
-```
-
-- 接收对象参数：
-
-```js
-const player = JSON.parse(decodeURIComponent(this.$route.query.player))
 ```
 
 ## js控制 `<input>` 输入指定格式数值
@@ -413,4 +401,24 @@ formatNum (value) {
   }
   this.inputValue = value
 }
+```
+
+## 路由中传递对象或数组参数
+
+- 传递对象参数：
+
+```js
+const player = {
+  name: 'curry',
+  age: 30
+}
+
+// 或只使用JSON.stringify()转化为字符串即可
+this.$router.push({ path: '/user/login', query: { player: encodeURIComponent(JSON.stringify(player)) } })
+```
+
+- 接收对象参数：
+
+```js
+const player = JSON.parse(decodeURIComponent(this.$route.query.player))
 ```

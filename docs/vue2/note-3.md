@@ -128,6 +128,22 @@ window.open(route.href, '_blank')
 
 ## window.location对象
 
+`Location` 接口表示其链接到的对象的位置（`URL`）。所做的修改反映在与之相关的对象上。 `Document` 和 `Window` 接口都有这样一个链接的 `Location`，分别通过 `Document.location` 和 `Window.location` 访问。
+
+属性 | 描述
+-- | --
+`Location.href` | 包含整个 `URL` 的一个 `DOMString`
+`Location.protocol` | 包含 `URL` 对应协议的一个 `DOMString`，最后有一个":"
+`Location.host` | 包含了域名的一个 `DOMString`，可能在该串最后带有一个":"并跟上 `URL` 的端口号
+`Location.hostname` | 包含 `URL` 域名的一个 `DOMString`
+`Location.port` | 包含端口号的一个 `DOMString`
+`Location.pathname` | 包含 `URL` 中路径部分的一个 `DOMString`，开头有一个 /
+`Location.search` | 包含 `URL` 参数的一个 `DOMString`，开头有一个“?”
+`Location.hash` | 包含块标识符的 `DOMString`，开头有一个 #
+`Location.username` | 包含 `URL` 中域名前的用户名的一个 `DOMString`
+`Location.password` | 包含 `URL` 域名前的密码的一个 `DOMString`
+`Location.origin`<Badge type="tip" text="只读" /> | 包含页面来源的域名的标准形式 `DOMString`
+
 假设当前网页路由：`http://172.16.200.17:8080/agent`
 
 ![Alt text](image-4.png)
