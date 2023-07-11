@@ -132,17 +132,17 @@ window.open(route.href, '_blank')
 
 属性 | 描述
 -- | --
-`Location.href` | 包含整个 `URL` 的一个 `DOMString`
-`Location.protocol` | 包含 `URL` 对应协议的一个 `DOMString`，最后有一个":"
-`Location.host` | 包含了域名的一个 `DOMString`，可能在该串最后带有一个":"并跟上 `URL` 的端口号
-`Location.hostname` | 包含 `URL` 域名的一个 `DOMString`
-`Location.port` | 包含端口号的一个 `DOMString`
-`Location.pathname` | 包含 `URL` 中路径部分的一个 `DOMString`，开头有一个 /
-`Location.search` | 包含 `URL` 参数的一个 `DOMString`，开头有一个“?”
-`Location.hash` | 包含块标识符的 `DOMString`，开头有一个 #
-`Location.username` | 包含 `URL` 中域名前的用户名的一个 `DOMString`
-`Location.password` | 包含 `URL` 域名前的密码的一个 `DOMString`
-`Location.origin`<Badge type="tip" text="只读" /> | 包含页面来源的域名的标准形式 `DOMString`
+`location.href` | 包含整个 `URL` 的一个 [`DOMString`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String)
+`location.protocol` | 包含 `URL` 对应协议的一个 `DOMString`，最后有一个":"
+`location.host` | 包含了域名的一个 `DOMString`，可能在该串最后带有一个":"并跟上 `URL` 的端口号
+`location.hostname` | 包含 `URL` 域名的一个 `DOMString`
+`location.port` | 包含端口号的一个 `DOMString`
+`location.pathname` | 包含 `URL` 中路径部分的一个 `DOMString`，开头有一个 /
+`location.search` | 包含 `URL` 参数的一个 `DOMString`，开头有一个“?”
+`location.hash` | 包含块标识符的 `DOMString`，开头有一个 #
+`location.username` | 包含 `URL` 中域名前的用户名的一个 `DOMString`
+`location.password` | 包含 `URL` 域名前的密码的一个 `DOMString`
+`location.origin`<Badge type="tip" text="只读" /> | 包含页面来源的域名的标准形式 `DOMString`
 
 假设当前网页路由：`http://172.16.200.17:8080/agent`
 
@@ -203,7 +203,47 @@ window.open(route.href, '_blank')
 
 **process.env 属性返回包含用户环境的对象**
 
-`process`对象是（global）全局变量，`NODE_ENV` 不是 `process.env` 对象上原有的属性，它是我们自己添加上去的一个环境变量，用来确定当前所处的开发阶段。一般生产阶段设为 `production`，开发阶段设为 `development`，然后在脚本中读取 `process.env.NODE_ENV`
+::: warning
+`process` 对象是 `global` 对象的属性，是一个全局对象，`NODE_ENV` 不是 `process.env` 对象上原有的属性，它是我们自己添加上去的一个环境变量，用来确定当前所处的开发阶段。一般生产阶段设为 `production`，开发阶段设为` development`，然后在脚本中读取 `process.env.NODE_ENV`
+:::
+
+`process.env` 包含着关于系统环境的信息，但是 `process.env` 中并不存在 `NODE_ENV` 这个东西。
+`NODE_ENV` 是一个用户自定义的变量，在` webpack` 中它的用途是判断生产环境或开发环境。
+`node` 中的 `process` 对象是一个全局对象，**表示当前的node进程，任何地方都能访问到它，通过这个对象提供的属性和方法，使我们可以对当前运行的程序的进程进行访问和控制。**
+
+```js
+console.log(process === global.process) // true
+```
+
+常用的一些属性：
+- `process.env` `<Object>`：返回包含用户环境的对象。
+- `process.platform` `<string>`：返回用于标识编译 Node.js 二进制文件的操作系统平台的字符串。
+目前可能的值是：'aix'，'darwin'，'freebsd'，'linux'，'openbsd'，'sunos'，'win32'
+
+```js
+import { platform } from 'process'
+console.log(`This platform is ${platform}`)
+```
+
+如果 `Node.js` 是在安卓操作系统上构建的，则也可能返回值 'android'。 但是，Node.js 中的安卓支持是实验的。
+
+- `process.uptime()` `<number>`：返回当前 Node.js 进程已经运行的秒数。
+返回值包括几分之一秒。 使用 Math.floor() 获得整秒。
+- `process.version` `<string>`：返回包含Node.js版本字符串。
+
+```js
+import { version } from 'process'
+console.log(`Version: ${version}`)
+```
+
+// Version: v14.8.0
+要获取不带 v 的版本字符串，则使用 `process.versions.node`。
+- `process.versions` `<Object>`：返回对象，其中列出Node.js的版本字符串及其依赖项。
+
+```js
+import { versions } from 'process'
+console.log(versions)
+```
 
 - 开发环境下的配置文件 `.env.development`：
 
