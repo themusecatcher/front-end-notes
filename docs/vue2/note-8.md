@@ -1,5 +1,7 @@
 # Note 8
 
+## 表格详情页样式
+
 ![Alt text](image-13.png)
 
 ```vue

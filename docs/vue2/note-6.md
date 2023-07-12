@@ -100,8 +100,27 @@ if (JSON.stringify(data) === '{}') {
 }
 ```
 
-## CSS的大于号选择器（`>`）
+## `CSS` 的大于号选择器 `>`
 
+** `>` 选择所有父级是 `<h1>` 元素的 `<strong>` 元素**
+<h1>
+  This is
+  <strong>very </strong>
+  <strong>very </strong>
+  <strong>very</strong>
+  important.
+</h1>
+<h1>
+  This is
+  <em>really <strong>very</strong></em>
+  important.
+</h1>
+
+<style module>
+h1 > strong {
+  color: red;
+}
+</style>
 ```html
 <h1>
   This is
@@ -119,6 +138,7 @@ if (JSON.stringify(data) === '{}') {
 /*
   即选择h1标签下，第一个子元素是strong标签的
   第二个<h1>第一个子元素是<em>所以<strong>元素不受影响
+  选择所有父级是 <h1> 元素的 <strong> 元素
 */
 h1 > strong {
   color: red;

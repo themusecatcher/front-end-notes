@@ -175,7 +175,7 @@ function onWheel (e: WheelEvent) {
 ## flex布局介绍
 
 - 父级元素设置为 `flex` 布局后，子元素的 `float`、`clear`、`vertical-align` 属性都会失效
-- 父级元素设置为 `flex` 布局后，所有的子元素都变成了行内块元素
+- 父级元素设置为 `flex` 布局后，所有的子元素都变成了行内块 `inline-block` 元素
 
 [`flex` 布局](https://www.runoob.com/w3cnote/flex-grammar.html)
 

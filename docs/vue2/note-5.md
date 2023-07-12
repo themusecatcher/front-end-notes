@@ -84,7 +84,7 @@ this.$router.push('/register?type=0&tab=-1')
 <input :type="visible ? 'text' : 'password'" />
 ```
 
-## `display` & `float`
+## 块级元素 `block` & 内联元素 `inline` & 行内块元素 `inline-block` & 浮动元素 `float`
 
 样式 | 说明
 -- | --
