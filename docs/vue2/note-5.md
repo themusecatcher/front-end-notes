@@ -16,7 +16,7 @@
     - `%o`
 
     ```js
-    console.log('%o', this.$refs.slider)
+    console.log('%o', this.$refs.slider) // slider:%o
     ```
 
     ![Alt text](image-10.png)
@@ -24,7 +24,7 @@
     - `%O`
 
     ```js
-    console.log('%O', this.$refs.slider)
+    console.log('%O', this.$refs.slider) // slider:%O
     ```
 
     ![Alt text](image-11.png)
