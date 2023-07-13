@@ -382,3 +382,17 @@ export default {
   - `vmin`：`vw` 和 `vh` 中较小的那个
   - `vmax`：`vw` 和 `vh` 中较大的那个
   - `%`：百分比，相对长度单位，相对于父元素的百分比值，**使用时必须从根容器就设置好百分比**
+
+## `currentColor` 关键字
+
+[`currentColor` 参考文档](https://developer.mozilla.org/zh-CN/docs/Web/CSS/color_value#currentcolor_%E5%85%B3%E9%94%AE%E5%AD%97)
+
+::: tip
+常见于 `<svg width="1em" height="1em" fill="currentColor"></svg>`
+
+**`currentColor` 是 CSS3的一个关键字，用于描述当前元素的颜色，默认继承当前元素的 `color` 颜色，如果当前元素未显式指明 `color`，则继承父元素的 `color` 颜色**
+
+`currentColor` 关键字代表原始的 color 属性的计算值。它允许让继承自属性或子元素的属性颜色属性以默认值不再继承。
+
+它也能用于那些继承了元素的 color 属性计算值的属性，相当于在这些元素上使用 inherit 关键字，如果这些元素有该关键字的话。
+:::
