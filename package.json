@@ -1,6 +1,8 @@
 {
   "name": "front-end-notes",
   "version": "0.0.1",
+  "private": "false",
+  "type": "module",
   "scripts": {
     "docs:dev": "vitepress dev docs --port 8888 --open",
     "docs:build": "vitepress build docs",
@@ -10,7 +12,7 @@
   },
   "devDependencies": {
     "less": "^4.1.3",
-    "vitepress": "1.0.0-beta.3"
+    "vitepress": "1.0.0-beta.5"
   },
   "description": "前端笔记",
   "directories": {
@@ -29,5 +31,14 @@
   "bugs": {
     "url": "https://github.com/themusecatcher/front-end-notes/issues"
   },
-  "homepage": "https://github.com/themusecatcher/front-end-notes#readme"
+  "homepage": "https://github.com/themusecatcher/front-end-notes#readme",
+  "dependencies": {
+    "@codemirror/lang-vue": "^0.1.2",
+    "@codemirror/theme-one-dark": "^6.1.2",
+    "echarts": "^5.4.3",
+    "vue-amazing-ui": "^0.0.36",
+    "vue-codemirror": "^6.1.1",
+    "vue3-pdf-app": "^1.0.3",
+    "vuedraggable": "^4.1.0"
+  }
 }

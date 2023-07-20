@@ -50,6 +50,7 @@ export default defineConfig({
     nav: [
       { text: 'Vue2 Notes', link: '/vue2/note-1', activeMatch: '/vue2/' },
       { text: 'Vue3 Notes', link: '/vue3/note-1', activeMatch: '/vue3/' },
+      { text: 'Plugins', link: '/plugins/started', activeMatch: '/plugins/' },
       {
         text: 'Links',
         items: [
@@ -215,6 +216,34 @@ export default defineConfig({
             {
               text: 'note-6',
               link: '/vue3/note-6'
+            }
+          ]
+        }
+      ],
+      '/plugins/': [
+        {
+          text: '指引',
+          items: [
+            {
+              text: '开始',
+              link: '/plugins/started'
+            }
+          ]
+        },
+        {
+          text: 'Plugins Use',
+          items: [
+            {
+              text: '拖拽 Draggable',
+              link: '/plugins/draggable'
+            },
+            {
+              text: '引擎图 GaugeChart',
+              link: '/plugins/gaugechart'
+            },
+            {
+              text: '树图 TreeChart',
+              link: '/plugins/treechart'
             }
           ]
         }
