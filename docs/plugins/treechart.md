@@ -282,7 +282,7 @@ function onClickNode (data: any) {
 ::: details Show Code
 
 ```vue
-<script setup lang="ts">
+<script setup lang="ts">  
 import TreeChart from './components/TreeChart.vue'
 import { ref } from 'vue'
 const treeData = ref({

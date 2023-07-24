@@ -308,3 +308,61 @@ function fetchVersion () {
     })
 }
 ```
+
+## `MutationObserver` 监听DOM变化
+
+[MutationObserver](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver)
+
+> MutationObserver 接口提供了监视对 DOM 树所做更改的能力。它被设计为旧的 Mutation Events 功能的替代品，该功能是 DOM3 Events 规范的一部分
+
+构造函数：
+- `MutationObserver()`：创建并返回一个新的 `MutationObserver` 它会**在指定的 DOM 发生变化时被调用**
+
+方法：
+- `disconnect()`
+  阻止 MutationObserver 实例继续接收的通知，直到再次调用其 observe() 方法，该观察者对象包含的回调函数都不会再被调用。
+- `observe()`
+  配置 MutationObserver 在 DOM 更改匹配给定选项时，通过其回调函数开始接收通知。
+- `takeRecords()`
+  从 MutationObserver 的通知队列中删除所有待处理的通知，并将它们返回到 MutationRecord 对象的新 Array 中。
+
+```vue
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
+const textarea = ref()
+const observer = ref()
+onMounted(() => {
+  // 观察器的配置（需要观察什么变动）
+  const config = { attributes: true, childList: false, subtree: false }
+  // 创建一个观察器实例并传入回调函数
+  observer.value = new MutationObserver(callback)
+  // 以上述配置开始观察目标节点
+  observer.value.observe(textarea.value, config)
+})
+onUnmounted(() => {
+  // 之后，可停止观察
+  observer.value.disconnect()
+})
+/*
+  例如：使用 MutationObserver 监听 textarea resize 时的高度属性变化
+  参考文档：https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver
+*/
+// 当观察到变动时执行的回调函数
+const callback = function (mutationsList: any, observer: any) {
+  console.log('mutation', textarea.value.scrollHeight)
+  // Use traditional 'for loops' for IE 11
+  // for(let mutation of mutationsList) {
+  //   if (mutation.type === 'childList') {
+  //     console.log('A child node has been added or removed.')
+  //   }
+  //   if (mutation.type === 'attributes') {
+  //     console.log('The ' + mutation.attributeName + ' attribute was modified.')
+  //     console.log(mutation.target.style.height)
+  //   }
+  // }
+}
+</script>
+<template>
+  <textarea ref="textarea" />
+</template>
+```
