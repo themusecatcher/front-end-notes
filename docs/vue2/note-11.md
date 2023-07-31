@@ -366,3 +366,9 @@ const callback = function (mutationsList: any, observer: any) {
   <textarea ref="textarea" />
 </template>
 ```
+
+## `vw` 单位相关问题<Badge type="warning">慎用</Badge>
+
+::: danger
+在windows系统中，页面有垂直滚动时，垂直滚动条会占用部分视口宽度，使用 `100vw` 时，由于 `100vw > 100%`，导致页面会出现横向滚动条
+:::
