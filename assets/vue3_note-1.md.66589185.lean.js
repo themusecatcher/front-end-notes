@@ -1,1 +1,0 @@
-import{_ as e,c as t,o}from"./chunks/framework.a134a6d6.js";const m=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"vue3/note-1.md","filePath":"vue3/note-1.md"}'),a={name:"vue3/note-1.md"};function n(r,s,c,p,_,d){return o(),t("div")}const f=e(a,[["render",n]]);export{m as __pageData,f as default};
