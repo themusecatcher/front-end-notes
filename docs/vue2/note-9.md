@@ -280,6 +280,32 @@ endCallback () {
 
 ## 向DOM树中添加元素（标签）
 
+- [`Node.cloneNode`](https://developer.mozilla.org/zh-CN/docs/Web/API/Node/cloneNode)
+
+  `Node.cloneNode()` 方法**返回调用该方法的节点的一个副本**。
+
+### 语法：`var dupNode = node.cloneNode(deep)`
+
+- `node`：将要被克隆的节点
+- `dupNode`：克隆生成的副本节点
+- `deep`<Badge type="tip">可选</Badge>：是否采用深度克隆，如果为 `true`，则**该节点的所有后代节点也都会被克隆**，如果为 `false`，则**只克隆该节点本身**。
+
+  ::: tip 备注：
+  **在 DOM4 规范中 (实现于 Gecko 13.0)**，`deep` 是一个可选参数。如果省略的话，参数的默认值为 `true`，也就是说**默认是深度克隆**。如果想**使用浅克隆**，你需要将该参数设置为 `false`。
+
+  **在最新的规范里**，该方法的行为已经改变了，其**默认值变成了 false**。虽然该参数仍旧是可选的，但是你**必须要为该方法设置 deep 参数**，无论是为了向前还是向后兼容考虑。假如开发者没设置参数的话，`Gecko 28.0` 版本的控制台会发出警告。从 `Gecko 29.0` 开始**该方法默认为浅复制而不是深度复制**。
+  :::
+
+  ::: tip 附注
+  克隆一个元素节点会拷贝它所有的属性以及属性值，当然也就包括了属性上绑定的事件 (比如`onclick="alert(1)"`)，但不会拷贝那些使用`addEventListener()`方法或者`node.onclick = fn`这种用 `JavaScript` **动态绑定的事件**。
+
+  在使用`Node.appendChild()`或其他类似的方法将拷贝的节点添加到文档中之前，那个拷贝节点并不属于当前文档树的一部分，也就是说，它没有父节点。
+
+  如果 `deep` 参数设为 `false`，则**不克隆它的任何子节点**。该**节点所包含的所有文本也不会被克隆**，因为**文本本身也是一个或多个的Text节点**。
+
+  如果 `deep` 参数设为 `true`，则会复制整棵 `DOM` 子树 (包括那些**可能存在的Text子节点**)。对于空结点 (例如 `<img>` 和 `<input>` 元素), 则 `deep` 参数无论设为 `true` 还是设为 `false`，都没有关系，但是仍然需要为它指定一个值。
+  :::
+
 - [`Node.appendChild`](https://developer.mozilla.org/zh-CN/docs/Web/API/Node/appendChild)
 
   `Node.appendChild()` 方法将一个节点附加到指定父节点的子节点列表的末尾处。如果将被插入的节点已经存在于当前文档的文档树中，那么 `appendChild()` 只会将它从原先的位置移动到新的位置（不需要事先移除要移动的节点）。
