@@ -14,13 +14,13 @@ console.log(values) // [1, 2, 3, 4]
 *CJK脚本是中国，日本和韩国（"中日韩"）脚本*
 
 - `word-wrap` 属性：允许长的内容可以自动换行。
-- `word-break` 属性：指定非CJK脚本的换行规则。
+- `word-break`<Badge type="tip" text="推荐" /> 属性：指定非CJK脚本的换行规则。
 
 ```css
 .content {
   text-align: justify;
   overflow: hidden;
-  word-break: break-all; // 允许在单词内换行（建议）
+  word-break: break-all; // 允许在单词内换行，会折断单词
   word-wrap: break-word; // 在长单词或 URL 地址内部进行换行，其中单词会另起一行换行
 }
 ```
