@@ -105,7 +105,7 @@ mounted () {
 
 ## `v-html` 使用
 
-- `v-html`：更新元素的 innerHTML
+- `v-html`：更新元素的 `innerHTML`
 - `v-text`：更新元素的内部文本
 
 ### 使用 `v-html` 并限制内容图片最大宽度

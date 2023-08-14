@@ -426,3 +426,104 @@ endCallback () {
     setListener(tempDiv)
   })
   ```
+
+## [element.innerHTML](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/innerHTML)
+
+`Element.innerHTML` 属性设置或获取 `HTML` 语法表示的元素的后代
+
+如果要向一个元素中插入一段 `HTML`，而不是替换它的内容，那么请使用 `insertAdjacentHTML()` 方法。
+
+- 语法
+
+  ```js
+  const content = element.innerHTML
+  element.innerHTML = htmlString
+  ```
+
+- 值
+
+  `DOMString` 包含元素后代的 `HTML` 序列（可作为 `v-html` 的值）。设置元素的 `innerHTML` 将**会删除所有该元素的后代并以上面给出的 htmlString 替代**。
+
+### 例子
+
+获取一个元素的 `innerHTML` 属性的值
+
+```js
+// HTML:
+/*
+<div id="div">
+  <p>Content</p>
+  <p>Further Elaborated</p>
+</div>
+*/
+const div = document.getElementById('div')
+console.log(div.innerHTML) // '<p>Content</p><p>Further Elaborated</p>'
+```
+
+### 替换元素的内容
+
+设置 `innerHTML` 的值可以让你轻松地将当前元素的内容替换为新的内容。
+举个例子来说，你可以通过文档 `body` 属性删除 `body` 的全部内容。
+
+```js
+document.body.innerHTML = ''
+```
+
+下面这个例子，首先获取文档当前的 `HTML` 标记并替换 "`<`" 字符为 `HTML` 实体 "`&lt;`"，从本质上来看，它是将 `HTML` 转换成原始文本，将其包裹在 `<pre>` 元素中。然后 `innerHTML` 的值被替换成新的字符串。最后，**文档的内容被替换为页面显示源码**。
+
+```js
+document.documentElement.innerHTML =
+  '<pre>' + document.documentElement.innerHTML.replace(/</g, '&lt;') + '</pre>'
+```
+
+::: tip 其他
+当给 `innerHTML` 设置一个值的时候到底发生了什么？用户代理按照以下步骤：
+
+- 给定的值被解析为 `HTML` 或者 `XML`（取决于文档类型），结果就是 `DocumentFragment` 对象代表元素新设置的 `DOM` 节点。
+- 如果元素内容被替换成 `<template>` 元素，`<template>` 元素的 `content` 属性会被替换为步骤 `1` 中创建的新的 `DocumentFragment`
+- 对于其他所有元素，元素的内容都被替换为新的 `DocumentFragment` 节点
+:::
+
+::: warning
+HTML 5 中指定不执行由 innerHTML 插入的 `<script>` 标签。
+然而，有很多不依赖 `<script>` 标签去执行 `JavaScript` 的方式。
+所以当你使用 `innerHTML` 去设置你无法控制的字符串时，这仍然是一个安全问题。
+<br/>例如：<br/>
+基于这个原因，**当插入纯文本时，建议不要使用 innerHTML 。取而代之的是使用 [Node.textContent](https://developer.mozilla.org/zh-CN/docs/Web/API/Node/textContent)** ，它不**会把给定的内容解析为 `HTML`，它仅仅是将原始文本插入给定的位置**。
+:::
+
+## [element.outerHTML](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/outerHTML)
+
+`element` `DOM` 接口的 `outerHTML` 属性获**取描述元素（包括其后代）的序列化 HTML 片段**。它**也可以设置为用从给定字符串解析的节点替换元素**。
+
+要仅获取元素内容的 `HTML` 表示形式或替换元素的内容，请使用 `innerHTML` 属性
+
+- 语法:
+
+  ```js
+  let content = element.outerHTML
+  ```
+
+- 返回时，**内容包含描述元素及其后代的序列化 HTML 片段**
+
+  ```js
+  element.outerHTML = content
+  ```
+
+  将元素替换为通过使用元素的父作为片段解析算法的上下文节点解析字符串内容生成的节点
+
+### 例子
+
+获取一个元素的 `outerHTML` 属性的值
+
+```js
+// HTML:
+/*
+<div id="div">
+  <p>Content</p>
+  <p>Further Elaborated</p>
+</div>
+*/
+const div = document.getElementById('div')
+console.log(div.outerHTML) // '<div id="d"><p>Content</p><p>Further Elaborated</p></div>'
+```

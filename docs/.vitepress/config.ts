@@ -18,11 +18,11 @@ export default defineConfig({
 
     editLink: {
       pattern: 'https://github.com/themusecatcher/front-end-notes/tree/master/docs/:path',
-      text: 'Suggest changes to this page',
+      text: 'Suggest changes to this page'
     },
     // 默认支持icon包括：'discord'|'facebook'|'github'|'instagram'|'linkedin'|'mastodon'|'slack'|'twitter'|'youtube'
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/themusecatcher/front-end-notes' },
+      { icon: 'github', link: 'https://github.com/themusecatcher/front-end-notes' }
       // 自定义icon
       // {
       //   icon: {
@@ -44,7 +44,7 @@ export default defineConfig({
 
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2023-present The Muse Catcher',
+      copyright: 'Copyright © 2023-present The Muse Catcher'
     },
 
     nav: [
@@ -88,6 +88,10 @@ export default defineConfig({
               {
                 text: 'Less Docs',
                 link: 'https://less.bootcss.com/'
+              },
+              {
+                text: 'Lodash Docs',
+                link: 'https://www.lodashjs.com/'
               }
             ]
           },

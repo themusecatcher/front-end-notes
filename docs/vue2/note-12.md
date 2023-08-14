@@ -173,3 +173,127 @@ if (y === void 0) {
   // 抛出一个 RenferenceError 错误 (与`typeof`相比)
 }
 ```
+
+## [Element.classList](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/classList)
+
+`Element.classList` 是一个只读属性，返回一个元素 `class` 属性的动态 `DOMTokenList` 集合。这可以用于操作 `class` 集合。
+
+相比将 `element.className` 作为`以空格分隔的字符串`来使用，`classList` 是一种更方便的访问元素的类列表的方法。
+
+### 值
+
+一个 [`DOMTokenList`](https://developer.mozilla.org/zh-CN/docs/Web/API/DOMTokenList)，表示元素的 `class` 属性的集合。如果 `class` 属性没有设置或者为空，它将返回一个空的 `DOMTokenList`，即 `length` 属性等于 `0` 的 `DOMTokenList`。
+
+尽管 `classList` 属性自身是只读的，但是你可以使用 `add()`、`remove()`、`replace()` 和 `toggle()` 方法修改其关联的 `DOMTokenList`。
+
+### 示例
+
+```js{2,5,8,9,12,15,18,20,23,24,27-29,32}
+const div = document.createElement('div')
+div.className = 'foo'
+
+// 初始状态：<div class='foo'></div>
+console.log(div.outerHTML)
+
+// 使用 classList API 移除、添加类值
+div.classList.remove('foo')
+div.classList.add('anotherclass')
+
+// <div class='anotherclass'></div>
+console.log(div.outerHTML)
+
+// 如果 visible 类值已存在，则移除它，否则添加它
+div.classList.toggle('visible')
+
+// add/remove visible, depending on test conditional, i less than 10
+div.classList.toggle('visible', i < 10)
+
+console.log(div.classList.contains('foo'))
+
+// 添加或移除多个类值
+div.classList.add('foo', 'bar', 'baz')
+div.classList.remove('foo', 'bar', 'baz')
+
+// 使用展开语法添加或移除多个类值
+const cls = ['foo', 'bar']
+div.classList.add(...cls)
+div.classList.remove(...cls)
+
+// 将类值 'foo' 替换成 'bar'
+div.classList.replace('foo', 'bar')
+```
+
+## [document.images](https://developer.mozilla.org/zh-CN/docs/Web/API/Document/images)
+
+`Document` 接口的只读属性 `images` 返回当前文档中所有 `image` 元素的集合。
+
+- 语法: `var imageCollection = document.images`
+- 值:
+  一个 `HTMLCollection`，提供了包含在该文档中的所有 `images` 元素实时的列表。**集合中的每条代表了一个单 image 元素的 HTMLImageElement**
+
+::: tip 备注
+你可以在返回的结果中使用 JavaScript 数组符号 ('**[]**'，译注)，或者 **item()** 方法去获取集合中的每个元素。下面方法是等价的：
+
+```js{1,3}
+firstImage = imageCollection.item(0)
+// 等价于
+firstImage = imageCollection[0]
+
+```
+
+:::
+
+### 示例
+
+该例是一次通过遍历图片列表找到名称为"`banner.gif`"的图片。
+
+```js
+var ilist = document.images;
+for (var i = 0; i < ilist.length; i++) {
+  if (ilist[i].src == 'banner.gif') {
+    // 发现了 banner 图片
+  }
+}
+```
+
+## [Intl](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl)
+
+`Intl` 对象是 `ECMAScript` 国际化 `API` 的一个命名空间，它**提供了精确的字符串对比、数字格式化，和日期时间格式化**。`Collator`，`NumberFormat` 和 `DateTimeFormat` 对象的构造函数是 `Intl` 对象的属性。本页文档内容包括了这些属性，以及国际化使用的构造器和其他语言的方法等常见的功能。
+
+### 属性
+
+- [`Intl.Collator`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator)
+`collators` 的构造函数，用于启用对语言敏感的字符串比较的对象。
+
+- [`Intl.DateTimeFormat`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat)
+用于启用语言敏感的日期和时间格式的对象的构造函数。
+
+- [`Intl.ListFormat`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl/ListFormat)
+Constructor for objects that enable language-sensitive list formatting.
+
+- [`Intl.NumberFormat`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
+用于启用语言敏感数字格式的对象的构造函数。
+
+  <p>{{ new Intl.NumberFormat('zh-CN', {
+    style: 'currency',
+    currency: 'CNY',
+    currencyDisplay: 'symbol',
+    maximumFractionDigits: 2,
+    roundingIncrement: 5
+  }).format(123456789.173456) }}</p>
+
+  ```vue
+  <p>{{ new Intl.NumberFormat('zh-CN', {
+    style: 'currency',
+    currency: 'CNY',
+    currencyDisplay: 'symbol',
+    maximumFractionDigits: 2,
+    roundingIncrement: 5
+  }).format(123456789.123456) }}</p>
+  ```
+
+- [`Intl.PluralRules`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules)
+用于启用多种敏感格式和多种语言语言规则的对象的构造函数。
+
+- [`Intl.RelativeTimeFormat`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat)
+Constructor for objects that enable language-sensitive relative time formatting.
