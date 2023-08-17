@@ -6,10 +6,10 @@ titleTemplate: Library
 
 hero:
   name: Front-end Notes
-  text: ''
-  tagline: 前端笔记文档
+  text: notes library
+  tagline: vue2、vue3、css、js...
   image:
-    src: /logo-with-shadow.png
+    src: https://viteconf.org/23/_nuxt/viteconf.9feb32c8.svg
     alt: Front-end Notes
   actions:
     - theme: brand
