@@ -110,6 +110,10 @@ export default defineConfig({
                 link: 'https://cn.vitejs.dev/'
               },
               {
+                text: 'Rollup',
+                link: 'https://cn.rollupjs.org/'
+              },
+              {
                 text: 'VitePress',
                 link: 'https://vitepress.dev/'
               },
