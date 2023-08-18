@@ -7,6 +7,7 @@
 - [百度地图开放平台](https://lbsyun.baidu.com/index.php?title=%E9%A6%96%E9%A1%B5)
 - [JavaScript API GL](https://lbsyun.baidu.com/index.php?title=jspopularGL)
 - [JavaScript API](http://lbsyun.baidu.com/cms/jsapi/reference/jsapi_reference.html)
+- [示例中心](https://lbsyun.baidu.com/index.php?title=open/jsdemo)
 
 使用地图时 `eslint` 报错：
 
