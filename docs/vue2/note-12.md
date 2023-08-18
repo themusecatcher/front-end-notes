@@ -297,3 +297,93 @@ Constructor for objects that enable language-sensitive list formatting.
 
 - [`Intl.RelativeTimeFormat`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat)
 Constructor for objects that enable language-sensitive relative time formatting.
+
+## [linear-gradient()](https://developer.mozilla.org/zh-CN/docs/Web/CSS/gradient/linear-gradient)
+
+`CSS` `linear-gradient()` 函数用于**创建一个表示两种或多种颜色线性渐变的图片**。其结果属于`<gradient>`数据类型，是一种特别的`<image>`数据类型。
+
+```
+/* 渐变轴为45度，从蓝色渐变到红色 */
+linear-gradient(45deg, blue, red);
+
+/* 从右下到左上、从蓝色渐变到红色 */
+linear-gradient(to left top, blue, red);
+
+/* 从下到上，从蓝色开始渐变、到高度 40% 位置是绿色渐变开始、最后以红色结束 */
+linear-gradient(0deg, blue, green 40%, red);
+```
+
+### 线形渐变的构成
+
+<br/>
+
+线性渐变由一个轴 (梯度线) 定义，其上的每个点具有两种或多种的颜色，且轴上的每个点都具有独立的颜色。为了构建出平滑的渐变，`linear-gradient()` 函数构建一系列垂直于渐变线的着色线，每一条着色线的颜色则取决于与之垂直相交的渐变线上的色点
+
+<br/>
+
+默认情况下，从一个颜色的终止点平滑的过渡到另一个颜色的终止点，颜色之间的中点是两个颜色转换的中点。你可以将中点移动到这两个颜色之间的任意位置，方法是在两个颜色之间添加未标记的 %，以指示颜色的中转位置。下面的示例是从起始点到 10% 的位置标记红色，从 90% 到结束标记蓝色。在 10% 到 90% 之间，颜色从红色过渡到蓝色，然而过渡的中点是在 30% 的标记上，而不是在没有 30% 中转点的情况下会默认为 50%。
+
+```
+linear-gradient(red 10%, 30%, blue 90%);
+```
+
+### 语法
+
+- `<side-or-corner>`
+  **描述渐变线的起始点位置**。它包含 to 和两个关键词：第一个**指出水平位置** `left` or `right`，第二个**指出垂直位置** `top` or `bottom`。关键词的**先后顺序无影响，且都是可选的**。 `to top`, `to bottom`, `to left` 和 `to right` 这些值会被转换成角度 `0 度`、`180 度`、`270 度`和 `90 度`。其余值会被转换为一个以向顶部中央方向为起点顺时针旋转的角度。渐变线的结束点与其起点中心对称。
+
+- `<angle>`
+  用角度值指定渐变的方向（或角度）。**向上是 0 度。角度顺时针增加**。
+
+- `<linear-color-stop>`
+  由一个`<color>`值组成，并且跟随着一个可选的终点位置（可以是一个百分比值或者是沿着渐变轴的`<length>`）。`CSS` 渐变的颜色渲染采取了与 `SVG` 相同的规则。
+
+- `<color-hint>`
+  颜色中转点是一个插值提示，它**定义了在相邻颜色之间渐变如何进行**。长度**定义了在两种颜色之间的哪个点停止渐变颜色应该达到颜色过渡的中点**。如果省略，颜色转换的中点是两个颜色停止之间的中点。
+
+### 示例
+
+- `45 度`渐变
+
+  ```html
+  <div style="width: 200px; height: 200px;"></div>
+  ```
+
+  ```css
+  div {
+    background: linear-gradient(45deg, red, blue);
+  }
+  ```
+
+- 从 `60%` 的梯度线开始的渐变
+
+  ```html
+  <div style="width: 200px; height: 200px;"></div>
+  ```
+
+  ```css
+  div {
+    background: linear-gradient(135deg, red, red 60%, blue);
+  }
+  ```
+
+- 具有多个颜色停止的渐变
+
+  ```html
+  <div>A rainbow made from a gradient</div>
+  ```
+
+  ```css
+  div {
+    background: linear-gradient(
+      to right,
+      red,
+      orange,
+      yellow,
+      green,
+      blue,
+      indigo,
+      violet
+    )
+  }
+  ```
