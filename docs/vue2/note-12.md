@@ -300,7 +300,7 @@ Constructor for objects that enable language-sensitive list formatting.
 - [`Intl.RelativeTimeFormat`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat)
 Constructor for objects that enable language-sensitive relative time formatting.
 
-## [linear-gradient()](https://developer.mozilla.org/zh-CN/docs/Web/CSS/gradient/linear-gradient)
+## 线性渐变[linear-gradient()](https://developer.mozilla.org/zh-CN/docs/Web/CSS/gradient/linear-gradient)
 
 `CSS` `linear-gradient()` 函数用于**创建一个表示两种或多种颜色线性渐变的图片**。其结果属于`<gradient>`数据类型，是一种特别的`<image>`数据类型。
 
@@ -389,3 +389,56 @@ linear-gradient(red 10%, 30%, blue 90%);
     )
   }
   ```
+
+## 径向渐变[radial-gradient()](https://developer.mozilla.org/zh-CN/docs/Web/CSS/gradient/radial-gradient)
+
+`radial-gradient()` `CSS` 函数创建一个图像，该图像由从原点辐射的两种或多种颜色之间的渐进过渡组成。它的形状可以是圆形或椭圆形。函数的结果是 `<gradient>` 数据类型的对象。这是一种特别的 `<image>`。
+
+### 语法
+
+```css
+/* 在容器中心的渐变，从红色开始，变成蓝色，最后变成绿色 */
+radial-gradient(circle at center, red 0, blue, green 100%)
+```
+
+径向渐变通过指定渐变的中心（0% 椭圆所在的位置）和结束形状（100% 椭圆）的大小和形状来指定。
+
+### 值
+
+- `<position>`
+ ` <position>` 与 `background-position` 或者 `transform-origin` 类似。如果没有指定，**默认为中心点**。
+
+- `<ending-shape>`
+  **渐变结束时的形状**。圆形（渐变的形状是一个半径不变的正圆）或椭圆形（轴对称椭圆）。默认值为椭圆。
+
+- `<size>`
+  **确定渐变结束形状的大小**。如果省略，则**默认为最远角**。它可以显式给出，也可以通过关键字给出。出于关键字定义的目的，将梯度框边缘视为在两个方向上无限延伸，而不是有限线段。
+
+- `<linear-color-stop>`
+色值结束点（`color stop`）的 `<color>` 值，后跟一个或两个可选的停止位置（沿渐变轴的 `<percentage>` 或 `<length>`）。`0% `的百分比，或者 `0` 的长度，代表渐变的中心；值 `100%` 表示结束形状与虚拟渐变射线的交点。两者之间的百分比值线性定位在梯度射线上。包括两个停止位置相当于在两个位置声明了两个颜色相同的色值结束点。
+
+- `<color-hint>`
+`color-hint` 是一个插值提示，定义了相邻色标之间的渐变如何进行。长度定义了两种颜色之间的哪个点渐变颜色应该到达颜色过渡的中点。如果省略，颜色过渡的中点是两个色值结束点之间的中点。
+
+### 示例
+
+- 简单的渐变
+
+  ```css
+  .radial-gradient {
+    background-image: radial-gradient(cyan 0%, transparent 20%, salmon 40%);
+  }
+  ```
+
+- 非居中渐变
+
+  ```css
+  .radial-gradient {
+    background-image: radial-gradient(
+      farthest-corner at 40px 40px,
+      #f35 0%,
+      #43e 100%
+    )
+  }
+
+### [CSS渐变](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_images/Using_CSS_gradients)

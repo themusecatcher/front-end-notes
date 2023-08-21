@@ -38,7 +38,7 @@
 
   ```vue
   <script setup>
-  import { defineProps, ref, onMounted } from 'vue'
+  import { ref, onMounted } from 'vue'
 
   const props = defineProps({ // 运行时声明
     longitude: { type: Number, default: 116.514 }, // 地理经度
@@ -119,3 +119,5 @@
   }
   </style>
   ```
+
+## [vue-ueditor-wrap](https://hc199421.gitee.io/vue-ueditor-wrap/#/home)
