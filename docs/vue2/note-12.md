@@ -426,6 +426,7 @@ radial-gradient(circle at center, red 0, blue, green 100%)
 
   ```css
   .radial-gradient {
+    <!-- 颜色值后的百分比表示指定颜色的标准中心线位置 -->
     background-image: radial-gradient(cyan 0%, transparent 20%, salmon 40%);
   }
   ```
