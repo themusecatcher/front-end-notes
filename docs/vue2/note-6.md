@@ -145,7 +145,7 @@ h1 > strong {
 }
 ```
 
-## js的 `Date` 对象获取当前天的起始和结束时间戳
+## js的 `Date` 对象获取指定日期的起始和结束时间戳
 
 - `setHours()` 用于设置指定的时间的小时字段
 - 返回值：设置后的日期的毫秒表示
@@ -156,8 +156,18 @@ h1 > strong {
   - `millisec`: 可选。表示毫秒的数值，介于 0 ~ 999之间。在 EMCAScript 标准化之前，不支持该参数。
 
 ```js
+// 获取当前天的起始时间戳和结束时间戳
 var startTimestamp = new Date().setHours(0, 0, 0, 0)
 var endTimestamp = new Date().setHours(23, 59, 59, 999)
+
+// 获取指定日期的起始时间戳和结束时间戳
+const dateFormat = '2023-10-10' // 字符串日期格式
+var startTimestamp = new Date(dateFormat).setHours(0, 0, 0, 0)
+var endTimestamp = new Date(dateFormat).setHours(23, 59, 59, 999)
+
+const dateTimestamp = 1696904408000 // 时间戳格式
+var startTimestamp = new Date(dateTimestamp).setHours(0, 0, 0, 0)
+var endTimestamp = new Date(dateTimestamp).setHours(23, 59, 59, 999)
 ```
 
 ## js在字符串中添加换行符
