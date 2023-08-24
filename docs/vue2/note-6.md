@@ -145,9 +145,9 @@ h1 > strong {
 }
 ```
 
-## js的 `Date` 对象获取指定日期的起始和结束时间戳
+## `Date` 对象常用操作
 
-- `setHours()` 用于设置指定的时间的小时字段
+- [`setHours()`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date/setHours) 用于设置指定的时间的小时字段
 - 返回值：设置后的日期的毫秒表示
 - 参数：
   - `hour`: 必需。表示小时的数值，介于 0（午夜） ~ 23（晚上11点） 之间，以本地时间计（下同）。
@@ -169,6 +169,25 @@ const dateTimestamp = 1696904408000 // 时间戳格式
 var startTimestamp = new Date(dateTimestamp).setHours(0, 0, 0, 0)
 var endTimestamp = new Date(dateTimestamp).setHours(23, 59, 59, 999)
 ```
+
+- `getFullYear()` 方法根据本地时间返回指定日期的年份
+- [`setFullYear()`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date/setFullYear) 方法根据本地时间为一个日期对象设置年份
+  - 语法：`dateObj.setFullYear(yearValue[, monthValue[, dayValue]])`
+  - 参数：<br/>
+    `yearValue`：指定年份的整数值，例如 `2000`<br/>
+    `monthValue`：一个 `0` 到 `11` 之间的整数值，表示`从一月到十二月`。<br/>
+    `dayValue`：一个 `1` 到 `31` 之间的整数值，表示月份中的第几天。<br/>
+    如果你指定了 `dayValue` 参数，就必须同时指定 `monthValue`。
+
+  ```js
+  // 当前年份
+  const year = new Date().getFullYear() // 2023
+  console.log('year', year)
+
+  // 100年后的此刻
+  const OneHundredYearsLater = new Date(new Date().setFullYear(new Date().getFullYear() + 100))
+  console.log('OneHundredYearsLater', OneHundredYearsLater)
+  ```
 
 ## js在字符串中添加换行符
 
