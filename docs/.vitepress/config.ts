@@ -14,7 +14,7 @@ export default defineConfig({
     lineNumbers: false // 是否显示行数，默认false
   },
   themeConfig: {
-    logo: 'https://cn.vitejs.dev/viteconf.svg',
+    logo: '/amazing-icon.svg',
 
     editLink: {
       pattern: 'https://github.com/themusecatcher/front-end-notes/tree/master/docs/:path',
@@ -66,38 +66,6 @@ export default defineConfig({
           {
             items: [
               {
-                text: 'Vue 2 Docs',
-                link: 'https://v2.cn.vuejs.org/v2/guide/'
-              },
-              {
-                text: 'Vue 3 Docs',
-                link: 'https://cn.vuejs.org/guide/introduction.html'
-              },
-              {
-                text: 'VueUse',
-                link: 'https://vueuse.org/'
-              },
-              {
-                text: 'TypeScript Docs',
-                link: 'https://www.tslang.cn/docs/home.html'
-              },
-              {
-                text: 'MDN Web Docs',
-                link: 'https://developer.mozilla.org/zh-CN/'
-              },
-              {
-                text: 'Less Docs',
-                link: 'https://less.bootcss.com/'
-              },
-              {
-                text: 'Lodash Docs',
-                link: 'https://www.lodashjs.com/'
-              }
-            ]
-          },
-          {
-            items: [
-              {
                 text: 'npm',
                 link: 'https://www.npmjs.com/'
               },
@@ -122,6 +90,39 @@ export default defineConfig({
                 link: 'https://markdown.com.cn/'
               }
             ]
+          }
+        ]
+      },
+      {
+        text: 'Docs',
+        items: [
+          {
+            text: 'Vue 2 Docs',
+            link: 'https://v2.cn.vuejs.org/v2/guide/'
+          },
+          {
+            text: 'Vue 3 Docs',
+            link: 'https://cn.vuejs.org/guide/introduction.html'
+          },
+          {
+            text: 'VueUse',
+            link: 'https://vueuse.org/'
+          },
+          {
+            text: 'TypeScript Docs',
+            link: 'https://www.tslang.cn/docs/home.html'
+          },
+          {
+            text: 'MDN Web Docs',
+            link: 'https://developer.mozilla.org/zh-CN/'
+          },
+          {
+            text: 'Less Docs',
+            link: 'https://less.bootcss.com/'
+          },
+          {
+            text: 'Lodash Docs',
+            link: 'https://www.lodashjs.com/'
           }
         ]
       }

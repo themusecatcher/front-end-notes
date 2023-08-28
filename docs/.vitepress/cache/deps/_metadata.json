@@ -1,25 +1,50 @@
 {
   "hash": "47c50fe6",
-  "browserHash": "84475715",
+  "browserHash": "dfacab0b",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/.pnpm/vue@3.3.4/node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "e717b4a6",
+      "fileHash": "c0987538",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../../node_modules/.pnpm/@vue+devtools-api@6.5.0/node_modules/@vue/devtools-api/lib/esm/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "ef0c9818",
+      "fileHash": "64c3e914",
       "needsInterop": false
     },
     "vitepress > minisearch": {
       "src": "../../../../node_modules/.pnpm/minisearch@6.1.0/node_modules/minisearch/dist/es/index.js",
       "file": "vitepress___minisearch.js",
-      "fileHash": "53afa67c",
+      "fileHash": "6ab10df0",
+      "needsInterop": false
+    },
+    "echarts": {
+      "src": "../../../../node_modules/.pnpm/echarts@5.4.3/node_modules/echarts/index.js",
+      "file": "echarts.js",
+      "fileHash": "98712f6e",
+      "needsInterop": false
+    },
+    "vuedraggable": {
+      "src": "../../../../node_modules/.pnpm/vuedraggable@4.1.0_vue@3.3.4/node_modules/vuedraggable/dist/vuedraggable.umd.js",
+      "file": "vuedraggable.js",
+      "fileHash": "7cf520fb",
+      "needsInterop": true
+    },
+    "vue-amazing-ui": {
+      "src": "../../../../node_modules/.pnpm/vue-amazing-ui@0.0.36/node_modules/vue-amazing-ui/dist/vue-amazing-ui.js",
+      "file": "vue-amazing-ui.js",
+      "fileHash": "3d77f2fd",
       "needsInterop": false
     }
   },
-  "chunks": {}
+  "chunks": {
+    "chunk-D4ROFVM7": {
+      "file": "chunk-D4ROFVM7.js"
+    },
+    "chunk-ROME4SDB": {
+      "file": "chunk-ROME4SDB.js"
+    }
+  }
 }
