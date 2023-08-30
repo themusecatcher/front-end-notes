@@ -255,6 +255,10 @@ export default defineConfig({
               link: '/plugins/gaugechart'
             },
             {
+              text: '懒加载 Lazyload',
+              link: '/plugins/lazyload'
+            },
+            {
               text: '树图 TreeChart',
               link: '/plugins/treechart'
             }

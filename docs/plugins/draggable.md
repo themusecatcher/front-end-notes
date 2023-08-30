@@ -51,6 +51,10 @@ function onMove (evt: any, originalEvent: DragEvent) { // 拖拽move事件回调
 }
 </script>
 
+## vuedraggable@next 参考文档
+
+- [使用文档](https://www.npmjs.com/package/vuedraggable/v/4.1.0)
+
 ## 设置相同的 group，即可实现两个拖拽区域按钮拖动交换
 
 <Space direction="vertical" :size="32">

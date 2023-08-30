@@ -10,11 +10,21 @@
     "docs:deploy": "sh deploy.sh",
     "push": "sh push.sh"
   },
+  "dependencies": {
+    "@codemirror/lang-vue": "^0.1.2",
+    "@codemirror/theme-one-dark": "^6.1.2",
+    "echarts": "^5.4.3",
+    "vue-amazing-ui": "^0.1.5",
+    "vue-codemirror": "^6.1.1",
+    "vue3-lazyload": "^0.3.8",
+    "vue3-pdf-app": "^1.0.3",
+    "vuedraggable": "^4.1.0"
+  },
   "devDependencies": {
     "less": "^4.1.3",
     "vitepress": "1.0.0-beta.6"
   },
-  "description": "前端笔记",
+  "description": "Front-end development study notes",
   "directories": {
     "doc": "docs"
   },
@@ -26,19 +36,10 @@
     "front-end",
     "notes"
   ],
-  "author": "themusecatcher",
-  "license": "ISC",
+  "author": "theMuseCatcher",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/themusecatcher/front-end-notes/issues"
   },
-  "homepage": "https://github.com/themusecatcher/front-end-notes#readme",
-  "dependencies": {
-    "@codemirror/lang-vue": "^0.1.2",
-    "@codemirror/theme-one-dark": "^6.1.2",
-    "echarts": "^5.4.3",
-    "vue-amazing-ui": "^0.0.36",
-    "vue-codemirror": "^6.1.1",
-    "vue3-pdf-app": "^1.0.3",
-    "vuedraggable": "^4.1.0"
-  }
+  "homepage": "https://themusecatcher.github.io/front-end-notes"
 }
