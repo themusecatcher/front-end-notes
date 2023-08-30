@@ -75,6 +75,7 @@ Vue.component('Button', Button) // 全局注册 Button 组件
 ```
 
 语法：
+
 ```css
 filter: none | blur() | brightness() | contrast() | drop-shadow() | grayscale() | hue-rotate() | invert() | opacity() | saturate() | sepia() | url();
 ```
@@ -269,7 +270,7 @@ isInViewport () {
 
 [`EventTarget.addEventListener()`](https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/addEventListener)方法将指定的监听器注册到 EventTarget 上，当该对象触发指定的事件时，指定的回调函数就会被执行。事件目标可以是一个文档上的元素 Element、Document 和 Window，也可以是任何支持事件的对象（比如 XMLHttpRequest）。
 
-::: info 备注
+::: tip 备注
 推荐使用 addEventListener() 来注册一个事件监听器，理由如下：
 
 - 它允许为一个事件添加多个监听器。特别是对库、JavaScript 模块和其他需要兼容第三方库/插件的代码来说，这一功能很有用。
@@ -279,7 +280,7 @@ isInViewport () {
 
 `addEventListener()` 的工作原理是将实现 EventListener 的函数或对象添加到调用它的 EventTarget 上的指定事件类型的事件侦听器列表中。如果要绑定的函数或对象已经被添加到列表中，该函数或对象不会被再次添加。
 
-::: info 备注
+::: tip 备注
 如果先前向事件侦听器列表中添加过一个匿名函数，并且在之后的代码中调用 addEventListener 来添加一个功能完全相同的匿名函数，那么之后的这个匿名函数也会被添加到列表中。
 
 实际上，即使使用完全相同的代码来定义一个匿名函数，这两个函数仍然存在区别，在循环中也是如此。在使用该方法的情况下，匿名函数的重复定义会带来许多麻烦，详见下文中的内存问题一节。
@@ -296,15 +297,15 @@ addEventListener(type, listener, useCapture);
 ```
 
 - 参数：
-  - type：表示监听事件类型的大小写敏感的字符串。
-  - listener：当所监听的事件类型触发时，会接收到一个事件通知（实现了 Event 接口的对象）对象。listener 必须是一个实现了 EventListener 接口的对象，或者是一个函数。有关回调本身的详细信息，请参阅事件监听回调
-  - options <Badge type="tip" text="可选" /> 一个指定有关 listener 属性的可选参数对象。可用的选项如下：
-    - capture <Badge type="tip" text="可选" /> 一个布尔值，表示 listener 会在该类型的事件捕获阶段传播到该 EventTarget 时触发。
-    - once <Badge type="tip" text="可选" /> 一个布尔值，表示 listener 在添加之后最多只调用一次。如果为 true，listener 会在其被调用之后自动移除。
-    - passive <Badge type="tip" text="可选" /> 一个布尔值，设置为 true 时，表示 listener 永远不会调用 preventDefault()。如果 listener 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告。查看使用 passive 改善滚屏性能以了解更多。
-    - signal <Badge type="tip" text="可选" /> AbortSignal，该 AbortSignal 的 abort() 方法被调用时，监听器会被移除。
-  - useCapture <Badge type="tip" text="可选" />
-  一个布尔值，表示在 DOM 树中注册了 listener 的元素，是否要先于它下面的 EventTarget 调用该 listener。当 useCapture（设为 true）时，沿着 DOM 树向上冒泡的事件不会触发 listener。当一个元素嵌套了另一个元素，并且两个元素都对同一事件注册了一个处理函数时，所发生的事件冒泡和事件捕获是两种不同的事件传播方式。事件传播模式决定了元素以哪个顺序接收事件。进一步的解释可以查看 DOM Level 3 事件及 JavaScript 事件顺序文档。如果没有指定，useCapture 默认为 false。
+  - `type`：表示监听事件类型的大小写敏感的字符串。
+  - `listener`：当所监听的事件类型触发时，会接收到一个事件通知（实现了 Event 接口的对象）对象。listener 必须是一个实现了 EventListener 接口的对象，或者是一个函数。有关回调本身的详细信息，请参阅事件监听回调
+  - `options` <Badge type="tip" text="可选" /> 一个指定有关 listener 属性的可选参数对象。可用的选项如下：
+    - `capture` <Badge type="tip" text="可选" /> 一个布尔值，表示 listener 会在该类型的事件捕获阶段传播到该 EventTarget 时触发。
+    - `once` <Badge type="tip" text="可选" /> 一个布尔值，表示 listener 在添加之后最多只调用一次。如果为 true，listener 会在其被调用之后自动移除。
+    - `passive` <Badge type="tip" text="可选" /> 一个布尔值，设置为 true 时，表示 listener 永远不会调用 preventDefault()。如果 listener 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告。查看使用 passive 改善滚屏性能以了解更多。
+    - `signal` <Badge type="tip" text="可选" /> AbortSignal，该 AbortSignal 的 abort() 方法被调用时，监听器会被移除。
+  - `useCapture` <Badge type="tip" text="可选" />
+  一个布尔值，表示在 DOM 树中注册了 listener 的元素，是否要先于它下面的 EventTarget 调用该 listener。当 useCapture（设为 true）时，沿着 DOM 树向上冒泡的事件不会触发 listener。当一个元素嵌套了另一个元素，并且两个元素都对同一事件注册了一个处理函数时，所发生的事件冒泡和事件捕获是两种不同的事件传播方式。事件传播模式决定了元素以哪个顺序接收事件。进一步的解释可以查看 DOM Level 3 事件及 JavaScript 事件顺序文档。如果没有指定，`useCapture` 默认为 `false`。
 
 `document.addEventListener()` 方法用于向文档添加事件句柄。
 
@@ -348,6 +349,7 @@ touchMove (e) {
 如果子元素p和父元素div都有一个click的处理函数，那么哪一个函数会首先被触发呢？
 
 为了解决这个问题微软和网景提出了两种几乎完全相反的概念，微软提出了名为事件冒泡(`event bubbling`)的事件流，网景提出另一种事件流名为事件捕获(`event capturing`)。
+
 - 事件冒泡可以理解为把一颗石头投入水中，泡泡会一直从水底冒出水面。也就是说，事件会从最内层的元素开始发生，一直向上传播，直到document对象。因此上面的例子在事件冒泡的概念下发生click事件的顺序应该是：`p -> div -> body -> html -> document`
 - 事件捕获与事件冒泡相反，事件会从最外层开始发生，直到最内层的元素。上面的例子在事件捕获的概念下发生click事件的顺序应该是：`document -> html -> body -> div -> p`
 
@@ -356,6 +358,7 @@ touchMove (e) {
 :::
 
 阻止事件冒泡：
+
 - 给子级加 `event.stopPropagation()` 只阻止事件往上冒泡，不阻止事件本身（默认事件）
 
 ```js
@@ -394,7 +397,7 @@ el.onclick = function (event) {
 `Document.documentElement` 是一个会返回文档对象（`document`）的根元素的只读属性（如 HTML 文档的 `<html>` 元素）
 
 ::: tip
-对于任何非空 HTML 文档，调用 `document.documentElement` 总是会返回一个` <html>` 元素，且它一定是该文档的根元素。借助这个只读属性，能方便地获取到任意文档的根元素。
+对于任何非空 HTML 文档，调用 `document.documentElement` 总是会返回一个`<html>` 元素，且它一定是该文档的根元素。借助这个只读属性，能方便地获取到任意文档的根元素。
 
 HTML 文档通常包含一个子节点 `<html>`，但在它前面可能还有个 DOCTYPE 声明。XML 文档通常包含多个子节点：根元素，DOCTYPE 声明，和 processing instructions。
 
