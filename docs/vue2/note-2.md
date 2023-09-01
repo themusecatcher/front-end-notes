@@ -310,7 +310,7 @@ addEventListener(type, listener, useCapture);
 `document.addEventListener()` 方法用于向文档添加事件句柄。
 
 ::: tip 提示
-可以使用 document.removeEventListener() 方法来移除 addEventListener() 方法添加的事件句柄。
+可以使用 [document.removeEventListener()](https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/removeEventListener) 方法来移除 addEventListener() 方法添加的事件句柄。
 :::
 
 ::: tip 提示
