@@ -189,6 +189,10 @@ export default defineConfig({
             {
               text: 'note-12',
               link: '/vue2/note-12'
+            },
+            {
+              text: 'note-13',
+              link: '/vue2/note-13'
             }
           ]
         }
