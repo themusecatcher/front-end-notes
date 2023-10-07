@@ -83,3 +83,15 @@ element.scrollTo({
   behavior: 'smooth'
 })
 ```
+
+## `$router` 新页面打开路由
+
+```js
+onDetail (id) {
+  const routeUrl = this.$router.resolve({
+    path: '/show/detail',
+    query: { id }
+  })
+  window.open(routeUrl.href, '_blank')
+}
+```
