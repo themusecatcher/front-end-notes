@@ -95,3 +95,50 @@ onDetail (id) {
   window.open(routeUrl.href, '_blank')
 }
 ```
+
+## [npm link](https://npm.nodejs.cn/cli/v10/commands/npm-link)
+
+- 没有参数的包文件夹中的 `npm link` 将在全局文件夹 `{prefix}/lib/node_modules/<package>` 中创建一个符号链接，该符号链接链接到执行 `npm link` 命令的包。它还将封装中的任何垃圾箱链接到 {prefix}/bin/{name}。 请注意，npm link 使用全局前缀（参见 npm prefix -g 的值）
+
+- 在某个其他位置，`npm link package-name` 将创建一个从全局安装的 `package-name` 到当前文件夹的 `node_modules/` 的符号链接。
+
+::: tip
+注意，`package-name` 取自 `package.json`，而不是目录名称。
+
+包名称可以选择以范围为前缀。 见 scope。 范围必须以 @ 符号开头，后跟斜杠
+:::
+
+### 例如：
+
+```bash
+cd ~/projects/node-redis    # go into the package directory
+npm link                    # creates global link
+cd ~/projects/node-bloggy   # go into some other package directory.
+npm link redis              # link-install the package
+```
+
+现在，对 `~/projects/node-redis` 的任何更改都将反映在 `~/projects/node-bloggy/node_modules/node-redis/` 中。 请注意，**链接应该指向包名称，而不是该包的目录名称**。
+
+你也可以将这两个步骤合二为一。 例如，以更短的方式执行上述用例：
+
+```bash
+cd ~/projects/node-bloggy  # go into the dir of your main project
+npm link ../node-redis     # link the dir of your dependency
+```
+
+第二行相当于做：
+
+```bash
+(cd ../node-redis; npm link)
+npm link redis
+```
+
+即它首先创建一个全局链接，然后将全局安装目标链接到你项目的 `node_modules` 文件夹中。
+
+请注意，**在这种情况下，你指的是目录名称 node-redis，而不是包名称 redis**。
+
+如果你的链接包有范围（参见 scope），你的链接命令必须包含该范围，例如
+
+```bash
+npm link @myorg/privatepackage
+```
