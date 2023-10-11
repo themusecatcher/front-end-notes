@@ -142,3 +142,9 @@ npm link redis
 ```bash
 npm link @myorg/privatepackage
 ```
+
+### unlink
+
+```bash
+npm uninstall <package-name> -g
+```
