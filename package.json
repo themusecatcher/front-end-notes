@@ -14,7 +14,7 @@
     "@codemirror/lang-vue": "^0.1.2",
     "@codemirror/theme-one-dark": "^6.1.2",
     "echarts": "^5.4.3",
-    "vue-amazing-ui": "^0.1.10",
+    "vue-amazing-ui": "^0.1.17",
     "vue-codemirror": "^6.1.1",
     "vue3-lazyload": "^0.3.8",
     "vue3-pdf-app": "^1.0.3",
@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "less": "^4.2.0",
-    "vitepress": "1.0.0-rc.12"
+    "vitepress": "1.0.0-rc.21"
   },
   "description": "Front-end development study notes",
   "directories": {
