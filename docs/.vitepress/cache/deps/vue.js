@@ -59,7 +59,6 @@ import {
   hydrate,
   initCustomFormatter,
   initDirectivesForSSR,
-  init_vue_runtime_esm_bundler,
   inject,
   isMemoSame,
   isProxy,
@@ -154,9 +153,7 @@ import {
   withMemo,
   withModifiers,
   withScopeId
-} from "./chunk-D4ROFVM7.js";
-import "./chunk-ROME4SDB.js";
-init_vue_runtime_esm_bundler();
+} from "./chunk-67UUJLDS.js";
 export {
   BaseTransition,
   BaseTransitionPropsValidators,
