@@ -102,17 +102,18 @@ if (JSON.stringify(data) === '{}') {
 
 ## `CSS` 的大于号选择器 `>`
 
-** `>` 选择所有父级是 `<h1>` 元素的 `<strong>` 元素**
+**`>` 选择所有父级是 `<h1>` 元素的 `<strong>` 元素**
+
 <h1>
   This is
   <strong>very </strong>
   <strong>very </strong>
-  <strong>very</strong>
+  <strong>very </strong>
   important.
 </h1>
 <h1>
   This is
-  <em>really <strong>very</strong></em>
+  <em>really <strong>very </strong></em>
   important.
 </h1>
 
@@ -121,15 +122,18 @@ h1 > strong {
   color: red;
 }
 </style>
+
 ```html
 <h1>
   This is
-  <strong>very</strong> <strong>very</strong>
+  <strong>very </strong>
+  <strong>very </strong>
+  <strong>very </strong>
   important.
 </h1>
 <h1>
   This is
-  <em>really <strong>very</strong></em>
+  <em>really <strong>very </strong></em>
   important.
 </h1>
 ```
