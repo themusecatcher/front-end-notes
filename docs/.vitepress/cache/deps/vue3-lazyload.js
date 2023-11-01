@@ -1,17 +1,12 @@
 import {
-  init_vue_runtime_esm_bundler,
   onMounted,
   onUnmounted,
   ref,
   watch
-} from "./chunk-D4ROFVM7.js";
-import "./chunk-ROME4SDB.js";
+} from "./chunk-DO6W2M3F.js";
+import "./chunk-UXIASGQL.js";
 
-// node_modules/.pnpm/vue-demi@0.12.5_vue@3.3.4/node_modules/vue-demi/lib/index.mjs
-init_vue_runtime_esm_bundler();
-init_vue_runtime_esm_bundler();
-
-// node_modules/.pnpm/vue3-lazyload@0.3.8_vue@3.3.4/node_modules/vue3-lazyload/dist/index.mjs
+// node_modules/.pnpm/vue3-lazyload@0.3.8_vue@3.3.7/node_modules/vue3-lazyload/dist/index.mjs
 var LifecycleEnum = ((LifecycleEnum2) => {
   LifecycleEnum2["LOADING"] = "loading";
   LifecycleEnum2["LOADED"] = "loaded";
