@@ -265,7 +265,7 @@ methods: {
 
 - this.$route：是当前路由对象，是一个局部的对象，里面包含`name`、`path`、`query`和`params`等属性，如下图：
 
-![Alt text](image-2.png)
+![Alt text](image-1.png)
 
 - this.$router：是全局路由对象，可以在任意页面实现路由跳转，任何页面都可以调用其 `push()`, `back()`、`replace()`, `go()` 等方法
 
@@ -291,26 +291,4 @@ let route = this.$router.resolve({
 window.open(route.href, '_blank')
 ```
 
-![Alt text](image-3.png)
-
-## window.location对象
-
-`Location` 接口表示其链接到的对象的位置（`URL`）。所做的修改反映在与之相关的对象上。 `Document` 和 `Window` 接口都有这样一个链接的 `Location`，分别通过 `Document.location` 和 `Window.location` 访问。
-
-属性 | 描述
--- | --
-`location.href` | 包含整个 `URL` 的一个 [`DOMString`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String)
-`location.protocol` | 包含 `URL` 对应协议的一个 `DOMString`，最后有一个":"
-`location.host` | 包含了域名的一个 `DOMString`，可能在该串最后带有一个":"并跟上 `URL` 的端口号
-`location.hostname` | 包含 `URL` 域名的一个 `DOMString`
-`location.port` | 包含端口号的一个 `DOMString`
-`location.pathname` | 包含 `URL` 中路径部分的一个 `DOMString`，开头有一个 /
-`location.search` | 包含 `URL` 参数的一个 `DOMString`，开头有一个“?”
-`location.hash` | 包含块标识符的 `DOMString`，开头有一个 #
-`location.username` | 包含 `URL` 中域名前的用户名的一个 `DOMString`
-`location.password` | 包含 `URL` 域名前的密码的一个 `DOMString`
-`location.origin`<Badge type="tip" text="只读" /> | 包含页面来源的域名的标准形式 `DOMString`
-
-假设当前网页路由：`http://172.16.200.17:8080/agent`
-
-![Alt text](image-4.png)
+![Alt text](image-2.png)

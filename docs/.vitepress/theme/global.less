@@ -296,15 +296,16 @@ html.dark .VPHome {
 .items {
   align-items: flex-start;
 }
-.grid-3 {
+.VPFeatures .container .items .item {
   cursor: pointer;
   transition: all .25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
   .VPFeature {
-    border-radius: 20px;
+    border-radius: 36px;
     border: none;
     background-color: rgba(0, 0, 0, .36);
     transition: all .25s;
     .icon, .title, .details {
+      font-size: 18px;
       color: #FFF;
       transition: all .25s;
     }
@@ -312,8 +313,16 @@ html.dark .VPHome {
       color: rgba(255, 255, 255, .88);
     }
     .icon {
-      border-radius: 50%;
+      width: 72px;
+      height: 72px;
+      font-size: 20px;
+      font-weight: 700;
+      border-radius: 28px;
       background-image: radial-gradient(circle at 0%, #f669bb, #98e8de, #ffd666);
+      .logo {
+        width: 32px;
+        height: 32px;
+      }
     }
   }
   &:hover {
