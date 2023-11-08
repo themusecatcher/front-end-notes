@@ -1,4 +1,4 @@
-# Note 10
+# Note 6
 
 ## 上传文件
 
@@ -238,32 +238,6 @@ uploadFile (files) {
 }
 ```
 
-## HTML5 新属性
-
-[`HTML5` 新属性参考文档](https://www.runoob.com/tags/ref-standardattributes.html)
-
-HTML 属性能够赋予元素含义和语境。
-
-下面的全局属性可用于任何 HTML5 元素。
-属性 | 描述
--- | --
-`accesskey` | 设置访问元素的键盘快捷键。
-`class` | 规定元素的类名（classname）
-`contenteditable` <Badge type="tip" text="New" /> | 规定是否可编辑元素的内容。
-`contextmenu` <Badge type="tip" text="New" /> | 指定一个元素的上下文菜单。当用户右击该元素，出现上下文菜单
-`data-*` <Badge type="tip" text="New" /> | 用于存储页面的自定义数据
-`dir` | 设置元素中内容的文本方向。
-`draggable` <Badge type="tip" text="New" /> | 指定某个元素是否可以拖动
-`dropzone` <Badge type="tip" text="New" /> | 指定是否将数据复制，移动，或链接，或删除
-`hidden` <Badge type="tip" text="New" /> | hidden 属性规定对元素进行隐藏。
-`id` | 规定元素的唯一 id
-`lang` | 设置元素中内容的语言代码。
-`spellcheck` <Badge type="tip" text="New" /> | 检测元素是否拼写错误
-`style` | 规定元素的行内样式（inline style）
-`tabindex` | 设置元素的 Tab 键控制次序。
-`title` | 规定元素的额外信息（可在工具提示中显示）
-`translate` <Badge type="tip" text="New" /> | 指定是否一个元素的值在页面载入时是否需要翻译
-
 ## `Image()` 对象
 
 [`Image()` 参考文档](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLImageElement/Image)
@@ -285,124 +259,60 @@ HTML 属性能够赋予元素含义和语境。
   document.body.appendChild(myImage)
   ```
 
-## CSS `object-fit` 属性
+## `MutationObserver` 监听DOM变化
 
-[`object-fit` 参考文档](https://developer.mozilla.org/zh-CN/docs/Web/CSS/object-position)
+[MutationObserver](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver)
 
-> `object-fit` 属性指定元素的内容应该如何去适应指定容器的高度与宽度。<br>`object-fit` 一般用于 `img` 和 `video` 标签，一般可以对这些元素进行保留原始比例的剪切、缩放或者直接进行拉伸等。
+> MutationObserver 接口提供了监视对 DOM 树所做更改的能力。它被设计为旧的 Mutation Events 功能的替代品，该功能是 DOM3 Events 规范的一部分
 
-您可以通过使用 `object-position` 属性来切换被替换元素的内容对象在元素框内的对齐方式。
+构造函数：
+- `MutationObserver()`：创建并返回一个新的 `MutationObserver` 它会**在指定的 DOM 发生变化时被调用**
 
-值 | 描述
--- | --
-`fill` | 默认，**不保证保持原有的比例，内容拉伸填充整个内容容器**。
-`contain` | **保持原有尺寸比例。内容被缩放**。
-`cover` | **保持原有尺寸比例。但部分内容可能被剪切**。
-`none` | **保留原有元素内容的长度和宽度**，也就是说内容不会被重置。
-`scale-down` | **保持原有尺寸比例**。内容的尺寸与 `none` 或 `contain` 中的一个相同，取决于它们两个之间谁得到的对象尺寸会更小一些。
+方法：
+- `disconnect()`
+  阻止 MutationObserver 实例继续接收的通知，直到再次调用其 observe() 方法，该观察者对象包含的回调函数都不会再被调用。
+- `observe()`
+  配置 MutationObserver 在 DOM 更改匹配给定选项时，通过其回调函数开始接收通知。
+- `takeRecords()`
+  从 MutationObserver 的通知队列中删除所有待处理的通知，并将它们返回到 MutationRecord 对象的新 Array 中。
 
-> `object-position`：属性一般与 `object-fit` 一起使用，用来设置元素的位置。<br>`object-position`： 一般用于 `img` 和 `video` 标签。
-
-值 | 描述
--- | --
-`position` | 指定 `image` 或 `video` 在容器中的位置。**第一个值为 x 坐标位置的值，第二个值为 y 坐标位置的值**。
-
-表示的方式有：
-
-```less
-object-position: 50% 50%; // 即水平垂直居中
-object-position: right top;
-object-position: left bottom; // center center
-object-position: 250px 125px;
-```
-
-## 引入并使用特定字体
-
-```html
-<p class="u-font">字体</p>
-```
-
-```css
-.u-head {
-  font-family: SourceHanSerifCN;
-  font-size: 28px;
-  font-weight: 600;
-  color: #333333;
-  line-height: 40px;
+```vue
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
+const textarea = ref()
+const observer = ref()
+onMounted(() => {
+  // 观察器的配置（需要观察什么变动）
+  const config = { attributes: true, childList: false, subtree: false }
+  // 创建一个观察器实例并传入回调函数
+  observer.value = new MutationObserver(callback)
+  // 以上述配置开始观察目标节点
+  observer.value.observe(textarea.value, config)
+})
+onUnmounted(() => {
+  // 之后，可停止观察
+  observer.value.disconnect()
+})
+/*
+  例如：使用 MutationObserver 监听 textarea resize 时的高度属性变化
+  参考文档：https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver
+*/
+// 当观察到变动时执行的回调函数
+const callback = function (mutationsList: any, observer: any) {
+  console.log('mutation', textarea.value.scrollHeight)
+  // Use traditional 'for loops' for IE 11
+  // for(let mutation of mutationsList) {
+  //   if (mutation.type === 'childList') {
+  //     console.log('A child node has been added or removed.')
+  //   }
+  //   if (mutation.type === 'attributes') {
+  //     console.log('The ' + mutation.attributeName + ' attribute was modified.')
+  //     console.log(mutation.target.style.height)
+  //   }
+  // }
 }
-@font-face {
-  font-family: SourceHanSerifCN;
-  src: url(~@/assets/fonts/SourceHanSerifCN-SemiBold.otf);
-}
-```
-
-::: tip
-浏览器支持：
-**Internet Explorer 9，Firefox，Opera，Chrome, 和 Safari 支持 @font-face 规则.**
-
-但是, Internet Explorer 9 只支持 .eot 类型的字体, Firefox, Chrome, Safari, 和 Opera 支持 .ttf 与.otf 两种类型字体.
-注意： Internet Explorer 8 及更早IE版本不支持 @font-face 规则.
-:::
-
-## `box-sizing` 属性
-
-CSS3 `box-sizing` 属性可以设置 `width` 和 `height` 属性中是否包含了 `padding`(内边距) 和 `border`(边框)。
-
-语法：`box-sizing: content-box|border-box|inherit`
-
-值 | 说明
--- | --
-`content-box` | 这是 CSS2.1 指定的宽度和高度的行为。指定元素的宽度和高度（最小/最大属性）适用于 `box` 的宽度和高度。元素的填充和边框布局和绘制指定宽度和高度除外
-`border-box` | 指定宽度和高度（最小/最大属性）确定元素边框。也就是说，对元素指定宽度和高度包括了 `padding` 和 `border` 。通过从已设定的宽度和高度分别减去边框和内边距才能得到内容的宽度和高度。
-`inherit` | 指定 `box-sizing` 属性的值，应该从父元素继承
-
-::: tip
-不使用 CSS3 `box-sizing` 属性
-
-默认情况下，元素的宽度与高度计算方式如下：
-
-- **元素实际宽度 = width(宽) + padding(内边距) + border(边框)**
-- **元素实际高度 = height(高) + padding(内边距) + border(边框)**
-:::
-
-## Vue登录后，无操作半小时后自动清除登录状态
-
-> 在项目的页面入口文件 `App.vue` 文件中监听用户最后一次操作鼠标、键盘或滚动事件
-
-```js
-import storage from 'store'
-computed: {
-  token () {
-    return storage.get('TOKEN')
-  },
-  uid () {
-    return storage.get('UID')
-  },
-  userInfo () {
-    return storage.get('USER_INFO')
-  }
-},
-mounted () { // 使用防抖debounce，对于短时间内连续触发的事件（上面的滚动事件），防抖就是让某个时间期限（如上面的1000毫秒）内，事件处理函数只执行一次
-  document.onmousemove = this.debounce(this.resetStatus, 3000)
-  document.onkeydown = this.debounce(this.resetStatus, 3000)
-  document.onscroll = this.debounce(this.resetStatus, 3000)
-},
-methods: {
-  debounce (fn, delay) {
-    let timer = null
-    return function () {
-      if (timer) {
-        clearTimeout(timer)
-      }
-      timer = setTimeout(fn, delay)
-    }
-  },
-  resetStatus () {
-    if (this.token) {
-      storage.set('TOKEN', this.token, new Date().getTime() + 30 * 60 * 1000)
-      storage.set('UID', this.uid, new Date().getTime() + 30 * 60 * 1000)
-      storage.set('USER_INFO', this.userInfo, new Date().getTime() + 30 * 60 * 1000)
-    }
-  }
-}
+</script>
+<template>
+  <textarea ref="textarea" />
+</template>
 ```

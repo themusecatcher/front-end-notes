@@ -48,8 +48,11 @@ export default defineConfig({
     },
 
     nav: [
-      { text: 'Vue2 Notes', link: '/vue2/note-1', activeMatch: '/vue2/' },
-      { text: 'Vue3 Notes', link: '/vue3/note-1', activeMatch: '/vue3/' },
+      { text: 'JavaScript', link: '/javascript/No.1', activeMatch: '/javascript/' },
+      { text: 'CSS', link: '/css/No.1', activeMatch: '/css/' },
+      { text: 'HTML', link: '/html/No.1', activeMatch: '/html/' },
+      { text: 'Vue2', link: '/vue2/No.1', activeMatch: '/vue2/' },
+      { text: 'Vue3', link: '/vue3/No.1', activeMatch: '/vue3/' },
       { text: 'Plugins', link: '/plugins/started', activeMatch: '/plugins/' },
       {
         text: 'Links',
@@ -129,6 +132,122 @@ export default defineConfig({
     ],
 
     sidebar: {
+      '/javascript/': [
+        {
+          text: '指引',
+          items: [
+            {
+              text: '开始',
+              link: '/javascript/started'
+            }
+          ]
+        },
+        {
+          text: 'JavaScript Notes',
+          items: [
+            {
+              text: 'No.1',
+              link: '/javascript/No.1'
+            },
+            {
+              text: 'No.2',
+              link: '/javascript/No.2'
+            },
+            {
+              text: 'No.3',
+              link: '/javascript/No.3'
+            },
+            {
+              text: 'No.4',
+              link: '/javascript/No.4'
+            },
+            {
+              text: 'No.5',
+              link: '/javascript/No.5'
+            },
+            {
+              text: 'No.6',
+              link: '/javascript/No.6'
+            },
+            {
+              text: 'No.7',
+              link: '/javascript/No.7'
+            },
+            {
+              text: 'No.8',
+              link: '/javascript/No.8'
+            }
+          ]
+        }
+      ],
+      '/css/': [
+        {
+          text: '指引',
+          items: [
+            {
+              text: '开始',
+              link: '/css/started'
+            }
+          ]
+        },
+        {
+          text: 'CSS Notes',
+          items: [
+            {
+              text: 'No.1',
+              link: '/css/No.1'
+            },
+            {
+              text: 'No.2',
+              link: '/css/No.2'
+            },
+            {
+              text: 'No.3',
+              link: '/css/No.3'
+            },
+            {
+              text: 'No.4',
+              link: '/css/No.4'
+            },
+            {
+              text: 'No.5',
+              link: '/css/No.5'
+            },
+            {
+              text: 'No.6',
+              link: '/css/No.6'
+            },
+            {
+              text: 'No.7',
+              link: '/css/No.7'
+            }
+          ]
+        }
+      ],
+      '/html/': [
+        {
+          text: '指引',
+          items: [
+            {
+              text: '开始',
+              link: '/html/started'
+            }
+          ]
+        },
+        {
+          text: 'HTML Notes',
+          items: [
+            {
+              text: 'No.1',
+              link: '/html/No.1'
+            },
+            {
+              text: 'No.2',
+              link: '/html/No.2'
+            }
+          ]
+        }
+      ],
       '/vue2/': [
         {
           text: '指引',
@@ -143,56 +262,20 @@ export default defineConfig({
           text: 'Vue2 Notes',
           items: [
             {
-              text: 'note-1',
-              link: '/vue2/note-1'
+              text: 'No.1',
+              link: '/vue2/No.1'
             },
             {
-              text: 'note-2',
-              link: '/vue2/note-2'
+              text: 'No.2',
+              link: '/vue2/No.2'
             },
             {
-              text: 'note-3',
-              link: '/vue2/note-3'
+              text: 'No.3',
+              link: '/vue2/No.3'
             },
             {
-              text: 'note-4',
-              link: '/vue2/note-4'
-            },
-            {
-              text: 'note-5',
-              link: '/vue2/note-5'
-            },
-            {
-              text: 'note-6',
-              link: '/vue2/note-6'
-            },
-            {
-              text: 'note-7',
-              link: '/vue2/note-7'
-            },
-            {
-              text: 'note-8',
-              link: '/vue2/note-8'
-            },
-            {
-              text: 'note-9',
-              link: '/vue2/note-9'
-            },
-            {
-              text: 'note-10',
-              link: '/vue2/note-10'
-            },
-            {
-              text: 'note-11',
-              link: '/vue2/note-11'
-            },
-            {
-              text: 'note-12',
-              link: '/vue2/note-12'
-            },
-            {
-              text: 'note-13',
-              link: '/vue2/note-13'
+              text: 'No.4',
+              link: '/vue2/No.4'
             }
           ]
         }
@@ -211,28 +294,8 @@ export default defineConfig({
           text: 'Vue3 Notes',
           items: [
             {
-              text: 'note-1',
-              link: '/vue3/note-1'
-            },
-            {
-              text: 'note-2',
-              link: '/vue3/note-2'
-            },
-            {
-              text: 'note-3',
-              link: '/vue3/note-3'
-            },
-            {
-              text: 'note-4',
-              link: '/vue3/note-4'
-            },
-            {
-              text: 'note-5',
-              link: '/vue3/note-5'
-            },
-            {
-              text: 'note-6',
-              link: '/vue3/note-6'
+              text: 'No.1',
+              link: '/vue3/No.1'
             }
           ]
         }

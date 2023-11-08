@@ -1,88 +1,4 @@
-# Note 5
-
-## `console` 对象
-
-[console MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/console)
-
-- `console.log()`
-  对象占位符：`%o` 或 `%O`
-  - 当打印普通的 `object` 对象时没有区别
-  - 当打印 `DOM` 对象时
-
-    ```html
-    <div ref="slider"></div>
-    ```
-
-    - `%o`
-
-    ```js
-    console.log('%o', this.$refs.slider) // slider:%o
-    ```
-
-    ![Alt text](image-10.png)
-
-    - `%O`
-
-    ```js
-    console.log('%O', this.$refs.slider) // slider:%O
-    ```
-
-    ![Alt text](image-11.png)
-
-## js中 `href` 属性中变量连接符需要使用 `&amp;`
-
-```js
-href = '/user/login?type=0&amp;tab=-1'
-this.$router.push('/register?type=0&tab=-1')
-```
-
-## CSS网格排列布局
-
-- [`display: grid;`](https://www.runoob.com/cssref/css-pr-grid.html)
-
-```html
-<div class="m-area">
-  <div class="m-card" v-for="(data, index) in cardData" :key="index"></div>
-</div>
-```
-
-```less
-.m-area {
-  width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 360px 360px 360px; // 列宽度，3列各360px宽
-  grid-template-rows: 400px; // 行高度
-  grid-gap: 60px; // 行间距 列间距
-  .m-card {
-    width: 360px;
-    height: 400px;
-  }
-}
-```
-
-- `display: inline-table;`
-
-```less
-.m-area {
-  width: 1200px;
-  margin: 0 auto;
-  .m-card:not(:nth-child(3n)) { // 除去第3个及3的倍数的child，其余右边距均为60
-    margin-right: 60px;
-  }
-  .m-card {
-    display: inline-table;
-    width: 360px;
-    height: 400px;
-  }
-}
-```
-
-## `<input type="password" />` 密码显示和隐藏
-
-```html
-<input :type="visible ? 'text' : 'password'" />
-```
+# Note 3
 
 ## 块级元素 `block` & 内联元素 `inline` & 行内块元素 `inline-block` & 浮动元素 `float`
 
@@ -265,160 +181,153 @@ align-content: unset; /* 未设置 */
 `%` | 使用 "line-height" 属性的百分比值来排列此元素。允许使用负值。
 `inherit` | 规定应该从父元素继承 vertical-align 属性的值。
 
-## js判断对象是否包含某个属性key
+## 水平垂直居中
 
-- `in` 关键字，会返回 `true` 和 `false`
-
-```js
-if (key in Obj) { 
-  // 包含
-} else {
-  // 不包含
+```css
+/* 水平垂直居中方法①：弹性布局，随内容增大高度，并自适应水平垂直居中 */
+.flex-hv-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 水平垂直居中方法②：相对定位，随内容增大高度，并自适应水平垂直居中 */
+.relative-hv-center {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 ```
 
-- `hasOwnProperty()`方法，会返回 `true` 和 `false`
+## 设置 `input` & `textarea` 的 `placeholder`样式
 
-```js
-if (Object.prototype.hasOwnProperty.call(Obj, key)) {
-  // 包含
-} else {
-  // 不包含
+```css
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  font-size: 14px; color: #999;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  font-size: 14px; color: #999;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+  font-size: 14px; color: #999;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  font-size: 14px; color: #999;
 }
 ```
 
-- 使用 `undefined`
+## `CSS` 的大于号选择器 `>`
 
-```js
-if (Obj[key] !== undefined) {
-  // 包含
-} else {
-  // 不包含
-}
-```
+**`>` 选择所有父级是 `<h1>` 元素的 `<strong>` 元素**
 
-## js正则检验是否全是汉字或字母
+<h1>
+  This is
+  <strong>very </strong>
+  <strong>very </strong>
+  <strong>very </strong>
+  important.
+</h1>
+<h1>
+  This is
+  <em>really <strong>very </strong></em>
+  important.
+</h1>
 
-```js
-// 校验是否全是汉字
-const nameReg = /^[\u4E00-\u9FA5]+$/
-
-// 校验是否全是汉字或字母
-const nameReg = /^[\u0391-\uFFE5A-Za-z]+$/
-
-const originName = '斯蒂芬·库里'
-const name = originName.replace(/·/g, '') // 去除姓名中所有的点（·）
-if (!this.nameReg.test(name)) { // 校验是否全部是汉字
-  this.errTxt = `姓名只能包含汉字和点（·）`
-} else {
-  this.errTxt = ''
-}
-
-// 区分中英文字符进行字符长度的计算，一个中文字符，算2个长度
-this.formatContent('asdsad;;;阿萨德？？？')
-formatContent (value) {
-  // value = value.replace(/[\u4e00-\u9fa5]/g, '') // 过滤所有汉字
-  const str = value.replace(/[^x00-\xff]/g, '') // 过滤所有汉字和中文字符
-  const len = str.length // 英文字符的长度
-  console.log('value:', value, value.length * 2 - len)
-}
-```
-
-## 只能输入正整数，且数字不能以0开头
-
-<input type="text" class="u-input" placeholder="请输入" oninput="value=value.replace(/^(0+)|[^\d]+/g,'')" />
-
-```html
-<input type="text" placeholder="请输入" oninput="value=value.replace(/^(0+)|[^\d]+/g,'')" />
-```
-
-## 只能输入数字和字母，并且小写字母自动转大写
-
-<input type="text" class="u-input" placeholder="请输入" oninput="value=value.toUpperCase().replace(/[\W]/g,'')" />
-
-<style>
-.u-input {
-  width: 120px;
-  border: 1px solid var(--vp-c-text-1);
-  border-radius: 5px;
-  padding: 0 8px;
+<style module>
+h1 > strong {
+  color: red;
 }
 </style>
 
 ```html
-<input type="text" placeholder="请输入" oninput="value=value.toUpperCase().replace(/[\W]/g,'')" />
+<h1>
+  This is
+  <strong>very </strong>
+  <strong>very </strong>
+  <strong>very </strong>
+  important.
+</h1>
+<h1>
+  This is
+  <em>really <strong>very </strong></em>
+  important.
+</h1>
 ```
 
-## js控制 `<input>` 输入指定格式数值
+```css
+/*
+  即选择h1标签下，第一个子元素是strong标签的
+  第二个<h1>第一个子元素是<em>所以<strong>元素不受影响
+  选择所有父级是 <h1> 元素的 <strong> 元素
+*/
+h1 > strong {
+  color: red;
+}
+```
+
+## 多行文本的展开和收起
+
+实例： https://codepen.io/xboxyan/pen/LYWpWzK?editors=1100
+超过一行时，省略号显示，文本末尾有展开按钮
+点击展开，显示全部文本，同时文本末尾有收起按钮
 
 ```html
-<input
-  type="text"
-  class="u-input"
-  v-model="inputValue"
-  @input="formatNum($event.target.value)"
-  placeholder="请输入" />
+<div class="m-fold-wrap">
+  <span :class="['m-content', !origin && fold ? 'fold':'unfold', {'origin': origin }]" ref="fold">
+    《麦田里的守望者》是美国作家杰罗姆·大卫·塞林格创作的唯一一部长篇小说，首次出版于1951年。塞林格将故事的起止局限于16岁的中学生霍尔顿·考尔菲德从离开学校到纽约游荡的三天时间内，并借鉴了意识流天马行空的写作方法，充分探索了一个十几岁少年的内心世界。愤怒与焦虑是此书的两大主题，主人公的经历和思想在青少年中引起强烈共鸣，受到读者，特别是广大中学生的热烈欢迎。
+  </span>
+  <a href="javascript:;" class="u-btn" @click="fold=!fold" v-if="showMore">{{ fold ? '展开':'收起' }}</a>
+</div>
 ```
 
-*只能输入数字和小数点后两位，且不能是0开头*
-
 ```js
-formatNum (value) {
-  value = value.replace(/[^\d.]/g, '') // 清除“数字”和“.”以外的字符
-  value = value.replace(/\.{2,}/g, '.') // 只保留第一个. 清除多余的
-  value = value.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.')
-  value = value.replace(/^(-)*(\d+)\.(\d\d).*$/, '$1$2.$3') // 只能输入两个小数
-  if (value.indexOf('.') < 0 && value !== '') { // 如果没有小数点，数字不能以0开头
-    value = value.replace(/\b(0+)/gi, '') // 删除字符串头部所有的 0
-  }
-}
-```
-
-*输入整数位不能超过9位，小数位不能超过4位，只能输入数字和小数点后两位，且不能是0开头*
-
-```js
-formatNum (value) {
-  value = value.replace(/[^\d.]/g, '') // 清除“数字”和“.”以外的字符
-  value = value.replace(/\.{2,}/g, '.') // 只保留第一个. 清除多余的
-  value = value.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.')
-  value = value.replace(/^(-)*(\d+)\.(\d\d\d\d).*$/, '$1$2.$3') // 只最多输入4位小数
-  if (value.indexOf('.') === -1 && value !== '0') { // 没有小数点，数字不能以0开头
-    value = value.replace(/\b(0+)/gi, '')
-  }
-  if (value.indexOf('.') !== -1 && value.substr(0, value.indexOf('.')) !== '0') { // 有小数点，整数部分不能是以0开头的整数，但可以单独一个0
-    value = value.replace(/\b(0+)/gi, '')
-  }
-  if (value.indexOf('.') !== -1) { // 有小数时，整数不超过9位，小数不超过4位
-    if (value.substr(0, value.indexOf('.')).length > 9) { // 整数超过9位
-      value = value.substr(0, 9) + value.substr(value.indexOf('.'))
+showMore: false,
+fold: false,
+origin: true,
+mounted () {
+  this.$nextTick(() => {
+    var fold = this.$refs.fold
+    var foldStyle = window.getComputedStyle(fold, null)
+    var height = foldStyle.height.replace('px', '')
+    var lineHeight = foldStyle.lineHeight.replace('px', '')
+    if (Number(height) / Number(lineHeight) > 1) { // 计算文本是否超过一行
+      this.showMore = true
+      this.fold = true
+      this.origin = false
     }
-    if (value.substr(value.indexOf('.') + 1).length > 4) { // 小数超过4位
-      value = value.substr(0, value.indexOf('.')) + value.substr(value.indexOf('.'), 5)
-    }
-  }
-  if (value.indexOf('.') === -1 && value.length > 9) { // 没有小数时，整数不超过9位
-    value = value.slice(0, 9)
-  }
-  this.inputValue = value
+  })
 }
 ```
 
-## 路由中传递对象或数组参数
-
-- 传递对象参数：
-
-```js
-const player = {
-  name: 'curry',
-  age: 30
+```less
+.m-fold-wrap {
+  margin: 50px auto;
+  width: 1080px;
+  padding: 60px;
+  background: #FFF;
+  border: 1px solid #333;
+  .m-content {
+    line-height: 28px;
+    font-size: 20px;
+    color: #333;
+    max-width: 1040px;
+  }
+  .fold { // 收起时的样式
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+  }
+  .unfold { // 展开时的样式
+    display: inline;
+  }
+  .origin { // 初始样式，方便获取文本高度height
+    display: inline-block;
+  }
+  .u-btn {
+    vertical-align: top;
+    color: #1890FF;
+    font-size: 20px;
+  }
 }
-
-// 或只使用JSON.stringify()转化为字符串即可
-this.$router.push({ path: '/user/login', query: { player: encodeURIComponent(JSON.stringify(player)) } })
-```
-
-- 接收对象参数：
-
-```js
-const player = JSON.parse(decodeURIComponent(this.$route.query.player))
 ```

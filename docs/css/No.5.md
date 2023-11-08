@@ -1,8 +1,8 @@
-# Note 8
+# Note 5
 
 ## 表格详情页样式
 
-![Alt text](image-13.png)
+![Alt text](image-6.png)
 
 ```vue
 <template>
@@ -263,90 +263,6 @@ export default {
   display: block;
 }
 ```
-
-## 路由切换时滚动到页面顶部
-
-- scrollTo()
-
-  把内容滚动到指定的坐标
-
-  语法：`scrollTo(xpos, ypos)`
-  
-  参数：
-
-  - `xpos`：必需。要在窗口文档显示区左上角显示的文档的 x 坐标。
-  - `ypos`：必需。要在窗口文档显示区左上角显示的文档的 y 坐标。
-
-  ```js
-  router.afterEach(() => {
-    // 路由切换时滚动到页面顶部
-    window.scrollTo(0, 0)
-  })
-  ```
-
-- scrollBehavior()
-
-  [参考文档](https://router.vuejs.org/zh/guide/advanced/scroll-behavior.html)
-
-  ```js
-  const router = new VueRouter({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes,
-    scrollBehavior () {
-      return { x: 0, y: 0 }
-    }
-  })
-  ```
-
-## js字符串转数字
-
-- `Number()`
-
-  ```js
-  Number('123') // 123
-  Number('123.456') // 123.456
-  Number('123.56') // 123.56
-  ```
-
-- `parseInt()`
-
-  ```js
-  parseInt('123') // 123
-  parseInt('123.456') // 123
-  parseInt('123.56') // 123
-  ```
-
-- `parseFloat()`
-
-  ```js
-  parseFloat('123') // 123
-  parseFloat('123.456') // 123.456
-  parseFloat('123.56') // 123.56
-  ```
-
-- `+`
-
-  ```js
-  +'123' // 123
-  +'123.456' // 123.456
-  +'123.56' // 123.56
-
-- `*1`
-
-  ```js
-  '123'*1 // 123
-  '123.456'*1 // 123.456
-  '123.56'*1 // 123.56
-  ```
-
-- `~~`
-
-  ```js
-  ~~'123' // 123
-  ~~'123.456' // 123
-  ~~'123.56' // 123
-  ```
 
 ## CSS单位：`em，rem，%，vh，vw，vmin，vmax，px`
 

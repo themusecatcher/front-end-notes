@@ -1,271 +1,5 @@
 # Note 2
 
-## 定义全局 CSS 变量
-
-*`vue.config.js`*
-
-```js
-css: {
-  loaderOptions: {
-    less: {
-      modifyVars: {
-        // less vars，customize ant design theme，可以带单引号也可以不带
-        themeColor: '#1677FF', // 定义全局变量，所有文件均可直接使用
-      },
-      // 等价于
-      // globalVars: {
-      // 可以带单引号也可以不带
-      //  themeColor: '#D93844'
-      // },
-      // DO NOT REMOVE THIS LINE
-      javascriptEnabled: true
-    }
-  }
-}
-```
-
-## 全局注册组件
-
-*在 `main.js` 中进行全局注册*
-
-```js
-import Page from '@/components/Button'
-Vue.component('Button', Button) // 全局注册 Button 组件
-```
-
-## `<a>` 标签使用
-
-- 取消默认行为
-
-```html
-<!-- 什么也不执行，去掉a标签的默认行为，跟href="javascript:void(0)"一样，void 是JavaScript 的一个运算符，void(0)就是什么也不做 -->
-<a href="javascript:;"></a>
-```
-
-- 在有滚动的页面定位到页面最顶端
-
-```html
-<a href="#"></a>
-```
-
-- 定位到页面中 `id="anchor"` 的锚点
-
-```html
-<a href="#anchor"></a>
-```
-
-- 刷新当前页面
-
-```html
-<a href=""></a>
-```
-
-- 跳转到首页
-
-```html
-<a href="/"></a>
-```
-
-## CSS3 filter（滤镜）属性
-
-*filter 属性定义了元素(通常是`<img>`)的可视效果(例如：模糊与饱和度)*
-
-```html
-<img src="pineapple.jpg" alt="Pineapple" width="300" height="300"/>
-```
-
-语法：
-
-```css
-filter: none | blur() | brightness() | contrast() | drop-shadow() | grayscale() | hue-rotate() | invert() | opacity() | saturate() | sepia() | url();
-```
-
-- 使用高斯模糊效果：
-
-```css
-img {
-  -webkit-filter: blur(5px); /* Chrome, Safari, Opera */
-  filter: blur(5px);
-}
-```
-
-- 使图片变亮:
-
-```css
-img {
-  -webkit-filter: brightness(200%); /* Chrome, Safari, Opera */
-  filter: brightness(200%);
-}
-```
-
-- 调整图像的对比度:
-
-```css
-img {
-  -webkit-filter: contrast(200%); /* Chrome, Safari, Opera */
-  filter: contrast(200%);
-}
-```
-
-- 设置一个阴影效果:
-
-```css
-img {
-  -webkit-filter: drop-shadow(8px 8px 10px red); /* Chrome, Safari, Opera */
-  filter: drop-shadow(8px 8px 10px red);
-}
-```
-
-- 将图像转换为灰度图像:
-
-```css
-img {
-  -webkit-filter: grayscale(50%); /* Chrome, Safari, Opera */
-  filter: grayscale(50%);
-}
-```
-
-- 转化图像的透明程度:
-
-```css
-img {
-  -webkit-filter: opacity(30%); /* Chrome, Safari, Opera */
-  filter: opacity(30%);
-}
-```
-
-- 转换图像饱和度:
-
-```css
-img {
-  -webkit-filter: saturate(800%); /* Chrome, Safari, Opera */
-  filter: saturate(800%);
-}
-```
-
-- 使用多个滤镜，每个滤镜使用空格分隔：
-
-*注意: 顺序是非常重要的 (例如使用 grayscale() 后再使用 sepia()将产生一个完整的灰度图片)。*
-
-```css
-img {
-  -webkit-filter: contrast(200%) brightness(150%);  /* Chrome, Safari, Opera */
-  filter: contrast(200%) brightness(150%);
-}
-```
-
-## 原生js相关BOM和DOM操作
-
-- 获取DOM元素
-
-```html
-<input
-  id="upload"
-  class="upload"
-  name="upload"
-  ref="upload"
-  type="file"
-  accept="image/*" />
-```
-
-`getElementBy...` 获取DOM元素：
-
-```js
-const el = document.getElementById('upload') // 返回DOM对象
-const el = document.getElementsByClassName('upload') // 返回key为0，1，2…的object，value为DOM对象
-const el = document.getElementsByTagName('div') // 返回key为0，1，2…的object，value为DOM对象
-const el = document.getElementsByName('upload') // NodeList对象，key为0，1，2…，value为DOM对象
-console.log('upload:', this.$refs.upload) // vue的ref模板引用获取DOM元素
-```
-
-`querySelector` 使用 `CSS选择符` 获取DOM元素
-
-```js
-var upType = document.querySelector('input[type="file"]')
-var upName = document.querySelector('input[name="upload"]')
-var upId = document.querySelector('#upload')
-var upClass = document.querySelector('.upload')
-```
-
-- 设置DOM元素的样式style
-
-```html
-<img id="animate" ref="animateRef" class="u-img-5"/>
-```
-
-```js
-// 使用ref修改特定元素的样式：
-this.$refs.animateRef.style.top = 0
-this.$refs.animateRef.style.opacity = 1
-// 等价于使用原生JS修改：
-const el = document.getElementById('animate')
-el.style.top = 0
-el.style.opacity = 1
-```
-
-- 获取DOM元素各边缘距离浏览器可视窗口的距离（不包括滚动条）
-
-[`Element.getBoundingClientRect()`](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getBoundingClientRect) 方法
-
-```js{1,4,6,8,10-11}
-const el = document.getElementById('animate') // 获取DOM元素
-// 或者 const el = this.$refs.animateRef
-// 元素上边缘距浏览器窗口上边界的距离，可正，可负，可为0
-console.log('distance:', el.getBoundingClientRect().top) 
-// 元素下边缘距浏览器窗口上边界的距离，可正，可负，可为0
-console.log('distance:', el.getBoundingClientRect().bottom) 
-// 元素左边缘距浏览器窗口左边界的距离，可正，可负，可为0
-console.log('distance:', el.getBoundingClientRect().left) 
-// 元素右边缘距浏览器窗口左边界的距离，可正，可负，可为0
-console.log('distance:', el.getBoundingClientRect().right) 
-console.log('distance:', el.getBoundingClientRect())
-// x，y：即元素左上角的像素点相对于浏览器显示窗口左上角点的坐标
-```
-
-![Alt text](image-1.png)
-
-- [`window`](https://developer.mozilla.org/zh-CN/docs/Web/API/Window) 对象表示一个包含 DOM 文档的窗口，其 document 属性指向窗口中载入的 DOM 文档
-
-```js{2,4,6,8,13,18}
-// 浏览器窗口可视区域的高度
-window.innerHeight
-// 浏览器窗口可视区域的宽度
-window.innerWidth
-// 获取/设置当前页面地址（URL）或把浏览器重定向到新页面
-window.location
-// 打开一个新的页面
-window.open()
-/*
-  window.scrollX的别名，
-  页面的水平滚动距离，即浏览器窗口左边界离页面左端的距离（页面水平滚动的距离）
-*/
-window.pageXOffset
-/*
-  window.scrollY的别名，
-  页面的垂直滚动距离，即浏览器窗口上边界离页面顶端的距离（页面垂直滚动的距离）
-*/
-window.pageYOffset
-```
-
-- 判断一个元素是否在浏览器视口中：
-
-```html
-<div id="slider" ref="slider"></div>
-```
-
-```js
-isInViewport () {
-  const el = this.$refs.slider
-  const rect = el.getBoundingClientRect()
-  const viewWidth = window.innerWidth || document.documentElement.clientWidth
-  const viewHeight = window.innerHeight || document.documentElement.clientHeight
-  if (rect.right < 0 || rect.bottom < 0 || rect.left > viewWidth || rect.top > viewHeight) {
-    return false
-  }
-  return true
-}
-```
-
 ## 向指定元素添加事件句柄（监听事件）
 
 [`EventTarget.addEventListener()`](https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/addEventListener)方法将指定的监听器注册到 EventTarget 上，当该对象触发指定的事件时，指定的回调函数就会被执行。事件目标可以是一个文档上的元素 Element、Document 和 Window，也可以是任何支持事件的对象（比如 XMLHttpRequest）。
@@ -392,14 +126,193 @@ el.onclick = function (event) {
   1. event.preventDefault()
   2. return false
 
-## `document.documentElement`
+## window.location对象
 
-`Document.documentElement` 是一个会返回文档对象（`document`）的根元素的只读属性（如 HTML 文档的 `<html>` 元素）
+`Location` 接口表示其链接到的对象的位置（`URL`）。所做的修改反映在与之相关的对象上。 `Document` 和 `Window` 接口都有这样一个链接的 `Location`，分别通过 `Document.location` 和 `Window.location` 访问。
 
-::: tip
-对于任何非空 HTML 文档，调用 `document.documentElement` 总是会返回一个`<html>` 元素，且它一定是该文档的根元素。借助这个只读属性，能方便地获取到任意文档的根元素。
+属性 | 描述
+-- | --
+`location.href` | 包含整个 `URL` 的一个 [`DOMString`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String)
+`location.protocol` | 包含 `URL` 对应协议的一个 `DOMString`，最后有一个":"
+`location.host` | 包含了域名的一个 `DOMString`，可能在该串最后带有一个":"并跟上 `URL` 的端口号
+`location.hostname` | 包含 `URL` 域名的一个 `DOMString`
+`location.port` | 包含端口号的一个 `DOMString`
+`location.pathname` | 包含 `URL` 中路径部分的一个 `DOMString`，开头有一个 /
+`location.search` | 包含 `URL` 参数的一个 `DOMString`，开头有一个“?”
+`location.hash` | 包含块标识符的 `DOMString`，开头有一个 #
+`location.username` | 包含 `URL` 中域名前的用户名的一个 `DOMString`
+`location.password` | 包含 `URL` 域名前的密码的一个 `DOMString`
+`location.origin`<Badge type="tip" text="只读" /> | 包含页面来源的域名的标准形式 `DOMString`
 
-HTML 文档通常包含一个子节点 `<html>`，但在它前面可能还有个 DOCTYPE 声明。XML 文档通常包含多个子节点：根元素，DOCTYPE 声明，和 processing instructions。
+假设当前网页路由：`http://172.16.200.17:8080/agent`
 
-所以，应当使用 `document.documentElement` 来获取根元素，而不是 `document.firstChild`。
+![Alt text](image-2.png)
+
+## `process.env`
+
+[参考文档](http://nodejs.cn/api/process.html#process_process_env)
+
+**process.env 属性返回包含用户环境的对象**
+
+::: warning
+`process` 对象是 `global` 对象的属性，是一个全局对象，`NODE_ENV` 不是 `process.env` 对象上原有的属性，它是我们自己添加上去的一个环境变量，用来确定当前所处的开发阶段。一般生产阶段设为 `production`，开发阶段设为` development`，然后在脚本中读取 `process.env.NODE_ENV`
 :::
+
+`process.env` 包含着关于系统环境的信息，但是 `process.env` 中并不存在 `NODE_ENV` 这个东西。
+`NODE_ENV` 是一个用户自定义的变量，在 `webpack` 中它的用途是判断生产环境或开发环境。
+`node` 中的 `process` 对象是一个全局对象，**表示当前的node进程，任何地方都能访问到它，通过这个对象提供的属性和方法，使我们可以对当前运行的程序的进程进行访问和控制。**
+
+```js
+console.log(process === global.process) // true
+```
+
+常用的一些属性：
+- `process.env` `<Object>`：返回包含用户环境的对象。
+- `process.platform` `<string>`：返回用于标识编译 Node.js 二进制文件的操作系统平台的字符串。
+目前可能的值是：'aix'，'darwin'，'freebsd'，'linux'，'openbsd'，'sunos'，'win32'
+
+```js
+import { platform } from 'process'
+console.log(`This platform is ${platform}`)
+```
+
+如果 `Node.js` 是在安卓操作系统上构建的，则也可能返回值 'android'。 但是，Node.js 中的安卓支持是实验的。
+
+- `process.uptime()` `<number>`：返回当前 Node.js 进程已经运行的秒数。
+返回值包括几分之一秒。 使用 Math.floor() 获得整秒。
+- `process.version` `<string>`：返回包含Node.js版本字符串。
+
+```js
+import { version } from 'process'
+console.log(`Version: ${version}`)
+```
+
+// Version: v14.8.0
+要获取不带 v 的版本字符串，则使用 `process.versions.node`。
+- `process.versions` `<Object>`：返回对象，其中列出Node.js的版本字符串及其依赖项。
+
+```js
+import { versions } from 'process'
+console.log(versions)
+```
+
+- 开发环境下的配置文件 `.env.development`：
+
+```bash
+NODE_ENV=development
+VUE_APP_API_BASE_URL=/api
+```
+
+- 生产环境下的配置文件 `.env.production`：
+
+```bash
+NODE_ENV=production
+VUE_APP_API_BASE_URL=''
+```
+
+- 本地开发配置文件 `.env.local`：
+
+```bash
+VUE_APP_PROXY=http://10.0.0.42:5507
+VUE_APP_PORT=8050
+VUE_APP_CHANNEL=1  // 自定义全局变量，必须以VUE_APP开头
+```
+
+![Alt text](image-3.png)
+
+## DOM事件对象
+
+```html
+<div>
+  <p>
+    <span></span>
+  </p>
+</div>
+```
+
+事件名 | 说明
+-- | --
+`onmouseenter` | `onmouseenter` 事件在鼠标指针移动到元素上时触发。<br>只有当鼠标指针进入 div 元素时触发，内部移动不会再次触发。<br>**提示：该事件通常与 `onmouseleave` 事件一同使用, 在鼠标指针移出元素上时触发。**
+`onmouseleave` | `onmouseleave` 事件在鼠标移出元素时触发。<br>**提示：该事件通常与 `onmouseenter` 事件一起使用， 该事件在鼠标移动到元素上时触发。**
+`onmouseover` | `onmouseover` 事件会在鼠标指针移动到指定的元素上时发生。<br>当鼠标指针进入 div 元素时会触发，当指针进入子元素上时也会触发(p 和 span)。
+`onmouseout` | `onmouseout` 事件会在鼠标指针移出指定的对象时发生。父元素进入子元素，或者子元素进入父元素都会触发。
+
+::: tip 提示
+`onmouseenter` 事件类似于 `onmouseover` 事件。 唯一的区别是 `onmouseenter` 事件不支持冒泡 。
+提示: `onmouseleave` 事件类似于 `onmouseout` 事件。 唯一的区别是 `onmouseleave` 事件不支持冒泡 。
+:::
+
+鼠标事件 | 描述
+-- | --
+onclick | 当用户点击某个对象时调用的事件句柄
+oncontextmenu | 在用户点击鼠标右键打开上下文菜单时触发
+ondblclick | 当用户双击某个对象时调用的事件句柄
+onmousedown | 鼠标按钮被按下
+onmouseenter | 当鼠标指针移动到元素上时触发
+onmouseleave | 当鼠标指针移出元素时触发
+onmousemove | 鼠标被移动
+onmouseover | 鼠标移到某元素之上
+onmouseout | 鼠标从某元素移开
+onmouseup | 鼠标按键被松开
+
+## 简单倒计时 countDown
+
+```html
+<h1 ref="countdown">{{ countDown('2023-10-01 18:25:00') }}</h1>
+```
+
+```js
+countDown (target) {
+  let timestamp = new Date(target).getTime() - Date.now()
+  var elapseTime = function (timestamp) {
+    var h = parseInt(timestamp / 1000 / 60 / 60)
+    var m = parseInt((timestamp / 1000 - h * 60 * 60) / 60)
+    var s = parseInt(timestamp / 1000 - h * 60 * 60 - m * 60)
+    return `还剩余${h}小时${m}分钟${s}秒`
+  }
+  setInterval(() => {
+    timestamp = timestamp - 1000
+    if (timestamp <= 0) {
+      this.$refs.countdown.innerHTML = '下班了'
+    } else {
+      this.$refs.countdown.innerHTML = elapseTime(timestamp)
+    }
+  }, 1000)
+}
+```
+
+## `console` 对象
+
+[console MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/console)
+
+- `console.log()`
+  对象占位符：`%o` 或 `%O`
+  - 当打印普通的 `object` 对象时没有区别
+  - 当打印 `DOM` 对象时
+
+    ```html
+    <div ref="slider"></div>
+    ```
+
+    - `%o`
+
+    ```js
+    console.log('%o', this.$refs.slider) // slider:%o
+    ```
+
+    ![Alt text](image-4.png)
+
+    - `%O`
+
+    ```js
+    console.log('%O', this.$refs.slider) // slider:%O
+    ```
+
+    ![Alt text](image-5.png)
+
+## js中 `href` 属性中变量连接符需要使用 `&amp;`
+
+```js
+href = '/user/login?type=0&amp;tab=-1'
+this.$router.push('/register?type=0&tab=-1')
+```

@@ -1,85 +1,4 @@
-# Note 4
-
-## 父组件监听子组件生命周期
-
-
-1. hook监听
-    - 在父组件 `Parent.vue` 中
-
-    ```html
-    <Child @hook:mounted="onMounted" />
-    ```
-
-    ```js
-    onMounted () {
-      console.log('父组件监听到子组件触发mounted！！！')
-    }
-    ```
-
-    - 在子组件 `Child.vue` 中
-
-    ```js
-      mounted () {
-        console.log('子组件Child触发mounted！！！')
-      }
-    ```
-
-2. $emit触发：
-    - 在父组件 `Parent.vue` 中
-
-    ```html
-    <Child @childMounted="onMounted" />
-    ```
-
-    ```js
-    onMounted () {
-      console.log('父组件监听到子组件触发mounted！！！')
-    }
-    ```
-
-    - 在子组件 `Child.vue` 中
-
-    ```js
-    mounted () {
-      console.log('子组件Child触发mounted！！！')
-      this.$emit('childMounted')
-    }
-    ```
-
-## DOM事件对象
-
-```html
-<div>
-  <p>
-    <span></span>
-  </p>
-</div>
-```
-
-事件名 | 说明
--- | --
-`onmouseenter` | `onmouseenter` 事件在鼠标指针移动到元素上时触发。<br>只有当鼠标指针进入 div 元素时触发，内部移动不会再次触发。<br>**提示：该事件通常与 `onmouseleave` 事件一同使用, 在鼠标指针移出元素上时触发。**
-`onmouseleave` | `onmouseleave` 事件在鼠标移出元素时触发。<br>**提示：该事件通常与 `onmouseenter` 事件一起使用， 该事件在鼠标移动到元素上时触发。**
-`onmouseover` | `onmouseover` 事件会在鼠标指针移动到指定的元素上时发生。<br>当鼠标指针进入 div 元素时会触发，当指针进入子元素上时也会触发(p 和 span)。
-`onmouseout` | `onmouseout` 事件会在鼠标指针移出指定的对象时发生。父元素进入子元素，或者子元素进入父元素都会触发。
-
-::: tip 提示
-`onmouseenter` 事件类似于 `onmouseover` 事件。 唯一的区别是 `onmouseenter` 事件不支持冒泡 。
-提示: `onmouseleave` 事件类似于 `onmouseout` 事件。 唯一的区别是 `onmouseleave` 事件不支持冒泡 。
-:::
-
-鼠标事件 | 描述
--- | --
-onclick | 当用户点击某个对象时调用的事件句柄
-oncontextmenu | 在用户点击鼠标右键打开上下文菜单时触发
-ondblclick | 当用户双击某个对象时调用的事件句柄
-onmousedown | 鼠标按钮被按下
-onmouseenter | 当鼠标指针移动到元素上时触发
-onmouseleave | 当鼠标指针移出元素时触发
-onmousemove | 鼠标被移动
-onmouseover | 鼠标移到某元素之上
-onmouseout | 鼠标从某元素移开
-onmouseup | 鼠标按键被松开
+# Note 2
 
 ## 水平垂直居中
 
@@ -146,32 +65,6 @@ onmouseup | 鼠标按键被松开
     height: 30px;
     background: forestgreen;
   }
-}
-```
-
-## 简单倒计时 countDown
-
-```html
-<h1 ref="countdown">{{ countDown('2023-10-01 18:25:00') }}</h1>
-```
-
-```js
-countDown (target) {
-  let timestamp = new Date(target).getTime() - Date.now()
-  var elapseTime = function (timestamp) {
-    var h = parseInt(timestamp / 1000 / 60 / 60)
-    var m = parseInt((timestamp / 1000 - h * 60 * 60) / 60)
-    var s = parseInt(timestamp / 1000 - h * 60 * 60 - m * 60)
-    return `还剩余${h}小时${m}分钟${s}秒`
-  }
-  setInterval(() => {
-    timestamp = timestamp - 1000
-    if (timestamp <= 0) {
-      this.$refs.countdown.innerHTML = '下班了'
-    } else {
-      this.$refs.countdown.innerHTML = elapseTime(timestamp)
-    }
-  }, 1000)
 }
 ```
 
@@ -300,7 +193,7 @@ countDown (target) {
 
 ## 箭头
 
-![Alt text](image-6.png)
+![Alt text](image-1.png)
 
 [在线预览](https://c.runoob.com/codedemo/3151/)
 
@@ -354,7 +247,7 @@ display: flex;
 justify-content: space-around;
 ```
 
-![Alt text](image-7.png)
+![Alt text](image-2.png)
 
 - 均匀排列每个元素，**首个元素放置于起点，末尾元素放置于终点**
 
@@ -363,7 +256,7 @@ display: flex;
 justify-content: space-between;
 ```
 
-![Alt text](image-8.png)
+![Alt text](image-3.png)
 
 - 均匀排列每个元素，**每个元素之间的间隔相等**
 
@@ -372,14 +265,46 @@ display: flex;
 justify-content: space-evenly;
 ```
 
-![Alt text](image-9.png)
+![Alt text](image-4.png)
 
-## `Vue.use(plugin)`
+## CSS网格排列布局
 
-- 参数：{Object | Function} plugin
-- 用法：安装 Vue.js 插件。如果**插件是一个对象，必须提供 install 方法**。如果**插件是一个函数，它会被作为 install 方法**。install 方法调用时，会将 Vue 作为参数传入。
+- [`display: grid;`](https://www.runoob.com/cssref/css-pr-grid.html)
 
-::: tip 提示
-该方法需要在调用 new Vue() 之前被调用。
-**当 install 方法被同一个插件多次调用，插件将只会被安装一次**。
-:::
+```html
+<div class="m-area">
+  <div class="m-card" v-for="(data, index) in cardData" :key="index"></div>
+</div>
+```
+
+```less
+.m-area {
+  width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 360px 360px 360px; // 列宽度，3列各360px宽
+  grid-template-rows: 400px; // 行高度
+  grid-gap: 60px; // 行间距 列间距
+  .m-card {
+    width: 360px;
+    height: 400px;
+  }
+}
+```
+
+- `display: inline-table;`
+
+```less
+.m-area {
+  width: 1200px;
+  margin: 0 auto;
+  .m-card:not(:nth-child(3n)) { // 除去第3个及3的倍数的child，其余右边距均为60
+    margin-right: 60px;
+  }
+  .m-card {
+    display: inline-table;
+    width: 360px;
+    height: 400px;
+  }
+}
+```

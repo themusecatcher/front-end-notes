@@ -7,14 +7,14 @@ titleTemplate: Library
 hero:
   name: Front-end Notes
   text: notes library
-  tagline: vue2、vue3、js、css...
+  tagline: js、css、html、vue2、vue3、plugins
   image:
     src: /amazing-logo.svg
     alt: Front-end Notes
   actions:
     - theme: brand
       text: Get Started
-      link: /vue2/started
+      link: /javascript/started
     - theme: alt
       text: View on GitHub
       link: https://github.com/themusecatcher/front-end-notes

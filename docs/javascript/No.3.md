@@ -1,93 +1,115 @@
-# Note 6
+# Note 3
 
-## 水平垂直居中
+## js判断对象是否包含某个属性key
 
-```css
-/* 水平垂直居中方法①：弹性布局，随内容增大高度，并自适应水平垂直居中 */
-.flex-hv-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-/* 水平垂直居中方法②：相对定位，随内容增大高度，并自适应水平垂直居中 */
-.relative-hv-center {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-```
-
-## 设置 `input` & `textarea` 的 `placeholder`样式
-
-```css
-input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-  font-size: 14px; color: #999;
-}
-input:-moz-placeholder, textarea:-moz-placeholder {
-  font-size: 14px; color: #999;
-}
-input::-moz-placeholder, textarea::-moz-placeholder {
-  font-size: 14px; color: #999;
-}
-input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-  font-size: 14px; color: #999;
-}
-```
-
-## 监听对象中某个属性值的变化
-
-*监听当前路由对象 `$route`*
-
-- 直接监听整个对象变化
+- `in` 关键字，会返回 `true` 和 `false`
 
 ```js
-watch:{
-  $route (to, from) {
-    console.log('to:', to)
-    console.log('query:', to.query)
+if (key in Obj) { 
+  // 包含
+} else {
+  // 不包含
+}
+```
+
+- `hasOwnProperty()`方法，会返回 `true` 和 `false`
+
+```js
+if (Object.prototype.hasOwnProperty.call(Obj, key)) {
+  // 包含
+} else {
+  // 不包含
+}
+```
+
+- 使用 `undefined`
+
+```js
+if (Obj[key] !== undefined) {
+  // 包含
+} else {
+  // 不包含
+}
+```
+
+## js正则检验是否全是汉字或字母
+
+```js
+// 校验是否全是汉字
+const nameReg = /^[\u4E00-\u9FA5]+$/
+
+// 校验是否全是汉字或字母
+const nameReg = /^[\u0391-\uFFE5A-Za-z]+$/
+
+const originName = '斯蒂芬·库里'
+const name = originName.replace(/·/g, '') // 去除姓名中所有的点（·）
+if (!this.nameReg.test(name)) { // 校验是否全部是汉字
+  this.errTxt = `姓名只能包含汉字和点（·）`
+} else {
+  this.errTxt = ''
+}
+
+// 区分中英文字符进行字符长度的计算，一个中文字符，算2个长度
+this.formatContent('asdsad;;;阿萨德？？？')
+formatContent (value) {
+  // value = value.replace(/[\u4e00-\u9fa5]/g, '') // 过滤所有汉字
+  const str = value.replace(/[^x00-\xff]/g, '') // 过滤所有汉字和中文字符
+  const len = str.length // 英文字符的长度
+  console.log('value:', value, value.length * 2 - len)
+}
+```
+
+## js控制 `<input>` 输入指定格式数值
+
+```html
+<input
+  type="text"
+  class="u-input"
+  v-model="inputValue"
+  @input="formatNum($event.target.value)"
+  placeholder="请输入" />
+```
+
+*只能输入数字和小数点后两位，且不能是0开头*
+
+```js
+formatNum (value) {
+  value = value.replace(/[^\d.]/g, '') // 清除“数字”和“.”以外的字符
+  value = value.replace(/\.{2,}/g, '.') // 只保留第一个. 清除多余的
+  value = value.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.')
+  value = value.replace(/^(-)*(\d+)\.(\d\d).*$/, '$1$2.$3') // 只能输入两个小数
+  if (value.indexOf('.') < 0 && value !== '') { // 如果没有小数点，数字不能以0开头
+    value = value.replace(/\b(0+)/gi, '') // 删除字符串头部所有的 0
   }
 }
 ```
 
-*监听普通对象 `player.name` 值的变化*
-
-- 使用计算属性，监听单一属性变化
+*输入整数位不能超过9位，小数位不能超过4位，只能输入数字和小数点后两位，且不能是0开头*
 
 ```js
-computed: {
-  name () {
-    return this.player.name 
-  }        
-}
-watch: {
-  name (to, from) {
-    console.log('to:', to)
+formatNum (value) {
+  value = value.replace(/[^\d.]/g, '') // 清除“数字”和“.”以外的字符
+  value = value.replace(/\.{2,}/g, '.') // 只保留第一个. 清除多余的
+  value = value.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.')
+  value = value.replace(/^(-)*(\d+)\.(\d\d\d\d).*$/, '$1$2.$3') // 只最多输入4位小数
+  if (value.indexOf('.') === -1 && value !== '0') { // 没有小数点，数字不能以0开头
+    value = value.replace(/\b(0+)/gi, '')
   }
-}
-```
-
-- 使用 `handler` 监听单一属性变化
-
-```js
-watch: {
-  'player.name': {
-    handler (to, from) {
-      console.log('to:', to)
+  if (value.indexOf('.') !== -1 && value.substr(0, value.indexOf('.')) !== '0') { // 有小数点，整数部分不能是以0开头的整数，但可以单独一个0
+    value = value.replace(/\b(0+)/gi, '')
+  }
+  if (value.indexOf('.') !== -1) { // 有小数时，整数不超过9位，小数不超过4位
+    if (value.substr(0, value.indexOf('.')).length > 9) { // 整数超过9位
+      value = value.substr(0, 9) + value.substr(value.indexOf('.'))
+    }
+    if (value.substr(value.indexOf('.') + 1).length > 4) { // 小数超过4位
+      value = value.substr(0, value.indexOf('.')) + value.substr(value.indexOf('.'), 5)
     }
   }
-}
-```
-
-- 使用 `deep` 属性，监听整个对象的变化
-
-```js
-watch: {
-  player: {
-    handler (to, from) {
-      console.log('to:', to)
-    },
-    deep: true
+  if (value.indexOf('.') === -1 && value.length > 9) { // 没有小数时，整数不超过9位
+    value = value.slice(0, 9)
   }
+  this.inputValue = value
 }
 ```
 
@@ -299,74 +321,6 @@ console.log('foldStyle.height:', foldStyle.height)
 console.log('foldStyle.getPropertyValue():', foldStyle.getPropertyValue('height'))
 ```
 
-## 多行文本的展开和收起
-
-实例： https://codepen.io/xboxyan/pen/LYWpWzK?editors=1100
-超过一行时，省略号显示，文本末尾有展开按钮
-点击展开，显示全部文本，同时文本末尾有收起按钮
-
-```html
-<div class="m-fold-wrap">
-  <span :class="['m-content', !origin && fold ? 'fold':'unfold', {'origin': origin }]" ref="fold">
-    《麦田里的守望者》是美国作家杰罗姆·大卫·塞林格创作的唯一一部长篇小说，首次出版于1951年。塞林格将故事的起止局限于16岁的中学生霍尔顿·考尔菲德从离开学校到纽约游荡的三天时间内，并借鉴了意识流天马行空的写作方法，充分探索了一个十几岁少年的内心世界。愤怒与焦虑是此书的两大主题，主人公的经历和思想在青少年中引起强烈共鸣，受到读者，特别是广大中学生的热烈欢迎。
-  </span>
-  <a href="javascript:;" class="u-btn" @click="fold=!fold" v-if="showMore">{{ fold ? '展开':'收起' }}</a>
-</div>
-```
-
-```js
-showMore: false,
-fold: false,
-origin: true,
-mounted () {
-  this.$nextTick(() => {
-    var fold = this.$refs.fold
-    var foldStyle = window.getComputedStyle(fold, null)
-    var height = foldStyle.height.replace('px', '')
-    var lineHeight = foldStyle.lineHeight.replace('px', '')
-    if (Number(height) / Number(lineHeight) > 1) { // 计算文本是否超过一行
-      this.showMore = true
-      this.fold = true
-      this.origin = false
-    }
-  })
-}
-```
-
-```less
-.m-fold-wrap {
-  margin: 50px auto;
-  width: 1080px;
-  padding: 60px;
-  background: #FFF;
-  border: 1px solid #333;
-  .m-content {
-    line-height: 28px;
-    font-size: 20px;
-    color: #333;
-    max-width: 1040px;
-  }
-  .fold { // 收起时的样式
-    display: inline-block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    vertical-align: bottom;
-  }
-  .unfold { // 展开时的样式
-    display: inline;
-  }
-  .origin { // 初始样式，方便获取文本高度height
-    display: inline-block;
-  }
-  .u-btn {
-    vertical-align: top;
-    color: #1890FF;
-    font-size: 20px;
-  }
-}
-```
-
 ## JS中的 `&&` 和 `||`
 
 - 逻辑或 `||` ：`var res = exp1 || exp2`
@@ -406,22 +360,3 @@ mounted () {
   var matrix = new DOMMatrix(sliderTransform)
   var offsetLeft = Math.abs(matrix.m41) // 取绝对值，或者使用matrix.e
   ```
-
-## 获取 `absolute` 定位元素的 `left` 偏移值
-
-```html
-<div ref="slider" class="m-slider"></div>
-```
-
-```js
-const offsetLeft = this.$refs.slider.offsetLeft // 获取元素的当前偏移位置
-console.log('offset:', offset) // Number: -200
-```
-
-```css
-.m-slider {
-  /* absolute 或 fixed */
-  position: relative;
-  left: -200px;
-}
-```
