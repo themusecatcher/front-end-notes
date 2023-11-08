@@ -1,0 +1,1 @@
+import{_ as s,o as n,c as a,Q as l}from"./chunks/framework.7256c1a3.js";const F=JSON.parse('{"title":"Note 7","description":"","frontmatter":{},"headers":[],"relativePath":"css/No.7.md","filePath":"css/No.7.md"}'),p={name:"css/No.7.md"},o=l("",20),e=[o];function t(c,r,E,y,i,d){return n(),a("div",null,e)}const u=s(p,[["render",t]]);export{F as __pageData,u as default};
