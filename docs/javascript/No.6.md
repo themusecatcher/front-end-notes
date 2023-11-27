@@ -269,11 +269,57 @@ uploadFile (files) {
 - `MutationObserver()`：创建并返回一个新的 `MutationObserver` 它会**在指定的 DOM 发生变化时被调用**
 
 方法：
-- `disconnect()`
+- [`disconnect()`](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver/disconnect)
+
   阻止 MutationObserver 实例继续接收的通知，直到再次调用其 observe() 方法，该观察者对象包含的回调函数都不会再被调用。
-- `observe()`
+- [`observe()`](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver/observe)
+
   配置 MutationObserver 在 DOM 更改匹配给定选项时，通过其回调函数开始接收通知。
-- `takeRecords()`
+  - 语法：
+
+    ```js
+    mutationObserver.observe(target[, options])
+    ```
+
+  - 参数：
+
+    `target`
+
+    `DOM` 树中的一个要观察变化的 `DOM Node` (可能是一个 `Element`)，或者是被观察的子节点树的根节点。
+
+    `options`
+
+    此对象的配置项描述了 `DOM` 的哪些变化应该报告给 `MutationObserver` 的 `callback`。当调用 `observe()` 时，`childList`、`attributes` 和 `characterData` 中，**必须有一个参数为 true**。否则会抛出 `TypeError` 异常。
+
+    `options` 的属性如下：
+    - `subtree` <Badge type="warning" text="可选" />
+
+        当为 `true` 时，将会监听以 `target` 为根节点的整个子树。包括子树中所有节点的属性，而不仅仅是针对 `target`。默认值为 `false`。
+
+      - `childList` <Badge type="warning" text="可选" />
+        当为 `true` 时，监听 `target` 节点中发生的节点的新增与删除（同时，如果 `subtree` 为 `true`，会针对整个子树生效）。默认值为 `false`。
+
+      - `attributes` <Badge type="warning" text="可选" />
+        当为 `true` 时观察所有监听的节点属性值的变化。默认值为 `true`，当声明了 `attributeFilter` 或 `attributeOldValue`，默认值则为 `false`。
+
+      - `attributeFilter` <Badge type="warning" text="可选" />
+        一个用于声明哪些属性名会被监听的数组。如果不声明该属性，所有属性的变化都将触发通知。
+
+      - `attributeOldValue` <Badge type="warning" text="可选" />
+        当为 `true` 时，记录上一次被监听的节点的属性变化；可查阅监听属性值了解关于观察属性变化和属性值记录的详情。默认值为 `false`。
+
+      - `characterData` <Badge type="warning" text="可选" />
+        当为 `true` 时，监听声明的 `target` 节点上所有字符的变化。默认值为 `true`，如果声明了 `characterDataOldValue`，默认值则为 `false`
+
+      - `characterDataOldValue` <Badge type="warning" text="可选" />
+        当为 `true` 时，记录前一个被监听的节点中发生的文本变化。默认值为 `false`
+
+  - 返回值
+
+    `undefined`。
+
+- [`takeRecords()`](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver/takeRecords)
+
   从 MutationObserver 的通知队列中删除所有待处理的通知，并将它们返回到 MutationRecord 对象的新 Array 中。
 
 ```vue
