@@ -1,1 +1,0 @@
-import{_ as s,o as n,c as a,Q as p}from"./chunks/framework.7256c1a3.js";const u=JSON.parse('{"title":"Note 4","description":"","frontmatter":{},"headers":[],"relativePath":"vue2/No.4.md","filePath":"vue2/No.4.md"}'),l={name:"vue2/No.4.md"},o=p("",39),e=[o];function c(t,r,E,y,i,d){return n(),a("div",null,e)}const h=s(l,[["render",c]]);export{u as __pageData,h as default};
