@@ -46,6 +46,45 @@
   document.body.appendChild(p)
   ```
 
+- [`Node.removeChild`](https://developer.mozilla.org/zh-CN/docs/Web/API/Node/removeChild)
+
+  `Node.removeChild()` 方法从 `DOM` 中删除一个子节点。返回删除的节点。
+
+  ### 语法
+
+  ```js
+  let oldChild = node.removeChild(child)
+  // or
+  element.removeChild(child)
+  ```
+
+  - `child` 是要移除的那个子节点。
+  - `node` 是 child 的父节点。
+  - `oldChild` 保存对删除的子节点的引用。`oldChild === child`.
+
+- [`Element.remove()`](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/remove)
+
+  `Element.remove()` 方法，把对象从它所属的 `DOM` 树中删除。
+
+  ### 语法
+
+  ```js
+  node.remove()
+  ```
+
+  ### 示例
+
+  ```html
+  <div id="div-01">Here is div-01</div>
+  <div id="div-02">Here is div-02</div>
+  <div id="div-03">Here is div-03</div>
+  ```
+
+  ```js
+  var el = document.getElementById("div-02")
+  el.remove() // id 为 'div-02' 的 div 被删掉了
+  ```
+
 - [`element.innerHTML`](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/innerHTML)（**常用于替换内容**）
 
   `Element.innerHTML` 属性设置或获取 `HTML` 语法表示的元素的后代

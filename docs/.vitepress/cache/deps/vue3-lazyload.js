@@ -1,15 +1,9 @@
 import {
-  init_vue_runtime_esm_bundler,
   onMounted,
   onUnmounted,
   ref,
   watch
-} from "./chunk-4Y7PDBWU.js";
-import "./chunk-ROME4SDB.js";
-
-// node_modules/.pnpm/vue-demi@0.12.5_vue@3.3.7/node_modules/vue-demi/lib/index.mjs
-init_vue_runtime_esm_bundler();
-init_vue_runtime_esm_bundler();
+} from "./chunk-LCQTCY7T.js";
 
 // node_modules/.pnpm/vue3-lazyload@0.3.8_vue@3.3.7/node_modules/vue3-lazyload/dist/index.mjs
 var LifecycleEnum = ((LifecycleEnum2) => {

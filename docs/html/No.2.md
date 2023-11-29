@@ -101,3 +101,5 @@ HTML 属性能够赋予元素含义和语境。
 ::: tip 备注：
 `dataset` 属性本身可以被读取，但是不能直接写入。相反，所有写入都必须是写入 `dataset` 的单个属性，而 `dataset` 又表示这些数据的属性。
 :::
+
+## [Canvas](https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API)
