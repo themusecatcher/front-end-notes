@@ -33,9 +33,28 @@
 <a href="/"></a>
 ```
 
-## `document.documentElement`
+## [`document.documentElement`](https://developer.mozilla.org/zh-CN/docs/Web/API/Document/documentElement)
 
 `Document.documentElement` 是一个会返回文档对象（`document`）的根元素的只读属性（如 HTML 文档的 `<html>` 元素）
+
+### 语法
+
+```js
+var element = document.documentElement
+```
+
+### 示例
+
+```js
+const rootElement = document.documentElement
+const firstTier = rootElement.childNodes
+
+// firstTier 是由根元素的所有子节点组成的一个 NodeList
+for (let i = 0; i < firstTier.length; i++) {
+  // 使用根节点的每个子节点
+  // 如 firstTier[i]
+}
+```
 
 ::: tip
 对于任何非空 HTML 文档，调用 `document.documentElement` 总是会返回一个`<html>` 元素，且它一定是该文档的根元素。借助这个只读属性，能方便地获取到任意文档的根元素。
