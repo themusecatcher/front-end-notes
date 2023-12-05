@@ -257,3 +257,102 @@ ctx.fillRect(0, 0, 80, 80)
 
 移动后的正方形是红色的，未移动的正方形是灰色的。
 ![Alt text](image-8.png)
+
+## [CanvasRenderingContext2D.drawImage()](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/drawImage)
+
+Canvas 2D API 中的 `CanvasRenderingContext2D.drawImage()` 方法提供了多种在画布（Canvas）上绘制图像的方式。
+
+### 语法
+
+```js
+drawImage(image, dx, dy)
+drawImage(image, dx, dy, dWidth, dHeight)
+drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+```
+
+![Alt text](image-9.png)
+
+### 参数
+
+- `image`：绘制到上下文的元素。允许任何的画布图像源，例如：`HTMLImageElement`、`SVGImageElement` (en-US)、`HTMLVideoElement`、`HTMLCanvasElement`、`ImageBitmap`、`OffscreenCanvas` 或 `VideoFrame` (en-US)。
+
+- `sx`<Badge type="warning" text="可选" />：需要绘制到目标上下文中的，`image` 的矩形（裁剪）选择框的左上角 `X` 轴坐标。可以使用 `3` 参数或 `5` 参数语法来省略这个参数。
+
+- `sy`<Badge type="warning" text="可选" />：需要绘制到目标上下文中的，`image` 的矩形（裁剪）选择框的左上角 `Y` 轴坐标。可以使用 `3` 参数或 `5` 参数语法来省略这个参数。
+
+- `sWidth`<Badge type="warning" text="可选" />：需要绘制到目标上下文中的，`image` 的矩形（裁剪）选择框的宽度。如果不说明，整个矩形（裁剪）从坐标的 `sx` 和 `sy` 开始，到 `image` 的右下角结束。可以使用 `3` 参数或 `5` 参数语法来省略这个参数。使用负值将翻转这个图像。
+
+- `sHeight`<Badge type="warning" text="可选" />：需要绘制到目标上下文中的，`image` 的矩形（裁剪）选择框的高度。使用负值将翻转这个图像。
+
+- `dx`<Badge type="warning" text="可选" />：`image` 的左上角在目标画布上 `X` 轴坐标。
+
+- `dy`<Badge type="warning" text="可选" />：`image` 的左上角在目标画布上 `Y` 轴坐标。
+
+- `dWidth`<Badge type="warning" text="可选" />：`image` 在目标画布上绘制的宽度。允许对绘制的 `image` 进行缩放。如果不说明，在绘制时 `image` 宽度不会缩放。注意，这个参数不包含在 `3` 参数语法中。
+
+- `dHeight`<Badge type="warning" text="可选" />：`image` 在目标画布上绘制的高度。允许对绘制的 `image` 进行缩放。如果不说明，在绘制时 `image` 高度不会缩放。注意，这个参数不包含在 `3` 参数语法中。
+
+### 返回值
+
+无（undefined）
+
+### 示例
+
+在画布上绘制图像。此示例在画布中使用 `drawImage()` 方法绘制一张图像。
+
+```html
+<canvas id="canvas"></canvas>
+<div style="display:none;">
+  <img id="source" src="rhino.jpg" width="300" height="227" />
+</div>
+```
+
+原图像从坐标 `(33,71)` 处截取一个宽度为 `104` 高度为 `124` 的图像。并将其绘制到画布的 `(21, 20)` 坐标处，并将其缩放为宽 `87`、高 `104` 的图像。
+
+```js
+const canvas = document.getElementById("canvas")
+const ctx = canvas.getContext("2d")
+const image = document.getElementById("source")
+
+image.addEventListener("load", (e) => {
+  ctx.drawImage(image, 33, 71, 104, 124, 21, 20, 87, 104)
+})
+```
+
+## [HTMLCanvasElement.getContext()](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLCanvasElement/getContext)
+
+`HTMLCanvasElement.getContext()` 方法返回 `canvas` 的上下文，如果上下文没有定义则返回 `null` .
+
+在同一个 canvas 上以相同的 contextType 多次调用此方法只会返回同一个上下文。
+
+### 语法
+
+```js
+var ctx = canvas.getContext(contextType)
+var ctx = canvas.getContext(contextType, contextAttributes)
+```
+
+### 参数
+
+- 上下文类型（`contextType`）
+  是一个指示使用何种上下文的 `DOMString` 。可能的值是：
+  - `"2d"`, 建立一个 `CanvasRenderingContext2D` 二维渲染上下文。
+  - `"webgl"` (或"experimental-webgl") 这将创建一个 WebGLRenderingContext 三维渲染上下文对象。只在实现WebGL 版本 1(OpenGL ES 2.0) 的浏览器上可用。
+  - `"webgl2"` (或 "experimental-webgl2") 这将创建一个 WebGL2RenderingContext 三维渲染上下文对象。只在实现 WebGL 版本 2 (OpenGL ES 3.0) 的浏览器上可用。实验性
+  "bitmaprenderer" 这将创建一个只提供将 canvas 内容替换为指定ImageBitmap功能的ImageBitmapRenderingContext 。
+
+### 示例
+
+定义 `<canvas>` 元素：
+
+```html
+<canvas id="canvas" width="300" height="300"></canvas>
+```
+
+通过如下代码可以获取 `canvas2d` 上下文：
+
+```js
+var canvas = document.getElementById("canvas")
+var ctx = canvas.getContext("2d")
+console.log(ctx) // CanvasRenderingContext2D { ... }
+```

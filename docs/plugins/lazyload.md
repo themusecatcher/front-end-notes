@@ -2,10 +2,12 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+import { Space, Button } from 'vue-amazing-ui'
+import 'vue-amazing-ui/css'
 
-const Image1 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.3/5.jpg'
-const Image2 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.3/8.jpg'
-const Image3 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.3/9.jpg'
+const Image1 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/5.jpg'
+const Image2 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/8.jpg'
+const Image3 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/9.jpg'
 
 const lazyOptions = ref({
   src: Image1,
@@ -74,7 +76,7 @@ app.mount('#app')
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-const Image1 = ref('https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.3/5.jpg')
+const Image1 = ref('https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/5.jpg')
 </script>
 <template>
   <div class="m-image">
@@ -121,9 +123,9 @@ import { ref } from 'vue'
 import { Space, Button } from 'vue-amazing-ui'
 import 'vue-amazing-ui/css'
 
-const Image1 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.3/5.jpg'
-const Image2 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.3/8.jpg'
-const Image3 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.3/9.jpg'
+const Image1 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/5.jpg'
+const Image2 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/8.jpg'
+const Image3 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/9.jpg'
 
 const lazyOptions = ref({
   src: Image1,
@@ -193,9 +195,9 @@ import { ref } from 'vue'
 import { Space, Button } from 'vue-amazing-ui'
 import 'vue-amazing-ui/css'
 
-const Image1 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.3/5.jpg'
-const Image2 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.3/8.jpg'
-const Image3 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.3/9.jpg'
+const Image1 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/5.jpg'
+const Image2 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/8.jpg'
+const Image3 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/9.jpg'
 
 const lazyOptions = ref({
   src: Image1,
