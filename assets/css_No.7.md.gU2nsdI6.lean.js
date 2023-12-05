@@ -1,1 +1,0 @@
-import{_ as s,o as i,c as a,R as n}from"./chunks/framework.EZisrhPI.js";const o=JSON.parse('{"title":"Note 7","description":"","frontmatter":{},"headers":[],"relativePath":"css/No.7.md","filePath":"css/No.7.md"}'),l={name:"css/No.7.md"},h=n("",20),t=[h];function p(k,e,E,d,r,g){return i(),a("div",null,t)}const c=s(l,[["render",p]]);export{o as __pageData,c as default};
