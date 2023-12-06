@@ -1,1 +1,0 @@
-import{_ as e,o as a,c as t,R as r}from"./chunks/framework._rsG8HA1.js";const m=JSON.parse('{"title":"开始","description":"","frontmatter":{},"headers":[],"relativePath":"vue2/started.md","filePath":"vue2/started.md"}'),o={name:"vue2/started.md"},s=r("",4),n=[s];function i(_,d,l,c,h,u){return a(),t("div",null,n)}const p=e(o,[["render",i]]);export{m as __pageData,p as default};
