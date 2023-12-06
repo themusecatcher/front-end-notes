@@ -101,7 +101,7 @@ someOtherNode.textContent = string
 
 ### 与 innerHTML 的区别
 
-正如其名称，`Element.innerHTML` 返回 `HTML`。通常，为了在元素中检索或写入文本，人们使用 innerHTML。但是，**textContent 通常具有更好的性能，因为文本不会被解析为 HTML**。
+正如其名称，`Element.innerHTML` 返回 `HTML`。通常，为了在元素中检索或写入文本，人们使用 `innerHTML`。但是，**textContent 通常具有更好的性能，因为文本不会被解析为 HTML**。
 
 ### 示例
 
