@@ -250,7 +250,7 @@ HTML 5 中指定不执行由 innerHTML 插入的 `<script>` 标签。
 然而，有很多不依赖 `<script>` 标签去执行 `JavaScript` 的方式。
 所以当你使用 `innerHTML` 去设置你无法控制的字符串时，这仍然是一个安全问题。
 <br/>例如：<br/>
-基于这个原因，**当插入纯文本时，建议不要使用 innerHTML 。取而代之的是使用 [Node.textContent](https://developer.mozilla.org/zh-CN/docs/Web/API/Node/textContent)** ，它不**会把给定的内容解析为 `HTML`，它仅仅是将原始文本插入给定的位置**。
+基于这个原因，**当插入纯文本时，建议不要使用 innerHTML 。取而代之的是使用 [Node.textContent](https://developer.mozilla.org/zh-CN/docs/Web/API/Node/textContent)** ，它**不会把给定的内容解析为 `HTML`，它仅仅是将原始文本插入给定的位置**。
 :::
 
 ## [element.outerHTML](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/outerHTML)

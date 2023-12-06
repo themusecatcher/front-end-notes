@@ -180,6 +180,10 @@ export default defineConfig({
             {
               text: 'No.9',
               link: '/javascript/No.9'
+            },
+            {
+              text: 'No.10',
+              link: '/javascript/No.10'
             }
           ]
         }
