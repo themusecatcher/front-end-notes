@@ -216,3 +216,42 @@ import { UEditor } from '@/packages'
   <UEditor v-model:value="formState.content" />
 </template>
 ```
+
+## [useSlots() & useAttrs()](https://cn.vuejs.org/api/sfc-script-setup.html#useslots-useattrs)
+
+在 `<script setup>` 使用 `slots` 和 `attrs` 的情况应该是相对来说较为罕见的，因为可以在模板中直接通过 `$slots` 和 `$attrs` 来访问它们。在你的确需要使用它们的罕见场景中，可以分别用 `useSlots` 和 `useAttrs` 两个辅助函数：
+
+```vue
+<script setup>
+import { useSlots, useAttrs } from 'vue'
+
+const slots = useSlots()
+const attrs = useAttrs()
+</script>
+```
+
+`useSlots` 和 `useAttrs` 是真实的运行时函数，它的返回与 `setupContext.slots` 和 `setupContext.attrs` 等价。它们同样也能在普通的组合式 API 中使用。
+
+### 示例
+
+组件内部监听默认插槽 `default slot` 是否有内容
+
+```vue
+<script setup lang="ts">
+import { computed, useSlots } from 'vue'
+
+const slots = useSlots()
+const showText = computed(() => {
+  const defaultSlots = slots.default?.()
+  if (defaultSlots) {
+    return Boolean(defaultSlots[0].children?.length)
+  }
+  return false
+})
+</script>
+<template>
+<span v-show="showText">
+  <slot></slot>
+</span>
+</template>
+```
