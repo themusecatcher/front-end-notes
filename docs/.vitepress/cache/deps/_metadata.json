@@ -1,47 +1,49 @@
 {
-  "hash": "61add959",
-  "browserHash": "95d437cc",
+  "hash": "1ed83065",
+  "configHash": "f6db8c39",
+  "lockfileHash": "9f2fec58",
+  "browserHash": "62bc6aa3",
   "optimized": {
     "vue": {
-      "src": "../../../../node_modules/.pnpm/vue@3.3.10/node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "src": "../../../../node_modules/.pnpm/vue@3.3.13/node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "ae384d1b",
+      "fileHash": "bb8e6233",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../../node_modules/.pnpm/@vue+devtools-api@6.5.1/node_modules/@vue/devtools-api/lib/esm/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "7617618e",
+      "fileHash": "52adbd69",
       "needsInterop": false
     },
     "vitepress > @vueuse/integrations/useFocusTrap": {
-      "src": "../../../../node_modules/.pnpm/@vueuse+integrations@10.7.0_focus-trap@7.5.4_qrcode@1.5.3_vue@3.3.10/node_modules/@vueuse/integrations/useFocusTrap.mjs",
+      "src": "../../../../node_modules/.pnpm/@vueuse+integrations@10.7.0_focus-trap@7.5.4_qrcode@1.5.3_vue@3.3.13/node_modules/@vueuse/integrations/useFocusTrap.mjs",
       "file": "vitepress___@vueuse_integrations_useFocusTrap.js",
-      "fileHash": "55016182",
+      "fileHash": "f1586f77",
       "needsInterop": false
     },
     "vitepress > mark.js/src/vanilla.js": {
       "src": "../../../../node_modules/.pnpm/mark.js@8.11.1/node_modules/mark.js/src/vanilla.js",
       "file": "vitepress___mark__js_src_vanilla__js.js",
-      "fileHash": "1f3a689c",
+      "fileHash": "b52a048a",
       "needsInterop": false
     },
     "vitepress > minisearch": {
       "src": "../../../../node_modules/.pnpm/minisearch@6.3.0/node_modules/minisearch/dist/es/index.js",
       "file": "vitepress___minisearch.js",
-      "fileHash": "9405ae8b",
+      "fileHash": "b059bf02",
       "needsInterop": false
     },
     "vue3-lazyload": {
-      "src": "../../../../node_modules/.pnpm/vue3-lazyload@0.3.8_vue@3.3.10/node_modules/vue3-lazyload/dist/index.mjs",
+      "src": "../../../../node_modules/.pnpm/vue3-lazyload@0.3.8_vue@3.3.13/node_modules/vue3-lazyload/dist/index.mjs",
       "file": "vue3-lazyload.js",
-      "fileHash": "9133ac61",
+      "fileHash": "6b91c147",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-J4WN7XVR": {
-      "file": "chunk-J4WN7XVR.js"
+    "chunk-BGM7FK2X": {
+      "file": "chunk-BGM7FK2X.js"
     }
   }
 }
