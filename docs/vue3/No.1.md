@@ -255,3 +255,24 @@ const showText = computed(() => {
 </span>
 </template>
 ```
+
+## [shallowRef()](https://cn.vuejs.org/api/reactivity-advanced.html#shallowref)
+
+`ref()` 的浅层作用形式。
+
+::: tip 注
+- 和 `ref()` 不同，浅层 `ref` 的**内部值将会原样存储和暴露，并且不会被深层递归地转为响应式**。只有对 `.value` 的访问是响应式的。
+- `shallowRef()` 常常用于**对大型数据结构的性能优化或是与外部的状态管理系统集成**。
+:::
+
+### 示例
+
+```js
+const state = shallowRef({ count: 1 })
+
+// 不会触发更改
+state.value.count = 2
+
+// 会触发更改
+state.value = { count: 2 }
+```
