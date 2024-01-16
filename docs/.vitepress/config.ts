@@ -228,6 +228,10 @@ export default defineConfig({
             {
               text: 'No.7',
               link: '/css/No.7'
+            },
+            {
+              text: 'No.8',
+              link: '/css/No.8'
             }
           ]
         }

@@ -178,3 +178,34 @@ aliases: unlink, remove, rm, r, un
 在全局模式下（即，将 `-g` 或 `--global` 附加到命令中），它将当前包上下文作为全局包卸载。 在这种情况下，`--no-save` 被忽略。
 
 范围是可选的，并遵循 `scope` 的通常规则。
+
+## 监听键盘事件，绑定Enter按键
+
+- 输入框监听键盘事件(`Enter`)
+
+```vue
+<a-input v-model="text" @keydown.enter="onClick" placeholder="请输入"/>
+```
+
+- 在当前页面监听键盘事件(`Enter`)
+
+  - `onkeydown`：会在用户按下一个键盘按键时发生
+  - `onkeypress`：会在键盘按键被按下并释放时发生。
+  - `onkeyup`：会在键盘按键被松开时发生。
+  事件发生次序为：
+    1. onkeydown
+    2. onkeypress
+    3. onkeyup
+
+    在所有浏览器中 `onkeypress` 事件不是适用于所有按键(如： ALT, CTRL, SHIFT, ESC)。
+    监听一个用户是否按下按键请使用 `onkeydown` 事件,所有浏览器都支持 `onkeydown` 事件。
+
+    ```js
+    // 当前页面监听键盘确认键
+    // 等价于window.onkeydown = function (e) { … }
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        // doing something
+      }
+    })
+    ```

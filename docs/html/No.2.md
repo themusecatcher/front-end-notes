@@ -103,3 +103,112 @@ HTML 属性能够赋予元素含义和语境。
 :::
 
 ## [Canvas](https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API)
+
+## [loadeddata](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLMediaElement/loadeddata_event)
+
+`loadeddata` 事件在媒体当前播放位置的视频帧（通常是第一帧）加载完成后触发。
+
+::: tip 备注
+若在`移动/平板设备`的浏览器设置中开启了`流量节省（data-saver）`模式，该事件则不会被触发。
+:::
+
+### 示例
+
+*使用`addEventListener()`*
+
+```js
+const video = document.querySelector('video')
+
+video.addEventListener('loadeddata', (event) => {
+  console.log(
+    'Yay! readyState just increased to  ' +
+      'HAVE_CURRENT_DATA or greater for first time.'
+  )
+})
+```
+
+*使用 `onloadeddata` 事件处理器属性*
+
+```js
+const video = document.querySelector('video')
+
+video.onloadeddata = (event) => {
+  console.log(
+    'Yay! readyState just increased to  ' +
+      'HAVE_CURRENT_DATA or greater for first time.',
+  )
+}
+```
+
+## [loadedmetadata](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLMediaElement/loadedmetadata_event)
+
+`loadedmetadata`事件在元数据（`metadata`）被加载完成后触发。
+
+### 语法
+
+```js
+element.onloadedmetadata = handlerFunction
+var handlerFunction = element.onloadedmetadata
+```
+
+## [Element.children](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/children)
+
+`Element.children` 是一个只读属性，返回 一个 `Node` 的`子elements` ，是一个动态更新的 `HTMLCollection`。
+
+### 语法
+
+```js
+var children = node.children
+```
+
+::: tip 备注
+`children` 属性为只读属性，对象类型为 `HTMLCollection`，你可以使用 `elementNodeReference.children[1].nodeName` 来获取某个子元素的标签名称。
+:::
+
+### 例子
+
+```js
+// parg 是一个指向<p>元素的对象引用
+if (parg.childElementCount) {
+  // 检查这个<p>元素是否有子元素
+  // 译者注:childElementCount 有兼容性问题
+  var children = parg.children;
+  for (var i = 0; i < children.length; i++) {
+    // 通过 children[i] 来获取每个子元素
+    // 注意:List 是一个 live 的 HTMLCollection 对象，在这里添加或删除 parg 的子元素节点，都会立即改变 List 的值。
+  }
+}
+
+// 获取含有指定类名的子元素
+
+const video = Array.from(parent.value.children).find((element: any) => {
+  return element.className.includes('nertc-video-container')
+})
+console.log('video:', video)
+```
+
+## [Element.firstElementChild](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/firstElementChild)
+
+`Element.firstElementChild` 只读属性返回元素的第一个子元素，如果没有子元素，则为 `null`。
+
+`Element.firstElementChild` 仅包含元素节点。要获取所有子节点（包括文本和注释节点等非元素节点），请使用 `Node.firstChild`
+
+### 值
+
+一个 `Element` 对象，或 `null`。
+
+## [Node.firstChild](https://developer.mozilla.org/zh-CN/docs/Web/API/Node/firstChild)
+
+`Node.firstChild` 只读属性返回树中节点的第一个子节点，如果节点是无子节点，则返回 `null`。
+
+### 语法
+
+```js
+var childNode = node.firstChild;
+```
+
+### 描述
+
+如果有一个子节点，`childNode` 是节点的第一个子节点的引用，否则为 `null`
+
+

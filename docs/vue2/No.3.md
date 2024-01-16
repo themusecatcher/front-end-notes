@@ -164,6 +164,8 @@ var component = new Component() // => "hello from mixin!"
 
 ## vue组件中引入外部JS和CSS
 
+[参考文档](https://zhuanlan.zhihu.com/p/379504188)
+
 - 引入外部JS文件资源
 
   在 `public/index.html` 入口文件中全局引入：

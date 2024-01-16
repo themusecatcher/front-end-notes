@@ -293,3 +293,90 @@ const reactiveFoo = reactive(foo)
 
 console.log(toRaw(reactiveFoo) === foo) // true
 ```
+
+## [创建虚拟DOM节点：h()](https://cn.vuejs.org/api/render-function.html#h)
+
+```ts
+// 完整参数签名
+function h(
+  type: string | Component,
+  props?: object | null,
+  children?: Children | Slot | Slots
+): VNode
+
+// 省略 props
+function h(type: string | Component, children?: Children | Slot): VNode
+
+type Children = string | number | boolean | VNode | null | Children[]
+
+type Slot = () => Children
+
+type Slots = { [name: string]: Slot }
+```
+
+- 第一个参数既可以是一个`字符串` (用于`原生元素`) 也可以是一个 `Vue组件` 定义。
+- 第二个参数是要传递的 `prop`
+- 第三个参数是`子节点`。
+
+当创建一个组件的 `vnode` 时，子节点必须以插槽函数进行传递。如果组件只有默认槽，可以使用单个插槽函数进行传递。否则，必须以插槽函数的对象形式来传递。
+
+为了方便阅读，当子节点不是插槽对象时，可以省略 `prop` 参数。
+
+### 示例
+
+*创建原生元素*
+
+```js
+import { h } from 'vue'
+
+// 除了 type 外，其他参数都是可选的
+h('div')
+h('div', { id: 'foo' })
+
+// attribute 和 property 都可以用于 prop
+// Vue 会自动选择正确的方式来分配它
+h('div', { class: 'bar', innerHTML: 'hello' })
+
+// class 与 style 可以像在模板中一样
+// 用数组或对象的形式书写
+h('div', { class: [foo, { bar }], style: { color: 'red' } })
+
+// 事件监听器应以 onXxx 的形式书写
+h('div', { onClick: () => {} })
+
+// children 可以是一个字符串
+h('div', { id: 'foo' }, 'hello')
+
+// 没有 prop 时可以省略不写
+h('div', 'hello')
+h('div', [h('span', 'hello')])
+
+// children 数组可以同时包含 vnode 和字符串
+h('div', ['hello', h('span', 'hello')])
+```
+
+*创建组件*
+
+```js
+import Foo from './Foo.vue'
+
+// 传递 prop
+h(Foo, {
+  // 等价于 some-prop="hello"
+  someProp: 'hello',
+  // 等价于 @update="() => {}"
+  onUpdate: () => {}
+})
+
+// 传递单个默认插槽
+h(Foo, () => 'default slot')
+
+// 传递具名插槽
+// 注意，需要使用 `null` 来避免
+// 插槽对象被当作是 prop
+h(MyComponent, null, {
+  default: () => 'default slot',
+  foo: () => h('div', 'foo'),
+  bar: () => [h('span', 'one'), h('span', 'two')]
+})
+```

@@ -125,3 +125,46 @@ document.getElementById("divA").textContent = "This text is different!"
 // The HTML for divA is now:
 // <div id="divA">This text is different!</div>
 ```
+
+## File对象转Blob
+
+<input
+  ref="upload"
+  type="file"
+  accept="image/*"
+  @change="uploadFile" />
+
+<script>
+function uploadFile (e) { // 统一上传文件方法
+  const files = e.target.files
+  console.log('files:', files)
+  if (files.length) {
+    const file = files[0]
+    console.log('file', file)
+    const type = file.type
+    const reader = new FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onload = () => {
+      const blob = new Blob([ reader.result ], { type })
+      console.log('blob:', blob)
+    }
+  }
+}
+</script>
+
+```js
+uploadFile (files) { // 统一上传文件方法
+  console.log('files:', files)
+  if (files.length) {
+    const file = files[0]
+    console.log('file', file)
+    const type = file.type
+    const reader = new FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onload = () => {
+      const blob = new Blob([ reader.result ], { type })
+      console.log('blob:', blob)
+    }
+  }
+}
+```
