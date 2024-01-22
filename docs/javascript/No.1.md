@@ -165,12 +165,49 @@ str2.charCodeAt() // 97
 
 ![Alt text](image.png)
 
-## 将指定元素滚动到浏览器窗口的可视区域
+## [scrollIntoView()](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/scrollIntoView)将指定元素滚动到浏览器窗口的可视区域
 
-*`scrollIntoView()` 可以在所有HTML元素上调用，通过滚动浏览器窗口或某个容器元素，调用元素就可以出现在视口中。*
+*`Element` 接口的 `scrollIntoView()` 方法会滚动元素的父容器，使被调用 `scrollIntoView()` 的元素对用户可见。*
 
-- 传入 `true` 参数或者不传入参数：窗口滚动之后会让调用元素的顶部与视口顶部尽可能平齐。
-- 传入 `false` 作为参数：调用元素会尽可能全部出现在视口中，（可能的话，调用元素的底部会与视口底部平齐。）不过顶部不一定平齐。
+### 语法
+
+```js
+scrollIntoView()
+scrollIntoView(alignToTop)
+scrollIntoView(scrollIntoViewOptions)
+```
+
+### 参数
+
+- `alignToTop` <Badge type="tip" text="可选" /> 一个布尔值：
+  - `true`，元素的*顶端将和其所在滚动区的可视区域的顶端对齐*。相应的 `scrollIntoViewOptions: {block: 'start', inline: 'nearest'}` 这是这个参数的*默认值*。
+  - `false`，元素的*底端将和其所在滚动区的可视区域的底端对齐*。相应的 `scrollIntoViewOptions: {block: 'end', inline: 'nearest'}`。
+
+- `scrollIntoViewOptions` <Badge type="tip" text="可选" /> 一个包含下列属性的对象：
+  - `behavior` <Badge type="tip" text="可选" />
+    定义滚动是立即的还是平滑的动画。该选项是一个字符串，必须采用以下值之一：
+    - `smooth`：滚动应该是*平滑的动画*。
+    - `instant`：滚动应该通过*一次跳跃立刻发生*。
+    - `auto`：滚动行为由 `scroll-behavior` 的计算值决定。
+  - `block` <Badge type="tip" text="可选" />
+    定义*垂直方向的对齐*，start、center、end 或 nearest 之一。默认为 start。
+  - `inline` <Badge type="tip" text="可选" />
+    定义*水平方向的对齐*，start、center、end 或 nearest 之一。默认为 nearest。
+
+### 返回值
+
+无（undefined）
+
+### 示例
+
+```js
+const element = document.getElementById('box')
+
+element.scrollIntoView()
+element.scrollIntoView(false)
+element.scrollIntoView({ block: 'end' })
+element.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'nearest' })
+```
 
 ### 场景1：将 id 为 content 的元素，滚动到可视窗口
 
