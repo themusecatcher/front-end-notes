@@ -132,6 +132,24 @@ watch: {
 }
 ```
 
+- 同时监听多个变量的变化
+
+```js
+computed: {
+  props () {
+    return [this.content, this.gap, this.color, this.fontSize, this.fullscreen]
+  }
+},
+watch: {
+  props: {
+    handler () {
+      this.renderWatermark()
+    },
+    deep: true
+  }
+}
+```
+
 ## `mixins` 混入
 
 [mixin](https://v2.cn.vuejs.org/v2/guide/mixins.html)
