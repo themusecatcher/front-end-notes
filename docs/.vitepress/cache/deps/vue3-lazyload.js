@@ -3,9 +3,9 @@ import {
   onUnmounted,
   ref,
   watch
-} from "./chunk-BGM7FK2X.js";
+} from "./chunk-HMY2GJYS.js";
 
-// node_modules/.pnpm/vue3-lazyload@0.3.8_vue@3.3.13/node_modules/vue3-lazyload/dist/index.mjs
+// node_modules/.pnpm/vue3-lazyload@0.3.8_vue@3.4.15/node_modules/vue3-lazyload/dist/index.mjs
 var LifecycleEnum = ((LifecycleEnum2) => {
   LifecycleEnum2["LOADING"] = "loading";
   LifecycleEnum2["LOADED"] = "loaded";
