@@ -1,4 +1,4 @@
-# Note 9
+# Note 2
 
 ## 如何让div具有 `focus` 和 `blur` 事件
 
@@ -211,4 +211,17 @@ var childNode = node.firstChild;
 
 如果有一个子节点，`childNode` 是节点的第一个子节点的引用，否则为 `null`
 
+## `<textarea>`标签点击`enter`键发送文本
 
+```html
+<textarea @keydown="onKeyboard" />
+```
+
+```js
+function onKeyboard (e) {
+  if (e.key === 'Enter') {
+    e.preventDefault() // 消除enter键换行
+    console.log('enter e:', e)
+  }
+}
+```
