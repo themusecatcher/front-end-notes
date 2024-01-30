@@ -225,3 +225,11 @@ function onKeyboard (e) {
   }
 }
 ```
+
+## 谷歌浏览器使用`iframe`预览`pdf`隐藏工具栏
+
+```html
+<iframe :src="`${pdf.url}#toolbar=0`" width="900" height="400" frameborder="0">
+  <p>您的浏览器不支持iframe标签。</p>
+</iframe>
+```
