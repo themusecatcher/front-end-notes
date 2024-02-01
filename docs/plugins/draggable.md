@@ -3,8 +3,6 @@
 <script lang="ts" setup>
 import { ref, watchEffect } from 'vue'
 import Draggable from 'vuedraggable'
-import { Space, Card, Button } from 'vue-amazing-ui'
-import 'vue-amazing-ui/css'
 
 const players = ref([
   { name: 'curry', id: 1 },

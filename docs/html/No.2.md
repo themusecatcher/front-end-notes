@@ -204,7 +204,7 @@ console.log('video:', video)
 ### 语法
 
 ```js
-var childNode = node.firstChild;
+var childNode = node.firstChild
 ```
 
 ### 描述

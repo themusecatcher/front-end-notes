@@ -18,8 +18,8 @@ dependencies:
     specifier: 1.0.0-rc.40
     version: 1.0.0-rc.40(@algolia/client-search@4.22.1)(less@4.2.0)(qrcode@1.5.3)(search-insights@2.13.0)
   vue-amazing-ui:
-    specifier: ^0.1.31
-    version: 0.1.31(@algolia/client-search@4.22.1)(less@4.2.0)(search-insights@2.13.0)
+    specifier: ^0.1.32
+    version: 0.1.32(@algolia/client-search@4.22.1)(less@4.2.0)(search-insights@2.13.0)
   vue-codemirror:
     specifier: ^6.1.1
     version: 6.1.1(codemirror@6.0.1)(vue@3.4.15)
@@ -180,8 +180,8 @@ packages:
       '@ctrl/tinycolor': 3.6.1
     dev: false
 
-  /@ant-design/icons-svg@4.3.2:
-    resolution: {integrity: sha512-s9WV19cXTC/Tux/XpDru/rCfPZQhGaho36B+9RrN1v5YsaKmE6dJ+fq6LQnXVBVYjzkqykEEK+1XG+SYiottTQ==}
+  /@ant-design/icons-svg@4.4.1:
+    resolution: {integrity: sha512-dIEsZNOeikwCsgSLpwE0Vsgiaj10bKcgut+CvGD5Dck4kOA+TuFcTCM+l2uEs4cMUANkfjrt3hDg1PzlDNhXqg==}
     dev: false
 
   /@ant-design/icons-vue@7.0.1(vue@3.4.15):
@@ -190,7 +190,7 @@ packages:
       vue: '>=3.0.3'
     dependencies:
       '@ant-design/colors': 6.0.0
-      '@ant-design/icons-svg': 4.3.2
+      '@ant-design/icons-svg': 4.4.1
       vue: 3.4.15
     dev: false
 
@@ -212,8 +212,8 @@ packages:
       '@babel/types': 7.23.6
     dev: false
 
-  /@babel/runtime@7.23.8:
-    resolution: {integrity: sha512-Y7KbAP984rn1VGMbGqKmBLio9V7y5Je9GvU4rQPCPinCyNfUcToxIXl06d59URp/F3LwinvODxab5N/G6qggkw==}
+  /@babel/runtime@7.23.9:
+    resolution: {integrity: sha512-0CX6F+BI2s9dkUqr08KFrAIZgNFj75rdBU/DjCyYLIaV/quFjkk6T+EJ2LkZHyZTbEV4L5p97mNkUsHl2wLFAw==}
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.1
@@ -313,6 +313,14 @@ packages:
 
   /@codemirror/lint@6.4.2:
     resolution: {integrity: sha512-wzRkluWb1ptPKdzlsrbwwjYCPLgzU6N88YBAmlZi8WFyuiEduSd05MnJYNogzyc8rPK7pj6m95ptUApc8sHKVA==}
+    dependencies:
+      '@codemirror/state': 6.4.0
+      '@codemirror/view': 6.23.1
+      crelt: 1.0.6
+    dev: false
+
+  /@codemirror/lint@6.5.0:
+    resolution: {integrity: sha512-+5YyicIaaAZKU8K43IQi8TBy6mF6giGeWAH7N96Z5LC30Wm5JMjqxOYIE9mxwMG1NbhT2mA3l9hA4uuKUM3E5g==}
     dependencies:
       '@codemirror/state': 6.4.0
       '@codemirror/view': 6.23.1
@@ -792,7 +800,7 @@ packages:
     resolution: {integrity: sha512-/l5w8BIkrpP6n1xsetx9MWPWlU6OblN5YgZZphxan0Tq4BByTCETL6lyIeY8lagalS2Nbt4F2W034KHLIiunKA==}
     dependencies:
       core-js: 3.35.1
-      nanopop: 2.4.1
+      nanopop: 2.4.2
     dev: false
 
   /@types/estree@1.0.5:
@@ -1038,15 +1046,15 @@ packages:
       color-convert: 2.0.1
     dev: false
 
-  /ant-design-vue@4.1.1(vue@3.4.15):
-    resolution: {integrity: sha512-YLhDHhGvegGEczxDqIiiZIJsTHh3dge5Rf94n17sp24gAcey0hDaLtYWM0Z/+N8EheAcM0w3fePvYGMxwGxSDg==}
+  /ant-design-vue@4.1.2(vue@3.4.15):
+    resolution: {integrity: sha512-ynFkDJLlHgumeK6Hr1UZ7PvQNZ1uBcri/pmejBdS3kRqHeA5VRsxneYDwa8YxA+uYB5YfT2jpYsSHsiMiCjRGg==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       vue: '>=3.2.0'
     dependencies:
       '@ant-design/colors': 6.0.0
       '@ant-design/icons-vue': 7.0.1(vue@3.4.15)
-      '@babel/runtime': 7.23.8
+      '@babel/runtime': 7.23.9
       '@ctrl/tinycolor': 3.6.1
       '@emotion/hash': 0.9.1
       '@emotion/unitless': 0.8.1
@@ -1096,7 +1104,7 @@ packages:
       '@codemirror/autocomplete': 6.12.0(@codemirror/language@6.10.0)(@codemirror/state@6.4.0)(@codemirror/view@6.23.1)(@lezer/common@1.2.1)
       '@codemirror/commands': 6.3.3
       '@codemirror/language': 6.10.0
-      '@codemirror/lint': 6.4.2
+      '@codemirror/lint': 6.5.0
       '@codemirror/search': 6.5.5
       '@codemirror/state': 6.4.0
       '@codemirror/view': 6.23.1
@@ -1168,7 +1176,7 @@ packages:
     resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
     engines: {node: '>=0.11'}
     dependencies:
-      '@babel/runtime': 7.23.8
+      '@babel/runtime': 7.23.9
     dev: false
 
   /date-fns@3.3.1:
@@ -1435,8 +1443,8 @@ packages:
     hasBin: true
     dev: false
 
-  /nanopop@2.4.1:
-    resolution: {integrity: sha512-hhtYHTaQPmclHHCWmh2EJpWQ9FCA47kj2r/vXqI0ACeMi/qR9qFYDQRSx+luami7qw1OkBR4luJqS6ADoC3FPQ==}
+  /nanopop@2.4.2:
+    resolution: {integrity: sha512-NzOgmMQ+elxxHeIha+OG/Pv3Oc3p4RU2aBhwWwAqDpXrdTbtRylbRLQztLy8dMMwfl6pclznBdfUhccEn9ZIzw==}
     dev: false
 
   /needle@3.3.1:
@@ -1793,13 +1801,13 @@ packages:
       vue: 3.4.15
     dev: false
 
-  /vue-amazing-ui@0.1.31(@algolia/client-search@4.22.1)(less@4.2.0)(search-insights@2.13.0):
-    resolution: {integrity: sha512-4HII17B2y7amuKmvhzhi3AmDa/NiLI68O6In/wZ4uiO9gwFgMcGDdtN6SKHnFOM4xQL3RypUM9G9jWHHep1Qvw==}
+  /vue-amazing-ui@0.1.32(@algolia/client-search@4.22.1)(less@4.2.0)(search-insights@2.13.0):
+    resolution: {integrity: sha512-BF6Hxuse4oHpsPlnkWCbpuyGLkknTQ73NHg4v7PxBVoLPe92Q7UcGJc5xsxhLcBTbCdcDoNmc1Fv0xpwJtOi7A==}
     dependencies:
       '@vuepic/vue-datepicker': 7.4.1(vue@3.4.15)
       '@vueuse/core': 10.7.2(vue@3.4.15)
       '@vueuse/integrations': 10.7.2(focus-trap@7.5.4)(qrcode@1.5.3)(vue@3.4.15)
-      ant-design-vue: 4.1.1(vue@3.4.15)
+      ant-design-vue: 4.1.2(vue@3.4.15)
       core-js: 3.35.1
       date-fns: 3.3.1
       naive-ui: 2.37.3(vue@3.4.15)
