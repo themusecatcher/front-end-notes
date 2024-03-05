@@ -308,6 +308,14 @@ export default defineConfig({
             {
               text: 'No.1',
               link: '/vue3/No.1'
+            },
+            {
+              text: 'No.2',
+              link: '/vue3/No.2'
+            },
+            {
+              text: 'No.3',
+              link: '/vue3/No.3'
             }
           ]
         }
