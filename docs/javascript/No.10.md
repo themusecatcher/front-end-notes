@@ -273,11 +273,11 @@ element.appendChild(fragment) // 一次性插入。可以避免每次插入时�
 
 <br/>
 
-`Worker` 是一个使用构造函数创建的对象（例如 Worker()），它运行一个具名 `JavaScript` 文件——该文件包含将在 `worker` 线程中运行的代码。
+`Worker` 是一个使用构造函数创建的对象（例如 `Worker()`），它运行一个具名 `JavaScript` 文件——该文件包含将在 `worker` 线程中运行的代码。
 
-除了标准的 JavaScript 函数集（如 String、Array、Object、JSON 等），你可以在 worker 线程中运行任何你喜欢的代码，有一些例外：**你不能直接在 worker 线程中操作 DOM 元素，或使用 window 对象中的某些方法和属性**。有关你可以运行的代码的信息，请参见下面的 Worker 全局上下文和函数和支持的 Web API 。
+除了标准的 JavaScript 函数集（如 `String`、`Array`、`Object`、`JSON` 等），你可以在 worker 线程中运行任何你喜欢的代码，有一些例外：**你不能直接在 worker 线程中操作 DOM 元素，或使用 window 对象中的某些方法和属性**。有关你可以运行的代码的信息，请参见下面的 Worker 全局上下文和函数和支持的 Web API 。
 
-**数据通过消息系统在 worker 和主线程之间发送**——双方都使用 `postMessage()` 方法发送消息，并通过 `onmessage` 事件处理程序响应消息（消息包含在 message 事件的 data 属性中）。数据是复制的，而不是共享的。
+**数据通过消息系统在 worker 和主线程之间发送**——双方都使用 `postMessage()` 方法发送消息，并通过 `onmessage` 事件处理程序响应消息（消息包含在 message 事件的 data 属性中）。**数据是复制的，而不是共享的**。
 
 worker 可以依次生成新的 worker，只要这些 worker 与父页面托管在同一个 origin 中。此外，worker 可以通过 XMLHttpRequest 来访问网络，但 XMLHttpRequest 的 responseXML 和 channel 属性始终返回 null。
 
