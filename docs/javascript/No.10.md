@@ -291,15 +291,27 @@ worker 可以依次生成新的 worker，只要这些 worker 与父页面托管�
 
 ```js
 // self.onmessage = (event) => { ... }
-self.addEventListener('message', (event) => {
-  console.log('web worker 收到来自主线程的消息:', event.data)
-  const result = doSomeHeavyWork(event.data)
+self.addEventListener('message', (e) => {
+  console.log('web worker 收到来自主线程的消息:', e.data)
+  const result = doSomeHeavyWork(e.data)
   self.postMessage(result) // 将操作结果发送到主线程
 })
 function doSomeHeavyWork (data) {
   // 执行耗时的计算或任务
   return data * 2
 }
+
+// ESModule模式
+import doSomeHeavyWork from './utils.js' // 导入外部js
+// utils.js
+// export default doSomeHeavyWork = (a) => a * 2
+
+self.addEventListener('message', e => { 
+  const result = doSomeHeavyWork(e.data)
+  postMessage(e.data)
+})
+
+export default self // 把顶级对象self暴露出去
 ```
 
 *主线程代码*
@@ -313,9 +325,14 @@ myWorker.addEventListener('message', (event) => {
   console.log('接收到 web worker 返回的信息:', event.data)
   worker.terminate() // 立即终止 web worker
 })
+
+// ESModule模式
+const worker = new Worker('worker.js', {
+  type: 'module' // 指定 worker.js 的类型
+})
 ```
 
-### [Worker.postMessage()](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/postMessage)
+### [Worker.postMessage()](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/postMessage) <Badge type="tip" text="宏任务" />
 
 <br/>
 
@@ -346,3 +363,47 @@ onmessage = (event) => {}
 <br/>
 
 `Worker` 接口中的 `terminate()` 方法用于**立即终止 Worker 的行为**。本方法并**不会等待 worker 去完成它剩余的操作；worker 将会被立刻停止**。
+
+## [importScripts()](https://developer.mozilla.org/zh-CN/docs/Web/API/WorkerGlobalScope/importScripts)
+
+`WorkerGlobalScope` 接口的 `importScripts()` 方法**将一个或多个脚本同步导入到工作者的作用域中**。
+
+### 语法
+
+```js
+self.importScripts('foo.js') /* 只引入 "foo.js" */
+self.importScripts('foo.js', 'bar.js', ...) /* 引入两个脚本 */
+self.importScripts("//example.com/hello.js") /* 你可以从其他来源导入脚本 */
+```
+
+### 示例
+
+如果你在一个名为 `foo.js` 的单独脚本中编写了一些你想在 `worker.js` 中使用的功能，则可以使用以下行导入它：
+
+```js
+importScripts('foo.js')
+```
+
+`importScripts()` 和 `self.importScripts()` 实际上是等效的 — 都表示从工作者的内部范围内调用的 `importScripts()`。
+
+## [window.self](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/self)
+
+返回一个指向当前 `window` 对象的引用。
+
+### 语法
+
+```js
+objRef = window.self
+```
+
+### 示例
+
+```js
+if (window.parent.frames[0] != window.self) {
+  // 当前对象不是 frames 列表中的第一个时
+}
+```
+
+::: tip 备注
+`window.self` 几乎总是用于上面示例那样的比较，用来判断当前 `window` 是不是父 `frameset` 中的第一个 `frame`。
+:::
