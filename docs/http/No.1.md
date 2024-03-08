@@ -165,7 +165,7 @@ field.addEventListener('change', function () {
 
 ## DOMContentLoaded & Load & Finish
 
-![alt text](未命名图片.png)
+![alt text](1.png)
 
 - `DOMContentLoaded`：DOM树构建完成。即HTML页面由上向下解析HTML结构到末尾封闭标签`</html>`
 
