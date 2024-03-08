@@ -53,6 +53,7 @@ export default defineConfig({
       { text: 'HTML', link: '/html/No.1', activeMatch: '/html/' },
       { text: 'Vue2', link: '/vue2/No.1', activeMatch: '/vue2/' },
       { text: 'Vue3', link: '/vue3/No.1', activeMatch: '/vue3/' },
+      { text: 'Http', link: '/http/No.1', activeMatch: '/http/' },
       { text: 'Plugins', link: '/plugins/started', activeMatch: '/plugins/' },
       {
         text: 'Links',
@@ -320,6 +321,34 @@ export default defineConfig({
             {
               text: 'No.3',
               link: '/vue3/No.3'
+            }
+          ]
+        }
+      ],
+      '/http/': [
+        {
+          text: '指引',
+          items: [
+            {
+              text: '开始',
+              link: '/http/started'
+            }
+          ]
+        },
+        {
+          text: 'Http Notes',
+          items: [
+            {
+              text: 'No.1',
+              link: '/http/No.1'
+            },
+            {
+              text: 'No.2',
+              link: '/http/No.2'
+            },
+            {
+              text: 'No.3',
+              link: '/http/No.3'
             }
           ]
         }

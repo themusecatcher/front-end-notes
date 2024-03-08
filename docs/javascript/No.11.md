@@ -79,6 +79,71 @@ map.set(el, 'foo元素') // 这样当el被移除时，就会自动释放占用�
 wm.get(el) // 'foo元素'
 ```
 
-总之，**WeakMap的专用场合就是，它的键所对应的对象，可能会在将来消失**。`WeakMap`结构有助于防止内存泄漏。
+总之，**Weak     Map的专用场合就是，它的键所对应的对象，可能会在将来消失**。`WeakMap`结构有助于防止内存泄漏。
 <br/>
 一个典型应用场景是，在网页的 `DOM` 元素上添加数据，就可以使用`WeakMap`结构。当该 `DOM` 元素被清除，其所对应的`WeakMap`记录就会自动被移除。
+
+## [WebSocket](https://developer.mozilla.org/zh-CN/docs/Web/API/WebSocket)
+
+`WebSocket` 对象提供了用于创建和管理 `WebSocket` 连接，以及可以通过该连接发送和接收数据的 API。
+
+`WebSockets` 是一种先进的技术。它**可以在用户的浏览器和服务器之间打开交互式通信会话**。使用此 API，你可以向服务器发送消息并接收事件驱动的响应，而无需通过轮询服务器的方式以获得响应。
+
+使用 `WebSocket()` 构造函数来构造一个 `WebSocket`。
+
+- 构造函数: `WebSocket(url[, protocols])` 返回一个 `WebSocket` 对象。
+- 语法：
+
+  ```js
+  var aWebSocket = new WebSocket(url [, protocols])
+  ```
+
+- 参数：
+  - `url`
+    要连接的 `URL`；这应该是 `WebSocket` 服务器将响应的 `URL`。
+  - `protocols` <Badge type="tip" text="可选" />
+    一个`协议字符串`或者一个`包含协议字符串的数组`。这些字符串用于指定子协议，这样单个服务器可以实现多个 WebSocket 子协议（例如，你可能希望一台服务器能够根据指定的协议（protocol）处理不同类型的交互）。如果不指定协议字符串，则假定为空字符串。
+
+### 属性
+
+- `WebSocket.binaryType`: 使用二进制的数据类型连接。
+- `WebSocket.bufferedAmount` <Badge type="tip" text="只读" />: 未发送至服务器的字节数。
+- `WebSocket.extensions` <Badge type="tip" text="只读" />: 服务器选择的扩展。
+- `WebSocket.onclose`: 用于指定连接关闭后的回调函数。
+- `WebSocket.onerror`: 用于指定连接失败后的回调函数。
+- `WebSocket.onmessage`: 用于指定当从服务器接受到信息时的回调函数。
+- `WebSocket.onopen`: 用于指定连接成功后的回调函数。
+- `WebSocket.protocol` <Badge type="tip" text="只读" />: 服务器选择的下属协议。
+- `WebSocket.readyState` <Badge type="tip" text="只读" />: 当前的链接状态。
+- `WebSocket.url` 只读: WebSocket 的绝对路径。
+
+### 方法
+
+- `WebSocket.close([code[, reason]])`: 关闭当前链接。
+- `WebSocket.send(data)`: 对要传输的数据进行排队。
+
+### 事件
+
+使用 `addEventListener()` 或将一个事件监听器赋值给本接口的 `oneventname` 属性，来监听下面的事件。
+
+- `close`：当一个 `WebSocket` 连接被关闭时触发。 也可以通过 `onclose` 属性来设置。
+- `error`：当一个 `WebSocket` 连接因错误而关闭时触发，例如无法发送数据时。 也可以通过 `onerror` 属性来设置。
+- `message`：当通过 `WebSocket` 收到数据时触发。 也可以通过 `onmessage` 属性来设置。
+- `open`：当一个 `WebSocket` 连接成功时触发。 也可以通过 `onopen` 属性来设置。
+
+### 示例
+
+```js
+// Create WebSocket connection.
+const socket = new WebSocket('ws://localhost:8080')
+
+// Connection opened
+socket.addEventListener('open', function (event) {
+  socket.send('Hello Server!')
+})
+
+// Listen for messages
+socket.addEventListener('message', function (event) {
+  console.log('Message from server ', event.data)
+})
+```
