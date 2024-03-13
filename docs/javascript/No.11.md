@@ -147,3 +147,47 @@ socket.addEventListener('message', function (event) {
   console.log('Message from server ', event.data)
 })
 ```
+
+## [ES6模块与CommonJS模块的差异](https://es6.ruanyifeng.com/#docs/module-loader#ES6-%E6%A8%A1%E5%9D%97%E4%B8%8E-CommonJS-%E6%A8%A1%E5%9D%97%E7%9A%84%E5%B7%AE%E5%BC%82)
+
+- `CommonJS` 模块输出的是一个**值的拷贝**，`ES6` 模块输出的是**值的引用**。
+  - `CommonJS` 模块输出的是值的拷贝，也就是说，一旦输出一个值，模块内部的变化就影响不到这个值。
+  - `ES6` 模块的运行机制与 `CommonJS` 不一样。**JS 引擎对脚本静态分析的时候，遇到模块加载命令import，就会生成一个只读引用**。等到脚本真正执行时，再根据这个只读引用，到被加载的那个模块里面去取值。换句话说，`ES6` 的import有点像 Unix 系统的“符号连接”，**原始值变了，import加载的值也会跟着变**。因此，`ES6` 模块是动态引用，并且不会缓存值，模块里面的变量绑定其所在的模块。
+- `CommonJS` 模块是**运行时**加载，`ES6` 模块是**编译时**输出接口。
+  - `CommonJS` 加载的是一个对象（即`module.exports`属性），该对象只有在脚本运行完才会生成。而 `ES6` 模块不是对象，它的对外接口只是一种静态定义，在代码静态解析阶段就会生成。
+- `CommonJS` 模块的`require()`是**同步加载**模块，`ES6` 模块的`import`命令是**异步加载**，有一个独立的模块依赖的解析阶段。
+
+### Node.js 的模块加载方法
+
+<br/>
+
+`JavaScript` 现在有两种模块。一种是 `ES6` 模块，简称 **ESM**；另一种是 `CommonJS` 模块，简称 **CJS**。
+
+`CommonJS` 模块是 `Node.js` 专用的，与 `ES6` 模块不兼容。语法上面，两者最明显的差异是，`CommonJS` 模块使用`require()`和`module.exports`，`ES6` 模块使用`import`和`export`。
+
+<br/>
+
+它们采用不同的加载方案。从 Node.js v13.2 版本开始，Node.js 已经默认打开了 ES6 模块支持。
+
+<br/>
+
+`Node.js` 要求 `ES6` 模块采用`.mjs`后缀文件名。也就是说，只要脚本文件里面使用`import`或者`export`命令，那么就必须采用`.mjs`后缀名。`Node.js` 遇到`.mjs`文件，就认为它是 `ES6` 模块，**默认启用严格模式**，不必在每个模块文件顶部指定`"use strict"`。
+
+**如果不希望将后缀名改成.mjs，可以在项目的`package.json`文件中，指定`type`字段为`module`。**
+
+```json
+"type": "module" // 一旦设置了以后，该项目的 JS 脚本，就被解释成 ES6 模块。
+```
+
+
+如果这时还要使用 `CommonJS` 模块，那么需要将 `CommonJS` 脚本的后缀名都改成`.cjs`。如果没有`type`字段，或者`type`字段为`commonjs`，则`.js`脚本会被解释成 `CommonJS` 模块。
+
+<br/>
+
+**总结为一句话**：`.mjs`文件总是以 `ES6` 模块加载，`.cjs`文件总是以 `CommonJS` 模块加载，`.js`文件的加载取决于`package.json`里面`type`字段的设置。
+
+::: tip 注意
+- ES6 模块与 CommonJS 模块尽量不要混用。require命令不能加载.mjs文件，会报错，只有import命令才可以加载.mjs文件。反过来，.mjs文件里面也不能使用require命令，必须使用import。
+- 如果 package.json 不包含 "type": "module"，Vite 会生成不同的文件后缀名以兼容 Node.js。.js 会变为 .mjs 而 .cjs 会变为 .js 。（即会生成 .mjs 和 .js 的两个文件）
+- 如果 package.json 包含 "type": "module"，（则会生成 .cjs 和 .js 的两个文件）
+:::
