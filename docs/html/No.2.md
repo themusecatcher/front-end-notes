@@ -79,20 +79,20 @@ HTML 属性能够赋予元素含义和语境。
 -- | --
 `accesskey` | 设置访问元素的键盘快捷键。
 `class` | 规定元素的类名（classname）
-`contenteditable` <Badge type="tip" text="New" /> | 规定是否可编辑元素的内容。
-`contextmenu` <Badge type="tip" text="New" /> | 指定一个元素的上下文菜单。当用户右击该元素，出现上下文菜单
-`data-*` <Badge type="tip" text="New" /> | 用于存储页面的自定义数据
+`contenteditable` <Tag :bordered="false" color="cyan">New</Tag> | 规定是否可编辑元素的内容。
+`contextmenu` <Tag :bordered="false" color="cyan">New</Tag> | 指定一个元素的上下文菜单。当用户右击该元素，出现上下文菜单
+`data-*` <Tag :bordered="false" color="cyan">New</Tag> | 用于存储页面的自定义数据
 `dir` | 设置元素中内容的文本方向。
-`draggable` <Badge type="tip" text="New" /> | 指定某个元素是否可以拖动
-`dropzone` <Badge type="tip" text="New" /> | 指定是否将数据复制，移动，或链接，或删除
-`hidden` <Badge type="tip" text="New" /> | hidden 属性规定对元素进行隐藏。
+`draggable` <Tag :bordered="false" color="cyan">New</Tag> | 指定某个元素是否可以拖动
+`dropzone` <Tag :bordered="false" color="cyan">New</Tag> | 指定是否将数据复制，移动，或链接，或删除
+`hidden` <Tag :bordered="false" color="cyan">New</Tag> | hidden 属性规定对元素进行隐藏。
 `id` | 规定元素的唯一 id
 `lang` | 设置元素中内容的语言代码。
-`spellcheck` <Badge type="tip" text="New" /> | 检测元素是否拼写错误
+`spellcheck` <Tag :bordered="false" color="cyan">New</Tag> | 检测元素是否拼写错误
 `style` | 规定元素的行内样式（inline style）
 `tabindex` | 设置元素的 Tab 键控制次序。
 `title` | 规定元素的额外信息（可在工具提示中显示）
-`translate` <Badge type="tip" text="New" /> | 指定是否一个元素的值在页面载入时是否需要翻译
+`translate` <Tag :bordered="false" color="cyan">New</Tag> | 指定是否一个元素的值在页面载入时是否需要翻译
 
 ## [HTMLElement.dataset](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dataset)
 

@@ -84,7 +84,7 @@ updateMessage: async function () {
 </style>
 ```
 
-3. 字符串全局替换 `replace` <Badge type="tip" text="推荐" />
+3. 字符串全局替换 `replace` <Tag :bordered="false" color="cyan">推荐</Tag>
 
 ```js
 // 全局替换 <img 为 <img class="u-img"
@@ -99,7 +99,7 @@ this.content = this.content.replace(/<img/gi, '<img style="max-width:100%;"')
 }
 ```
 
-4. `deep` 样式穿透 <Badge type="tip" text="较简单" />
+4. `deep` 样式穿透 <Tag :bordered="false" color="cyan">较简单</Tag>
 
 ```less
 <style lang="less" scoped>

@@ -33,12 +33,12 @@ addEventListener(type, listener, useCapture);
 - 参数：
   - `type`：表示监听事件类型的大小写敏感的字符串。
   - `listener`：当所监听的事件类型触发时，会接收到一个事件通知（实现了 Event 接口的对象）对象。listener 必须是一个实现了 EventListener 接口的对象，或者是一个函数。有关回调本身的详细信息，请参阅事件监听回调
-  - `options` <Badge type="tip" text="可选" /> 一个指定有关 listener 属性的可选参数对象。可用的选项如下：
-    - `capture` <Badge type="tip" text="可选" /> 一个布尔值，表示 listener 会在该类型的事件捕获阶段传播到该 EventTarget 时触发。
-    - `once` <Badge type="tip" text="可选" /> 一个布尔值，表示 listener 在添加之后最多只调用一次。如果为 true，listener 会在其被调用之后自动移除。
-    - `passive` <Badge type="tip" text="可选" /> 一个布尔值，设置为 true 时，表示 listener 永远不会调用 preventDefault()。如果 listener 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告。查看使用 passive 改善滚屏性能以了解更多。
-    - `signal` <Badge type="tip" text="可选" /> AbortSignal，该 AbortSignal 的 abort() 方法被调用时，监听器会被移除。
-  - `useCapture` <Badge type="tip" text="可选" />
+  - `options` <Tag :bordered="false" color="cyan">可选</Tag> 一个指定有关 listener 属性的可选参数对象。可用的选项如下：
+    - `capture` <Tag :bordered="false" color="cyan">可选</Tag> 一个布尔值，表示 listener 会在该类型的事件捕获阶段传播到该 EventTarget 时触发。
+    - `once` <Tag :bordered="false" color="cyan">可选</Tag> 一个布尔值，表示 listener 在添加之后最多只调用一次。如果为 true，listener 会在其被调用之后自动移除。
+    - `passive` <Tag :bordered="false" color="cyan">可选</Tag> 一个布尔值，设置为 true 时，表示 listener 永远不会调用 preventDefault()。如果 listener 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告。查看使用 passive 改善滚屏性能以了解更多。
+    - `signal` <Tag :bordered="false" color="cyan">可选</Tag> AbortSignal，该 AbortSignal 的 abort() 方法被调用时，监听器会被移除。
+  - `useCapture` <Tag :bordered="false" color="cyan">可选</Tag>
   一个布尔值，表示在 DOM 树中注册了 listener 的元素，是否要先于它下面的 EventTarget 调用该 listener。当 useCapture（设为 true）时，沿着 DOM 树向上冒泡的事件不会触发 listener。当一个元素嵌套了另一个元素，并且两个元素都对同一事件注册了一个处理函数时，所发生的事件冒泡和事件捕获是两种不同的事件传播方式。事件传播模式决定了元素以哪个顺序接收事件。进一步的解释可以查看 DOM Level 3 事件及 JavaScript 事件顺序文档。如果没有指定，`useCapture` 默认为 `false`。
 
 `document.addEventListener()` 方法用于向文档添加事件句柄。
@@ -56,9 +56,9 @@ addEventListener(type, listener, useCapture);
 
 参数 | 描述
 -- | --
-event <Badge type="tip" text="必需" /> | 描述事件名称的字符串<br>注意： 不要使用 "on" 前缀。例如，使用 "click" 来取代 "onclick"。<br>提示： 所有 HTML DOM 事件，可以查看我们完整的 HTML DOM Event 对象参考手册。
-function <Badge type="tip" text="必需" /> | 描述了事件触发后执行的函数。<br>当事件触发时，事件对象会作为第一个参数传入函数。事件对象的类型取决于特定的事件。<br>例如，`click` 事件属于 MouseEvent(鼠标事件) 对象。
-useCapture <Badge type="tip" text="可选" /> | 布尔值，指定事件是否在捕获或冒泡阶段执行。<br>可能值：<ul><li>true：事件句柄在捕获阶段执行</li><li>false：默认。事件句柄在冒泡阶段执行</li></ul>
+event <Tag :bordered="false" color="cyan">必需</Tag> | 描述事件名称的字符串<br>注意： 不要使用 "on" 前缀。例如，使用 "click" 来取代 "onclick"。<br>提示： 所有 HTML DOM 事件，可以查看我们完整的 HTML DOM Event 对象参考手册。
+function <Tag :bordered="false" color="cyan">必需</Tag> | 描述了事件触发后执行的函数。<br>当事件触发时，事件对象会作为第一个参数传入函数。事件对象的类型取决于特定的事件。<br>例如，`click` 事件属于 MouseEvent(鼠标事件) 对象。
+useCapture <Tag :bordered="false" color="cyan">可选</Tag> | 布尔值，指定事件是否在捕获或冒泡阶段执行。<br>可能值：<ul><li>true：事件句柄在捕获阶段执行</li><li>false：默认。事件句柄在冒泡阶段执行</li></ul>
 
 ```js
 // 禁用H5页面的下拉刷新
@@ -142,7 +142,7 @@ el.onclick = function (event) {
 `location.hash` | 包含块标识符的 `DOMString`，开头有一个 #
 `location.username` | 包含 `URL` 中域名前的用户名的一个 `DOMString`
 `location.password` | 包含 `URL` 域名前的密码的一个 `DOMString`
-`location.origin`<Badge type="tip" text="只读" /> | 包含页面来源的域名的标准形式 `DOMString`
+`location.origin`<Tag :bordered="false" color="cyan">只读</Tag> | 包含页面来源的域名的标准形式 `DOMString`
 
 假设当前网页路由：`http://172.16.200.17:8080/agent`
 
@@ -155,7 +155,7 @@ el.onclick = function (event) {
 **process.env 属性返回包含用户环境的对象**
 
 ::: warning
-`process` 对象是 `global` 对象的属性，是一个全局对象，`NODE_ENV` 不是 `process.env` 对象上原有的属性，它是我们自己添加上去的一个环境变量，用来确定当前所处的开发阶段。一般生产阶段设为 `production`，开发阶段设为` development`，然后在脚本中读取 `process.env.NODE_ENV`
+`process` 对象是 `global` 对象的属性，是一个全局对象，`NODE_ENV` 不是 `process.env` 对象上原有的属性，它是我们自己添加上去的一个环境变量，用来确定当前所处的开发阶段。一般生产阶段设为 `production`，开发阶段设为`development`，然后在脚本中读取 `process.env.NODE_ENV`
 :::
 
 `process.env` 包含着关于系统环境的信息，但是 `process.env` 中并不存在 `NODE_ENV` 这个东西。
@@ -167,6 +167,7 @@ console.log(process === global.process) // true
 ```
 
 常用的一些属性：
+
 - `process.env` `<Object>`：返回包含用户环境的对象。
 - `process.platform` `<string>`：返回用于标识编译 Node.js 二进制文件的操作系统平台的字符串。
 目前可能的值是：'aix'，'darwin'，'freebsd'，'linux'，'openbsd'，'sunos'，'win32'
@@ -189,6 +190,7 @@ console.log(`Version: ${version}`)
 
 // Version: v14.8.0
 要获取不带 v 的版本字符串，则使用 `process.versions.node`。
+
 - `process.versions` `<Object>`：返回对象，其中列出Node.js的版本字符串及其依赖项。
 
 ```js

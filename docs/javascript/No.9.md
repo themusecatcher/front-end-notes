@@ -92,51 +92,51 @@ text.width // 16;
 
 ### 属性
 
-- `TextMetrics.width` <Badge type="warning" text="只读" />
+- `TextMetrics.width` <Tag :bordered="false" color="cyan">只读</Tag>
 
   `double` 类型，**使用 CSS 像素计算的内联字符串的宽度**。基于当前上下文字体考虑。
 
-- `TextMetrics.actualBoundingBoxLeft` <Badge type="warning" text="只读" />
+- `TextMetrics.actualBoundingBoxLeft` <Tag :bordered="false" color="cyan">只读</Tag>
 
   `double` 类型，平行于基线，从CanvasRenderingContext2D.textAlign 属性确定的对齐点到文本矩形边界左侧的距离，使用 CSS 像素计算；正值表示文本矩形边界左侧在该对齐点的左侧。
 
-- `TextMetrics.actualBoundingBoxRight` <Badge type="warning" text="只读" />
+- `TextMetrics.actualBoundingBoxRight` <Tag :bordered="false" color="cyan">只读</Tag>
 
   `double` 类型，平行于基线，从CanvasRenderingContext2D.textAlign 属性确定的对齐点到文本矩形边界右侧的距离，使用 CSS 像素计算。
 
-- `TextMetrics.fontBoundingBoxAscent` <Badge type="warning" text="只读" />
+- `TextMetrics.fontBoundingBoxAscent` <Tag :bordered="false" color="cyan">只读</Tag>
 
   `double` 类型，从CanvasRenderingContext2D.textBaseline 属性标明的水平线到渲染文本的所有字体的矩形最高边界顶部的距离，使用 CSS 像素计算。
 
-- `TextMetrics.fontBoundingBoxDescent` <Badge type="warning" text="只读" />
+- `TextMetrics.fontBoundingBoxDescent` <Tag :bordered="false" color="cyan">只读</Tag>
 
   `double` 类型，从CanvasRenderingContext2D.textBaseline 属性标明的水平线到渲染文本的所有字体的矩形边界最底部的距离，使用 CSS 像素计算。
 
-- `TextMetrics.actualBoundingBoxAscent` <Badge type="warning" text="只读" />
+- `TextMetrics.actualBoundingBoxAscent` <Tag :bordered="false" color="cyan">只读</Tag>
 
   `double` 类型，从CanvasRenderingContext2D.textBaseline 属性标明的水平线到渲染文本的矩形边界顶部的距离，使用 CSS 像素计算。
 
-- `TextMetrics.actualBoundingBoxDescent` <Badge type="warning" text="只读" />
+- `TextMetrics.actualBoundingBoxDescent` <Tag :bordered="false" color="cyan">只读</Tag>
 
   `double` 类型，从CanvasRenderingContext2D.textBaseline 属性标明的水平线到渲染文本的矩形边界底部的距离，使用 CSS 像素计算。
 
-- `TextMetrics.emHeightAscent` <Badge type="warning" text="只读" />
+- `TextMetrics.emHeightAscent` <Tag :bordered="false" color="cyan">只读</Tag>
 
   `double` 类型，从CanvasRenderingContext2D.textBaseline 属性标明的水平线到线框中 em 方块顶部的距离，使用 CSS 像素计算。
 
-- `TextMetrics.emHeightDescent` <Badge type="warning" text="只读" />
+- `TextMetrics.emHeightDescent` <Tag :bordered="false" color="cyan">只读</Tag>
 
   `double` 类型，从CanvasRenderingContext2D.textBaseline 属性标明的水平线到线框中 em 方块底部的距离，使用 CSS 像素计算。
 
-- `TextMetrics.hangingBaseline` <Badge type="warning" text="只读" />
+- `TextMetrics.hangingBaseline` <Tag :bordered="false" color="cyan">只读</Tag>
 
   `double` 类型，从CanvasRenderingContext2D.textBaseline 属性标明的水平线到线框的 hanging 基线的距离，使用 CSS 像素计算。
 
-- `TextMetrics.alphabeticBaseline` <Badge type="warning" text="只读" />
+- `TextMetrics.alphabeticBaseline` <Tag :bordered="false" color="cyan">只读</Tag>
 
   `double` 类型，从CanvasRenderingContext2D.textBaseline 属性标明的水平线到线框的 alphabetic 基线的距离，使用 CSS 像素计算。
 
-- `TextMetrics.ideographicBaseline` <Badge type="warning" text="只读" />
+- `TextMetrics.ideographicBaseline` <Tag :bordered="false" color="cyan">只读</Tag>
 
   `double` 类型，从 CanvasRenderingContext2D.textBaseline 属性标明的水平线到线框的 ideographic 基线的距离，使用 CSS 像素计算。
 
@@ -184,7 +184,7 @@ fillText(text, x, y, maxWidth)
 
 - `y`：开始绘制文本的基线的 `Y` 轴坐标，单位为像素。
 
-- `maxWidth` <Badge type="warning" text="可选" /> 文本渲染后的最大像素宽度。如果未指定，则文本宽度没有限制。但是，如果提供了该值，用户代理将调整字距，选择水平方向更紧凑的字体（如果有这种字体或可以在不降低质量的情况下生成这种字体），或缩小字体大小，以便在指定宽度内容纳文本。
+- `maxWidth` <Tag :bordered="false" color="cyan">可选</Tag> 文本渲染后的最大像素宽度。如果未指定，则文本宽度没有限制。但是，如果提供了该值，用户代理将调整字距，选择水平方向更紧凑的字体（如果有这种字体或可以在不降低质量的情况下生成这种字体），或缩小字体大小，以便在指定宽度内容纳文本。
 
 ### 返回值
 
@@ -276,21 +276,21 @@ drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
 
 - `image`：绘制到上下文的元素。允许任何的画布图像源，例如：`HTMLImageElement`、`SVGImageElement` (en-US)、`HTMLVideoElement`、`HTMLCanvasElement`、`ImageBitmap`、`OffscreenCanvas` 或 `VideoFrame` (en-US)。
 
-- `sx`<Badge type="warning" text="可选" />：需要绘制到目标上下文中的，`image` 的矩形（裁剪）选择框的左上角 `X` 轴坐标。可以使用 `3` 参数或 `5` 参数语法来省略这个参数。
+- `sx`<Tag :bordered="false" color="cyan">可选</Tag>：需要绘制到目标上下文中的，`image` 的矩形（裁剪）选择框的左上角 `X` 轴坐标。可以使用 `3` 参数或 `5` 参数语法来省略这个参数。
 
-- `sy`<Badge type="warning" text="可选" />：需要绘制到目标上下文中的，`image` 的矩形（裁剪）选择框的左上角 `Y` 轴坐标。可以使用 `3` 参数或 `5` 参数语法来省略这个参数。
+- `sy`<Tag :bordered="false" color="cyan">可选</Tag>：需要绘制到目标上下文中的，`image` 的矩形（裁剪）选择框的左上角 `Y` 轴坐标。可以使用 `3` 参数或 `5` 参数语法来省略这个参数。
 
-- `sWidth`<Badge type="warning" text="可选" />：需要绘制到目标上下文中的，`image` 的矩形（裁剪）选择框的宽度。如果不说明，整个矩形（裁剪）从坐标的 `sx` 和 `sy` 开始，到 `image` 的右下角结束。可以使用 `3` 参数或 `5` 参数语法来省略这个参数。使用负值将翻转这个图像。
+- `sWidth`<Tag :bordered="false" color="cyan">可选</Tag>：需要绘制到目标上下文中的，`image` 的矩形（裁剪）选择框的宽度。如果不说明，整个矩形（裁剪）从坐标的 `sx` 和 `sy` 开始，到 `image` 的右下角结束。可以使用 `3` 参数或 `5` 参数语法来省略这个参数。使用负值将翻转这个图像。
 
-- `sHeight`<Badge type="warning" text="可选" />：需要绘制到目标上下文中的，`image` 的矩形（裁剪）选择框的高度。使用负值将翻转这个图像。
+- `sHeight`<Tag :bordered="false" color="cyan">可选</Tag>：需要绘制到目标上下文中的，`image` 的矩形（裁剪）选择框的高度。使用负值将翻转这个图像。
 
-- `dx`<Badge type="warning" text="可选" />：`image` 的左上角在目标画布上 `X` 轴坐标。
+- `dx`<Tag :bordered="false" color="cyan">可选</Tag>：`image` 的左上角在目标画布上 `X` 轴坐标。
 
-- `dy`<Badge type="warning" text="可选" />：`image` 的左上角在目标画布上 `Y` 轴坐标。
+- `dy`<Tag :bordered="false" color="cyan">可选</Tag>：`image` 的左上角在目标画布上 `Y` 轴坐标。
 
-- `dWidth`<Badge type="warning" text="可选" />：`image` 在目标画布上绘制的宽度。允许对绘制的 `image` 进行缩放。如果不说明，在绘制时 `image` 宽度不会缩放。注意，这个参数不包含在 `3` 参数语法中。
+- `dWidth`<Tag :bordered="false" color="cyan">可选</Tag>：`image` 在目标画布上绘制的宽度。允许对绘制的 `image` 进行缩放。如果不说明，在绘制时 `image` 宽度不会缩放。注意，这个参数不包含在 `3` 参数语法中。
 
-- `dHeight`<Badge type="warning" text="可选" />：`image` 在目标画布上绘制的高度。允许对绘制的 `image` 进行缩放。如果不说明，在绘制时 `image` 高度不会缩放。注意，这个参数不包含在 `3` 参数语法中。
+- `dHeight`<Tag :bordered="false" color="cyan">可选</Tag>：`image` 在目标画布上绘制的高度。允许对绘制的 `image` 进行缩放。如果不说明，在绘制时 `image` 高度不会缩放。注意，这个参数不包含在 `3` 参数语法中。
 
 ### 返回值
 

@@ -179,19 +179,19 @@ scrollIntoView(scrollIntoViewOptions)
 
 ### 参数
 
-- `alignToTop` <Badge type="tip" text="可选" /> 一个布尔值：
+- `alignToTop` <Tag :bordered="false" color="cyan">可选</Tag> 一个布尔值：
   - `true`，元素的*顶端将和其所在滚动区的可视区域的顶端对齐*。相应的 `scrollIntoViewOptions: {block: 'start', inline: 'nearest'}` 这是这个参数的*默认值*。
   - `false`，元素的*底端将和其所在滚动区的可视区域的底端对齐*。相应的 `scrollIntoViewOptions: {block: 'end', inline: 'nearest'}`。
 
-- `scrollIntoViewOptions` <Badge type="tip" text="可选" /> 一个包含下列属性的对象：
-  - `behavior` <Badge type="tip" text="可选" />
+- `scrollIntoViewOptions` <Tag :bordered="false" color="cyan">可选</Tag> 一个包含下列属性的对象：
+  - `behavior` <Tag :bordered="false" color="cyan">可选</Tag>
     定义滚动是立即的还是平滑的动画。该选项是一个字符串，必须采用以下值之一：
     - `smooth`：滚动应该是*平滑的动画*。
     - `instant`：滚动应该通过*一次跳跃立刻发生*。
     - `auto`：滚动行为由 `scroll-behavior` 的计算值决定。
-  - `block` <Badge type="tip" text="可选" />
+  - `block` <Tag :bordered="false" color="cyan">可选</Tag>
     定义*垂直方向的对齐*，start、center、end 或 nearest 之一。默认为 start。
-  - `inline` <Badge type="tip" text="可选" />
+  - `inline` <Tag :bordered="false" color="cyan">可选</Tag>
     定义*水平方向的对齐*，start、center、end 或 nearest 之一。默认为 nearest。
 
 ### 返回值

@@ -1,18 +1,18 @@
 # Note 1
 
-## 非CJK脚本的换行规则 <Badge type="tip" text="长字母和数字" />
+## 非CJK脚本的换行规则 <Tag :bordered="false" color="magenta">长字母和数字</Tag>
 
 *CJK脚本是中国，日本和韩国（"中日韩"）脚本*
 
-- `word-wrap` 属性：允许长的内容可以自动换行。
-- `word-break`<Badge type="tip" text="推荐" /> 属性：指定非CJK脚本的换行规则。
+- `word-wrap` 已更名为 `overflow-wrap`，属性：允许长的内容可以自动换行。应用于行级元素，用来设置浏览器是否应该在一个本来不能断开的字符串中插入换行符，以防止文本溢出其行向盒。
+- `word-break`<Tag :bordered="false" color="cyan">推荐</Tag> 属性：指定非CJK脚本的换行规则。
 
 ```css
 .content {
   text-align: justify;
   overflow: hidden;
-  word-break: break-all; // 允许在单词内换行，会折断单词
-  word-wrap: break-word; // 在长单词或 URL 地址内部进行换行，其中单词会另起一行换行
+  word-break: break-all; // 对于 non-CJK (CJK 指中文/日文/韩文) 文本，可在任意字符间断行
+  overflow-wrap: break-word; // 在长单词或 URL 地址内部进行换行，其中单词会另起一行换行
 }
 ```
 
@@ -46,7 +46,7 @@
 }
 ```
 
-- 使用 `display: flex; flex-shrink: 0;` <Badge type="tip" text="推荐" />
+- 使用 `display: flex; flex-shrink: 0;` <Tag :bordered="false" color="cyan">推荐</Tag>
 
 *`flex-shrink` 属性指定了 flex 元素的收缩规则。flex 元素仅在默认宽度之和大于容器的时候才会发生收缩，其收缩的大小是依据 `flex-shrink` 的值。*
 

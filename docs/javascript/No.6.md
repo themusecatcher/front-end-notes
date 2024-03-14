@@ -24,11 +24,11 @@
   语法：`var blob = instanceOfBlob.slice([start [, end [, contentType]]]};`
   
   参数：
-  - `start` <Badge type="tip" text="可选" />
+  - `start` <Tag :bordered="false" color="cyan">可选</Tag>
     代表 Blob 里的下标，表示第一个会被会被拷贝进新的 `Blob` 的字节的起始位置。如果你传入的是一个负数，那么这个偏移量将会从数据的末尾从后到前开始计算。举例来说，-10 将会是 `Blob` 的倒数第十个字节。它的默认值是 0，如果你传入的 start 的长度大于源 `Blob` 的长度，那么返回的将会是一个长度为 0 并且不包含任何数据的一个 `Blob` 对象。
-  - `end` <Badge type="tip" text="可选" />
+  - `end` <Tag :bordered="false" color="cyan">可选</Tag>
     代表的是 `Blob` 的一个下标，这个下标 -1 的对应的字节将会是被拷贝进新的`Blob` 的最后一个字节。如果你传入了一个负数，那么这个偏移量将会从数据的末尾从后到前开始计算。举例来说， -10 将会是 `Blob` 的倒数第十个字节。它的默认值就是它的原始长度 (size).
-  - `contentType` <Badge type="tip" text="可选" />
+  - `contentType` <Tag :bordered="false" color="cyan">可选</Tag>
     给新的 `Blob` 赋予一个新的文档类型。这将会把它的 type 属性设为被传入的值。它的默认值是一个空的字符串。
   返回值：一个新的 `Blob` 对象，它包含了原始 `Blob` 对象的某一个段的数据。
 
@@ -292,31 +292,31 @@ uploadFile (files) {
     此对象的配置项描述了 `DOM` 的哪些变化应该报告给 `MutationObserver` 的 `callback`。当调用 `observe()` 时，`childList`、`attributes` 和 `characterData` 中，**必须有一个参数为 true**。否则会抛出 `TypeError` 异常。
 
     `options` 的属性如下：
-      - `subtree` <Badge type="warning" text="可选" />
+      - `subtree` <Tag :bordered="false" color="cyan">可选</Tag>
 
         当为 `true` 时，将会监听以 `target` 为根节点的整个子树。包括子树中所有节点的属性，而不仅仅是针对 `target`。默认值为 `false`。
 
-      - `childList` <Badge type="warning" text="可选" />
+      - `childList` <Tag :bordered="false" color="cyan">可选</Tag>
 
         当为 `true` 时，监听 `target` 节点中发生的节点的新增与删除（同时，如果 `subtree` 为 `true`，会针对整个子树生效）。默认值为 `false`。
 
-      - `attributes` <Badge type="warning" text="可选" />
+      - `attributes` <Tag :bordered="false" color="cyan">可选</Tag>
 
         当为 `true` 时观察所有监听的节点属性值的变化。默认值为 `true`，当声明了 `attributeFilter` 或 `attributeOldValue`，默认值则为 `false`。
 
-      - `attributeFilter` <Badge type="warning" text="可选" />
+      - `attributeFilter` <Tag :bordered="false" color="cyan">可选</Tag>
 
         一个用于声明哪些属性名会被监听的数组。如果不声明该属性，所有属性的变化都将触发通知。
 
-      - `attributeOldValue` <Badge type="warning" text="可选" />
+      - `attributeOldValue` <Tag :bordered="false" color="cyan">可选</Tag>
 
         当为 `true` 时，记录上一次被监听的节点的属性变化；可查阅监听属性值了解关于观察属性变化和属性值记录的详情。默认值为 `false`。
 
-      - `characterData` <Badge type="warning" text="可选" />
+      - `characterData` <Tag :bordered="false" color="cyan">可选</Tag>
 
         当为 `true` 时，监听声明的 `target` 节点上所有字符的变化。默认值为 `true`，如果声明了 `characterDataOldValue`，默认值则为 `false`
 
-      - `characterDataOldValue` <Badge type="warning" text="可选" />
+      - `characterDataOldValue` <Tag :bordered="false" color="cyan">可选</Tag>
 
         当为 `true` 时，记录前一个被监听的节点中发生的文本变化。默认值为 `false`
 

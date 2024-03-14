@@ -211,7 +211,7 @@ inset | 可选。从外层的阴影（开始时）改变阴影内侧阴影
   box-shadow: 5px 0 5px 0 rgba(0,0,0,0.08);
   ```
 
-## `vw` 单位相关问题<Badge type="warning">慎用</Badge>
+## `vw` 单位相关问题<Tag :bordered="false" color="cyan">慎用</Tag>
 
 ::: danger
 在windows系统中，页面有垂直滚动时，垂直滚动条会占用部分视口宽度，使用 `100vw` 时，由于 `100vw > 100%`，导致页面会出现横向滚动条

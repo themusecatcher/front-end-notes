@@ -277,7 +277,7 @@ let style = window.getComputedStyle(element, [pseudoElt])
 ```
 
 - `element`：用于获取计算样式的 `Element`。
-- `pseudoElt`<Badge type="tip" text="可选" />：指定一个要匹配的伪元素的字符串。必须对普通元素省略（或`null`）。
+- `pseudoElt`<Tag :bordered="false" color="cyan">可选</Tag>：指定一个要匹配的伪元素的字符串。必须对普通元素省略（或`null`）。
 
 ::: tip 提示
 返回的 `style` 是一个实时的 `CSSStyleDeclaration` 对象，**当元素的样式更改时，它会自动更新本身**

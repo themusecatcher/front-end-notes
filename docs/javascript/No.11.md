@@ -101,20 +101,20 @@ wm.get(el) // 'foo元素'
 - 参数：
   - `url`
     要连接的 `URL`；这应该是 `WebSocket` 服务器将响应的 `URL`。
-  - `protocols` <Badge type="tip" text="可选" />
+  - `protocols` <Tag :bordered="false" color="cyan">可选</Tag>
     一个`协议字符串`或者一个`包含协议字符串的数组`。这些字符串用于指定子协议，这样单个服务器可以实现多个 WebSocket 子协议（例如，你可能希望一台服务器能够根据指定的协议（protocol）处理不同类型的交互）。如果不指定协议字符串，则假定为空字符串。
 
 ### 属性
 
 - `WebSocket.binaryType`: 使用二进制的数据类型连接。
-- `WebSocket.bufferedAmount` <Badge type="tip" text="只读" />: 未发送至服务器的字节数。
-- `WebSocket.extensions` <Badge type="tip" text="只读" />: 服务器选择的扩展。
+- `WebSocket.bufferedAmount` <Tag :bordered="false" color="cyan">只读</Tag>: 未发送至服务器的字节数。
+- `WebSocket.extensions` <Tag :bordered="false" color="cyan">只读</Tag>: 服务器选择的扩展。
 - `WebSocket.onclose`: 用于指定连接关闭后的回调函数。
 - `WebSocket.onerror`: 用于指定连接失败后的回调函数。
 - `WebSocket.onmessage`: 用于指定当从服务器接受到信息时的回调函数。
 - `WebSocket.onopen`: 用于指定连接成功后的回调函数。
-- `WebSocket.protocol` <Badge type="tip" text="只读" />: 服务器选择的下属协议。
-- `WebSocket.readyState` <Badge type="tip" text="只读" />: 当前的链接状态。
+- `WebSocket.protocol` <Tag :bordered="false" color="cyan">只读</Tag>: 服务器选择的下属协议。
+- `WebSocket.readyState` <Tag :bordered="false" color="cyan">只读</Tag>: 当前的链接状态。
 - `WebSocket.url` 只读: WebSocket 的绝对路径。
 
 ### 方法
