@@ -1,6 +1,6 @@
 # front-end-notes
 
-## 前端开发个人笔记
+## 前端个人笔记
 
 - Javascript
 - CSS
