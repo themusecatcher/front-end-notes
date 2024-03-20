@@ -6,7 +6,7 @@ import {
 } from "./chunk-3DXR62HT.js";
 import "./chunk-LQ2VYIYD.js";
 
-// node_modules/.pnpm/vue3-lazyload@0.3.8_vue@3.4.15/node_modules/vue3-lazyload/dist/index.mjs
+// node_modules/.pnpm/vue3-lazyload@0.3.8_vue@3.4.21/node_modules/vue3-lazyload/dist/index.mjs
 var LifecycleEnum = ((LifecycleEnum2) => {
   LifecycleEnum2["LOADING"] = "loading";
   LifecycleEnum2["LOADED"] = "loaded";

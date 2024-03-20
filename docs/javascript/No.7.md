@@ -274,24 +274,22 @@ Constructor for objects that enable language-sensitive list formatting.
 - [`Intl.NumberFormat`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat)
 用于启用语言敏感数字格式的对象的构造函数。
 
-  ```vue
-  <p>{{ new Intl.NumberFormat('zh-CN', {
+  <h3>{{ new Intl.NumberFormat('zh-CN', {
     style: 'currency',
     currency: 'CNY',
     currencyDisplay: 'symbol',
     maximumFractionDigits: 2,
     roundingIncrement: 5
-  }).format(123456789.173456) }}</p>
-  ```
+  }).format(123456789.173456) }}</h3>
 
   ```vue
-  <p>{{ new Intl.NumberFormat('zh-CN', {
+  <h3>{{ new Intl.NumberFormat('zh-CN', {
     style: 'currency',
     currency: 'CNY',
     currencyDisplay: 'symbol',
     maximumFractionDigits: 2,
     roundingIncrement: 5
-  }).format(123456789.123456) }}</p>
+  }).format(123456789.123456) }}</h3>
   ```
 
 - [`Intl.PluralRules`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Intl/PluralRules)
