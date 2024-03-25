@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "less": "^4.2.0",
-    "vitepress": "1.0.0-rc.45"
+    "vitepress": "^1.0.1"
   },
   "description": "Front-end development study notes",
   "directories": {
