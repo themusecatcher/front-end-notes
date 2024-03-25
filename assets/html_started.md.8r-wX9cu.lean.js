@@ -1,1 +1,0 @@
-import{a3 as a,e,f as t,V as r}from"./chunks/framework.-j7siyoT.js";const p=JSON.parse('{"title":"开始","description":"","frontmatter":{},"headers":[],"relativePath":"html/started.md","filePath":"html/started.md"}'),o={name:"html/started.md"},l=r("",4),s=[l];function n(h,d,i,_,c,m){return e(),t("div",null,s)}const u=a(o,[["render",n]]);export{p as __pageData,u as default};
