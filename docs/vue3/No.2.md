@@ -23,7 +23,7 @@ Vue.js 是一个流行的前端框架，它**通过 MVVM 模式实现了数据�
 3. **属性添加和删除的局限**：Vue 2 的响应式系统**无法检测到对象属性的添加或删除**。为了解决这个问题，Vue 提供了全局方法 `Vue.set` 来确保新属性也是响应式的。
 4. **深度监听**：Vue 2 需要递归地对每个嵌套对象进行 `Object.defineProperty` 处理，这可能会对性能产生影响。
 
-- `Object.defineProperty()`（algorithm/Object.property.js）
+- [`Object.defineProperty()`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)（algorithm/Object.property.js）
   该方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象。
   - 语法：`Object.defineProperty(obj, prop, descriptor)`
   - 参数：
@@ -102,7 +102,7 @@ console.log(player.career.height) // 190
 
 总结来说，Vue 3 的响应式系统在功能和性能上都有显著的提升，但同时也带来了对现代浏览器环境的要求。开发者需要根据项目需求和目标用户的浏览器使用情况来选择合适的 Vue 版本。
 
-- `Proxy()`（algorithm/Proxy.js）
+- [`Proxy()`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy)（algorithm/Proxy.js）
   `Proxy` 对象用于创建一个对象的代理，从而实现基本操作的拦截和自定义（如属性查找、赋值、枚举、函数调用等）。
   - 语法：`const p = new Proxy(target, handler)`
   - 参数：
@@ -112,100 +112,67 @@ console.log(player.career.height) // 190
 ::: details Show Code
 
 ```js
-/*
-  Vue 3 的响应式系统是基于 ES6 的 `Proxy` 特性构建的。
-  下面是一个简化版的 Vue 3 `Proxy` 响应式实现，它展示了如何使用 `Proxy` 来创建响应式对象，并在属性被访问或修改时触发更新。
-*/
-
-function isObject(value) {
-  return value !== null && typeof value === 'object' && !Array.isArray(value);
+// 检查一个值是否为对象类型
+function isObject (value) {
+  return value !== null && typeof value === 'object'
 }
-
-function createProxy(target, key, proxyHandler) {
-  if (isObject(target[key])) {
-    return createProxy(target[key], key, proxyHandler);
-  }
-
-  const proxy = new Proxy(target, proxyHandler);
-  return proxy;
-}
-
-function createReactiveObject(data, proxyHandler) {
-  const observed = {};
+function createReactiveObject (obj) {
   const handler = {
-    get(target, key, receiver) {
-      if (key in target) {
-        const value = target[key];
-        return createProxy(value, key, proxyHandler);
-      } else {
-        return Reflect.get(target, key, receiver);
-      }
+    get (target, key, receiver) {
+      console.log(`get target['${key}'] value`)
+      const res = Reflect.get(target, key, receiver)
+      return res
     },
-    set(target, key, value, receiver) {
+    set (target, key, value, receiver) {
+      console.log(`target['${key}'] changed to '${value}'`)
       if (key in target && target[key] === value) {
-        return true;
+        return true
       }
-      const oldValue = target[key];
-      target[key] = value;
-      proxyHandler.set(target, key, value, oldValue);
-      return true;
+      Reflect.set(target, key, value, receiver)
+      return true
     },
-    deleteProperty(target, key) {
-      if (key in target) {
-        const oldValue = target[key];
-        delete target[key];
-        proxyHandler.delete(target, key, oldValue);
-        return true;
-      }
-      return Reflect.deleteProperty(target, key);
-    }
-  };
-
-  for (const key in data) {
-    if (isObject(data[key])) {
-      observed[key] = createReactiveObject(data[key], proxyHandler);
-    } else {
-      observed[key] = data[key];
+    deleteProperty (target, key) {
+      console.log(`target['${key}'] has been deleted`)
+      const res = Reflect.deleteProperty(target, key)
+      return res
     }
   }
-
-  return createProxy(observed, null, handler);
+  const observed = {}
+  for (const key in obj) {
+    if (isObject(obj[key])) {
+      observed[key] = createReactiveObject(obj[key])
+    } else {
+      observed[key] = obj[key]
+    }
+  }
+  const proxy = new Proxy(observed, handler)
+  return proxy
 }
 
-// 使用示例
-const data = {
-  name: 'Alice',
-  age: 30,
-  details: {
-    address: 'Wonderland'
+const player = {
+  name: 'Curry',
+  age: 34,
+  career: {
+    sports: 'basketball'
   }
-};
+}
+const reactiveData = createReactiveObject(player)
 
-const reactiveData = createReactiveObject(data, {
-  set(target, key, value, oldValue) {
-    console.log(`'${key}' changed from '${oldValue}' to '${value}'`);
-  },
-  delete(target, key, oldValue) {
-    console.log(`'${key}' has been deleted`);
-  }
-});
+console.log('reactiveData:', reactiveData) // { name: 'Curry', age: 34, career: { sports: 'basketball' } }
 
-// 访问响应式数据
-console.log(reactiveData.name); // 输出: 'Alice'
+// 访问响应式数据name
+console.log('name:', reactiveData.name) // curry
 
 // 修改响应式数据
-reactiveData.name = 'Bob'; // 输出: "'name' changed from 'Alice' to 'Bob'"
+reactiveData.name = 'Stephen' // 输出: "'name' changed to 'Stephen'"
+console.log('reactiveData:', reactiveData)
+
+reactiveData.career.sports = 'golf'
+console.log('reactiveData:', reactiveData)
 
 // 删除响应式数据
-delete reactiveData.details.address; // 输出: "'address' has been deleted"
-
-/*
-  在这个简化版的例子中，我们定义了一个 `createReactiveObject` 函数来递归地将普通对象转换为响应式对象。
-  我们使用 `Proxy` 来拦截对对象属性的访问（`get`）和修改（`set`）操作，并在这些操作发生时执行特定的逻辑。
-  我们还定义了一个 `isObject` 辅助函数来检查一个值是否为对象类型。
-  请注意，这个例子是一个非常基础的实现，Vue 3 的实际响应式系统要复杂得多，包括对数组的特别处理、依赖收集、批量更新等高级特性。
-  此外，Vue 3 还使用了 `WeakMap` 和 `WeakSet` 来处理一些内部的响应式数据结构。
-*/
+delete reactiveData.career.sports // 输出: "'sports' has been deleted"
+console.log('reactiveData:', reactiveData)
 ```
 
 :::
