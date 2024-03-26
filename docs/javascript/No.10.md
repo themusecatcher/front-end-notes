@@ -244,7 +244,7 @@ element.appendChild(fragment) // 一次性插入。可以避免每次插入时�
 
 ## [Web Worker](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API)
 
-`Web Worker` 使得在一个独立于 Web 应用程序主执行线程的后台线程中运行脚本操作成为可能。这样做的好处是**可以在独立线程中执行费时的处理任务，使主线程（通常是 UI 线程）的运行不会被阻塞/放慢**。(解决javascript单线程执行的一些弊端)
+`Web Worker` 使得**在一个独立于 Web 应用程序主执行线程的后台线程中运行脚本**操作成为可能。这样做的好处是**可以在独立线程中执行费时的处理任务，使主线程（通常是 UI 线程）的运行不会被阻塞/放慢**。(解决javascript单线程执行的一些弊端)
 
 ### 语法
 
