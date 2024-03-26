@@ -21,3 +21,111 @@ HTML语义化是一种编写HTML文档的方法，它**强调使用恰当的HTML
 7. **避免过度使用`<div>`和`<span>`**：虽然`<div>`和`<span>`标签在布局和样式应用上非常灵活，但它们本身并不传达任何语义信息。在可能的情况下，应优先使用更具体的语义标签。
 
 总之，**HTML语义化是一种编写网页的方法，它通过使用描述性的标签来提高内容的可理解性，从而使得网页更加友好地与用户、搜索引擎和开发工具互动。**
+
+## src和href的区别和使用场景
+
+`src`（source的缩写）和`href`（hypertext reference的缩写）是HTML中用于不同目的的两个属性。它们的主要区别和使用场景如下：
+
+### `src`（源）
+
+### 用途
+
+<br/>
+
+`src`属性用于**指定嵌入到当前文档中的外部资源的路径**。这些资源可以是图像、视频、音频、脚本文件等。
+
+### 使用场景
+
+- **图像**：`<img>`标签使用`src`属性来指定图像文件的路径。
+
+  ```html
+  <img src="path/to/image.jpg" alt="描述文本">
+  ```
+
+- **视频**：`<video>`标签使用`src`属性来指定视频文件的路径。
+
+  ```html
+  <video src="path/to/video.mp4" controls></video>
+  ```
+
+- **音频**：`<audio>`标签使用`src`属性来指定音频文件的路径。
+
+  ```html
+  <audio src="path/to/audio.mp3" controls></audio>
+  ```
+
+- **脚本**：`<script>`标签使用`src`属性来引入外部JavaScript文件。
+
+  ```html
+  <script src="path/to/script.js"></script>
+  ```
+
+- **框架**：`<iframe>`、`<embed>`和`<object>`等标签也使用`src`属性来指定嵌入内容的路径。
+
+### `href`（超文本引用）
+
+### 用途
+
+<br/>
+
+`href`属性**用于指定超链接的目标URL**，即**链接指向的另一个文档或资源的位置**。
+
+### 使用场景
+
+- **链接**：`<a>`标签使用`href`属性来定义超链接，点击链接会导航到指定的URL。
+
+  ```html
+  <a href="https://www.example.com" target="_blank">访问示例网站</a>
+  ```
+
+- **样式表**：`<link>`标签使用`href`属性来链接外部CSS样式表。
+
+  ```html
+  <link href="path/to/styles.css" rel="stylesheet">
+  ```
+
+- **图标**：`<link>`标签使用`href`属性来定义页面的图标（favicon）。
+
+  ```html
+  <link href="path/to/favicon.ico" rel="icon">
+  ```
+
+- **资源预加载**：`<link>`标签的`rel`属性可以设置为`preconnect`、`preload`等，使用`href`属性来指定预加载的资源。
+
+### 总结区别
+
+- **加载方式**：`src`属性加载的资源会被嵌入到当前文档中，而`href`属性创建的链接会在新的上下文或窗口中加载资源。
+- **导航行为**：使用`href`属性的链接会导致页面跳转，而`src`属性通常用于在当前页面内嵌入内容。
+- **应用范围**：`src`属性通常与`<img>`、`<script>`等标签一起使用，而`href`属性通常与`<a>`、`<link>`等标签一起使用。
+
+理解`src`和`href`的区别对于正确地使用HTML标签和创建功能性网页非常重要。
+
+## BFC
+
+`BFC（Block Formatting Context）`是**块级格式化上下文**，是Web页面的可视CSS渲染的一部分。它**决定了元素如何对其内容进行定位，以及与其他元素的关系和相互作用**。在 `BFC` 中，元素的布局不会影响到 `BFC` 外部的元素。
+
+BFC 的形成条件包括但不限于以下几点：
+
+1. 根元素（HTML 文档的 `<html>` 元素）
+2. 浮动元素（`float` 值不为 `none`）
+3. 绝对定位元素（`position` 值为 `absolute` 或 `fixed`）
+4. `display` 值为 `inline-block`、`table-cells`、`flex`
+5. `overflow` 值不为 `visible` 的块元素
+6. `perspective` 属性非 `none`
+7. `transform` 属性非 `none`
+
+BFC 的特点：
+
+1. **独立的渲染区域**：BFC 内部的布局不会影响到外部元素。在 BFC 中，两个相邻的 Box 的垂直距离由 `margin` 决定。属于同一个 BFC 的两个相邻 Box 的 `margin` 会发生重叠。
+2. **计算 BFC 的高度时，会包含浮动元素**：即使浮动元素没有清除（`clear` 属性），BFC 也会考虑到浮动元素的 `height` 和 `width`。
+3. **BFC 可以阻止 `margin` 重叠**：当两个相邻的 Box 都属于 BFC 时，它们的 `margin` 不会发生重叠。
+4. **BFC 作为容器时，其 `padding` 和 `border` 不会与 float 的子元素重叠**：即使子元素浮动，BFC 的内边距和边框也会包裹住它们。
+
+BFC 的应用场景：
+
+1. **清除内部浮动**：当父元素需要包含浮动的子元素时，可以创建一个 BFC 来避免父元素的高度塌陷。
+2. **防止外边距重叠**：通过创建 BFC，可以避免相邻元素的外边距重叠。
+3. **创建自适应两栏布局**：通过设置两个相邻元素的宽度，并给其中一个元素创建 BFC，可以实现宽度自适应的两栏布局。
+4. **避免元素被覆盖**：当一个元素需要避免被浮动元素覆盖时，可以给该元素创建 BFC。
+
+BFC 是 CSS 布局中的一个重要概念，理解 BFC 的工作原理和特点，对于进行高效的布局设计和解决布局问题非常有帮助。

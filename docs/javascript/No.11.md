@@ -191,3 +191,40 @@ socket.addEventListener('message', function (event) {
 - 如果 package.json 不包含 "type": "module"，Vite 会生成不同的文件后缀名以兼容 Node.js。.js 会变为 .mjs 而 .cjs 会变为 .js 。（即会生成 .mjs 和 .js 的两个文件）
 - 如果 package.json 包含 "type": "module"，（则会生成 .cjs 和 .js 的两个文件）
 :::
+
+## [eval()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/eval)函数
+
+`eval()` 函数会将传入的字符串当做 `JavaScript` 代码进行执行。
+
+- 语法：eval(string)
+
+- 参数：string
+  一个表示 `JavaScript` 表达式、语句或一系列语句的字符串。表达式可以包含变量与已存在对象的属性。
+
+- 返回值：
+  返回字符串中代码的返回值。如果返回值为空，则返回 `undefined`。
+
+### 示例
+
+```js
+console.log(eval('2 + 2'))
+// Expected output: 4
+
+console.log(eval(new String('2 + 2')))
+// Expected output: 2 + 2
+
+console.log(eval('2 + 2') === eval('4'))
+// Expected output: true
+
+console.log(eval('2 + 2') === eval(new String('2 + 2')))
+// Expected output: false
+```
+
+### 永远不要使用 eval！
+
+`eval()` 是一个危险的函数，它**使用与调用者相同的权限执行代码**。如果你用 `eval()` 运行的字符串代码被恶意方（不怀好意的人）修改，你最终可能会在你的网页/扩展程序的权限下，在用户计算机上运行恶意代码。更重要的是，第三方代码可以看到某一个 `eval()` 被调用时的作用域，这也有可能导致一些不同方式的攻击。相似的 `Function` 就不容易被攻击。
+
+> eval() 通常比其他替代方法更慢，因为它必须调用 JS 解释器，而许多其他结构则可被现代 JS 引擎进行优化。
+
+此外，现代 `JavaScript` 解释器将 `JavaScript` 转换为机器代码。这意味着任何变量命名的概念都会被删除。因此，任意一个 `eval` 的使用都会强制浏览器进行冗长的变量名称查找，以确定变量在机器代码中的位置并设置其值。另外，新内容将会通过 `eval()` 引进给变量，比如更改该变量的类型，因此会强制浏览器重新执行所有已经生成的机器代码以进行补偿。但是（谢天谢地）存在一个非常好的 `eval` 替代方法：只需使用 window.Function。
+这有个例子方便你了解如何将eval()的使用转变为Function()。
