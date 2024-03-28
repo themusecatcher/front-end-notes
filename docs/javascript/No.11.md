@@ -228,3 +228,144 @@ console.log(eval('2 + 2') === eval(new String('2 + 2')))
 
 此外，现代 `JavaScript` 解释器将 `JavaScript` 转换为机器代码。这意味着任何变量命名的概念都会被删除。因此，任意一个 `eval` 的使用都会强制浏览器进行冗长的变量名称查找，以确定变量在机器代码中的位置并设置其值。另外，新内容将会通过 `eval()` 引进给变量，比如更改该变量的类型，因此会强制浏览器重新执行所有已经生成的机器代码以进行补偿。但是（谢天谢地）存在一个非常好的 `eval` 替代方法：只需使用 window.Function。
 这有个例子方便你了解如何将eval()的使用转变为Function()。
+
+## [window.open()](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/open) 微信扫码弹窗
+
+`Window` 接口的 `open()` 方法，是用**指定的名称将指定的资源加载到新的或已存在的浏览上下文（标签、窗口或 iframe）中**。
+
+### 语法
+
+```js
+open()
+open(url)
+open(url, target)
+open(url, target, windowFeatures)
+```
+
+### 参数
+
+- `url` <Tag :bordered="false" color="cyan">可选</Tag>
+  - 一个字符串，表示**要加载的资源的 `URL` 或路径**。如果指定**空字符串（""）或省略此参数，则会在目标浏览上下文中打开一个空白页**。
+- `target` <Tag :bordered="false" color="cyan">可选</Tag>
+  - 一个不含空格的字符串，用于**指定加载资源的浏览上下文的名称**。如果该名称无法识别现有的上下文，则会创建一个新的上下文，并赋予指定的名称。还可以使用特殊的 `target` 关键字：`_self`、`_blank`、`_parent` 和 `_top`。
+  该名称可用作 `<a>` 或 `<form>` 元素的 `target` 属性。
+- `windowFeatures` <Tag :bordered="false" color="cyan">可选</Tag>
+  - 一个字符串，包含以逗号分隔的窗口特性列表，形式为 `name=value`，布尔特性则仅为 `name`。这些特性包括窗口的默认大小和位置、是否打开最小弹出窗口等选项。
+  <br/>支持以下选项：
+    - `popup`: 如果启用此特性，则要求使用最小弹出窗口。弹出窗口中包含的用户界面功能将由浏览器自动决定，**一般只包括地址栏**。
+
+      如果未启用 `popup`，也没有声明窗口特性，则新的浏览上下文将是一个标签页。
+
+      ::: tip 备注：
+      在 `windowFeatures` 参数中指定除 `noopener` 或 `noreferrer` 以外的任何特性，也会产生请求弹出窗口的效果。
+      :::
+
+      要启用该特性，可以不指定 `popup` 值，或将其设置为 `yes`, `1` 或 `true`。
+
+      例如：`popup=yes`、`popup=1`、`popup=true` 和 `popup` 的结果完全相同。
+
+    - `width` 或 `innerWidth`: 指定**内容区域（包括滚动条）的宽度**。最小要求值为 `100`。
+
+    - `height` 或 `innerHeight`: 指定**内容区域（包括滚动条）的高度**。最小要求值为 `100`。
+
+    - `left` 或 `screenX`: 指定**从用户操作系统定义的工作区左侧到新窗口生成位置的距离**（以像素为单位）。
+
+    - `top` 或 `screenY`: 指定**从用户操作系统定义的工作区顶部到新窗口生成位置的距离**（以像素为单位）。
+
+    - `noopener`: 如果设置了此特性，**新窗口将无法通过 Window.opener 访问原窗口，并返回 null**。
+
+      使用 `noopener` 时，在决定是否打开新的浏览上下文时，除 `_top`、`_self` 和 `_parent` 以外的非空目标名称会像 `_blank` 一样处理。
+
+    - `noreferrer`: 如果设置了此特性，浏览器将省略 `Referer` 标头，并将 `noopener` 设为 `true`。更多信息请参阅 rel="noreferrer" (en-US) 
+
+  ::: tip 备注
+  `windowFeatures` 中要求的位置（`top`、`left`）和尺寸（`width`、`height`）值，如果其中任何一个值不允许在用户操作系统应用程序的工作区内呈现整个浏览器弹出窗口，则将被更正。换句话说，新弹出窗口的任何部分最初都不能置于屏幕之外。
+  :::
+
+### 返回值
+
+一个 `WindowProxy` (en-US) 对象。只要符合同源策略安全要求，返回的引用就可用于访问新窗口的属性和方法。
+
+### 示例
+
+打开一个新标签页
+
+```js
+window.open('https://www.mozilla.org/', 'mozillaTab')
+```
+
+可以控制新弹出窗口的大小和位置：
+
+```js
+const windowFeatures = 'left=100,top=100,width=320,height=320'
+const handle = window.open(
+  'https://www.mozilla.org/',
+  'mozillaWindow',
+  windowFeatures
+)
+if (!handle) {
+  // 不允许打开此窗口
+  // 可能被内置弹窗阻止程序阻止了
+  // …
+}
+```
+
+## [window.moveTo](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/moveTo)
+
+将当前窗口移动到指定的坐标位置。
+
+### 语法
+
+```js
+window.moveTo(x, y)
+```
+
+### 参数
+
+- `x`: 是要移动到的位置横坐标
+- `y`: 是要移动到的位置纵坐标
+
+### 示例
+
+```js
+function origin() {
+  // 把窗口移动到左上角
+  window.moveTo(0, 0)
+}
+```
+
+::: tip 附注
+从 Firefox 7 开始，如果符合下列情况，则**普通网页中的 JavaScript 无法通过调用该函数来移动浏览器窗口**：
+1. 当前**窗口或标签页不是由window.open方法创建的**
+2. 当前**标签页所在的窗口包含有多个标签页**
+:::
+
+## [window.resizeTo](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/resizeTo)
+
+动态调整窗口的大小。
+
+### 语法
+
+```js
+window.resizeTo(aWidth, aHeight)
+```
+
+### 参数
+
+- `aWidth`: 是一个整数，表示新的 `outerWidth`（单位：像素）（包括滚动条、窗口边框等）。
+- `aHeight`: 是一个整数，表示新的 `outerHeight`（单位：像素）（包括滚动条、标题栏、窗口边框等）。
+
+### 示例
+
+```js
+// 将窗口设置为整个屏幕的 1/4 大小（面积）
+function quarter() {
+  window.resizeTo(window.screen.availWidth / 2, window.screen.availHeight / 2);
+}
+```
+
+::: tip 备注
+从 Firefox 7 开始，**不能改变浏览器窗口的大小了，要依据下面的规则**：
+1. 不能设置那些**不是通过 window.open 创建的窗口或 Tab 的大小**。
+2. **当一个窗口里面含有一个以上的 Tab 时，无法设置窗口的大小**。
+:::
