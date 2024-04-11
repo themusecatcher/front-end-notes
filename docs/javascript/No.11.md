@@ -369,3 +369,35 @@ function quarter() {
 1. 不能设置那些**不是通过 window.open 创建的窗口或 Tab 的大小**。
 2. **当一个窗口里面含有一个以上的 Tab 时，无法设置窗口的大小**。
 :::
+
+## [window.scrollTo()](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/scrollTo)
+
+滚动到文档中的某个坐标。
+
+### 语法
+
+```js
+window.scrollTo(x-coord,y-coord )
+window.scrollTo(options)
+```
+
+### 参数
+
+- `x-coord` 是文档中的横轴坐标。
+- `y-coord` 是文档中的纵轴坐标。
+- `options` 是一个包含三个属性的对象：
+  1. `top` 等同于 `y-coord`
+  2. `left` 等同于 `x-coord`
+  3. `behavior` 类型 `String`，表示滚动行为，支持参数 `smooth`(平滑滚动),`instant`(瞬间滚动),默认值 `auto`
+
+### 例子
+
+```js
+window.scrollTo( 0, 1000 )
+
+// 设置滚动行为改为平滑的滚动
+window.scrollTo({
+    top: 1000,
+    behavior: "smooth"
+})
+```
