@@ -49,10 +49,11 @@ export default defineConfig({
 
     nav: [
       { text: 'JavaScript', link: '/javascript/No.1', activeMatch: '/javascript/' },
-      { text: 'CSS', link: '/css/No.1', activeMatch: '/css/' },
       { text: 'HTML', link: '/html/No.1', activeMatch: '/html/' },
+      { text: 'CSS', link: '/css/No.1', activeMatch: '/css/' },
       { text: 'Vue2', link: '/vue2/No.1', activeMatch: '/vue2/' },
       { text: 'Vue3', link: '/vue3/No.1', activeMatch: '/vue3/' },
+      { text: 'Mobile', link: '/mobile/No.1', activeMatch: '/mobile/' },
       { text: 'Http', link: '/http/No.1', activeMatch: '/http/' },
       { text: 'Plugins', link: '/plugins/started', activeMatch: '/plugins/' },
       {
@@ -197,6 +198,34 @@ export default defineConfig({
           ]
         }
       ],
+      '/html/': [
+        {
+          text: '指引',
+          items: [
+            {
+              text: '开始',
+              link: '/html/started'
+            }
+          ]
+        },
+        {
+          text: 'HTML Notes',
+          items: [
+            {
+              text: 'No.1',
+              link: '/html/No.1'
+            },
+            {
+              text: 'No.2',
+              link: '/html/No.2'
+            },
+            {
+              text: 'No.3',
+              link: '/html/No.3'
+            }
+          ]
+        }
+      ],
       '/css/': [
         {
           text: '指引',
@@ -241,34 +270,6 @@ export default defineConfig({
             {
               text: 'No.8',
               link: '/css/No.8'
-            }
-          ]
-        }
-      ],
-      '/html/': [
-        {
-          text: '指引',
-          items: [
-            {
-              text: '开始',
-              link: '/html/started'
-            }
-          ]
-        },
-        {
-          text: 'HTML Notes',
-          items: [
-            {
-              text: 'No.1',
-              link: '/html/No.1'
-            },
-            {
-              text: 'No.2',
-              link: '/html/No.2'
-            },
-            {
-              text: 'No.3',
-              link: '/html/No.3'
             }
           ]
         }
@@ -329,6 +330,34 @@ export default defineConfig({
             {
               text: 'No.3',
               link: '/vue3/No.3'
+            }
+          ]
+        }
+      ],
+      '/mobile/': [
+        {
+          text: '指引',
+          items: [
+            {
+              text: '开始',
+              link: '/plugins/started'
+            }
+          ]
+        },
+        {
+          text: 'MiniProgram',
+          items: [
+            {
+              text: 'No.1',
+              link: '/mobile/No.1'
+            },
+            {
+              text: 'No.2',
+              link: '/mobile/No.2'
+            },
+            {
+              text: 'No.3',
+              link: '/mobile/No.3'
             }
           ]
         }
