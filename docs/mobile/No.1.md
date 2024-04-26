@@ -54,7 +54,6 @@ export default defineAppConfig({
 
 ```ts
 export default {
-  addGlobalClass: true, // 解决tabbar样式隔离导致的<IconFont />图标无法显示问题
   component: true
 }
 ```
@@ -64,6 +63,13 @@ export default {
 1. 自定义 `tabBar` 组件：
 
 ```vue
+<script lang="ts">
+  export default {
+    options: {
+      addGlobalClass: true // 解决tabbar样式隔离导致的<IconFont />图标无法显示问题
+    }
+  }
+</script>
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import Taro from '@tarojs/taro'
@@ -165,6 +171,13 @@ function switchTab (index: number, url: string) {
 2. 使用 `<nut-tabbar/>` 组件
 
 ```vue
+<script lang="ts">
+  export default {
+    options: {
+      addGlobalClass: true // 解决tabbar样式隔离导致的<IconFont />图标无法显示问题
+    }
+  }
+</script>
 <script setup lang="ts">
 import { h } from 'vue'
 import { storeToRefs } from 'pinia'
