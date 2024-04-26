@@ -3,8 +3,8 @@ import {
   isClient,
   toRef as toRef2,
   useTransition
-} from "./chunk-JWJSPFEH.js";
-import "./chunk-F6Y6EDMG.js";
+} from "./chunk-YEJNDSQY.js";
+import "./chunk-M3QN4B3X.js";
 import {
   Fragment,
   Teleport,
@@ -61,7 +61,7 @@ import {
   withDirectives,
   withKeys,
   withModifiers
-} from "./chunk-3DXR62HT.js";
+} from "./chunk-G35T3CLE.js";
 import {
   __commonJS,
   __toESM
@@ -2228,7 +2228,7 @@ var require_browser = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@babel+runtime@7.24.1/node_modules/@babel/runtime/helpers/esm/typeof.js
+// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/typeof.js
 function _typeof(o) {
   "@babel/helpers - typeof";
   return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
@@ -4263,7 +4263,7 @@ function isEqual(dirtyLeftDate, dirtyRightDate) {
   return dateLeft.getTime() === dateRight.getTime();
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.1/node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
+// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length)
     len = arr.length;
@@ -4272,7 +4272,7 @@ function _arrayLikeToArray(arr, len) {
   return arr2;
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.1/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
 function _unsupportedIterableToArray(o, minLen) {
   if (!o)
     return;
@@ -4287,7 +4287,7 @@ function _unsupportedIterableToArray(o, minLen) {
     return _arrayLikeToArray(o, minLen);
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.1/node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
+// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
 function _createForOfIteratorHelper(o, allowArrayLike) {
   var it2 = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
   if (!it2) {
@@ -4343,7 +4343,7 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
   };
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.1/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
+// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
 function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -4351,7 +4351,7 @@ function _assertThisInitialized(self) {
   return self;
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.1/node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
+// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
 function _setPrototypeOf(o, p) {
   _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
     o3.__proto__ = p3;
@@ -4360,7 +4360,7 @@ function _setPrototypeOf(o, p) {
   return _setPrototypeOf(o, p);
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.1/node_modules/@babel/runtime/helpers/esm/inherits.js
+// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/inherits.js
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
     throw new TypeError("Super expression must either be null or a function");
@@ -4379,7 +4379,7 @@ function _inherits(subClass, superClass) {
     _setPrototypeOf(subClass, superClass);
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.1/node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
+// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
 function _getPrototypeOf(o) {
   _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
     return o3.__proto__ || Object.getPrototypeOf(o3);
@@ -4387,7 +4387,7 @@ function _getPrototypeOf(o) {
   return _getPrototypeOf(o);
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.1/node_modules/@babel/runtime/helpers/esm/isNativeReflectConstruct.js
+// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/isNativeReflectConstruct.js
 function _isNativeReflectConstruct() {
   try {
     var t3 = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
@@ -4399,7 +4399,7 @@ function _isNativeReflectConstruct() {
   })();
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.1/node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js
+// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js
 function _possibleConstructorReturn(self, call) {
   if (call && (_typeof(call) === "object" || typeof call === "function")) {
     return call;
@@ -4409,7 +4409,7 @@ function _possibleConstructorReturn(self, call) {
   return _assertThisInitialized(self);
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.1/node_modules/@babel/runtime/helpers/esm/createSuper.js
+// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/createSuper.js
 function _createSuper(Derived) {
   var hasNativeReflectConstruct = _isNativeReflectConstruct();
   return function _createSuperInternal() {
@@ -4424,14 +4424,14 @@ function _createSuper(Derived) {
   };
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.1/node_modules/@babel/runtime/helpers/esm/classCallCheck.js
+// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/classCallCheck.js
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
   }
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.1/node_modules/@babel/runtime/helpers/esm/toPrimitive.js
+// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/toPrimitive.js
 function toPrimitive(t3, r) {
   if ("object" != _typeof(t3) || !t3)
     return t3;
@@ -4445,13 +4445,13 @@ function toPrimitive(t3, r) {
   return ("string" === r ? String : Number)(t3);
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.1/node_modules/@babel/runtime/helpers/esm/toPropertyKey.js
+// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/toPropertyKey.js
 function toPropertyKey(t3) {
   var i3 = toPrimitive(t3, "string");
   return "symbol" == _typeof(i3) ? i3 : i3 + "";
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.1/node_modules/@babel/runtime/helpers/esm/createClass.js
+// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/createClass.js
 function _defineProperties(target, props) {
   for (var i3 = 0; i3 < props.length; i3++) {
     var descriptor = props[i3];
@@ -4473,7 +4473,7 @@ function _createClass(Constructor, protoProps, staticProps) {
   return Constructor;
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.1/node_modules/@babel/runtime/helpers/esm/defineProperty.js
+// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/defineProperty.js
 function _defineProperty(obj, key, value) {
   key = toPropertyKey(key);
   if (key in obj) {
@@ -7022,7 +7022,7 @@ function subYears(dirtyDate, dirtyAmount) {
   return addYears(dirtyDate, -amount);
 }
 
-// node_modules/.pnpm/@vuepic+vue-datepicker@7.4.1_vue@3.4.21/node_modules/@vuepic/vue-datepicker/dist/vue-datepicker.js
+// node_modules/.pnpm/@vuepic+vue-datepicker@7.4.1_vue@3.4.25/node_modules/@vuepic/vue-datepicker/dist/vue-datepicker.js
 function Ot() {
   return openBlock(), createElementBlock(
     "svg",
@@ -12097,7 +12097,7 @@ Object.entries(Oo).forEach(([e3, t3]) => {
   e3 !== "default" && (Ka[e3] = t3);
 });
 
-// node_modules/.pnpm/@vueuse+integrations@10.9.0_qrcode@1.5.3_vue@3.4.21/node_modules/@vueuse/integrations/useQRCode.mjs
+// node_modules/.pnpm/@vueuse+integrations@10.9.0_async-validator@4.2.5_focus-trap@7.5.4_qrcode@1.5.3_sortablejs@1.15.2_vue@3.4.25/node_modules/@vueuse/integrations/useQRCode.mjs
 var import_qrcode = __toESM(require_browser(), 1);
 function useQRCode(text, options) {
   const src = toRef2(text);
@@ -12113,7 +12113,7 @@ function useQRCode(text, options) {
   return result;
 }
 
-// node_modules/.pnpm/swiper@11.0.7/node_modules/swiper/shared/ssr-window.esm.mjs
+// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/ssr-window.esm.mjs
 function isObject(obj) {
   return obj !== null && typeof obj === "object" && "constructor" in obj && obj.constructor === Object;
 }
@@ -12263,7 +12263,7 @@ function getWindow() {
   return win;
 }
 
-// node_modules/.pnpm/swiper@11.0.7/node_modules/swiper/shared/utils.mjs
+// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/utils.mjs
 function classesToTokens(classes2) {
   if (classes2 === void 0) {
     classes2 = "";
@@ -12538,7 +12538,7 @@ function makeElementsArray(el3) {
   return (Array.isArray(el3) ? el3 : [el3]).filter((e3) => !!e3);
 }
 
-// node_modules/.pnpm/swiper@11.0.7/node_modules/swiper/shared/swiper-core.mjs
+// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/swiper-core.mjs
 var support;
 function calcSupport() {
   const window2 = getWindow();
@@ -13366,6 +13366,13 @@ function updateProgress(translate2) {
   }
   swiper.emit("progress", progress);
 }
+var toggleSlideClasses = (slideEl, condition, className) => {
+  if (condition && !slideEl.classList.contains(className)) {
+    slideEl.classList.add(className);
+  } else if (!condition && slideEl.classList.contains(className)) {
+    slideEl.classList.remove(className);
+  }
+};
 function updateSlidesClasses() {
   const swiper = this;
   const {
@@ -13379,9 +13386,6 @@ function updateSlidesClasses() {
   const getFilteredSlide = (selector) => {
     return elementChildren(slidesEl, `.${params.slideClass}${selector}, swiper-slide${selector}`)[0];
   };
-  slides.forEach((slideEl) => {
-    slideEl.classList.remove(params.slideActiveClass, params.slideNextClass, params.slidePrevClass);
-  });
   let activeSlide;
   let prevSlide;
   let nextSlide;
@@ -13406,31 +13410,22 @@ function updateSlidesClasses() {
     }
   }
   if (activeSlide) {
-    activeSlide.classList.add(params.slideActiveClass);
-    if (gridEnabled) {
-      if (nextSlide) {
-        nextSlide.classList.add(params.slideNextClass);
-      }
-      if (prevSlide) {
-        prevSlide.classList.add(params.slidePrevClass);
-      }
-    } else {
+    if (!gridEnabled) {
       nextSlide = elementNextAll(activeSlide, `.${params.slideClass}, swiper-slide`)[0];
       if (params.loop && !nextSlide) {
         nextSlide = slides[0];
-      }
-      if (nextSlide) {
-        nextSlide.classList.add(params.slideNextClass);
       }
       prevSlide = elementPrevAll(activeSlide, `.${params.slideClass}, swiper-slide`)[0];
       if (params.loop && !prevSlide === 0) {
         prevSlide = slides[slides.length - 1];
       }
-      if (prevSlide) {
-        prevSlide.classList.add(params.slidePrevClass);
-      }
     }
   }
+  slides.forEach((slideEl) => {
+    toggleSlideClasses(slideEl, slideEl === activeSlide, params.slideActiveClass);
+    toggleSlideClasses(slideEl, slideEl === nextSlide, params.slideNextClass);
+    toggleSlideClasses(slideEl, slideEl === prevSlide, params.slidePrevClass);
+  });
   swiper.emitSlidesClasses();
 }
 var processLazyPreloader = (swiper, imageEl) => {
@@ -13810,6 +13805,7 @@ function translateTo(translate2, speed, runCallbacks, translateBounds, internal)
           swiper.wrapperEl.removeEventListener("transitionend", swiper.onTranslateToWrapperTransitionEnd);
           swiper.onTranslateToWrapperTransitionEnd = null;
           delete swiper.onTranslateToWrapperTransitionEnd;
+          swiper.animating = false;
           if (runCallbacks) {
             swiper.emit("transitionEnd");
           }
@@ -13917,9 +13913,6 @@ function slideTo(index, speed, runCallbacks, internal, initial) {
   if (index === void 0) {
     index = 0;
   }
-  if (speed === void 0) {
-    speed = this.params.speed;
-  }
   if (runCallbacks === void 0) {
     runCallbacks = true;
   }
@@ -13940,8 +13933,11 @@ function slideTo(index, speed, runCallbacks, internal, initial) {
     wrapperEl,
     enabled
   } = swiper;
-  if (swiper.animating && params.preventInteractionOnTransition || !enabled && !internal && !initial || swiper.destroyed) {
+  if (!enabled && !internal && !initial || swiper.destroyed || swiper.animating && params.preventInteractionOnTransition) {
     return false;
+  }
+  if (typeof speed === "undefined") {
+    speed = swiper.params.speed;
   }
   const skip = Math.min(swiper.params.slidesPerGroupSkip, slideIndex);
   let snapIndex = skip + Math.floor((slideIndex - skip) / swiper.params.slidesPerGroup);
@@ -14069,9 +14065,6 @@ function slideToLoop(index, speed, runCallbacks, internal) {
   if (index === void 0) {
     index = 0;
   }
-  if (speed === void 0) {
-    speed = this.params.speed;
-  }
   if (runCallbacks === void 0) {
     runCallbacks = true;
   }
@@ -14082,6 +14075,9 @@ function slideToLoop(index, speed, runCallbacks, internal) {
   const swiper = this;
   if (swiper.destroyed)
     return;
+  if (typeof speed === "undefined") {
+    speed = swiper.params.speed;
+  }
   const gridEnabled = swiper.grid && swiper.params.grid && swiper.params.grid.rows > 1;
   let newIndex = index;
   if (swiper.params.loop) {
@@ -14112,6 +14108,9 @@ function slideToLoop(index, speed, runCallbacks, internal) {
       if (centeredSlides) {
         needLoopFix = needLoopFix || targetSlideIndex < Math.ceil(slidesPerView / 2);
       }
+      if (internal && centeredSlides && swiper.params.slidesPerView !== "auto" && !gridEnabled) {
+        needLoopFix = false;
+      }
       if (needLoopFix) {
         const direction = centeredSlides ? targetSlideIndex < swiper.activeIndex ? "prev" : "next" : targetSlideIndex - swiper.activeIndex - 1 < swiper.params.slidesPerView ? "next" : "prev";
         swiper.loopFix({
@@ -14135,9 +14134,6 @@ function slideToLoop(index, speed, runCallbacks, internal) {
   return swiper;
 }
 function slideNext(speed, runCallbacks, internal) {
-  if (speed === void 0) {
-    speed = this.params.speed;
-  }
   if (runCallbacks === void 0) {
     runCallbacks = true;
   }
@@ -14149,6 +14145,9 @@ function slideNext(speed, runCallbacks, internal) {
   } = swiper;
   if (!enabled || swiper.destroyed)
     return swiper;
+  if (typeof speed === "undefined") {
+    speed = swiper.params.speed;
+  }
   let perGroup = params.slidesPerGroup;
   if (params.slidesPerView === "auto" && params.slidesPerGroup === 1 && params.slidesPerGroupAuto) {
     perGroup = Math.max(swiper.slidesPerViewDynamic("current", true), 1);
@@ -14175,9 +14174,6 @@ function slideNext(speed, runCallbacks, internal) {
   return swiper.slideTo(swiper.activeIndex + increment, speed, runCallbacks, internal);
 }
 function slidePrev(speed, runCallbacks, internal) {
-  if (speed === void 0) {
-    speed = this.params.speed;
-  }
   if (runCallbacks === void 0) {
     runCallbacks = true;
   }
@@ -14192,6 +14188,9 @@ function slidePrev(speed, runCallbacks, internal) {
   } = swiper;
   if (!enabled || swiper.destroyed)
     return swiper;
+  if (typeof speed === "undefined") {
+    speed = swiper.params.speed;
+  }
   const isVirtual = swiper.virtual && params.virtual.enabled;
   if (params.loop) {
     if (animating && !isVirtual && params.loopPreventsSliding)
@@ -14243,21 +14242,18 @@ function slidePrev(speed, runCallbacks, internal) {
   return swiper.slideTo(prevIndex, speed, runCallbacks, internal);
 }
 function slideReset(speed, runCallbacks, internal) {
-  if (speed === void 0) {
-    speed = this.params.speed;
-  }
   if (runCallbacks === void 0) {
     runCallbacks = true;
   }
   const swiper = this;
   if (swiper.destroyed)
     return;
+  if (typeof speed === "undefined") {
+    speed = swiper.params.speed;
+  }
   return swiper.slideTo(swiper.activeIndex, speed, runCallbacks, internal);
 }
 function slideToClosest(speed, runCallbacks, internal, threshold) {
-  if (speed === void 0) {
-    speed = this.params.speed;
-  }
   if (runCallbacks === void 0) {
     runCallbacks = true;
   }
@@ -14267,6 +14263,9 @@ function slideToClosest(speed, runCallbacks, internal, threshold) {
   const swiper = this;
   if (swiper.destroyed)
     return;
+  if (typeof speed === "undefined") {
+    speed = swiper.params.speed;
+  }
   let index = swiper.activeIndex;
   const skip = Math.min(swiper.params.slidesPerGroupSkip, index);
   const snapIndex = skip + Math.floor((index - skip) / swiper.params.slidesPerGroup);
@@ -14897,7 +14896,7 @@ function onTouchMove(event2) {
       data.startMoving = true;
     }
   }
-  if (data.isScrolling) {
+  if (data.isScrolling || e3.type === "touchmove" && data.preventTouchMoveFromPointerMove) {
     data.isTouched = false;
     return;
   }
@@ -15414,6 +15413,8 @@ function setBreakpoint() {
   const breakpointParams = breakpointOnlyParams || swiper.originalParams;
   const wasMultiRow = isGridEnabled(swiper, params);
   const isMultiRow = isGridEnabled(swiper, breakpointParams);
+  const wasGrabCursor = swiper.params.grabCursor;
+  const isGrabCursor = breakpointParams.grabCursor;
   const wasEnabled = params.enabled;
   if (wasMultiRow && !isMultiRow) {
     el3.classList.remove(`${params.containerModifierClass}grid`, `${params.containerModifierClass}grid-column`);
@@ -15424,6 +15425,11 @@ function setBreakpoint() {
       el3.classList.add(`${params.containerModifierClass}grid-column`);
     }
     swiper.emitContainerClasses();
+  }
+  if (wasGrabCursor && !isGrabCursor) {
+    swiper.unsetGrabCursor();
+  } else if (!wasGrabCursor && isGrabCursor) {
+    swiper.setGrabCursor();
   }
   ["navigation", "pagination", "scrollbar"].forEach((prop) => {
     if (typeof breakpointParams[prop] === "undefined")
@@ -16343,7 +16349,7 @@ Object.keys(prototypes).forEach((prototypeGroup) => {
 });
 Swiper.use([Resize, Observer]);
 
-// node_modules/.pnpm/swiper@11.0.7/node_modules/swiper/shared/update-swiper.mjs
+// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/update-swiper.mjs
 var paramsList = [
   "eventsPrefix",
   "injectStyles",
@@ -16701,7 +16707,7 @@ function updateSwiper(_ref) {
   swiper.update();
 }
 
-// node_modules/.pnpm/swiper@11.0.7/node_modules/swiper/shared/update-on-virtual-data.mjs
+// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/update-on-virtual-data.mjs
 function getParams(obj, splitEvents) {
   if (obj === void 0) {
     obj = {};
@@ -16834,7 +16840,7 @@ var updateOnVirtualData = (swiper) => {
   }
 };
 
-// node_modules/.pnpm/swiper@11.0.7/node_modules/swiper/swiper-vue.mjs
+// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/swiper-vue.mjs
 function getChildren(originalSlots, slidesRef, oldSlidesRef) {
   if (originalSlots === void 0) {
     originalSlots = {};
@@ -17627,7 +17633,7 @@ var SwiperSlide = {
   }
 };
 
-// node_modules/.pnpm/swiper@11.0.7/node_modules/swiper/modules/mousewheel.mjs
+// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/modules/mousewheel.mjs
 function Mousewheel(_ref) {
   let {
     swiper,
@@ -17951,7 +17957,7 @@ function Mousewheel(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.0.7/node_modules/swiper/shared/create-element-if-not-defined.mjs
+// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/create-element-if-not-defined.mjs
 function createElementIfNotDefined(swiper, originalParams, params, checkProps) {
   if (swiper.params.createElements) {
     Object.keys(checkProps).forEach((key) => {
@@ -17970,7 +17976,7 @@ function createElementIfNotDefined(swiper, originalParams, params, checkProps) {
   return params;
 }
 
-// node_modules/.pnpm/swiper@11.0.7/node_modules/swiper/modules/navigation.mjs
+// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/modules/navigation.mjs
 function Navigation(_ref) {
   let {
     swiper,
@@ -18003,8 +18009,10 @@ function Navigation(_ref) {
     if (el3) {
       if (typeof el3 === "string")
         res = [...document.querySelectorAll(el3)];
-      if (swiper.params.uniqueNavElements && typeof el3 === "string" && res.length > 1 && swiper.el.querySelectorAll(el3).length === 1) {
+      if (swiper.params.uniqueNavElements && typeof el3 === "string" && res && res.length > 1 && swiper.el.querySelectorAll(el3).length === 1) {
         res = swiper.el.querySelector(el3);
+      } else if (res && res.length === 1) {
+        res = res[0];
       }
     }
     if (el3 && !res)
@@ -18163,7 +18171,7 @@ function Navigation(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.0.7/node_modules/swiper/shared/classes-to-selector.mjs
+// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/classes-to-selector.mjs
 function classesToSelector(classes2) {
   if (classes2 === void 0) {
     classes2 = "";
@@ -18171,7 +18179,7 @@ function classesToSelector(classes2) {
   return `.${classes2.trim().replace(/([\.:!+\/])/g, "\\$1").replace(/ /g, ".")}`;
 }
 
-// node_modules/.pnpm/swiper@11.0.7/node_modules/swiper/modules/pagination.mjs
+// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/modules/pagination.mjs
 function Pagination(_ref) {
   let {
     swiper,
@@ -18617,7 +18625,7 @@ function Pagination(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.0.7/node_modules/swiper/modules/autoplay.mjs
+// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/modules/autoplay.mjs
 function Autoplay(_ref) {
   let {
     swiper,
@@ -18932,7 +18940,7 @@ function Autoplay(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.0.7/node_modules/swiper/shared/effect-init.mjs
+// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/effect-init.mjs
 function effectInit(params) {
   const {
     effect,
@@ -18994,7 +19002,7 @@ function effectInit(params) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.0.7/node_modules/swiper/shared/effect-target.mjs
+// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/effect-target.mjs
 function effectTarget(effectParams, slideEl) {
   const transformEl = getSlideTransformEl(slideEl);
   if (transformEl !== slideEl) {
@@ -19004,7 +19012,7 @@ function effectTarget(effectParams, slideEl) {
   return transformEl;
 }
 
-// node_modules/.pnpm/swiper@11.0.7/node_modules/swiper/shared/effect-virtual-transition-end.mjs
+// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/effect-virtual-transition-end.mjs
 function effectVirtualTransitionEnd(_ref) {
   let {
     swiper,
@@ -19051,7 +19059,7 @@ function effectVirtualTransitionEnd(_ref) {
   }
 }
 
-// node_modules/.pnpm/swiper@11.0.7/node_modules/swiper/modules/effect-fade.mjs
+// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/modules/effect-fade.mjs
 function EffectFade(_ref) {
   let {
     swiper,
@@ -19113,7 +19121,7 @@ function EffectFade(_ref) {
   });
 }
 
-// node_modules/.pnpm/vue-amazing-ui@0.1.37/node_modules/vue-amazing-ui/dist/vue-amazing-ui.js
+// node_modules/.pnpm/vue-amazing-ui@0.1.38_async-validator@4.2.5_focus-trap@7.5.4_sortablejs@1.15.2/node_modules/vue-amazing-ui/dist/vue-amazing-ui.js
 function Uo(l = Date.now(), a3 = "YYYY-MM-DD HH:mm:ss") {
   if (typeof l == "number" || typeof l == "string")
     var e3 = new Date(l);
@@ -19166,7 +19174,7 @@ function ue(l, a3 = 0, e3 = false) {
   }) };
   return c3;
 }
-function Me(l) {
+function be(l) {
   const a3 = typeof window < "u" ? window.cancelAnimationFrame || window.mozCancelAnimationFrame : () => {
   };
   l && l.id && a3(l.id);
@@ -19182,7 +19190,7 @@ function Ko(l, a3 = 300) {
 function Zo(l, a3 = 300) {
   let e3 = null;
   return function() {
-    e3 && Me(e3), e3 = ue(l, a3);
+    e3 && be(e3), e3 = ue(l, a3);
   };
 }
 function Go(l, a3) {
@@ -19420,7 +19428,7 @@ sa2.install = (l) => {
 };
 var rl2 = ["href", "target", "disabled"];
 var vl2 = { class: "u-text" };
-var xe = V(defineComponent({ __name: "Button", props: { name: { default: "按钮" }, type: { default: "default" }, effect: { default: "fade" }, size: { default: "middle" }, route: { default: () => ({}) }, target: { default: "_self" }, disabled: { type: Boolean, default: false }, loading: { type: Boolean, default: false }, center: { type: Boolean, default: false } }, emits: ["click"], setup(l, { emit: a3 }) {
+var Me = V(defineComponent({ __name: "Button", props: { name: { default: "按钮" }, type: { default: "default" }, effect: { default: "fade" }, size: { default: "middle" }, route: { default: () => ({}) }, target: { default: "_self" }, disabled: { type: Boolean, default: false }, loading: { type: Boolean, default: false }, center: { type: Boolean, default: false } }, emits: ["click"], setup(l, { emit: a3 }) {
   const e3 = l, o = computed(() => JSON.stringify(e3.route) !== "{}"), n = a3;
   function c3(s3) {
     o.value || n("click", s3);
@@ -19437,8 +19445,8 @@ var xe = V(defineComponent({ __name: "Button", props: { name: { default: "按钮
   }
   return (s3, p) => (openBlock(), createElementBlock("div", { class: normalizeClass(["m-btn-wrap", { center: s3.center }]) }, [createBaseVNode("a", { onClick: c3, href: d3(s3.route), target: o.value ? s3.target : "_self", disabled: s3.disabled, class: normalizeClass(["m-btn", [s3.type, s3.size, { [s3.effect]: s3.type === "default", disabled: s3.disabled, "m-btn-loading": !o.value && s3.loading }]]) }, [withDirectives(createBaseVNode("span", { class: normalizeClass(["m-loading-icon", { [`loading-${s3.size}`]: s3.loading }]) }, [createBaseVNode("span", { class: normalizeClass(["u-spin-circle", `spin-${s3.size}`]) }, null, 2)], 2), [[vShow, !o.value]]), createBaseVNode("span", vl2, [renderSlot(s3.$slots, "default", {}, () => [createTextVNode(toDisplayString(s3.name), 1)], true)])], 10, rl2)], 2));
 } }), [["__scopeId", "data-v-2ce0a6fe"]]);
-xe.install = (l) => {
-  l.component(xe.__name, xe);
+Me.install = (l) => {
+  l.component(Me.__name, Me);
 };
 var pl2 = { class: "m-head-wrapper" };
 var fl2 = { class: "u-title" };
@@ -19488,7 +19496,7 @@ var ia2 = V(defineComponent({ __name: "Carousel", props: { images: { default: ()
   });
   const z3 = ref(), $ = ref();
   function H3(D3) {
-    D3.preventDefault(), u3.value > 1 && (D3.key !== "ArrowLeft" && D3.key !== "ArrowUp" || ke2(), D3.key !== "ArrowRight" && D3.key !== "ArrowDown" || we());
+    D3.preventDefault(), u3.value > 1 && (D3.key !== "ArrowLeft" && D3.key !== "ArrowUp" || we(), D3.key !== "ArrowRight" && D3.key !== "ArrowDown" || xe());
   }
   function L3() {
     u3.value > 1 && b3.value[0] && (e3.value = true, n.value = false, K3(), console.log("imageSlider start"));
@@ -19517,11 +19525,11 @@ var ia2 = V(defineComponent({ __name: "Carousel", props: { images: { default: ()
       o.value === 0 && (o.value = u3.value * z3.value), s3.value = q3, d3.value = fe(pe);
     }(D3);
   }
-  function ke2() {
+  function we() {
     const D3 = (h5.value + u3.value - 2) % u3.value * z3.value;
     h5.value = h5.value - 1 > 0 ? h5.value - 1 : u3.value, re(D3);
   }
-  function we() {
+  function xe() {
     const D3 = h5.value * z3.value;
     h5.value = h5.value % u3.value + 1, ae(D3);
   }
@@ -19556,11 +19564,11 @@ var ia2 = V(defineComponent({ __name: "Carousel", props: { images: { default: ()
     }), z3.value = i3.value.offsetWidth, $.value = i3.value.offsetHeight, document.addEventListener("keydown", H3);
   }), onUnmounted(() => {
     document.removeEventListener("keydown", H3);
-  }), (D3, q3) => (openBlock(), createElementBlock("div", { class: "m-slider", ref_key: "carousel", ref: i3, style: normalizeStyle(`--navColor: ${D3.navColor}; --pageActiveColor: ${D3.pageActiveColor}; width: ${k3.value}; height: ${M3.value};`), onMouseenter: q3[1] || (q3[1] = (Z) => D3.pauseOnMouseEnter ? (Me(c3.value), c3.value = null, e3.value ? I3() : E3(), void console.log("imageSlider stop")) : () => false), onMouseleave: q3[2] || (q3[2] = (Z) => D3.pauseOnMouseEnter ? L3() : () => false) }, [createBaseVNode("div", { class: normalizeClass({ transition: n.value }), style: normalizeStyle(`width: ${w3.value}px; height: 100%; will-change: transform; transform: translateX(${-o.value}px);`) }, [(openBlock(true), createElementBlock(Fragment, null, renderList(D3.images, (Z, le) => (openBlock(), createElementBlock("div", { class: "m-image", key: le }, [createVNode(unref(ce), { spinning: !b3.value[le], indicator: "dynamic-circle" }, { default: withCtx(() => [createBaseVNode("a", { href: Z.link ? Z.link : "javascript:;", target: Z.link ? "_blank" : "_self", class: "m-link" }, [(openBlock(), createElementBlock("img", { onLoad: (te) => g(le), src: Z.src, key: Z.src, alt: Z.title, class: "u-img", style: normalizeStyle(`width: ${z3.value}px; height: ${$.value}px;`) }, null, 44, _l2))], 8, zl2)]), _: 2 }, 1032, ["spinning"])]))), 128)), u3.value ? (openBlock(), createElementBlock("div", Cl2, [createVNode(unref(ce), { spinning: !b3.value[0], indicator: "dynamic-circle" }, { default: withCtx(() => [createBaseVNode("a", { href: D3.images[0].link ? D3.images[0].link : "javascript:;", target: D3.images[0].link ? "_blank" : "_self", class: "m-link" }, [(openBlock(), createElementBlock("img", { onLoad: q3[0] || (q3[0] = (Z) => g(0)), src: D3.images[0].src, key: D3.images[0].src, alt: D3.images[0].title, class: "u-img", style: normalizeStyle(`width: ${z3.value}px; height: ${$.value}px;`) }, null, 44, Bl2))], 8, $l2)]), _: 1 }, 8, ["spinning"])])) : createCommentVNode("", true)], 6), D3.navigation ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [(openBlock(), createElementBlock("svg", { class: "arrow-left", style: normalizeStyle(`width: ${D3.navSize}px; height: ${D3.navSize}px;`), onClick: ke2, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 16 16" }, Fl2, 4)), (openBlock(), createElementBlock("svg", { class: "arrow-right", style: normalizeStyle(`width: ${D3.navSize}px; height: ${D3.navSize}px;`), onClick: we, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 16 16" }, Ll2, 4))], 64)) : createCommentVNode("", true), D3.pagination ? (openBlock(), createElementBlock("div", Sl2, [(openBlock(true), createElementBlock(Fragment, null, renderList(u3.value, (Z) => (openBlock(), createElementBlock("div", { onClick: (le) => function(te) {
+  }), (D3, q3) => (openBlock(), createElementBlock("div", { class: "m-slider", ref_key: "carousel", ref: i3, style: normalizeStyle(`--navColor: ${D3.navColor}; --pageActiveColor: ${D3.pageActiveColor}; width: ${k3.value}; height: ${M3.value};`), onMouseenter: q3[1] || (q3[1] = (Z) => D3.pauseOnMouseEnter ? (be(c3.value), c3.value = null, e3.value ? I3() : E3(), void console.log("imageSlider stop")) : () => false), onMouseleave: q3[2] || (q3[2] = (Z) => D3.pauseOnMouseEnter ? L3() : () => false) }, [createBaseVNode("div", { class: normalizeClass({ transition: n.value }), style: normalizeStyle(`width: ${w3.value}px; height: 100%; will-change: transform; transform: translateX(${-o.value}px);`) }, [(openBlock(true), createElementBlock(Fragment, null, renderList(D3.images, (Z, le) => (openBlock(), createElementBlock("div", { class: "m-image", key: le }, [createVNode(unref(ce), { spinning: !b3.value[le], indicator: "dynamic-circle" }, { default: withCtx(() => [createBaseVNode("a", { href: Z.link ? Z.link : "javascript:;", target: Z.link ? "_blank" : "_self", class: "m-link" }, [(openBlock(), createElementBlock("img", { onLoad: (te) => g(le), src: Z.src, key: Z.src, alt: Z.title, class: "u-img", style: normalizeStyle(`width: ${z3.value}px; height: ${$.value}px;`) }, null, 44, _l2))], 8, zl2)]), _: 2 }, 1032, ["spinning"])]))), 128)), u3.value ? (openBlock(), createElementBlock("div", Cl2, [createVNode(unref(ce), { spinning: !b3.value[0], indicator: "dynamic-circle" }, { default: withCtx(() => [createBaseVNode("a", { href: D3.images[0].link ? D3.images[0].link : "javascript:;", target: D3.images[0].link ? "_blank" : "_self", class: "m-link" }, [(openBlock(), createElementBlock("img", { onLoad: q3[0] || (q3[0] = (Z) => g(0)), src: D3.images[0].src, key: D3.images[0].src, alt: D3.images[0].title, class: "u-img", style: normalizeStyle(`width: ${z3.value}px; height: ${$.value}px;`) }, null, 44, Bl2))], 8, $l2)]), _: 1 }, 8, ["spinning"])])) : createCommentVNode("", true)], 6), D3.navigation ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [(openBlock(), createElementBlock("svg", { class: "arrow-left", style: normalizeStyle(`width: ${D3.navSize}px; height: ${D3.navSize}px;`), onClick: we, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 16 16" }, Fl2, 4)), (openBlock(), createElementBlock("svg", { class: "arrow-right", style: normalizeStyle(`width: ${D3.navSize}px; height: ${D3.navSize}px;`), onClick: xe, xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 16 16" }, Ll2, 4))], 64)) : createCommentVNode("", true), D3.pagination ? (openBlock(), createElementBlock("div", Sl2, [(openBlock(true), createElementBlock(Fragment, null, renderList(u3.value, (Z) => (openBlock(), createElementBlock("div", { onClick: (le) => function(te) {
     if (h5.value !== te) {
       p.value = true;
-      const Q3 = (te - 1) * z3.value;
-      te < h5.value && (h5.value = te, re(Q3)), te > h5.value && (h5.value = te, ae(Q3));
+      const ee = (te - 1) * z3.value;
+      te < h5.value && (h5.value = te, re(ee)), te > h5.value && (h5.value = te, ae(ee));
     }
   }(Z), class: normalizeClass(["u-circle", { active: h5.value === Z }]), style: normalizeStyle([{ width: `${D3.pageSize}px`, height: `${D3.pageSize}px` }, D3.pageStyle]), key: Z }, null, 14, Al2))), 128))])) : createCommentVNode("", true)], 36));
 } }), [["__scopeId", "data-v-c9dc3cb6"]]);
@@ -19940,7 +19948,7 @@ var ma2 = V(defineComponent({ __name: "Dialog", props: { title: { default: "提�
   function h5() {
     c3("ok");
   }
-  return (k3, M3) => (openBlock(), createElementBlock("div", ft2, [createVNode(Transition, { name: "mask" }, { default: withCtx(() => [withDirectives(createBaseVNode("div", ht, null, 512), [[vShow, k3.visible]])]), _: 1 }), createVNode(Transition, null, { default: withCtx(() => [withDirectives(createBaseVNode("div", { class: "m-dialog-wrap", onClick: withModifiers(d3, ["self"]) }, [createBaseVNode("div", { ref: "dialog", class: normalizeClass(["m-dialog", k3.center ? "relative-hv-center" : "top-center"]), style: normalizeStyle(`width: ${o.value ? "100%" : e3.width + "px"}; top: ${k3.center ? "50%" : o.value ? 0 : k3.top + "px"};`) }, [createBaseVNode("div", { class: normalizeClass(["m-dialog-content", { loading: k3.loading }]), style: normalizeStyle(`--height: ${o.value ? "100vh" : n.value}`) }, [createVNode(unref(ce), { class: "u-spin", spinning: k3.loading, size: "small" }, null, 8, ["spinning"]), createBaseVNode("div", mt, [createBaseVNode("p", gt, [renderSlot(k3.$slots, "title", {}, () => [createTextVNode(toDisplayString(k3.title), 1)], true)])]), k3.switchFullscreen ? (openBlock(), createElementBlock("span", { key: 0, class: "m-screen", onClick: s3 }, [withDirectives((openBlock(), createElementBlock("svg", yt2, bt, 512)), [[vShow, !o.value]]), withDirectives((openBlock(), createElementBlock("svg", kt, wt2, 512)), [[vShow, o.value]])])) : createCommentVNode("", true), createBaseVNode("span", { class: "m-close", onClick: p }, xt2), createBaseVNode("div", { class: "m-dialog-body", style: normalizeStyle(k3.bodyStyle) }, [renderSlot(k3.$slots, "default", {}, () => [createTextVNode(toDisplayString(k3.content), 1)], true)], 4), withDirectives(createBaseVNode("div", Mt, [createVNode(unref(xe), { class: "mr8", onClick: i3 }, { default: withCtx(() => [createTextVNode(toDisplayString(k3.cancelText), 1)]), _: 1 }), createVNode(unref(xe), { type: "primary", onClick: h5 }, { default: withCtx(() => [createTextVNode(toDisplayString(k3.okText), 1)]), _: 1 })], 512), [[vShow, k3.footer]])], 6)], 6)], 512), [[vShow, k3.visible]])]), _: 3 })]));
+  return (k3, M3) => (openBlock(), createElementBlock("div", ft2, [createVNode(Transition, { name: "mask" }, { default: withCtx(() => [withDirectives(createBaseVNode("div", ht, null, 512), [[vShow, k3.visible]])]), _: 1 }), createVNode(Transition, null, { default: withCtx(() => [withDirectives(createBaseVNode("div", { class: "m-dialog-wrap", onClick: withModifiers(d3, ["self"]) }, [createBaseVNode("div", { ref: "dialog", class: normalizeClass(["m-dialog", k3.center ? "relative-hv-center" : "top-center"]), style: normalizeStyle(`width: ${o.value ? "100%" : e3.width + "px"}; top: ${k3.center ? "50%" : o.value ? 0 : k3.top + "px"};`) }, [createBaseVNode("div", { class: normalizeClass(["m-dialog-content", { loading: k3.loading }]), style: normalizeStyle(`--height: ${o.value ? "100vh" : n.value}`) }, [createVNode(unref(ce), { class: "u-spin", spinning: k3.loading, size: "small" }, null, 8, ["spinning"]), createBaseVNode("div", mt, [createBaseVNode("p", gt, [renderSlot(k3.$slots, "title", {}, () => [createTextVNode(toDisplayString(k3.title), 1)], true)])]), k3.switchFullscreen ? (openBlock(), createElementBlock("span", { key: 0, class: "m-screen", onClick: s3 }, [withDirectives((openBlock(), createElementBlock("svg", yt2, bt, 512)), [[vShow, !o.value]]), withDirectives((openBlock(), createElementBlock("svg", kt, wt2, 512)), [[vShow, o.value]])])) : createCommentVNode("", true), createBaseVNode("span", { class: "m-close", onClick: p }, xt2), createBaseVNode("div", { class: "m-dialog-body", style: normalizeStyle(k3.bodyStyle) }, [renderSlot(k3.$slots, "default", {}, () => [createTextVNode(toDisplayString(k3.content), 1)], true)], 4), withDirectives(createBaseVNode("div", Mt, [createVNode(unref(Me), { class: "mr8", onClick: i3 }, { default: withCtx(() => [createTextVNode(toDisplayString(k3.cancelText), 1)]), _: 1 }), createVNode(unref(Me), { type: "primary", onClick: h5 }, { default: withCtx(() => [createTextVNode(toDisplayString(k3.okText), 1)]), _: 1 })], 512), [[vShow, k3.footer]])], 6)], 6)], 512), [[vShow, k3.visible]])]), _: 3 })]));
 } }), [["__scopeId", "data-v-b1ef1a5c"]]);
 ma2.install = (l) => {
   l.component(ma2.__name, ma2);
@@ -19998,7 +20006,7 @@ var qe2 = V(defineComponent({ __name: "Tooltip", props: { maxWidth: { default: 1
     (function() {
       const k3 = d3.value.offsetWidth, M3 = s3.value.offsetWidth, w3 = s3.value.offsetHeight;
       n.value = w3 + 4, c3.value = (M3 - k3) / 2;
-    })(), Me(o.value), e3.value = true, p("openChange", e3.value);
+    })(), be(o.value), e3.value = true, p("openChange", e3.value);
   }
   function h5() {
     o.value = ue(() => {
@@ -20065,29 +20073,29 @@ var Se = V(defineComponent({ __name: "Space", props: { width: { default: "auto" 
 Se.install = (l) => {
   l.component(Se.__name, Se);
 };
-var be = (l) => (pushScopeId("data-v-f7604d80"), l = l(), popScopeId(), l);
+var ke2 = (l) => (pushScopeId("data-v-f7604d80"), l = l(), popScopeId(), l);
 var Ot2 = { class: "m-image-wrap" };
 var qt2 = ["onLoad", "src", "alt"];
 var Pt = ["onClick"];
 var Yt = { class: "m-image-mask-info" };
-var Ut2 = be(() => createBaseVNode("svg", { class: "u-eye", focusable: "false", "data-icon": "eye", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z" })], -1));
+var Ut2 = ke2(() => createBaseVNode("svg", { class: "u-eye", focusable: "false", "data-icon": "eye", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z" })], -1));
 var Kt = { class: "u-pre" };
 var Zt2 = { class: "m-preview-mask" };
 var Gt = { class: "m-preview-body" };
 var Jt = { class: "m-preview-operations" };
 var Xt = ["href", "title"];
-var Qt = [be(() => createBaseVNode("svg", { class: "u-icon", focusable: "false", "data-icon": "close", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z" })], -1))];
-var e2 = [be(() => createBaseVNode("svg", { class: "u-icon", focusable: "false", "data-icon": "zoom-in", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M637 443H519V309c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v134H325c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h118v134c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V519h118c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8zm284 424L775 721c122.1-148.9 113.6-369.5-26-509-148-148.1-388.4-148.1-537 0-148.1 148.6-148.1 389 0 537 139.5 139.6 360.1 148.1 509 26l146 146c3.2 2.8 8.3 2.8 11 0l43-43c2.8-2.7 2.8-7.8 0-11zM696 696c-118.8 118.7-311.2 118.7-430 0-118.7-118.8-118.7-311.2 0-430 118.8-118.7 311.2-118.7 430 0 118.7 118.8 118.7 311.2 0 430z" })], -1))];
-var a22 = [be(() => createBaseVNode("svg", { class: "u-icon", focusable: "false", "data-icon": "zoom-out", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M637 443H325c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h312c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8zm284 424L775 721c122.1-148.9 113.6-369.5-26-509-148-148.1-388.4-148.1-537 0-148.1 148.6-148.1 389 0 537 139.5 139.6 360.1 148.1 509 26l146 146c3.2 2.8 8.3 2.8 11 0l43-43c2.8-2.7 2.8-7.8 0-11zM696 696c-118.8 118.7-311.2 118.7-430 0-118.7-118.8-118.7-311.2 0-430 118.8-118.7 311.2-118.7 430 0 118.7 118.8 118.7 311.2 0 430z" })], -1))];
-var l2 = [be(() => createBaseVNode("svg", { class: "u-icon", focusable: "false", "data-icon": "expand", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M342 88H120c-17.7 0-32 14.3-32 32v224c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16V168h174c8.8 0 16-7.2 16-16v-48c0-8.8-7.2-16-16-16zm578 576h-48c-8.8 0-16 7.2-16 16v176H682c-8.8 0-16 7.2-16 16v48c0 8.8 7.2 16 16 16h222c17.7 0 32-14.3 32-32V680c0-8.8-7.2-16-16-16zM342 856H168V680c0-8.8-7.2-16-16-16h-48c-8.8 0-16 7.2-16 16v224c0 17.7 14.3 32 32 32h222c8.8 0 16-7.2 16-16v-48c0-8.8-7.2-16-16-16zM904 88H682c-8.8 0-16 7.2-16 16v48c0 8.8 7.2 16 16 16h174v176c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16V120c0-17.7-14.3-32-32-32z" })], -1))];
-var t2 = [be(() => createBaseVNode("svg", { class: "u-icon", focusable: "false", "data-icon": "rotate-right", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M480.5 251.2c13-1.6 25.9-2.4 38.8-2.5v63.9c0 6.5 7.5 10.1 12.6 6.1L660 217.6c4-3.2 4-9.2 0-12.3l-128-101c-5.1-4-12.6-.4-12.6 6.1l-.2 64c-118.6.5-235.8 53.4-314.6 154.2A399.75 399.75 0 00123.5 631h74.9c-.9-5.3-1.7-10.7-2.4-16.1-5.1-42.1-2.1-84.1 8.9-124.8 11.4-42.2 31-81.1 58.1-115.8 27.2-34.7 60.3-63.2 98.4-84.3 37-20.6 76.9-33.6 119.1-38.8z" }), createBaseVNode("path", { d: "M880 418H352c-17.7 0-32 14.3-32 32v414c0 17.7 14.3 32 32 32h528c17.7 0 32-14.3 32-32V450c0-17.7-14.3-32-32-32zm-44 402H396V494h440v326z" })], -1))];
-var o2 = [be(() => createBaseVNode("svg", { class: "u-icon", focusable: "false", "data-icon": "rotate-left", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M672 418H144c-17.7 0-32 14.3-32 32v414c0 17.7 14.3 32 32 32h528c17.7 0 32-14.3 32-32V450c0-17.7-14.3-32-32-32zm-44 402H188V494h440v326z" }), createBaseVNode("path", { d: "M819.3 328.5c-78.8-100.7-196-153.6-314.6-154.2l-.2-64c0-6.5-7.6-10.1-12.6-6.1l-128 101c-4 3.1-3.9 9.1 0 12.3L492 318.6c5.1 4 12.7.4 12.6-6.1v-63.9c12.9.1 25.9.9 38.8 2.5 42.1 5.2 82.1 18.2 119 38.7 38.1 21.2 71.2 49.7 98.4 84.3 27.1 34.7 46.7 73.7 58.1 115.8a325.95 325.95 0 016.5 140.9h74.9c14.8-103.6-11.3-213-81-302.3z" })], -1))];
-var s22 = [be(() => createBaseVNode("svg", { class: "u-icon", focusable: "false", "data-icon": "swap", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M847.9 592H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h605.2L612.9 851c-4.1 5.2-.4 13 6.3 13h72.5c4.9 0 9.5-2.2 12.6-6.1l168.8-214.1c16.5-21 1.6-51.8-25.2-51.8zM872 356H266.8l144.3-183c4.1-5.2.4-13-6.3-13h-72.5c-4.9 0-9.5 2.2-12.6 6.1L150.9 380.2c-16.5 21-1.6 51.8 25.1 51.8h696c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z" })], -1))];
+var Qt = [ke2(() => createBaseVNode("svg", { class: "u-icon", focusable: "false", "data-icon": "close", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z" })], -1))];
+var e2 = [ke2(() => createBaseVNode("svg", { class: "u-icon", focusable: "false", "data-icon": "zoom-in", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M637 443H519V309c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v134H325c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h118v134c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V519h118c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8zm284 424L775 721c122.1-148.9 113.6-369.5-26-509-148-148.1-388.4-148.1-537 0-148.1 148.6-148.1 389 0 537 139.5 139.6 360.1 148.1 509 26l146 146c3.2 2.8 8.3 2.8 11 0l43-43c2.8-2.7 2.8-7.8 0-11zM696 696c-118.8 118.7-311.2 118.7-430 0-118.7-118.8-118.7-311.2 0-430 118.8-118.7 311.2-118.7 430 0 118.7 118.8 118.7 311.2 0 430z" })], -1))];
+var a22 = [ke2(() => createBaseVNode("svg", { class: "u-icon", focusable: "false", "data-icon": "zoom-out", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M637 443H325c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h312c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8zm284 424L775 721c122.1-148.9 113.6-369.5-26-509-148-148.1-388.4-148.1-537 0-148.1 148.6-148.1 389 0 537 139.5 139.6 360.1 148.1 509 26l146 146c3.2 2.8 8.3 2.8 11 0l43-43c2.8-2.7 2.8-7.8 0-11zM696 696c-118.8 118.7-311.2 118.7-430 0-118.7-118.8-118.7-311.2 0-430 118.8-118.7 311.2-118.7 430 0 118.7 118.8 118.7 311.2 0 430z" })], -1))];
+var l2 = [ke2(() => createBaseVNode("svg", { class: "u-icon", focusable: "false", "data-icon": "expand", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M342 88H120c-17.7 0-32 14.3-32 32v224c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16V168h174c8.8 0 16-7.2 16-16v-48c0-8.8-7.2-16-16-16zm578 576h-48c-8.8 0-16 7.2-16 16v176H682c-8.8 0-16 7.2-16 16v48c0 8.8 7.2 16 16 16h222c17.7 0 32-14.3 32-32V680c0-8.8-7.2-16-16-16zM342 856H168V680c0-8.8-7.2-16-16-16h-48c-8.8 0-16 7.2-16 16v224c0 17.7 14.3 32 32 32h222c8.8 0 16-7.2 16-16v-48c0-8.8-7.2-16-16-16zM904 88H682c-8.8 0-16 7.2-16 16v48c0 8.8 7.2 16 16 16h174v176c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16V120c0-17.7-14.3-32-32-32z" })], -1))];
+var t2 = [ke2(() => createBaseVNode("svg", { class: "u-icon", focusable: "false", "data-icon": "rotate-right", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M480.5 251.2c13-1.6 25.9-2.4 38.8-2.5v63.9c0 6.5 7.5 10.1 12.6 6.1L660 217.6c4-3.2 4-9.2 0-12.3l-128-101c-5.1-4-12.6-.4-12.6 6.1l-.2 64c-118.6.5-235.8 53.4-314.6 154.2A399.75 399.75 0 00123.5 631h74.9c-.9-5.3-1.7-10.7-2.4-16.1-5.1-42.1-2.1-84.1 8.9-124.8 11.4-42.2 31-81.1 58.1-115.8 27.2-34.7 60.3-63.2 98.4-84.3 37-20.6 76.9-33.6 119.1-38.8z" }), createBaseVNode("path", { d: "M880 418H352c-17.7 0-32 14.3-32 32v414c0 17.7 14.3 32 32 32h528c17.7 0 32-14.3 32-32V450c0-17.7-14.3-32-32-32zm-44 402H396V494h440v326z" })], -1))];
+var o2 = [ke2(() => createBaseVNode("svg", { class: "u-icon", focusable: "false", "data-icon": "rotate-left", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M672 418H144c-17.7 0-32 14.3-32 32v414c0 17.7 14.3 32 32 32h528c17.7 0 32-14.3 32-32V450c0-17.7-14.3-32-32-32zm-44 402H188V494h440v326z" }), createBaseVNode("path", { d: "M819.3 328.5c-78.8-100.7-196-153.6-314.6-154.2l-.2-64c0-6.5-7.6-10.1-12.6-6.1l-128 101c-4 3.1-3.9 9.1 0 12.3L492 318.6c5.1 4 12.7.4 12.6-6.1v-63.9c12.9.1 25.9.9 38.8 2.5 42.1 5.2 82.1 18.2 119 38.7 38.1 21.2 71.2 49.7 98.4 84.3 27.1 34.7 46.7 73.7 58.1 115.8a325.95 325.95 0 016.5 140.9h74.9c14.8-103.6-11.3-213-81-302.3z" })], -1))];
+var s22 = [ke2(() => createBaseVNode("svg", { class: "u-icon", focusable: "false", "data-icon": "swap", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M847.9 592H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h605.2L612.9 851c-4.1 5.2-.4 13 6.3 13h72.5c4.9 0 9.5-2.2 12.6-6.1l168.8-214.1c16.5-21 1.6-51.8-25.2-51.8zM872 356H266.8l144.3-183c4.1-5.2.4-13-6.3-13h-72.5c-4.9 0-9.5 2.2-12.6 6.1L150.9 380.2c-16.5 21-1.6 51.8 25.1 51.8h696c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z" })], -1))];
 var n2 = { class: "u-icon", style: { transform: "rotate(90deg)" }, focusable: "false", "data-icon": "swap", "aria-hidden": "true", viewBox: "64 64 896 896" };
-var i2 = [be(() => createBaseVNode("path", { d: "M847.9 592H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h605.2L612.9 851c-4.1 5.2-.4 13 6.3 13h72.5c4.9 0 9.5-2.2 12.6-6.1l168.8-214.1c16.5-21 1.6-51.8-25.2-51.8zM872 356H266.8l144.3-183c4.1-5.2.4-13-6.3-13h-72.5c-4.9 0-9.5 2.2-12.6 6.1L150.9 380.2c-16.5 21-1.6 51.8 25.1 51.8h696c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z" }, null, -1))];
+var i2 = [ke2(() => createBaseVNode("path", { d: "M847.9 592H152c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h605.2L612.9 851c-4.1 5.2-.4 13 6.3 13h72.5c4.9 0 9.5-2.2 12.6-6.1l168.8-214.1c16.5-21 1.6-51.8-25.2-51.8zM872 356H266.8l144.3-183c4.1-5.2.4-13-6.3-13h-72.5c-4.9 0-9.5 2.2-12.6 6.1L150.9 380.2c-16.5 21-1.6 51.8 25.1 51.8h696c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z" }, null, -1))];
 var u2 = ["src", "alt", "onLoad"];
-var c2 = [be(() => createBaseVNode("svg", { focusable: "false", class: "u-switch", "data-icon": "left", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z" })], -1))];
-var d22 = [be(() => createBaseVNode("svg", { focusable: "false", class: "u-switch", "data-icon": "right", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z" })], -1))];
+var c2 = [ke2(() => createBaseVNode("svg", { focusable: "false", class: "u-switch", "data-icon": "left", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z" })], -1))];
+var d22 = [ke2(() => createBaseVNode("svg", { focusable: "false", class: "u-switch", "data-icon": "right", "aria-hidden": "true", viewBox: "64 64 896 896" }, [createBaseVNode("path", { d: "M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z" })], -1))];
 var r2 = defineComponent({ __name: "Image", props: { src: { default: "" }, name: { default: "" }, width: { default: 200 }, height: { default: 200 }, bordered: { type: Boolean, default: true }, gap: { default: 8 }, fit: { default: "contain" }, preview: { default: "预览" }, zoomRatio: { default: 0.1 }, minZoomScale: { default: 0.1 }, maxZoomScale: { default: 10 }, resetOnDbclick: { type: Boolean, default: true }, loop: { type: Boolean, default: false }, album: { type: Boolean, default: false } }, setup(l, { expose: a3 }) {
   const e3 = l, o = computed(() => typeof e3.width == "number" ? e3.width + "px" : e3.width), n = computed(() => typeof e3.height == "number" ? e3.height + "px" : e3.height), c3 = ref([]);
   watchEffect(() => {
@@ -20118,8 +20126,8 @@ var r2 = defineComponent({ __name: "Image", props: { src: { default: "" }, name:
   }
   function H3(D3, q3) {
     const Z = String(D3).split(".")[1], le = String(q3).split(".")[1];
-    let te = Math.max((Z == null ? void 0 : Z.length) || 0, (le == null ? void 0 : le.length) || 0), Q3 = D3.toFixed(te), ze = q3.toFixed(te);
-    return (+Q3.replace(".", "") + +ze.replace(".", "")) / Math.pow(10, te);
+    let te = Math.max((Z == null ? void 0 : Z.length) || 0, (le == null ? void 0 : le.length) || 0), ee = D3.toFixed(te), ze = q3.toFixed(te);
+    return (+ee.replace(".", "") + +ze.replace(".", "")) / Math.pow(10, te);
   }
   function L3() {
     h5.value = false;
@@ -20139,10 +20147,10 @@ var r2 = defineComponent({ __name: "Image", props: { src: { default: "" }, name:
   function re() {
     k3.value -= 90;
   }
-  function ke2() {
+  function we() {
     w3.value *= -1;
   }
-  function we() {
+  function xe() {
     u3.value *= -1;
   }
   function ve(D3) {
@@ -20157,19 +20165,19 @@ var r2 = defineComponent({ __name: "Image", props: { src: { default: "" }, name:
     e3.loop ? i3.value = (i3.value + 1) % d3.value : i3.value < d3.value - 1 && i3.value++, K3();
   }
   return a3({ onPreview: $ }), (D3, q3) => (openBlock(), createElementBlock("div", Ot2, [createVNode(unref(Se), { size: D3.gap }, { default: withCtx(() => [(openBlock(true), createElementBlock(Fragment, null, renderList(c3.value, (Z, le) => withDirectives((openBlock(), createElementBlock("div", { class: normalizeClass(["m-image", { bordered: D3.bordered, "image-hover-mask": s3.value[le] }]), style: normalizeStyle(`width: ${o.value}; height: ${n.value};`), key: le }, [createVNode(unref(ce), { spinning: !s3.value[le], indicator: "dynamic-circle" }, { default: withCtx(() => [createBaseVNode("img", { class: "u-image", style: normalizeStyle(`width: calc(${o.value} - 2px); height: calc(${n.value} - 2px); object-fit: ${D3.fit};`), onLoad: (te) => {
-    return Q3 = le, void (s3.value[Q3] = true);
-    var Q3;
-  }, src: Z.src, alt: Z.name }, null, 44, qt2)]), _: 2 }, 1032, ["spinning"]), createBaseVNode("div", { class: "m-image-mask", onClick: (te) => $(le) }, [createBaseVNode("div", Yt, [Ut2, createBaseVNode("p", Kt, [renderSlot(D3.$slots, "preview", {}, () => [createTextVNode(toDisplayString(D3.preview), 1)], true)])])], 8, Pt)], 6)), [[vShow, !D3.album || D3.album && le === 0]])), 128))]), _: 3 }, 8, ["size"]), createVNode(Transition, { name: "mask" }, { default: withCtx(() => [withDirectives(createBaseVNode("div", Zt2, null, 512), [[vShow, h5.value]])]), _: 1 }), createVNode(Transition, { name: "preview" }, { default: withCtx(() => [withDirectives(createBaseVNode("div", { class: "m-preview-wrap", onClick: withModifiers(L3, ["self"]), onWheel: withModifiers(ve, ["prevent"]) }, [createBaseVNode("div", Gt, [createBaseVNode("div", Jt, [createBaseVNode("a", { class: "u-name", href: c3.value[i3.value].src, target: "_blank", title: z3(c3.value[i3.value]) }, toDisplayString(z3(c3.value[i3.value])), 9, Xt), withDirectives(createBaseVNode("p", { class: "u-preview-progress" }, toDisplayString(i3.value + 1) + " / " + toDisplayString(d3.value), 513), [[vShow, Array.isArray(D3.src)]]), createBaseVNode("div", { class: "u-preview-operation", title: "关闭", onClick: L3 }, Qt), createBaseVNode("div", { class: normalizeClass(["u-preview-operation", { "u-operation-disabled": M3.value === D3.maxZoomScale }]), title: "放大", onClick: I3 }, e2, 2), createBaseVNode("div", { class: normalizeClass(["u-preview-operation", { "u-operation-disabled": M3.value === D3.minZoomScale }]), title: "缩小", onClick: E3 }, a22, 2), createBaseVNode("div", { class: "u-preview-operation", title: "还原", onClick: K3 }, l2), createBaseVNode("div", { class: "u-preview-operation", title: "向右旋转", onClick: ae }, t2), createBaseVNode("div", { class: "u-preview-operation", title: "向左旋转", onClick: re }, o2), createBaseVNode("div", { class: "u-preview-operation", title: "水平镜像", onClick: ke2 }, s22), createBaseVNode("div", { class: "u-preview-operation", title: "垂直镜像", onClick: we }, [(openBlock(), createElementBlock("svg", n2, i2))])]), createBaseVNode("div", { class: "m-preview-image", style: normalizeStyle(`transform: translate3d(${y3.value}px, ${f.value}px, 0px);`) }, [(openBlock(true), createElementBlock(Fragment, null, renderList(c3.value, (Z, le) => withDirectives((openBlock(), createBlock(unref(ce), { spinning: !p.value[le], indicator: "dynamic-circle", key: le }, { default: withCtx(() => [createBaseVNode("img", { class: "u-preview-image", style: normalizeStyle(`transform: scale3d(${w3.value * M3.value}, ${u3.value * M3.value}, 1) rotate(${k3.value}deg);`), src: Z.src, alt: Z.name, onMousedown: q3[0] || (q3[0] = withModifiers((te) => function(Q3) {
-    const ze = Q3.target.getBoundingClientRect(), Ve2 = ze.top, De = ze.bottom, Je = ze.right, Xe2 = ze.left, Qe2 = document.documentElement.clientWidth, Re2 = document.documentElement.clientHeight;
-    b3.value = Q3.clientX, m3.value = Q3.clientY;
+    return ee = le, void (s3.value[ee] = true);
+    var ee;
+  }, src: Z.src, alt: Z.name }, null, 44, qt2)]), _: 2 }, 1032, ["spinning"]), createBaseVNode("div", { class: "m-image-mask", onClick: (te) => $(le) }, [createBaseVNode("div", Yt, [Ut2, createBaseVNode("p", Kt, [renderSlot(D3.$slots, "preview", {}, () => [createTextVNode(toDisplayString(D3.preview), 1)], true)])])], 8, Pt)], 6)), [[vShow, !D3.album || D3.album && le === 0]])), 128))]), _: 3 }, 8, ["size"]), createVNode(Transition, { name: "mask" }, { default: withCtx(() => [withDirectives(createBaseVNode("div", Zt2, null, 512), [[vShow, h5.value]])]), _: 1 }), createVNode(Transition, { name: "preview" }, { default: withCtx(() => [withDirectives(createBaseVNode("div", { class: "m-preview-wrap", onClick: withModifiers(L3, ["self"]), onWheel: withModifiers(ve, ["prevent"]) }, [createBaseVNode("div", Gt, [createBaseVNode("div", Jt, [createBaseVNode("a", { class: "u-name", href: c3.value[i3.value].src, target: "_blank", title: z3(c3.value[i3.value]) }, toDisplayString(z3(c3.value[i3.value])), 9, Xt), withDirectives(createBaseVNode("p", { class: "u-preview-progress" }, toDisplayString(i3.value + 1) + " / " + toDisplayString(d3.value), 513), [[vShow, Array.isArray(D3.src)]]), createBaseVNode("div", { class: "u-preview-operation", title: "关闭", onClick: L3 }, Qt), createBaseVNode("div", { class: normalizeClass(["u-preview-operation", { "u-operation-disabled": M3.value === D3.maxZoomScale }]), title: "放大", onClick: I3 }, e2, 2), createBaseVNode("div", { class: normalizeClass(["u-preview-operation", { "u-operation-disabled": M3.value === D3.minZoomScale }]), title: "缩小", onClick: E3 }, a22, 2), createBaseVNode("div", { class: "u-preview-operation", title: "还原", onClick: K3 }, l2), createBaseVNode("div", { class: "u-preview-operation", title: "向右旋转", onClick: ae }, t2), createBaseVNode("div", { class: "u-preview-operation", title: "向左旋转", onClick: re }, o2), createBaseVNode("div", { class: "u-preview-operation", title: "水平镜像", onClick: we }, s22), createBaseVNode("div", { class: "u-preview-operation", title: "垂直镜像", onClick: xe }, [(openBlock(), createElementBlock("svg", n2, i2))])]), createBaseVNode("div", { class: "m-preview-image", style: normalizeStyle(`transform: translate3d(${y3.value}px, ${f.value}px, 0px);`) }, [(openBlock(true), createElementBlock(Fragment, null, renderList(c3.value, (Z, le) => withDirectives((openBlock(), createBlock(unref(ce), { spinning: !p.value[le], indicator: "dynamic-circle", key: le }, { default: withCtx(() => [createBaseVNode("img", { class: "u-preview-image", style: normalizeStyle(`transform: scale3d(${w3.value * M3.value}, ${u3.value * M3.value}, 1) rotate(${k3.value}deg);`), src: Z.src, alt: Z.name, onMousedown: q3[0] || (q3[0] = withModifiers((te) => function(ee) {
+    const ze = ee.target.getBoundingClientRect(), Ve2 = ze.top, De = ze.bottom, Je = ze.right, Xe2 = ze.left, Qe2 = document.documentElement.clientWidth, Re2 = document.documentElement.clientHeight;
+    b3.value = ee.clientX, m3.value = ee.clientY;
     const Fe2 = y3.value, _e = f.value;
     document.onmousemove = (ea) => {
       y3.value = Fe2 + ea.clientX - b3.value, f.value = _e + ea.clientY - m3.value;
     }, document.onmouseup = () => {
       y3.value > Fe2 + Qe2 - Je && (y3.value = Fe2 + Qe2 - Je), y3.value < Fe2 - Xe2 && (y3.value = Fe2 - Xe2), f.value > _e + Re2 - De && (f.value = _e + Re2 - De), f.value < _e - Ve2 && (f.value = _e - Ve2), document.onmousemove = null;
     };
-  }(te), ["prevent"])), onLoad: (te) => function(Q3) {
-    p.value[Q3] = true;
+  }(te), ["prevent"])), onLoad: (te) => function(ee) {
+    p.value[ee] = true;
   }(le), onDblclick: q3[1] || (q3[1] = (te) => D3.resetOnDbclick ? K3() : () => false) }, null, 44, u2)]), _: 2 }, 1032, ["spinning"])), [[vShow, i3.value === le]])), 128))], 4), d3.value > 1 ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [createBaseVNode("div", { class: normalizeClass(["m-switch-left", { "u-switch-disabled": i3.value === 0 && !D3.loop }]), onClick: ie }, c2, 2), createBaseVNode("div", { class: normalizeClass(["m-switch-right", { "u-switch-disabled": i3.value === d3.value - 1 && !D3.loop }]), onClick: pe }, d22, 2)], 64)) : createCommentVNode("", true)])], 544), [[vShow, h5.value]])]), _: 1 })]));
 } });
 var Pe2 = V(r2, [["__scopeId", "data-v-f7604d80"]]);
@@ -20298,7 +20306,7 @@ var Ee2 = ((l) => (l.info = "#1677FF", l.success = "#52c41a", l.error = "#ff4d4f
 var Ye2 = V(defineComponent({ __name: "Message", props: { duration: { default: 3e3 }, top: { default: 30 } }, emits: ["close"], setup(l, { expose: a3, emit: e3 }) {
   const o = l, n = ref(), c3 = ref([]), d3 = ref([]), s3 = ref([]), p = computed(() => typeof o.top == "number" ? o.top + "px" : o.top), i3 = computed(() => c3.value.every((w3) => !w3));
   function h5() {
-    Me(n.value);
+    be(n.value);
     const w3 = s3.value.length - 1;
     c3.value[w3] = true, M3(w3);
   }
@@ -20324,7 +20332,7 @@ var Ye2 = V(defineComponent({ __name: "Message", props: { duration: { default: 3
     }, o.duration);
   }
   return (w3, u3) => (openBlock(), createElementBlock("div", { class: "m-message-wrap", style: normalizeStyle(`top: ${p.value};`) }, [createVNode(TransitionGroup, { name: "slide-fade" }, { default: withCtx(() => [(openBlock(true), createElementBlock(Fragment, null, renderList(s3.value, (b3, m3) => withDirectives((openBlock(), createElementBlock("div", { class: "m-message", key: m3 }, [createBaseVNode("div", { class: "m-message-content", onMouseenter: (y3) => function(f) {
-    Me(d3.value[f]);
+    be(d3.value[f]);
   }(m3), onMouseleave: (y3) => function(f) {
     M3(f);
   }(m3) }, [b3.mode === "info" ? (openBlock(), createElementBlock("svg", { key: 0, class: "u-svg", style: normalizeStyle({ fill: Ee2[b3.mode] }), viewBox: "64 64 896 896", "data-icon": "info-circle", "aria-hidden": "true", focusable: "false" }, B22, 4)) : createCommentVNode("", true), b3.mode === "success" ? (openBlock(), createElementBlock("svg", { key: 1, class: "u-svg", style: normalizeStyle({ fill: Ee2[b3.mode] }), viewBox: "64 64 896 896", "data-icon": "check-circle", "aria-hidden": "true", focusable: "false" }, F2, 4)) : createCommentVNode("", true), b3.mode === "error" ? (openBlock(), createElementBlock("svg", { key: 2, class: "u-svg", style: normalizeStyle({ fill: Ee2[b3.mode] }), viewBox: "64 64 896 896", "data-icon": "close-circle", "aria-hidden": "true", focusable: "false" }, L2, 4)) : createCommentVNode("", true), b3.mode === "warning" ? (openBlock(), createElementBlock("svg", { key: 3, class: "u-svg", style: normalizeStyle({ fill: Ee2[b3.mode] }), viewBox: "64 64 896 896", "data-icon": "exclamation-circle", "aria-hidden": "true", focusable: "false" }, S22, 4)) : createCommentVNode("", true), b3.mode === "loading" ? (openBlock(), createElementBlock("svg", { key: 4, class: "u-svg circular", style: normalizeStyle({ stroke: Ee2[b3.mode] }), viewBox: "0 0 50 50", focusable: "false" }, A2, 4)) : createCommentVNode("", true), createBaseVNode("p", D2, toDisplayString(b3.content), 1)], 40, $2)])), [[vShow, c3.value[m3]]])), 128))]), _: 1 })], 4));
@@ -20380,7 +20388,7 @@ var Ma = V(defineComponent({ __name: "Modal", props: { width: { default: 420 }, 
   }
   return (h5, k3) => (openBlock(), createElementBlock("div", E2, [createVNode(Transition, { name: "mask" }, { default: withCtx(() => [withDirectives(createBaseVNode("div", H22, null, 512), [[vShow, h5.visible]])]), _: 1 }), createVNode(Transition, null, { default: withCtx(() => {
     var M3, w3;
-    return [withDirectives(createBaseVNode("div", { class: "m-modal-wrap", onClick: withModifiers(d3, ["self"]) }, [createBaseVNode("div", { class: normalizeClass(["m-modal", h5.center ? "relative-hv-center" : "top-center"]), style: normalizeStyle(`width: ${h5.width}px; top: ${h5.center ? "50%" : h5.top + "px"};`) }, [createBaseVNode("div", { class: normalizeClass(["m-modal-body", { loading: h5.loading }]) }, [createVNode(unref(ce), { class: "u-spin", spinning: h5.loading, size: "small" }, null, 8, ["spinning"]), createBaseVNode("div", I2, [createBaseVNode("div", T2, [o.value === "confirm" || o.value === "erase" ? (openBlock(), createElementBlock("svg", j2, V2)) : createCommentVNode("", true), o.value === "info" ? (openBlock(), createElementBlock("svg", R2, W2)) : createCommentVNode("", true), o.value === "success" ? (openBlock(), createElementBlock("svg", N2, O2)) : createCommentVNode("", true), o.value === "error" ? (openBlock(), createElementBlock("svg", q2, P2)) : createCommentVNode("", true), o.value === "warning" ? (openBlock(), createElementBlock("svg", Y2, U2)) : createCommentVNode("", true), createBaseVNode("div", K2, toDisplayString((M3 = n.value) == null ? void 0 : M3.title), 1)]), createBaseVNode("div", Z2, toDisplayString((w3 = n.value) == null ? void 0 : w3.content), 1)]), createBaseVNode("div", G2, [o.value === "confirm" || o.value === "erase" ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [createVNode(unref(xe), { class: "mr8", onClick: s3 }, { default: withCtx(() => [createTextVNode(toDisplayString(h5.cancelText), 1)]), _: 1 }), o.value === "confirm" ? (openBlock(), createBlock(unref(xe), { key: 0, type: "primary", onClick: p }, { default: withCtx(() => [createTextVNode(toDisplayString(h5.okText), 1)]), _: 1 })) : createCommentVNode("", true), o.value === "erase" ? (openBlock(), createBlock(unref(xe), { key: 1, type: "danger", onClick: p }, { default: withCtx(() => [createTextVNode(toDisplayString(h5.okText), 1)]), _: 1 })) : createCommentVNode("", true)], 64)) : createCommentVNode("", true), ["info", "success", "error", "warning"].includes(o.value) ? (openBlock(), createBlock(unref(xe), { key: 1, type: "primary", onClick: i3 }, { default: withCtx(() => [createTextVNode(toDisplayString(h5.noticeText), 1)]), _: 1 })) : createCommentVNode("", true)])], 2)], 6)], 512), [[vShow, h5.visible]])];
+    return [withDirectives(createBaseVNode("div", { class: "m-modal-wrap", onClick: withModifiers(d3, ["self"]) }, [createBaseVNode("div", { class: normalizeClass(["m-modal", h5.center ? "relative-hv-center" : "top-center"]), style: normalizeStyle(`width: ${h5.width}px; top: ${h5.center ? "50%" : h5.top + "px"};`) }, [createBaseVNode("div", { class: normalizeClass(["m-modal-body", { loading: h5.loading }]) }, [createVNode(unref(ce), { class: "u-spin", spinning: h5.loading, size: "small" }, null, 8, ["spinning"]), createBaseVNode("div", I2, [createBaseVNode("div", T2, [o.value === "confirm" || o.value === "erase" ? (openBlock(), createElementBlock("svg", j2, V2)) : createCommentVNode("", true), o.value === "info" ? (openBlock(), createElementBlock("svg", R2, W2)) : createCommentVNode("", true), o.value === "success" ? (openBlock(), createElementBlock("svg", N2, O2)) : createCommentVNode("", true), o.value === "error" ? (openBlock(), createElementBlock("svg", q2, P2)) : createCommentVNode("", true), o.value === "warning" ? (openBlock(), createElementBlock("svg", Y2, U2)) : createCommentVNode("", true), createBaseVNode("div", K2, toDisplayString((M3 = n.value) == null ? void 0 : M3.title), 1)]), createBaseVNode("div", Z2, toDisplayString((w3 = n.value) == null ? void 0 : w3.content), 1)]), createBaseVNode("div", G2, [o.value === "confirm" || o.value === "erase" ? (openBlock(), createElementBlock(Fragment, { key: 0 }, [createVNode(unref(Me), { class: "mr8", onClick: s3 }, { default: withCtx(() => [createTextVNode(toDisplayString(h5.cancelText), 1)]), _: 1 }), o.value === "confirm" ? (openBlock(), createBlock(unref(Me), { key: 0, type: "primary", onClick: p }, { default: withCtx(() => [createTextVNode(toDisplayString(h5.okText), 1)]), _: 1 })) : createCommentVNode("", true), o.value === "erase" ? (openBlock(), createBlock(unref(Me), { key: 1, type: "danger", onClick: p }, { default: withCtx(() => [createTextVNode(toDisplayString(h5.okText), 1)]), _: 1 })) : createCommentVNode("", true)], 64)) : createCommentVNode("", true), ["info", "success", "error", "warning"].includes(o.value) ? (openBlock(), createBlock(unref(Me), { key: 1, type: "primary", onClick: i3 }, { default: withCtx(() => [createTextVNode(toDisplayString(h5.noticeText), 1)]), _: 1 })) : createCommentVNode("", true)])], 2)], 6)], 512), [[vShow, h5.visible]])];
   }), _: 1 })]));
 } }), [["__scopeId", "data-v-7209d377"]]);
 Ma.install = (l) => {
@@ -20399,7 +20407,7 @@ var Oe2 = ((l) => (l.info = "#1677FF", l.success = "#52c41a", l.error = "#ff4d4f
 var za2 = V(defineComponent({ __name: "Notification", props: { message: { default: "温馨提示" }, duration: { default: 4500 }, top: { default: 24 }, bottom: { default: 24 }, placement: { default: "topRight" } }, emits: ["close"], setup(l, { expose: a3, emit: e3 }) {
   const o = l, n = ref(), c3 = ref([]), d3 = ref([]), s3 = ref([]), p = ref(o.placement), i3 = ref(), h5 = computed(() => c3.value.length === s3.value.length);
   function k3() {
-    Me(n.value), d3.value.push(null);
+    be(n.value), d3.value.push(null);
     const u3 = s3.value.length - 1;
     nextTick(() => {
       i3.value[u3].style.height = i3.value[u3].offsetHeight + "px", i3.value[u3].style.opacity = 1;
@@ -20427,7 +20435,7 @@ var za2 = V(defineComponent({ __name: "Notification", props: { message: { defaul
     c3.value.push(u3), M3("close");
   }
   return (u3, b3) => (openBlock(), createElementBlock("div", { class: normalizeClass(["m-notification-wrapper", p.value]), style: normalizeStyle(`top: ${["topRight", "topLeft"].includes(p.value) ? u3.top : "auto"}px; bottom: ${["bottomRight", "bottomLeft"].includes(p.value) ? u3.bottom : ""}px;`) }, [createVNode(TransitionGroup, { name: ["topRight", "bottomRight"].includes(p.value) ? "right" : "left" }, { default: withCtx(() => [(openBlock(true), createElementBlock(Fragment, null, renderList(s3.value, (m3, y3) => withDirectives((openBlock(), createElementBlock("div", { ref_for: true, ref_key: "notification", ref: i3, class: "m-notification", onMouseenter: (f) => function(g) {
-    Me(d3.value[g]), d3.value[g] = null;
+    be(d3.value[g]), d3.value[g] = null;
   }(y3), onMouseleave: (f) => function(g) {
     o.duration && (d3.value[g] = ue(() => {
       w3(g);
@@ -20575,7 +20583,7 @@ var $a = V(defineComponent({ __name: "Popover", props: { title: { default: "" },
   }
   const h5 = a3, k3 = ref();
   function M3() {
-    i3(), Me(k3.value), n.value = true, h5("openChange", n.value);
+    i3(), be(k3.value), n.value = true, h5("openChange", n.value);
   }
   function w3() {
     k3.value = ue(() => {
@@ -20766,7 +20774,7 @@ var Ea2 = V(defineComponent({ __name: "Slider", props: { width: { default: "100%
   }), onMounted(() => {
     p.value = s3.value.offsetWidth, f();
   }), (L3, I3) => (openBlock(), createElementBlock("div", { class: normalizeClass(["m-slider", { disabled: L3.disabled }]), ref_key: "slider", ref: s3, style: normalizeStyle(`width: ${M3.value};`) }, [createBaseVNode("div", { class: "u-slider-rail", onClick: I3[0] || (I3[0] = withModifiers((E3) => L3.disabled ? () => false : function(K3) {
-    o.value ? (Me(n.value), n.value = null) : o.value = true, n.value = ue(() => {
+    o.value ? (be(n.value), n.value = null) : o.value = true, n.value = ue(() => {
       o.value = false;
     }, 300);
     const ae = Math.round(K3.layerX / k3.value) * k3.value;
@@ -21000,7 +21008,11 @@ Na2.install = (l) => {
 var go2 = ["title", "href", "target", "onClick"];
 var yo2 = ["title", "href", "target", "onClick"];
 var Oa2 = V(defineComponent({ __name: "TextScroll", props: { scrollText: {}, single: { type: Boolean, default: false }, width: { default: "100%" }, height: { default: 60 }, fontSize: { default: 16 }, fontWeight: { default: 400 }, color: { default: "rgba(0, 0, 0, .88)" }, backgroundColor: { default: "#FFF" }, amount: { default: 4 }, gap: { default: 20 }, vertical: { type: Boolean, default: false }, interval: { default: 3e3 } }, emits: ["click"], setup(l, { emit: a3 }) {
-  const e3 = l, o = ref(0), n = ref(0), c3 = ref(), d3 = ref(60), s3 = computed(() => e3.single ? [e3.scrollText, e3.scrollText] : [...e3.scrollText]), p = computed(() => s3.value.length), i3 = computed(() => e3.single ? 1 : e3.amount), h5 = computed(() => d3.value === 60 ? 1 : 60 / d3.value), k3 = ref(), M3 = ref(0);
+  const e3 = l, o = ref(0), n = ref(0), c3 = ref(), d3 = ref(60), s3 = computed(() => e3.single ? [e3.scrollText, e3.scrollText] : [...e3.scrollText]), p = computed(() => s3.value.length), i3 = computed(() => e3.single ? 1 : e3.amount), h5 = computed(() => d3.value === 60 ? 1 : 60 / d3.value);
+  watch(() => [s3, e3.width, e3.amount, e3.gap, e3.vertical, e3.interval], () => {
+    e3.vertical ? ($.value && be($.value), m3()) : w3();
+  }, { deep: true, flush: "post" });
+  const k3 = ref(), M3 = ref(0);
   function w3() {
     const L3 = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
     var I3 = null;
@@ -21018,7 +21030,7 @@ var Oa2 = V(defineComponent({ __name: "TextScroll", props: { scrollText: {}, sin
     e3.vertical ? p.value > 1 && H3() : s3.value.length > i3.value && (c3.value = fe(u3));
   }
   function y3() {
-    e3.vertical ? p.value > 1 && Me($) : e1(c3.value);
+    e3.vertical ? p.value > 1 && be($.value) : e1(c3.value);
   }
   onMounted(() => {
     e3.vertical ? m3() : w3();
@@ -21028,14 +21040,14 @@ var Oa2 = V(defineComponent({ __name: "TextScroll", props: { scrollText: {}, sin
     f("click", L3);
   }
   const z3 = ref(0);
-  var $ = null;
+  var $ = ref(null);
   function H3() {
-    $ = ue(() => {
+    $.value = ue(() => {
       z3.value === p.value - 1 ? z3.value = 0 : z3.value++, H3();
     }, e3.interval);
   }
   return (L3, I3) => L3.vertical ? (openBlock(), createElementBlock("div", { key: 1, class: "m-slider-vertical", onMouseenter: y3, onMouseleave: m3, style: normalizeStyle(`height: ${L3.height}px; width: ${b3.value}; background: ${L3.backgroundColor}; --fontSize: ${L3.fontSize}px; --fontWeight: ${L3.fontWeight}; --color: ${L3.color};`) }, [createVNode(TransitionGroup, { name: "slide" }, { default: withCtx(() => [(openBlock(true), createElementBlock(Fragment, null, renderList(s3.value, (E3, K3) => withDirectives((openBlock(), createElementBlock("div", { class: "m-slider", style: normalizeStyle(`width: calc(${b3.value} - ${2 * L3.gap}px); height: ${L3.height}px;`), key: K3 }, [createBaseVNode("a", { class: "u-slider", title: E3.title, href: E3.link ? E3.link : "javascript:;", target: E3.link ? "_blank" : "_self", onClick: (ae) => g(E3.title) }, toDisplayString(E3.title || "--"), 9, yo2)], 4)), [[vShow, z3.value === K3]])), 128))]), _: 1 })], 36)) : (openBlock(), createElementBlock("div", { key: 0, ref_key: "horizonRef", ref: k3, class: "m-slider-horizon", onMouseenter: y3, onMouseleave: m3, style: normalizeStyle(`height: ${L3.height}px; width: ${b3.value}; background: ${L3.backgroundColor}; --fontSize: ${L3.fontSize}px; --fontWeight: ${L3.fontWeight}; --color: ${L3.color};`) }, [(openBlock(true), createElementBlock(Fragment, null, renderList(s3.value, (E3, K3) => (openBlock(), createElementBlock("a", { style: normalizeStyle(`will-change: transform; transform: translateX(${-o.value}px); width: ${M3.value - L3.gap}px; margin-left: ${L3.gap}px;`), class: "u-slide-title", key: K3, title: E3.title, href: E3.link ? E3.link : "javascript:;", target: E3.link ? "_blank" : "_self", onClick: (ae) => g(E3.title) }, toDisplayString(E3.title || "--"), 13, go2))), 128))], 36));
-} }), [["__scopeId", "data-v-71abcabf"]]);
+} }), [["__scopeId", "data-v-af1a5b9a"]]);
 Oa2.install = (l) => {
   l.component(Oa2.__name, Oa2);
 };
@@ -21255,8 +21267,8 @@ var Ka2 = defineComponent({ __name: "Watermark", props: { width: { default: void
     return window.devicePixelRatio || 1;
   }
   function y3(z3, $, H3, L3, I3) {
-    const E3 = m3(), K3 = a3.content, ae = a3.fontSize, re = a3.fontWeight, ke2 = a3.fontFamily, we = a3.fontStyle, ve = a3.color, ie = Number(ae) * E3;
-    z3.font = `${we} normal ${re} ${ie}px/${I3}px ${ke2}`, z3.fillStyle = ve, z3.textAlign = "center", z3.textBaseline = "top", z3.translate(L3 / 2, 0);
+    const E3 = m3(), K3 = a3.content, ae = a3.fontSize, re = a3.fontWeight, we = a3.fontFamily, xe = a3.fontStyle, ve = a3.color, ie = Number(ae) * E3;
+    z3.font = `${xe} normal ${re} ${ie}px/${I3}px ${we}`, z3.fillStyle = ve, z3.textAlign = "center", z3.textBaseline = "top", z3.translate(L3 / 2, 0);
     const pe = Array.isArray(K3) ? K3 : [K3];
     pe == null || pe.forEach((D3, q3) => {
       z3.fillText(D3 ?? "", $, H3 + q3 * (ie + 3 * E3));
@@ -21266,25 +21278,25 @@ var Ka2 = defineComponent({ __name: "Watermark", props: { width: { default: void
     const z3 = document.createElement("canvas"), $ = z3.getContext("2d"), H3 = a3.image, L3 = a3.rotate ?? -22;
     if ($) {
       o.value || (o.value = document.createElement("div"));
-      const I3 = m3(), [E3, K3] = function(Q3) {
+      const I3 = m3(), [E3, K3] = function(ee) {
         let ze = 120, Ve2 = 64;
         const De = a3.content, Je = a3.image, Xe2 = a3.width, Qe2 = a3.height, Re2 = a3.fontSize, Fe2 = a3.fontFamily;
-        if (!Je && Q3.measureText) {
-          Q3.font = `${Number(Re2)}px ${Fe2}`;
-          const _e = Array.isArray(De) ? De : [De], ea = _e.map((g1) => Q3.measureText(g1).width);
+        if (!Je && ee.measureText) {
+          ee.font = `${Number(Re2)}px ${Fe2}`;
+          const _e = Array.isArray(De) ? De : [De], ea = _e.map((g1) => ee.measureText(g1).width);
           ze = Math.ceil(Math.max(...ea)), Ve2 = Number(Re2) * _e.length + 3 * (_e.length - 1);
         }
         return [Xe2 ?? ze, Qe2 ?? Ve2];
       }($), ae = (d3.value + E3) * I3, re = (s3.value + K3) * I3;
       z3.setAttribute("width", ae * M3.value + "px"), z3.setAttribute("height", re * M3.value + "px");
-      const ke2 = d3.value * I3 / 2, we = s3.value * I3 / 2, ve = E3 * I3, ie = K3 * I3, pe = (ve + d3.value * I3) / 2, D3 = (ie + s3.value * I3) / 2, q3 = ke2 + ae, Z = we + re, le = pe + ae, te = D3 + re;
+      const we = d3.value * I3 / 2, xe = s3.value * I3 / 2, ve = E3 * I3, ie = K3 * I3, pe = (ve + d3.value * I3) / 2, D3 = (ie + s3.value * I3) / 2, q3 = we + ae, Z = xe + re, le = pe + ae, te = D3 + re;
       if ($.save(), g($, pe, D3, L3), H3) {
-        const Q3 = new Image();
-        Q3.onload = () => {
-          $.drawImage(Q3, ke2, we, ve, ie), $.restore(), g($, le, te, L3), $.drawImage(Q3, q3, Z, ve, ie), b3(z3.toDataURL(), E3);
-        }, Q3.crossOrigin = "anonymous", Q3.referrerPolicy = "no-referrer", Q3.src = H3;
+        const ee = new Image();
+        ee.onload = () => {
+          $.drawImage(ee, we, xe, ve, ie), $.restore(), g($, le, te, L3), $.drawImage(ee, q3, Z, ve, ie), b3(z3.toDataURL(), E3);
+        }, ee.crossOrigin = "anonymous", ee.referrerPolicy = "no-referrer", ee.src = H3;
       } else
-        y3($, ke2, we, ve, ie), $.restore(), g($, le, te, L3), y3($, q3, Z, ve, ie), b3(z3.toDataURL(), E3);
+        y3($, we, xe, ve, ie), $.restore(), g($, le, te, L3), y3($, q3, Z, ve, ie), b3(z3.toDataURL(), E3);
     }
   }
   function g(z3, $, H3, L3) {
@@ -21315,7 +21327,7 @@ var Ka2 = defineComponent({ __name: "Watermark", props: { width: { default: void
 Ka2.install = (l) => {
   l.component(Ka2.__name, Ka2);
 };
-var Ro2 = [aa2, la2, ta, oa2, sa2, xe, na2, ia2, ua2, ca2, da2, ra2, va2, pa2, fa2, ha2, ma2, ga2, ya2, ba, He2, ka, Pe2, wa, xa, Ye2, Ma, za2, _a2, Ue, Ca2, $a, Ba2, Fa2, La2, Sa2, Aa2, Da, Le, Ea2, Se, ce, Ha2, Ia2, Ta, ja2, Va2, Ra2, Wa2, Na2, Oa2, qa, qe2, Pa2, Ya2, Ua2, Ka2];
+var Ro2 = [aa2, la2, ta, oa2, sa2, Me, na2, ia2, ua2, ca2, da2, ra2, va2, pa2, fa2, ha2, ma2, ga2, ya2, ba, He2, ka, Pe2, wa, xa, Ye2, Ma, za2, _a2, Ue, Ca2, $a, Ba2, Fa2, La2, Sa2, Aa2, Da, Le, Ea2, Se, ce, Ha2, Ia2, Ta, ja2, Va2, Ra2, Wa2, Na2, Oa2, qa, qe2, Pa2, Ya2, Ua2, Ka2];
 var Qo = { install: (l) => {
   Ro2.forEach((a3) => l.component(a3.__name, a3));
 } };
@@ -21325,7 +21337,7 @@ export {
   ta as BackTop,
   oa2 as Badge,
   sa2 as Breadcrumb,
-  xe as Button,
+  Me as Button,
   na2 as Card,
   ia2 as Carousel,
   ua2 as Cascader,
@@ -21379,7 +21391,7 @@ export {
   Ka2 as Watermark,
   Go as add,
   e1 as cancelAnimationFrame,
-  Me as cancelRaf,
+  be as cancelRaf,
   Uo as dateFormat,
   Zo as debounce,
   Qo as default,

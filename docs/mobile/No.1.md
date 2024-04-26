@@ -54,11 +54,14 @@ export default defineAppConfig({
 
 ```ts
 export default {
+  addGlobalClass: true, // 解决tabbar样式隔离导致的<IconFont />图标无法显示问题
   component: true
 }
 ```
 
 `index.vue` 文件如下：
+
+1. 自定义 `tabBar` 组件：
 
 ```vue
 <script setup lang="ts">
@@ -67,12 +70,25 @@ import Taro from '@tarojs/taro'
 import { useSelectedStore } from '@/stores/selected'
 import { IconFont } from '@nutui/icons-vue-taro'
 
+const systemInfo = Taro.getSystemInfoSync() // 获取系统信息
+const theme:'light'|'dark' = systemInfo.theme || 'light'
+console.log('systemInfo', systemInfo)
+console.log('theme', theme)
+
 const store = useSelectedStore()
 const { selected } = storeToRefs(store)
-console.log('selected', selected)
-
-const color = '#AAAAAA'
-const activeColor = '#000000'
+const themeStyle = {
+  light: {
+    color: '#AAAAAA',
+    activeColor: '#000000',
+    backgroundColor: '#F9F9F9'
+  },
+  dark: {
+    color: '#AAAAAA',
+    activeColor: '#F5F5F5',
+    backgroundColor: 'rgba(0, 0, 0, .65)'
+  }
+}
 const tabBarList = [
   {
     text: 'Home',
@@ -92,7 +108,7 @@ const tabBarList = [
 ]
 function switchTab (index: number, url: string) {
   const isUserLoggedIn = Taro.getStorageSync('isUserLoggedIn') || false
-  const loginInterception = ['/pages/find/index', '/pages/my/index']
+  const loginInterception = ['/pages/my/index']
   if (!isUserLoggedIn && loginInterception.includes(url)) {
     Taro.navigateTo({
       url: `/subpackages/login/index?redirect=${encodeURIComponent(url)}&index=${index}`
@@ -104,13 +120,14 @@ function switchTab (index: number, url: string) {
 }
 </script>
 <template>
-  <view class="m-tab-bar">
+  <view class="m-tab-bar" :style="`background-color: ${themeStyle[theme].backgroundColor};`">
     <view
       class="m-tab-bar-item"
-      v-for="(item, index) in tabBarList" :key="index"
-      @tap="switchTab(index, item.url)">
-      <IconFont class="u-icon" :name="item.icon" :color="selected === index ? activeColor : color" />
-      <text class="u-view" :style="{ color: selected === index ? activeColor : color }">{{ item.text }}</text>
+      v-for="(tabBar, index) in tabBarList" :key="index"
+      @tap="switchTab(index, tabBar.url)">
+      <IconFont class="u-icon" :name="tabBar.icon" v-show="selected === index" :color="themeStyle[theme].activeColor" />
+      <IconFont class="u-icon" :name="tabBar.icon" v-show="selected !== index" :color="themeStyle[theme].color" />
+      <text class="u-view" :style="{ color: selected === index ? themeStyle[theme].activeColor : themeStyle[theme].color }">{{ tabBar.text }}</text>
     </view>
   </view>
 </template>
@@ -124,12 +141,10 @@ function switchTab (index: number, url: string) {
   background: #FFFFFF;
   display: flex;
   z-index: 999;
-  border-top: 1px solid #E3E3E3;
   .m-tab-bar-item {
     flex: 1;
     text-align: center;
     display: flex;
-    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     .u-icon {
@@ -143,6 +158,89 @@ function switchTab (index: number, url: string) {
       line-height: 32px;
     }
   }
+}
+</style>
+```
+
+2. 使用 `<nut-tabbar/>` 组件
+
+```vue
+<script setup lang="ts">
+import { h } from 'vue'
+import { storeToRefs } from 'pinia'
+import Taro from '@tarojs/taro'
+import { useSelectedStore } from '@/stores/selected'
+import { Home, Find, My } from '@nutui/icons-vue-taro'
+
+const store = useSelectedStore()
+const { selected } = storeToRefs(store)
+
+const systemInfo = Taro.getSystemInfoSync() // 获取系统信息
+const theme:'light'|'dark' = systemInfo.theme || 'light'
+console.log('theme', theme)
+
+const themeStyle = {
+  light: {
+    color: '#AAAAAA',
+    activeColor: '#000000',
+    backgroundColor: '#FFFFFF'
+  },
+  dark: {
+    color: '#AAAAAA',
+    activeColor: '#F5F5F5',
+    backgroundColor: 'rgba(0, 0, 0, .65)'
+  }
+}
+const tabBarList = [
+  {
+    title: 'Home',
+    icon: h(Home),
+    url: '/pages/index/index'
+  },
+  {
+    title: 'Find',
+    icon: h(Find),
+    url: '/pages/find/index'
+  },
+  {
+    title: 'My',
+    icon: h(My),
+    url: '/pages/my/index'
+  }
+]
+function switchTab (index: number, url: string) {
+  const isUserLoggedIn = Taro.getStorageSync('isUserLoggedIn') || false
+  const loginInterception = ['/pages/my/index']
+  if (!isUserLoggedIn && loginInterception.includes(url)) {
+    Taro.navigateTo({
+      url: `/subpackages/login/index?redirect=${encodeURIComponent(url)}&index=${index}`
+    })
+  } else {
+    store.setSelected(index)
+    Taro.switchTab({ url })
+  }
+}
+</script>
+<template>
+  <nut-tabbar
+    :style="`--backgroundColor: ${themeStyle[theme].backgroundColor};`"
+    :unactive-color="themeStyle[theme].color"
+    :active-color="themeStyle[theme].activeColor"
+    bottom
+    safe-area-inset-bottom
+    placeholder
+    v-model="selected">
+    <nut-tabbar-item
+      v-for="(tabBar, index) in tabBarList" :key="index"
+      :tab-title="tabBar.title"
+      :icon="tabBar.icon"
+      @tap="switchTab(index, tabBar.url)">
+    </nut-tabbar-item>
+  </nut-tabbar>
+</template>
+<style lang="less">
+.nut-tabbar {
+  background-color: var(--backgroundColor);
 }
 </style>
 ```
@@ -385,7 +483,7 @@ env(safe-area-inset-left, 1.4rem)
 <template>
   <!--
     mode: 
-    默认 scaleToFill 	缩放模式，不保持纵横比缩放图片，使图片的宽高完全拉伸至填满 image 元素
+    默认 scaleToFill: 缩放模式，不保持纵横比缩放图片，使图片的宽高完全拉伸至填满 image 元素
     aspectFit: 缩放模式，保持纵横比缩放图片，使图片的长边能完全显示出来。也就是说，可以完整地将图片显示出来。
     aspectFill: 缩放模式，保持纵横比缩放图片，只保证图片的短边能完全显示出来。也就是说，图片通常只在水平或垂直方向是完整的，另一个方向将会发生截取。
     widthFix: 缩放模式，宽度不变，高度自动变化，保持原图宽高比不变
