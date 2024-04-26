@@ -91,17 +91,17 @@ const themeStyle = {
 }
 const tabBarList = [
   {
-    text: 'Home',
+    title: 'Home',
     icon: 'home',
     url: '/pages/index/index'
   },
   {
-    text: 'Find',
+    title: 'Find',
     icon: 'find',
     url: '/pages/find/index'
   },
   {
-    text: 'My',
+    title: 'My',
     icon: 'my',
     url: '/pages/my/index'
   }
@@ -127,7 +127,7 @@ function switchTab (index: number, url: string) {
       @tap="switchTab(index, tabBar.url)">
       <IconFont class="u-icon" :name="tabBar.icon" v-show="selected === index" :color="themeStyle[theme].activeColor" />
       <IconFont class="u-icon" :name="tabBar.icon" v-show="selected !== index" :color="themeStyle[theme].color" />
-      <text class="u-view" :style="{ color: selected === index ? themeStyle[theme].activeColor : themeStyle[theme].color }">{{ tabBar.text }}</text>
+      <text class="u-view" :style="{ color: selected === index ? themeStyle[theme].activeColor : themeStyle[theme].color }">{{ tabBar.title }}</text>
     </view>
   </view>
 </template>
