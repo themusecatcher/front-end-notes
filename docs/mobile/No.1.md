@@ -71,18 +71,19 @@ export default {
   }
 </script>
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import Taro from '@tarojs/taro'
-import { useSelectedStore } from '@/stores/selected'
 import { IconFont } from '@nutui/icons-vue-taro'
+import { storeToRefs } from 'pinia'
+import { useSelectedStore } from '@/stores/selected'
+
+const store = useSelectedStore()
+const { selected } = storeToRefs(store)
 
 const systemInfo = Taro.getSystemInfoSync() // 获取系统信息
 const theme:'light'|'dark' = systemInfo.theme || 'light'
 console.log('systemInfo', systemInfo)
 console.log('theme', theme)
 
-const store = useSelectedStore()
-const { selected } = storeToRefs(store)
 const themeStyle = {
   light: {
     color: '#AAAAAA',
@@ -113,9 +114,9 @@ const tabBarList = [
   }
 ]
 function switchTab (index: number, url: string) {
-  const isUserLoggedIn = Taro.getStorageSync('isUserLoggedIn') || false
-  const loginInterception = ['/pages/my/index']
-  if (!isUserLoggedIn && loginInterception.includes(url)) {
+  const isAuthorized = Taro.getStorageSync('isAuthorized') || false
+  const authorizeInterception = ['/pages/my/index']
+  if (!isAuthorized && authorizeInterception.includes(url)) {
     Taro.navigateTo({
       url: `/subpackages/login/index?redirect=${encodeURIComponent(url)}&index=${index}`
     })
@@ -222,9 +223,9 @@ const tabBarList = [
   }
 ]
 function switchTab (index: number, url: string) {
-  const isUserLoggedIn = Taro.getStorageSync('isUserLoggedIn') || false
-  const loginInterception = ['/pages/my/index']
-  if (!isUserLoggedIn && loginInterception.includes(url)) {
+  const isAuthorized = Taro.getStorageSync('isAuthorized') || false
+  const authorizeInterception = ['/pages/my/index']
+  if (!isAuthorized && authorizeInterception.includes(url)) {
     Taro.navigateTo({
       url: `/subpackages/login/index?redirect=${encodeURIComponent(url)}&index=${index}`
     })
