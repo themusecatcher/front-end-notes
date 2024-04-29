@@ -291,7 +291,7 @@ function showError (message: string) {
 }
 ```
 
-- 在 `src/apis` 下 创建 `index.ts` 下入以下通用请求：
+- 在 `src/http` 下创建 `index.ts` 并导出通用请求：
 
 ```ts
 import { request } from '@/http/request'
@@ -323,7 +323,7 @@ export function postAction (url: string, parameter: any, args = {}) {
 <script setup lang="ts">
 import { ref } from 'vue'
 import Taro, { useLoad, usePullDownRefresh } from '@tarojs/taro'
-import { getAction } from '@/apis/index'
+import { getAction } from '@/http/index'
 
 const url = {
   detail: '/api/activity/getActivityTemplateByKeyWord'
