@@ -219,7 +219,7 @@ useUnload(() => {
 </script>
 ```
 
-## 微信小程序网络请求封装
+## 微信小程序网络请求封装[Taro.request(option)](https://taro-docs.jd.com/docs/apis/network/request/)
 
 - 在 `src/http` 下创建 `request.ts`, 写入如下配置：
 
@@ -326,7 +326,7 @@ import Taro, { useLoad, usePullDownRefresh } from '@tarojs/taro'
 import { getAction } from '@/http/index'
 
 const url = {
-  detail: '/api/activity/getActivityTemplateByKeyWord'
+  detail: '/api/detail'
 }
 const detailData = ref()
 useLoad(() => {
@@ -337,7 +337,7 @@ usePullDownRefresh(async () => {
   Taro.stopPullDownRefresh()
 })
 function getDetail () {
-  getAction(url.detail, { keyWord: 'collectWine' }).then((res: any) => {
+  getAction(url.detail, { id: 1 }).then((res: any) => {
     console.log('detail', res)
     detailData.value = res.data
   }).catch((err) => {
