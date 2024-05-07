@@ -142,14 +142,19 @@ export default defineAppConfig({
 })
 ```
 
-## 微信小程序全局转发分享
+## 微信小程序转发分享 [useShareAppMessage](https://taro-docs.jd.com/docs/composition-api#useshareappmessage)
 
 监听用户点击页面内转发按钮（`Button` 组件 `openType='share'`）或右上角菜单“转发”按钮的行为，并自定义转发内容。
 
 ::: tip 注意：
-当 `onShareAppMessage` 没有触发时，请在页面配置中设置 `enableShareAppMessage: true`
-只有定义了此事件处理函数，右上角菜单才会显示“转发”按钮
+- 使用时，必须为页面配置 `enableShareAppMessage: true`。（**修改配置文件后请重新编译项目**）
+- 当 `onShareAppMessage` 没有触发时，请在页面配置中设置 `enableShareAppMessage: true`
+- 只有定义了此事件处理函数，右上角菜单才会显示“转发”按钮
 :::
+
+### 1. 全局转发分享
+
+<br/>
 
 在 `src/app.ts` 中加入以下配置：
 
@@ -188,6 +193,46 @@ Page = function (pageConfig) {
   // 使用原始Page函数创建页面实例
   return originPage(newPageConfig)
 }
+```
+
+### 2. 单个页面自定义转发分享
+
+<br/>
+
+#### 例如：在首页设置自定义转发分享
+
+<br/>
+
+在 `pages/index/index.config.ts` 加入相关配置:
+
+```ts
+export default definePageConfig({
+  navigationBarTitleText: '首页',
+  enableShareAppMessage: true
+})
+```
+
+在 `pages/index/index.vue` 自定义转发分享:
+
+```vue
+<script setup lang="ts">
+import { useShareAppMessage } from '@tarojs/taro'
+
+useShareAppMessage((res) => {
+  console.log('share', res)
+  if (res.from === 'button') {
+    // 来自页面内转发按钮
+    console.log(res.target)
+  }
+  return {
+    title: '纵横命运之上',
+    path: '/page/index/index'
+  }
+})
+</script>
+<template>
+  <button openType="share">分享</button>
+</template>
 ```
 
 ## 微信小程序监听页面返回，跳转指定页面
