@@ -231,7 +231,7 @@ useShareAppMessage((res) => {
 })
 </script>
 <template>
-  <button openType="share">分享</button>
+  <button open-type="share">分享</button>
 </template>
 ```
 
