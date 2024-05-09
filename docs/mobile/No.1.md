@@ -287,7 +287,56 @@ export const useSelectedStore = defineStore('selected', () => {
 
 ## 微信小程序授权 [Taro.authorize(option)](https://taro-docs.jd.com/docs/apis/open-api/authorize/)
 
-提前向用户发起授权请求。调用后会立刻弹窗询问用户是否同意授权小程序使用某项功能或获取用户的某些数据，但不会实际调用对应接口。如果用户之前已经同意授权，则不会出现弹窗，直接返回成功。更多用法详见 用户授权。
+提前向用户发起授权请求。调用后会立刻弹窗询问用户是否同意授权小程序使用某项功能或获取用户的某些数据，但不会实际调用对应接口。如果用户之前已经同意授权，则不会出现弹窗，直接返回成功。更多用法详见 [用户授权](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/authorize.html)。
+
+::: tip 注意
+- 需要授权 `scope.userLocation`、`scope.userLocationBackground`、`scope.userFuzzyLocation` 时必须配置地理位置用途说明。
+- 授权弹窗会展示小程序在[小程序用户隐私保护指引](https://developers.weixin.qq.com/miniprogram/dev/framework/user-privacy/)中填写的说明，请谨慎填写。
+:::
+
+### 在 src/app.config.ts 加入相关配置
+
+```ts
+export default defineAppConfig({
+  permission: {
+    'scope.userLocation': {
+      desc: '你的位置信息将用于小程序位置接口的效果展示'
+    }
+  }
+})
+```
+
+例如：授权精确地理位置
+
+```vue
+<script setup lang="ts">
+import Taro from '@tarojs/taro'
+
+function onLocation () {
+  Taro.getSetting({
+    success: (res) => {
+      console.log('getSetting', res)
+      if (!res.authSetting['scope.userLocation']) {
+        Taro.authorize({
+          scope: 'scope.userLocation',
+          success: () => {},
+          fail: () => {
+            Taro.showToast({
+              title: '地理位置授权失败',
+              icon: 'error',
+              mask: true
+            })
+          }
+        })
+      }
+    }
+  })
+}
+</script>
+<template>
+  <button @tap="onLocation">位置</button>
+</template>
+```
 
 ## 微信小程序[手机号授权](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/getPhoneNumber.html)
 
