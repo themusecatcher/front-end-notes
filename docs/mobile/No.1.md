@@ -406,8 +406,8 @@ function scanCode () {
     },
     fail: (error) => {
       Taro.showToast({
-        title: '扫码失败',
-        icon: 'error',
+        title: error.errMsg,
+        icon: 'none',
         mask: true
       })
       console.error('扫码失败:', error)
