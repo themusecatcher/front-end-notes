@@ -28,15 +28,20 @@ const chart = ref()
 const treeChart = ref()
 var option: any
 
+interface Tree {
+  name: string // 数据项名称
+  value?: number // 数据值
+  [propName: string]: any // 添加一个字符串索引签名，用于包含带有任意数量的其他属性
+}
 interface Props {
-  treeData: object // 树图数据源
+  treeData: Tree[] // 树图数据源
   width?: string|number // 容器宽度
   height?: string|number // 容器高度
   themeColor?: string // 主题色
   edgeShape?: 'curve'|'polyline' // 树图边的形状，有曲线curve和折线polyline两种，只有正交布局下生效
 }
 const props = withDefaults(defineProps<Props>(), {
-  treeData: () => ({}),
+  treeData: () => ([]),
   width: '100%',
   height: '100%',
   themeColor: '#1677FF',
@@ -62,13 +67,12 @@ onMounted(() => {
 watch(
   () => props.treeData,
   (to) => {
-    if (treeChart.value) {
-      // 监听并更新图例数据
-      option.series[0].data = [to]
-      treeChart.value.setOption(option)
-    } else {
-      initChart() // 重新初始化实例
-    }
+    // 监听并更新图例数据
+    option.series[0].data = to
+    treeChart.value.setOption(option)
+  },
+  {
+    deep: true
   }
 )
 watch(
@@ -155,7 +159,7 @@ function initChart () {
     series: [
       {
         type: 'tree',
-        data: JSON.stringify(props.treeData) === '{}' ? [] : [props.treeData],
+        data: props.treeData,
         name: '树图',
         top: '1%', // 组件离容器上侧的距离，像素值20，或相对容器的百分比20%
         left: '10%', // 组件离容器左侧的距离

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 /*
   按需引入
+*/
 // 使用 ECharts 提供的按需引入的接口来打包必须的组件
 // 引入 echarts 核心模块，核心模块提供了 echarts 使用必须要的接口
 import * as echarts from 'echarts/core'
@@ -13,11 +14,11 @@ import { TooltipComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 // 注册必须的组件
 echarts.use([GaugeChart, TooltipComponent, CanvasRenderer])
-*/
+
 /*
   全部引入
 */
-import * as echarts from 'echarts'
+// import * as echarts from 'echarts'
 /*
   需要注意的是为了保证打包的体积是最小的，ECharts 按需引入的时候不再提供任何渲染器，
   所以需要选择引入 CanvasRenderer 或者 SVGRenderer 作为渲染器。这样的好处是假如
@@ -48,7 +49,7 @@ const gradient = ref({ // 自定义渐变色
         ],
         global: false // 缺省为 false
       })
-var option
+var option: any
 
 interface Gauge {
   name: string // 数据项名称
@@ -59,11 +60,13 @@ interface Props {
   gaugeData: Gauge[] // 仪表盘数据源
   width?: string|number // 容器宽度
   height?: string|number // 容器高度
+  themeColor?: string // 主题色
 }
 const props = withDefaults(defineProps<Props>(), {
   gaugeData: () => [],
   width: '100%',
-  height: '100%'
+  height: '100%',
+  themeColor: '#1677FF'
 })
 const chartWidth = computed(() => {
   if (typeof props.width === 'number') {
@@ -81,6 +84,61 @@ const chartHeight = computed(() => {
 })
 onMounted(() => {
   initChart() // 初始化图标示例
+})
+watch(
+  () => props.gaugeData,
+  (to) => {
+    // 监听并更新图例数据
+    option.series[0].data = to
+    gaugeChart.value.setOption(option)
+  },
+  {
+    deep: true
+  }
+)
+watch(
+  () => [props.width, props.height, props.themeColor],
+  () => {
+    if (gaugeChart.value) {
+      gaugeChart.value.dispose() // 销毁实例
+    }
+    initChart() // 重新初始化实例
+  },
+  {
+    deep: true,
+    flush: 'post'
+  }
+)
+// const loadingConfig = {
+  // text: 'loading',
+  // color: '#c23531',
+  // textColor: '#000',
+  // maskColor: 'rgba(255, 255, 255, 0.8)',
+  // zlevel: 0,
+  // 字体大小。从 `v4.8.0` 开始支持。
+  // fontSize: 12,
+  // 是否显示旋转动画（spinner）。从 `v4.8.0` 开始支持。
+  // showSpinner: true,
+  // 旋转动画（spinner）的半径。从 `v4.8.0` 开始支持。
+  // spinnerRadius: 20,
+  // 旋转动画（spinner）的线宽。从 `v4.8.0` 开始支持。
+  // lineWidth: 5,
+  // 字体粗细。从 `v5.0.1` 开始支持。
+  // fontWeight: 'normal',
+  // 字体风格。从 `v5.0.1` 开始支持。
+  // fontStyle: 'normal',
+  // 字体系列。从 `v5.0.1` 开始支持。
+  // fontFamily: 'sans-serif'
+// }
+function showLoading (config: any) {
+  gaugeChart.value.showLoading('default', { text: '', color: props.themeColor, ...config }) // 显示加载动画效果
+}
+function hideLoading () {
+  gaugeChart.value.hideLoading() // 隐藏动画加载效果
+}
+defineExpose({
+  showLoading,
+  hideLoading
 })
 function initChart () {
   // 等价于使用 Canvas 渲染器（默认）：echarts.init(containerDom, null, { renderer: 'canvas' })
@@ -111,7 +169,7 @@ function initChart () {
         ellipsis: '...'
       },
     },
-    color: ['#7CFFB2'],
+    color: [props.themeColor],
     series: [
       {
         type: 'gauge',
@@ -263,7 +321,7 @@ function initChart () {
           icon: 'circle', // 标记类型，可选 'circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin', 'arrow', 'none'
           offsetCenter: [0, '16%'], // 相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
           itemStyle: { // 指针固定点样式
-            color: '#1677FF', // 图形的颜色
+            color: props.themeColor, // 图形的颜色
             borderColor: '#eee', // 固定点边框颜色
             borderWidth: 8, // 描边线宽。为 0 时无描边
             borderType: 'solid', // 描边类型，可选：'solid' 'dashed' 'dotted'
@@ -300,7 +358,7 @@ function initChart () {
         },
         detail: { // 仪表盘详情，用于显示数据，即表盘中心的数据展示
           show: true, // 是否显示详情
-          color: '#1677FF', // 文本颜色
+          color: props.themeColor, // 文本颜色
           fontStyle: 'normal', // 文字字体的风格，可选 'normal' 'italic' 'oblique'
           fontWeight: 'bold', // 文字字体的粗细，可选 'normal' 'bold' 'bolder' 'lighter' 100 | 200 | 300 | 400...
           fontFamily: 'Microsoft YaHei', // 文字的字体系列，还可以是 'serif' , 'monospace', 'Arial', 'Courier New', 'Microsoft YaHei', ...
