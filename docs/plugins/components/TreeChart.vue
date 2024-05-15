@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 /*
   按需引入
+*/
 // 使用 ECharts 提供的按需引入的接口来打包必须的组件
 // 引入 echarts 核心模块，核心模块提供了 echarts 使用必须要的接口
 import * as echarts from 'echarts/core'
@@ -13,11 +14,11 @@ import { TooltipComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 // 注册必须的组件
 echarts.use([TreeChart, TooltipComponent, CanvasRenderer])
-*/
+
 /*
   全部引入
 */
-import * as echarts from 'echarts'
+// import * as echarts from 'echarts'
 /*
   需要注意的是为了保证打包的体积是最小的，ECharts 按需引入的时候不再提供任何渲染器，
   所以需要选择引入 CanvasRenderer 或者 SVGRenderer 作为渲染器。这样的好处是假如
@@ -25,17 +26,21 @@ import * as echarts from 'echarts'
 */
 const chart = ref()
 const treeChart = ref()
-var option
+var option: any
 
 interface Props {
   treeData: object // 树图数据源
   width?: string|number // 容器宽度
   height?: string|number // 容器高度
+  themeColor?: string // 主题色
+  edgeShape?: 'curve'|'polyline' // 树图边的形状，有曲线curve和折线polyline两种，只有正交布局下生效
 }
 const props = withDefaults(defineProps<Props>(), {
-  treeData: () => { return {} },
+  treeData: () => ({}),
   width: '100%',
-  height: '100%'
+  height: '100%',
+  themeColor: '#1677FF',
+  edgeShape: 'curve'
 })
 const chartWidth = computed(() => {
   if (typeof props.width === 'number') {
@@ -53,8 +58,62 @@ const chartHeight = computed(() => {
 })
 onMounted(() => {
   initChart() // 初始化图标示例
-  // 监听树图节点的点击事件
-  treeChart.value.on('click', onClick)
+})
+watch(
+  () => props.treeData,
+  (to) => {
+    if (treeChart.value) {
+      // 监听并更新图例数据
+      option.series[0].data = [to]
+      treeChart.value.setOption(option)
+    } else {
+      initChart() // 重新初始化实例
+    }
+  }
+)
+watch(
+  () => [props.width, props.height, props.themeColor, props.edgeShape],
+  () => {
+    if (treeChart.value) {
+      treeChart.value.dispose() // 销毁实例
+    }
+    initChart() // 重新初始化实例
+  },
+  {
+    deep: true,
+    flush: 'post'
+  }
+)
+// const loadingConfig = {
+  // text: 'loading',
+  // color: '#c23531',
+  // textColor: '#000',
+  // maskColor: 'rgba(255, 255, 255, 0.8)',
+  // zlevel: 0,
+  // 字体大小。从 `v4.8.0` 开始支持。
+  // fontSize: 12,
+  // 是否显示旋转动画（spinner）。从 `v4.8.0` 开始支持。
+  // showSpinner: true,
+  // 旋转动画（spinner）的半径。从 `v4.8.0` 开始支持。
+  // spinnerRadius: 20,
+  // 旋转动画（spinner）的线宽。从 `v4.8.0` 开始支持。
+  // lineWidth: 5,
+  // 字体粗细。从 `v5.0.1` 开始支持。
+  // fontWeight: 'normal',
+  // 字体风格。从 `v5.0.1` 开始支持。
+  // fontStyle: 'normal',
+  // 字体系列。从 `v5.0.1` 开始支持。
+  // fontFamily: 'sans-serif'
+// }
+function showLoading (config: any) {
+  treeChart.value.showLoading('default', { text: '', color: props.themeColor, ...config }) // 显示加载动画效果
+}
+function hideLoading () {
+  treeChart.value.hideLoading() // 隐藏动画加载效果
+}
+defineExpose({
+  showLoading,
+  hideLoading
 })
 const emit = defineEmits(['clickNode'])
 function onClick (e: any) {
@@ -77,7 +136,7 @@ function initChart () {
       //   return '$' + value.toFixed(2)
       // },
       backgroundColor: '#FFF', // 提示框浮层的背景颜色
-      borderColor: '#1890FF', // 提示框浮层的边框颜色
+      borderColor: props.themeColor, // 提示框浮层的边框颜色
       borderWidth: 1, // 提示框浮层的边框宽
       borderRadius: 8, // 提示框浮层圆角
       padding: [6, 8], // 提示框浮层的内边距
@@ -96,22 +155,22 @@ function initChart () {
     series: [
       {
         type: 'tree',
-        data: [props.treeData],
+        data: JSON.stringify(props.treeData) === '{}' ? [] : [props.treeData],
         name: '树图',
         top: '1%', // 组件离容器上侧的距离，像素值20，或相对容器的百分比20%
-        left: '9%', // 组件离容器左侧的距离
+        left: '10%', // 组件离容器左侧的距离
         bottom: '1%', // 组件离容器下侧的距离
-        right: '15%', // 组件离容器右侧的距离
+        right: '16%', // 组件离容器右侧的距离
         layout: 'orthogonal', // 树图的布局，正交orthogonal和径向radial两种
         orient: 'LR', // 树图中正交布局的方向，'LR','RL','TB','BT'，只有布局是正交时才生效
-        edgeShape: 'curve', // 树图边的形状，有曲线curve和折线polyline两种，只有正交布局下生效
+        edgeShape: props.edgeShape, // 树图边的形状，有曲线curve和折线polyline两种，只有正交布局下生效
         roam: false, // 是否开启鼠标缩放或平移，默认false
         initialTreeDepth: 2, // 树图初始的展开层级（深度），根节点是0，不设置时全部展开
         // symbol: 'arrow', // 标记的图形，默认是emptyCircle;circle,rect,roundRect,triangle,diamond,pin,arrow,none
         // symbolRotate: 270, // 配合arrow图形使用效果较好
         symbolSize: 16, // 大于0时是圆圈，等于0时不展示，标记的大小
         itemStyle: { // 树图中每个节点的样式
-          color: '#1890FF', // 节点未展开时的填充色
+          color: props.themeColor, // 节点未展开时的填充色
           borderColor: 'rgba(255, 144, 0, 1)', // 图形的描边颜色
           borderWidth: 1, // 描边线宽，为0时无描边
           borderType: 'dotted', // 描边类型
@@ -129,7 +188,7 @@ function initChart () {
           fontSize: 16, // 字体大小
           color: '#333', // 字体颜色
           backgroundColor: '#F0F5FA', // 文字块的背景颜色
-          borderColor: '#1890FF', // 文字块边框颜色
+          borderColor: props.themeColor, // 文字块边框颜色
           borderWidth: 1, // 文字块边框宽度
           borderType: 'solid', // 文字块边框描边类型 solid dashed dotted
           borderRadius: 4, // 文字块的圆角
@@ -154,7 +213,7 @@ function initChart () {
           focus: 'self', // none不淡出其他图形（默认）；self只聚焦当前高亮的数据图形；series聚焦当前高亮的数据所在系列的所有图形；ancestor聚焦所有祖先节点；descendant聚焦所有子孙节点；relative聚焦所有子孙和祖先节点
           blurScope: 'coordinateSystem', // 开启focus时，配置淡出的范围，coordinateSystem淡出范围为坐标系（默认）；series淡出范围为系列；global淡出范围为全局
           itemStyle: { // 该节点的样式
-            color: '#1890FF', // 图形的颜色
+            color: props.themeColor, // 图形的颜色
             // borderColor: 'rgba(255, 144, 0, 1)', // 图形的描边颜色
             borderWidth: 1, // 描边线宽，为0时无描边
             borderType: 'solid', // 描边类型 solid dashed dotted
@@ -183,7 +242,7 @@ function initChart () {
         leaves: { // 叶子节点的特殊配置
           label: { // 叶子节点的文本标签样式
             distance: 8,
-            // color: '#1890FF',
+            // color: props.themeColor,
             position: 'right',
             verticalAlign: 'middle',
             align: 'left'
@@ -205,6 +264,8 @@ function initChart () {
     ]
   }
   option && treeChart.value.setOption(option)
+  // 监听树图节点的点击事件
+  treeChart.value.on('click', onClick)
 }
 </script>
 <template>
