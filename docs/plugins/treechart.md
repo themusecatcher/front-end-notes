@@ -1,4 +1,4 @@
-# 树图 echarts<Tag color="volcano" style="vertical-align: top; margin-left: 6px;">5.4.3</Tag><BackTop />
+# 树图 echarts<Tag color="volcano" style="vertical-align: top; margin-left: 6px;">{{ pkg.dependencies.echarts }}</Tag><BackTop />
 
 ::: details Show Source Code
 
@@ -281,6 +281,7 @@ function initChart () {
 :::
 
 <script setup lang="ts">
+import pkg from '../../package.json'
 import TreeChart from './components/TreeChart.vue'
 import { ref, onMounted } from 'vue'
 

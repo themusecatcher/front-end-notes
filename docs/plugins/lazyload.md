@@ -1,9 +1,8 @@
-# 懒加载 vue3-lazyload<Tag color="volcano" style="vertical-align: top; margin-left: 6px;">0.3.8</Tag><BackTop />
+# 懒加载 vue3-lazyload<Tag color="volcano" style="vertical-align: top; margin-left: 6px;">{{ pkg.dependencies['vue3-lazyload'] }}</Tag><BackTop />
 
 <script lang="ts" setup>
+import pkg from '../../package.json'
 import { ref } from 'vue'
-import { Space, Button } from 'vue-amazing-ui'
-import 'vue-amazing-ui/css'
 
 const Image1 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/5.jpg'
 const Image2 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/8.jpg'
