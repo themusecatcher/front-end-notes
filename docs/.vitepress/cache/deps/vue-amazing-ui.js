@@ -3,8 +3,8 @@ import {
   isClient,
   toRef as toRef2,
   useTransition
-} from "./chunk-KQTOVFK7.js";
-import "./chunk-KSXQXIR5.js";
+} from "./chunk-U4YG4YF4.js";
+import "./chunk-QT3Z7FRT.js";
 import {
   Fragment,
   Teleport,
@@ -23,7 +23,6 @@ import {
   getCurrentScope,
   guardReactiveProps,
   h,
-  init_vue_runtime_esm_bundler,
   isRef,
   mergeProps,
   nextTick,
@@ -62,11 +61,11 @@ import {
   withDirectives,
   withKeys,
   withModifiers
-} from "./chunk-LEQUGF6D.js";
+} from "./chunk-D4D2XWKF.js";
 import {
   __commonJS,
   __toESM
-} from "./chunk-CEQRFMJQ.js";
+} from "./chunk-ZS7NZCD4.js";
 
 // node_modules/.pnpm/qrcode@1.5.3/node_modules/qrcode/lib/can-promise.js
 var require_can_promise = __commonJS({
@@ -2229,13 +2228,7 @@ var require_browser = __commonJS({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@0.1.38_async-validator@4.2.5_focus-trap@7.5.4_sortablejs@1.15.2/node_modules/vue-amazing-ui/dist/vue-amazing-ui.js
-init_vue_runtime_esm_bundler();
-
-// node_modules/.pnpm/@vuepic+vue-datepicker@7.4.1_vue@3.4.27/node_modules/@vuepic/vue-datepicker/dist/vue-datepicker.js
-init_vue_runtime_esm_bundler();
-
-// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/typeof.js
+// node_modules/.pnpm/@babel+runtime@7.24.5/node_modules/@babel/runtime/helpers/esm/typeof.js
 function _typeof(o) {
   "@babel/helpers - typeof";
   return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(o3) {
@@ -4270,7 +4263,7 @@ function isEqual(dirtyLeftDate, dirtyRightDate) {
   return dateLeft.getTime() === dateRight.getTime();
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
+// node_modules/.pnpm/@babel+runtime@7.24.5/node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
 function _arrayLikeToArray(arr, len) {
   if (len == null || len > arr.length)
     len = arr.length;
@@ -4279,7 +4272,7 @@ function _arrayLikeToArray(arr, len) {
   return arr2;
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
+// node_modules/.pnpm/@babel+runtime@7.24.5/node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
 function _unsupportedIterableToArray(o, minLen) {
   if (!o)
     return;
@@ -4294,7 +4287,7 @@ function _unsupportedIterableToArray(o, minLen) {
     return _arrayLikeToArray(o, minLen);
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
+// node_modules/.pnpm/@babel+runtime@7.24.5/node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
 function _createForOfIteratorHelper(o, allowArrayLike) {
   var it2 = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
   if (!it2) {
@@ -4350,7 +4343,7 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
   };
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
+// node_modules/.pnpm/@babel+runtime@7.24.5/node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
 function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -4358,7 +4351,7 @@ function _assertThisInitialized(self) {
   return self;
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
+// node_modules/.pnpm/@babel+runtime@7.24.5/node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
 function _setPrototypeOf(o, p) {
   _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf2(o3, p3) {
     o3.__proto__ = p3;
@@ -4367,7 +4360,7 @@ function _setPrototypeOf(o, p) {
   return _setPrototypeOf(o, p);
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/inherits.js
+// node_modules/.pnpm/@babel+runtime@7.24.5/node_modules/@babel/runtime/helpers/esm/inherits.js
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
     throw new TypeError("Super expression must either be null or a function");
@@ -4386,7 +4379,7 @@ function _inherits(subClass, superClass) {
     _setPrototypeOf(subClass, superClass);
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
+// node_modules/.pnpm/@babel+runtime@7.24.5/node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
 function _getPrototypeOf(o) {
   _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf2(o3) {
     return o3.__proto__ || Object.getPrototypeOf(o3);
@@ -4394,7 +4387,7 @@ function _getPrototypeOf(o) {
   return _getPrototypeOf(o);
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/isNativeReflectConstruct.js
+// node_modules/.pnpm/@babel+runtime@7.24.5/node_modules/@babel/runtime/helpers/esm/isNativeReflectConstruct.js
 function _isNativeReflectConstruct() {
   try {
     var t3 = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function() {
@@ -4406,7 +4399,7 @@ function _isNativeReflectConstruct() {
   })();
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js
+// node_modules/.pnpm/@babel+runtime@7.24.5/node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js
 function _possibleConstructorReturn(self, call) {
   if (call && (_typeof(call) === "object" || typeof call === "function")) {
     return call;
@@ -4416,7 +4409,7 @@ function _possibleConstructorReturn(self, call) {
   return _assertThisInitialized(self);
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/createSuper.js
+// node_modules/.pnpm/@babel+runtime@7.24.5/node_modules/@babel/runtime/helpers/esm/createSuper.js
 function _createSuper(Derived) {
   var hasNativeReflectConstruct = _isNativeReflectConstruct();
   return function _createSuperInternal() {
@@ -4431,14 +4424,14 @@ function _createSuper(Derived) {
   };
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/classCallCheck.js
+// node_modules/.pnpm/@babel+runtime@7.24.5/node_modules/@babel/runtime/helpers/esm/classCallCheck.js
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
   }
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/toPrimitive.js
+// node_modules/.pnpm/@babel+runtime@7.24.5/node_modules/@babel/runtime/helpers/esm/toPrimitive.js
 function toPrimitive(t3, r) {
   if ("object" != _typeof(t3) || !t3)
     return t3;
@@ -4452,13 +4445,13 @@ function toPrimitive(t3, r) {
   return ("string" === r ? String : Number)(t3);
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/toPropertyKey.js
+// node_modules/.pnpm/@babel+runtime@7.24.5/node_modules/@babel/runtime/helpers/esm/toPropertyKey.js
 function toPropertyKey(t3) {
   var i3 = toPrimitive(t3, "string");
   return "symbol" == _typeof(i3) ? i3 : i3 + "";
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/createClass.js
+// node_modules/.pnpm/@babel+runtime@7.24.5/node_modules/@babel/runtime/helpers/esm/createClass.js
 function _defineProperties(target, props) {
   for (var i3 = 0; i3 < props.length; i3++) {
     var descriptor = props[i3];
@@ -4480,7 +4473,7 @@ function _createClass(Constructor, protoProps, staticProps) {
   return Constructor;
 }
 
-// node_modules/.pnpm/@babel+runtime@7.24.4/node_modules/@babel/runtime/helpers/esm/defineProperty.js
+// node_modules/.pnpm/@babel+runtime@7.24.5/node_modules/@babel/runtime/helpers/esm/defineProperty.js
 function _defineProperty(obj, key, value) {
   key = toPropertyKey(key);
   if (key in obj) {
@@ -12120,10 +12113,7 @@ function useQRCode(text, options) {
   return result;
 }
 
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/swiper-vue.mjs
-init_vue_runtime_esm_bundler();
-
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/ssr-window.esm.mjs
+// node_modules/.pnpm/swiper@11.1.3/node_modules/swiper/shared/ssr-window.esm.mjs
 function isObject(obj) {
   return obj !== null && typeof obj === "object" && "constructor" in obj && obj.constructor === Object;
 }
@@ -12273,7 +12263,7 @@ function getWindow() {
   return win;
 }
 
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/utils.mjs
+// node_modules/.pnpm/swiper@11.1.3/node_modules/swiper/shared/utils.mjs
 function classesToTokens(classes2) {
   if (classes2 === void 0) {
     classes2 = "";
@@ -12548,7 +12538,7 @@ function makeElementsArray(el3) {
   return (Array.isArray(el3) ? el3 : [el3]).filter((e3) => !!e3);
 }
 
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/swiper-core.mjs
+// node_modules/.pnpm/swiper@11.1.3/node_modules/swiper/shared/swiper-core.mjs
 var support;
 function calcSupport() {
   const window2 = getWindow();
@@ -13158,8 +13148,9 @@ function updateSlides() {
       allSlidesSize += slideSizeValue + (spaceBetween || 0);
     });
     allSlidesSize -= spaceBetween;
-    if (allSlidesSize < swiperSize) {
-      const allSlidesOffset = (swiperSize - allSlidesSize) / 2;
+    const offsetSize = (params.slidesOffsetBefore || 0) + (params.slidesOffsetAfter || 0);
+    if (allSlidesSize + offsetSize < swiperSize) {
+      const allSlidesOffset = (swiperSize - allSlidesSize - offsetSize) / 2;
       snapGrid.forEach((snap, snapIndex) => {
         snapGrid[snapIndex] = snap - allSlidesOffset;
       });
@@ -13258,6 +13249,13 @@ function updateSlidesOffset() {
     slides[i3].swiperSlideOffset = (swiper.isHorizontal() ? slides[i3].offsetLeft : slides[i3].offsetTop) - minusOffset - swiper.cssOverflowAdjustment();
   }
 }
+var toggleSlideClasses$1 = (slideEl, condition, className) => {
+  if (condition && !slideEl.classList.contains(className)) {
+    slideEl.classList.add(className);
+  } else if (!condition && slideEl.classList.contains(className)) {
+    slideEl.classList.remove(className);
+  }
+};
 function updateSlidesProgress(translate2) {
   if (translate2 === void 0) {
     translate2 = this && this.translate || 0;
@@ -13276,9 +13274,6 @@ function updateSlidesProgress(translate2) {
   let offsetCenter = -translate2;
   if (rtl)
     offsetCenter = translate2;
-  slides.forEach((slideEl) => {
-    slideEl.classList.remove(params.slideVisibleClass, params.slideFullyVisibleClass);
-  });
   swiper.visibleSlidesIndexes = [];
   swiper.visibleSlides = [];
   let spaceBetween = params.spaceBetween;
@@ -13302,11 +13297,9 @@ function updateSlidesProgress(translate2) {
     if (isVisible) {
       swiper.visibleSlides.push(slide2);
       swiper.visibleSlidesIndexes.push(i3);
-      slides[i3].classList.add(params.slideVisibleClass);
     }
-    if (isFullyVisible) {
-      slides[i3].classList.add(params.slideFullyVisibleClass);
-    }
+    toggleSlideClasses$1(slide2, isVisible, params.slideVisibleClass);
+    toggleSlideClasses$1(slide2, isFullyVisible, params.slideFullyVisibleClass);
     slide2.progress = rtl ? -slideProgress : slideProgress;
     slide2.originalProgress = rtl ? -originalSlideProgress : originalSlideProgress;
   }
@@ -14948,7 +14941,10 @@ function onTouchMove(event2) {
     if (swiper.animating) {
       const evt = new window.CustomEvent("transitionend", {
         bubbles: true,
-        cancelable: true
+        cancelable: true,
+        detail: {
+          bySwiperTouchMove: true
+        }
       });
       swiper.wrapperEl.dispatchEvent(evt);
     }
@@ -16359,7 +16355,7 @@ Object.keys(prototypes).forEach((prototypeGroup) => {
 });
 Swiper.use([Resize, Observer]);
 
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/update-swiper.mjs
+// node_modules/.pnpm/swiper@11.1.3/node_modules/swiper/shared/update-swiper.mjs
 var paramsList = [
   "eventsPrefix",
   "injectStyles",
@@ -16717,7 +16713,7 @@ function updateSwiper(_ref) {
   swiper.update();
 }
 
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/update-on-virtual-data.mjs
+// node_modules/.pnpm/swiper@11.1.3/node_modules/swiper/shared/update-on-virtual-data.mjs
 function getParams(obj, splitEvents) {
   if (obj === void 0) {
     obj = {};
@@ -16850,7 +16846,7 @@ var updateOnVirtualData = (swiper) => {
   }
 };
 
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/swiper-vue.mjs
+// node_modules/.pnpm/swiper@11.1.3/node_modules/swiper/swiper-vue.mjs
 function getChildren(originalSlots, slidesRef, oldSlidesRef) {
   if (originalSlots === void 0) {
     originalSlots = {};
@@ -16872,7 +16868,7 @@ function getChildren(originalSlots, slidesRef, oldSlidesRef) {
         slotName = "container-end";
       if (isFragment && vnode.children) {
         getSlidesFromElements(vnode.children, slotName);
-      } else if (vnode.type && (vnode.type.name === "SwiperSlide" || vnode.type.name === "AsyncComponentWrapper")) {
+      } else if (vnode.type && (vnode.type.name === "SwiperSlide" || vnode.type.name === "AsyncComponentWrapper") || vnode.componentOptions && vnode.componentOptions.tag === "SwiperSlide") {
         slides.push(vnode);
       } else if (slots[slotName]) {
         slots[slotName].push(vnode);
@@ -16928,9 +16924,15 @@ function renderVirtual(swiperRef, slides, virtualData) {
       slide2.props.style = {};
     slide2.props.swiperRef = swiperRef;
     slide2.props.style = style;
-    return h(slide2.type, {
-      ...slide2.props
-    }, slide2.children);
+    if (slide2.type) {
+      return h(slide2.type, {
+        ...slide2.props
+      }, slide2.children);
+    } else if (slide2.componentOptions) {
+      return h(slide2.componentOptions.Ctor, {
+        ...slide2.props
+      }, slide2.componentOptions.children);
+    }
   });
 }
 var Swiper2 = {
@@ -17643,7 +17645,7 @@ var SwiperSlide = {
   }
 };
 
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/modules/mousewheel.mjs
+// node_modules/.pnpm/swiper@11.1.3/node_modules/swiper/modules/mousewheel.mjs
 function Mousewheel(_ref) {
   let {
     swiper,
@@ -17967,7 +17969,7 @@ function Mousewheel(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/create-element-if-not-defined.mjs
+// node_modules/.pnpm/swiper@11.1.3/node_modules/swiper/shared/create-element-if-not-defined.mjs
 function createElementIfNotDefined(swiper, originalParams, params, checkProps) {
   if (swiper.params.createElements) {
     Object.keys(checkProps).forEach((key) => {
@@ -17986,7 +17988,7 @@ function createElementIfNotDefined(swiper, originalParams, params, checkProps) {
   return params;
 }
 
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/modules/navigation.mjs
+// node_modules/.pnpm/swiper@11.1.3/node_modules/swiper/modules/navigation.mjs
 function Navigation(_ref) {
   let {
     swiper,
@@ -18181,7 +18183,7 @@ function Navigation(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/classes-to-selector.mjs
+// node_modules/.pnpm/swiper@11.1.3/node_modules/swiper/shared/classes-to-selector.mjs
 function classesToSelector(classes2) {
   if (classes2 === void 0) {
     classes2 = "";
@@ -18189,7 +18191,7 @@ function classesToSelector(classes2) {
   return `.${classes2.trim().replace(/([\.:!+\/])/g, "\\$1").replace(/ /g, ".")}`;
 }
 
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/modules/pagination.mjs
+// node_modules/.pnpm/swiper@11.1.3/node_modules/swiper/modules/pagination.mjs
 function Pagination(_ref) {
   let {
     swiper,
@@ -18635,7 +18637,7 @@ function Pagination(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/modules/autoplay.mjs
+// node_modules/.pnpm/swiper@11.1.3/node_modules/swiper/modules/autoplay.mjs
 function Autoplay(_ref) {
   let {
     swiper,
@@ -18679,7 +18681,7 @@ function Autoplay(_ref) {
     if (e3.target !== swiper.wrapperEl)
       return;
     swiper.wrapperEl.removeEventListener("transitionend", onTransitionEnd);
-    if (pausedByPointerEnter) {
+    if (pausedByPointerEnter || e3.detail && e3.detail.bySwiperTouchMove) {
       return;
     }
     resume();
@@ -18950,7 +18952,7 @@ function Autoplay(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/effect-init.mjs
+// node_modules/.pnpm/swiper@11.1.3/node_modules/swiper/shared/effect-init.mjs
 function effectInit(params) {
   const {
     effect,
@@ -19012,7 +19014,7 @@ function effectInit(params) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/effect-target.mjs
+// node_modules/.pnpm/swiper@11.1.3/node_modules/swiper/shared/effect-target.mjs
 function effectTarget(effectParams, slideEl) {
   const transformEl = getSlideTransformEl(slideEl);
   if (transformEl !== slideEl) {
@@ -19022,7 +19024,7 @@ function effectTarget(effectParams, slideEl) {
   return transformEl;
 }
 
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/shared/effect-virtual-transition-end.mjs
+// node_modules/.pnpm/swiper@11.1.3/node_modules/swiper/shared/effect-virtual-transition-end.mjs
 function effectVirtualTransitionEnd(_ref) {
   let {
     swiper,
@@ -19069,7 +19071,7 @@ function effectVirtualTransitionEnd(_ref) {
   }
 }
 
-// node_modules/.pnpm/swiper@11.1.1/node_modules/swiper/modules/effect-fade.mjs
+// node_modules/.pnpm/swiper@11.1.3/node_modules/swiper/modules/effect-fade.mjs
 function EffectFade(_ref) {
   let {
     swiper,

@@ -7,15 +7,15 @@
     "docs:dev": "vitepress dev docs --port 8888 --open",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "docs:deploy": "sh deploy.sh",
-    "push": "sh push.sh"
+    "docs:deploy": "sh scripts/deploy.sh",
+    "push": "sh scripts/push.sh"
   },
   "dependencies": {
     "@codemirror/lang-vue": "^0.1.3",
     "@codemirror/theme-one-dark": "^6.1.2",
     "echarts": "^5.5.0",
     "vue": "^3.4.27",
-    "vue-amazing-ui": "^0.1.38",
+    "vue-amazing-ui": "^0.1.39",
     "vue-codemirror": "^6.1.1",
     "vue3-lazyload": "^0.3.8",
     "vue3-pdf-app": "^1.0.3",
