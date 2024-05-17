@@ -5,7 +5,7 @@ import {
   ref,
   watch
 } from "./chunk-D4D2XWKF.js";
-import "./chunk-ZS7NZCD4.js";
+import "./chunk-UV5CTPV7.js";
 
 // node_modules/.pnpm/vue3-lazyload@0.3.8_vue@3.4.27/node_modules/vue3-lazyload/dist/index.mjs
 var LifecycleEnum = ((LifecycleEnum2) => {
