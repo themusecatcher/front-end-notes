@@ -194,6 +194,9 @@ html.dark .VPHome {
 }
 .Layout {
   position: relative;
+  .VPContent .content .content-container {
+    max-width: none;
+  }
   .VPFooter {
     position: absolute;
     right: 0;
@@ -217,6 +220,9 @@ html.dark .VPHome {
       }
     }
   }
+}
+.VPSidebar {
+  z-index: 8 !important;
 }
 .VPNavBar:not(.has-sidebar):not(.top) {
   border: none;
