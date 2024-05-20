@@ -1,0 +1,1 @@
+import{_ as s,o as i,c as t,ak as e}from"./chunks/framework.Pe5nteH3.js";const E=JSON.parse('{"title":"Note 3","description":"","frontmatter":{},"headers":[],"relativePath":"html/No.3.md","filePath":"html/No.3.md"}'),a={name:"html/No.3.md"},o=e("",32),l=[o];function h(d,n,c,r,p,k){return i(),t("div",null,l)}const u=s(a,[["render",h]]);export{E as __pageData,u as default};
