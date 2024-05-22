@@ -175,6 +175,116 @@ CSS3 `box-sizing` 属性可以设置 `width` 和 `height` 属性中是否包含�
 `initial` | 设置该属性为它的默认值，即为 `0 1 auto`。请参阅 initial。
 `inherit` | 从父元素继承该属性。请参阅 inherit。
 
+## 网格间距 [`gap`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/gap)
+
+CSS `gap` 简写属性用于**设置行与列之间的间隙**（网格间距）。
+
+规范的早期版本将该属性命名为 `grid-gap`，且为了保持与旧网站的兼容性，浏览器仍然会接受 `grid-gap` 作为 `gap` 的别名。
+
+### 语法
+
+```css
+/* 一个 <length> 值 */
+gap: 20px;
+gap: 1em;
+gap: 3vmin;
+gap: 0.5cm;
+
+/* 一个 <percentage> 值 */
+gap: 16%;
+gap: 100%;
+
+/* 两个 <length> 值 */
+gap: 20px 10px;
+gap: 1em 0.5em;
+gap: 3vmin 2vmax;
+gap: 0.5cm 2mm;
+
+/* 一个或两个 <percentage> 值 */
+gap: 16% 100%;
+gap: 21px 82%;
+
+/* calc() 值 */
+gap: calc(10% + 20px);
+gap: calc(20px + 10%) calc(10% - 5px);
+
+/* 全局值 */
+gap: inherit;
+gap: initial;
+gap: revert;
+gap: revert-layer;
+gap: unset;
+```
+
+该属性用来表示 `<'row-gap'>` 和可选的 `<'column-gap'>` 的值。如果缺失 `<'column-gap'>`，则其会被设置成跟 `<'row-gap'>` 一样的值。
+
+`<'row-gap'>` 和 `<'column-gap'>` 都可以用 `<length>` 或者 `<percentage>` 来指定。
+
+### 值
+
+- `<length>`: 网格线之间的间隙宽度。
+- `<percentage>`: 网格线之间的间隙宽度，为相对于当前元素尺寸的百分比。
+
+### 示例
+
+#### 弹性布局
+
+```html
+<div id="flexbox">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+```
+
+```css
+#flexbox {
+  display: flex;
+  flex-wrap: wrap; // 超出后换行，默认 nowrap 不换行
+  width: 300px;
+  gap: 20px 5px; // [行间距, 列间距]: 20px 5px
+}
+#flexbox > div {
+  border: 1px solid green;
+  background-color: lime;
+  flex: 1 1 auto;
+  width: 100px;
+  height: 50px;
+}
+```
+
+#### 网格布局
+
+```html
+<div id="grid">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+```
+
+```css
+#grid {
+  display: grid;
+  height: 200px;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  gap: 20px 5px; // [行间距, 列间距]: 20px 5px
+}
+#grid > div {
+  border: 1px solid green;
+  background-color: lime;
+}
+```
+
 ## 只设置单边阴影 `box-shadow`
 
 语法：`box-shadow: h-shadow v-shadow blur spread color inset;`
