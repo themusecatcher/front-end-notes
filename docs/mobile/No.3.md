@@ -7,6 +7,33 @@
 - [微信公众平台](https://mp.weixin.qq.com/)
 - [Nut UI](https://nutui.jd.com/taro/vue/4x/#/zh-CN/guide/start)
 
+## 微信小程序图片压缩 [Taro.compressImage(option)](https://taro-docs.jd.com/docs/apis/media/image/compressImage)
+
+压缩图片接口，可选压缩质量
+
+```vue
+<script setup lang="ts">
+function beforeXhrUpload (taroUploadFile, options) {
+  console.log('before taroUploadFile', taroUploadFile)
+  console.log('before options', options)
+  Taro.compressImage({
+    src: options.taroFilePath,, // 图片路径，图片的路径，可以是相对路径、临时文件路径、存储文件路径
+    quality: 80, // 压缩质量，范围0～100，数值越小，质量越低，压缩率越高（仅对jpg有效）。
+    compressedWidth: 300, // 压缩后图片的宽度，单位为px，若不填写则默认以 compressedHeight 为准等比缩放。
+    compressHeight: 300, // 压缩后图片的高度，单位为px，若不填写则默认以 compressedWidth 为准等比缩放。
+    success: (res: any) => { // 接口调用成功的回调函数
+      console.log('compress', res)
+      // uploadFile(res.tempFilePath, taroUploadFile, options)
+    },
+    fail: (err: any) => { // 接口调用失败的回调函数
+      console.log('compress err', err)
+      // abortUpload(taroUploadFile, options)
+    }
+  })
+}
+</script>
+```
+
 ## 微信小程序上传文件
 
 使用 [`<nut-uploader/>`](https://nutui.jd.com/taro/vue/4x/#/zh-CN/component/uploader) 组件，并自定义上传方式
@@ -19,10 +46,10 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import Taro from '@tarojs/taro'
-import { encryptData } from '@/http/encrypt'
+import { encryptData } from '@/http/encrypt' // 数据加密 可选
 
 const url = {
-  upload: '/api/tools/file/upload'
+  upload: '/file/upload'
 }
 const uploadUrl = process.env.TARO_APP_PROXY + url.upload
 interface Image {
@@ -45,7 +72,7 @@ function uploadFile (src, taroUploadFile, options) {
       console.log('getFileInfo res', res)
     }
   })
-  fs.readFile({ // 读取本地文件内容。单个文件大小上限为100M
+  fs.readFile({ // 读取本地文件内容。单个文件大小上限为10MB
     filePath: src, // 要读取的文件的路径 (本地路径)
     encoding: 'base64', // 指定读取文件的字符编码，如果不传 encoding，则以 ArrayBuffer 格式读取文件的二进制内容
     success: (res) => {
