@@ -21,8 +21,8 @@ importers:
         specifier: ^3.4.27
         version: 3.4.27
       vue-amazing-ui:
-        specifier: ^0.1.42
-        version: 0.1.42(async-validator@4.2.5)(focus-trap@7.5.4)(sortablejs@1.15.2)
+        specifier: ^0.1.44
+        version: 0.1.44(async-validator@4.2.5)(focus-trap@7.5.4)(sortablejs@1.15.2)
       vue-codemirror:
         specifier: ^6.1.1
         version: 6.1.1(codemirror@6.0.1(@lezer/common@1.2.1))(vue@3.4.27)
@@ -171,8 +171,8 @@ packages:
   '@codemirror/lint@6.7.0':
     resolution: {integrity: sha512-LTLOL2nT41ADNSCCCCw8Q/UmdAFzB23OUYSjsHTdsVaH0XEo+orhuqbDNWzrzodm14w6FOxqxpmy4LF8Lixqjw==}
 
-  '@codemirror/lint@6.7.1':
-    resolution: {integrity: sha512-rELba6QJD20/bNXWP/cKTGLrwVEcpa2ViwULCV03ONcY1Je85++7sczVRUlnE4TJMjatx3IJTz6HX4NXi+moXw==}
+  '@codemirror/lint@6.8.0':
+    resolution: {integrity: sha512-lsFofvaw0lnPRJlQylNsC4IRt/1lI4OD/yYslrSGVndOJfStc58v+8p9dgGiD90ktOfL7OhBWns1ZETYgz0EJA==}
 
   '@codemirror/search@6.5.6':
     resolution: {integrity: sha512-rpMgcsh7o0GuCDUXKPvww+muLA1pDJaFrpq/CCHtpQJYz8xopu4D1hPcKRoDD0YlF8gZaqTNIRa4VRBWyhyy7Q==}
@@ -1041,8 +1041,8 @@ packages:
     peerDependencies:
       vue: ^3.0.0
 
-  vue-amazing-ui@0.1.42:
-    resolution: {integrity: sha512-Swu+T3LvNwydFfhrBK7BUc/d/gRe23dE7w1733Fc06i5vmZ+WKR1iGy4THn7iUs94X9po1NVaeliISVqFR5UBg==}
+  vue-amazing-ui@0.1.44:
+    resolution: {integrity: sha512-6z2raR/mQfrpzjUZ27cDlRIpFVAeo88BYu0ywbyYizuYEeEEufGuLc9o/mwl4bybnX/bFT3gDrAaiqj32FP+0A==}
 
   vue-codemirror@6.1.1:
     resolution: {integrity: sha512-rTAYo44owd282yVxKtJtnOi7ERAcXTeviwoPXjIc6K/IQYUsoDkzPvw/JDFtSP6T7Cz/2g3EHaEyeyaQCKoDMg==}
@@ -1348,7 +1348,7 @@ snapshots:
       '@codemirror/view': 6.26.3
       crelt: 1.0.6
 
-  '@codemirror/lint@6.7.1':
+  '@codemirror/lint@6.8.0':
     dependencies:
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.26.3
@@ -1780,7 +1780,7 @@ snapshots:
       '@codemirror/autocomplete': 6.16.0(@codemirror/language@6.10.1)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
       '@codemirror/commands': 6.5.0
       '@codemirror/language': 6.10.1
-      '@codemirror/lint': 6.7.1
+      '@codemirror/lint': 6.8.0
       '@codemirror/search': 6.5.6
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.26.3
@@ -2196,7 +2196,7 @@ snapshots:
       evtd: 0.2.4
       vue: 3.4.27
 
-  vue-amazing-ui@0.1.42(async-validator@4.2.5)(focus-trap@7.5.4)(sortablejs@1.15.2):
+  vue-amazing-ui@0.1.44(async-validator@4.2.5)(focus-trap@7.5.4)(sortablejs@1.15.2):
     dependencies:
       '@vuepic/vue-datepicker': 8.6.0(vue@3.4.27)
       '@vueuse/core': 10.9.0(vue@3.4.27)
