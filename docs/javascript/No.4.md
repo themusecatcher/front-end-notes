@@ -1,32 +1,59 @@
 # Note 4
 
-## 监听当前页面是否处于激活状态
+## 监听当前页面是否处于激活状态 [`visibilitychange`](https://developer.mozilla.org/zh-CN/docs/Web/API/Document/visibilitychange_event)
 
 - 方法一：监听 `visibilitychange` 事件
 
-[`visibilitychange` 参考文档](https://developer.mozilla.org/zh-CN/docs/Web/API/Document/visibilitychange_event)
-
-> 当其选项卡的内容变得可见或被隐藏时，会在文档上触发 `visibilitychange` (能见度更改) 事件。<br>该事件不包括文档的更新的可见性状态，但是您可以从文档的 `visibilityState` 属性中获取该信息。
+> 当其选项卡的内容变得可见或被隐藏时，会在 `document` 上触发 `visibilitychange` 事件。该事件不包括文档的更新的可见性状态，但是你可以从文档的 `visibilityState` 属性中获取该信息。该事件不可取消。
 
 ::: tip 注意：
-- 当 `visibleStateState` 属性的值转换为 `hidden` `时，Safari` 不会按预期触发 `visibilitychange`；因此，在这种情况下，您还需要包含代码以侦听 `pagehide` 事件。（**经测试目前最新版已无该问题**）
 - 出于兼容性原因，请确保使用 `document.addEventListener` 而不是 `window.addEventListener` 来注册回调。`Safari < 14.0` 仅支持前者。
 :::
 
-`Document.onvisibilitychange` 是一个事件处理方法，它将在该对象的 `visibilitychange` 事件被触发时调用。
+### 语法
+
+```js
+addEventListener('visibilitychange', (event) => {})
+onvisibilitychange = (event) => {}
+```
+
+### 使用说明
+
+<br/>
+
+该事件不包括文档的更新的可见性状态，但是你可以从文档的 `visibilityState` 属性中获取该信息。
+
+**当用户导航到新页面、切换标签页、关闭标签页、最小化或关闭浏览器，或者在移动设备上从浏览器切换到不同的应用程序时，该事件就会触发**，其 `visibilityState` 为 `hidden`。过渡到 `hidden` 是页面能可靠观察到的最后一个事件，因此开发人员应将其视为用户会话的可能结束（例如，用于发送分析数据）。
+
+向 `hidden` 过渡也是页面停止用户界面更新和停止用户不想在后台运行的任何任务的好时机。
+
+### 示例
+
+> 在文档转向隐藏状态时暂停音乐
 
 ```js
 // 本示例在文档可见时开始播放音乐曲目，在文档不再可见时暂停音乐。
-document.addEventListener('visibilitychange', function () {
+document.addEventListener('visibilitychange', () => {
   console.log('visibilityState', document.visibilityState)
 })
-document.addEventListener('visibilitychange', function () {
+document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') {
     backgroundMusic.play()
   } else {
     backgroundMusic.pause()
   }
 })
+```
+
+> 在文档转向隐藏状态时发送会话结束分析报告
+
+```js
+// 本示例将 hidden 转换视为用户会话的结束，并使用 Navigator.sendBeacon() API 发送相应的分析结果。
+document.onvisibilitychange = () => {
+  if (document.visibilityState === 'hidden') {
+    navigator.sendBeacon('/log', analyticsData)
+  }
+}
 ```
 
 - 方法二：监听 `blur` 和 `focus` 事件
