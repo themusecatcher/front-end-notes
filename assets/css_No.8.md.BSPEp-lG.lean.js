@@ -1,1 +1,0 @@
-import{_ as t,o as e,c as o,aj as d}from"./chunks/framework.C5MBkus0.js";const h=JSON.parse('{"title":"Note 8","description":"","frontmatter":{},"headers":[],"relativePath":"css/No.8.md","filePath":"css/No.8.md"}'),c={name:"css/No.8.md"},r=d("",5),s=[r];function n(l,i,a,g,f,p){return e(),o("div",null,s)}const _=t(c,[["render",n]]);export{h as __pageData,_ as default};

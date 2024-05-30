@@ -1,1 +1,0 @@
-import{_ as e,o as a,c as t,aj as r}from"./chunks/framework.C5MBkus0.js";const m=JSON.parse('{"title":"开始","description":"","frontmatter":{},"headers":[],"relativePath":"vue3/started.md","filePath":"vue3/started.md"}'),o={name:"vue3/started.md"},s=r("",4),n=[s];function i(d,l,_,c,h,u){return a(),t("div",null,n)}const p=e(o,[["render",i]]);export{m as __pageData,p as default};

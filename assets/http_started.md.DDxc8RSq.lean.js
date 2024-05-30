@@ -1,1 +1,0 @@
-import{_ as t,o as a,c as e,aj as r}from"./chunks/framework.C5MBkus0.js";const f=JSON.parse('{"title":"开始","description":"","frontmatter":{},"headers":[],"relativePath":"http/started.md","filePath":"http/started.md"}'),o={name:"http/started.md"},s=r("",4),l=[s];function h(n,d,i,_,c,p){return a(),e("div",null,l)}const m=t(o,[["render",h]]);export{f as __pageData,m as default};
