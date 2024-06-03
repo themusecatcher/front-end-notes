@@ -340,8 +340,7 @@ export function useResize () {
   function resizeEvent (event: any) {
     isMobile.value = (window.innerWidth <= 768 || window.innerHeight <= 768)
   }
-  const debounceResize = debounce(resizeEvent)
-
+  const debounceResize = debounce(resizeEvent, 100)
 
   // 一个组合式函数也可以挂靠在所属组件的生命周期上
   // 来启动和卸载副作用
@@ -403,7 +402,7 @@ export function useScroll () {
     // 更新上一次滚动的位置
     lastScrollPosition = currentScrollPosition
   }
-  const throttleScroll = throttle(scrollEvent)
+  const throttleScroll = throttle(scrollEvent, 100)
   useEventListener(window, 'scroll', throttleScroll)
 
   return { scrollDown }
