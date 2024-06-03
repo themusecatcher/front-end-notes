@@ -5,22 +5,22 @@
 [`EventTarget.addEventListener()`](https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/addEventListener)方法将指定的监听器注册到 EventTarget 上，当该对象触发指定的事件时，指定的回调函数就会被执行。事件目标可以是一个文档上的元素 Element、Document 和 Window，也可以是任何支持事件的对象（比如 XMLHttpRequest）。
 
 ::: tip 备注
-推荐使用 addEventListener() 来注册一个事件监听器，理由如下：
+推荐使用 `addEventListener()` 来注册一个事件监听器，理由如下：
 
 - 它允许为一个事件添加多个监听器。特别是对库、JavaScript 模块和其他需要兼容第三方库/插件的代码来说，这一功能很有用。
-- 相比于 onXYZ 属性绑定来说，它提供了一种更精细的手段来控制 listener 的触发阶段。（即可以选择捕获或者冒泡）。
-- 它对任何事件都有效，而不仅仅是 HTML 或 SVG 元素。
+- 相比于 `onXYZ` 属性绑定来说，它提供了一种更精细的手段来控制 `listener` 的触发阶段。（即可以选择捕获或者冒泡）。
+- 它对任何事件都有效，而不仅仅是 `HTML` 或 `SVG` 元素。
 :::
 
-`addEventListener()` 的工作原理是将实现 EventListener 的函数或对象添加到调用它的 EventTarget 上的指定事件类型的事件侦听器列表中。如果要绑定的函数或对象已经被添加到列表中，该函数或对象不会被再次添加。
+`addEventListener()` 的工作原理是将实现 `EventListener` 的函数或对象添加到调用它的 `EventTarget` 上的指定事件类型的事件侦听器列表中。如果要绑定的函数或对象已经被添加到列表中，该函数或对象不会被再次添加。
 
 ::: tip 备注
-如果先前向事件侦听器列表中添加过一个匿名函数，并且在之后的代码中调用 addEventListener 来添加一个功能完全相同的匿名函数，那么之后的这个匿名函数也会被添加到列表中。
+如果先前向事件侦听器列表中添加过一个匿名函数，并且在之后的代码中调用 `addEventListener` 来添加一个功能完全相同的匿名函数，那么之后的这个匿名函数也会被添加到列表中。
 
 实际上，即使使用完全相同的代码来定义一个匿名函数，这两个函数仍然存在区别，在循环中也是如此。在使用该方法的情况下，匿名函数的重复定义会带来许多麻烦，详见下文中的内存问题一节。
 :::
 
-当一个 EventListener 在 EventTarget 正在处理事件的时候被注册到 EventTarget 上，它不会被立即触发，但可能在事件流后面的事件触发阶段被触发，例如可能在捕获阶段添加，然后在冒泡阶段被触发。
+当一个 `EventListener` 在 `EventTarget` 正在处理事件的时候被注册到 `EventTarget` 上，它不会被立即触发，但可能在事件流后面的事件触发阶段被触发，例如可能在捕获阶段添加，然后在冒泡阶段被触发。
 
 - 语法：
 
@@ -32,33 +32,38 @@ addEventListener(type, listener, useCapture);
 
 - 参数：
   - `type`：表示监听事件类型的大小写敏感的字符串。
-  - `listener`：当所监听的事件类型触发时，会接收到一个事件通知（实现了 Event 接口的对象）对象。listener 必须是一个实现了 EventListener 接口的对象，或者是一个函数。有关回调本身的详细信息，请参阅事件监听回调
-  - `options` <Tag :bordered="false" color="cyan">可选</Tag> 一个指定有关 listener 属性的可选参数对象。可用的选项如下：
-    - `capture` <Tag :bordered="false" color="cyan">可选</Tag> 一个布尔值，表示 listener 会在该类型的事件捕获阶段传播到该 EventTarget 时触发。
-    - `once` <Tag :bordered="false" color="cyan">可选</Tag> 一个布尔值，表示 listener 在添加之后最多只调用一次。如果为 true，listener 会在其被调用之后自动移除。
-    - `passive` <Tag :bordered="false" color="cyan">可选</Tag> 一个布尔值，设置为 true 时，表示 listener 永远不会调用 preventDefault()。如果 listener 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告。查看使用 passive 改善滚屏性能以了解更多。
-    - `signal` <Tag :bordered="false" color="cyan">可选</Tag> AbortSignal，该 AbortSignal 的 abort() 方法被调用时，监听器会被移除。
+  - `listener`：当所监听的事件类型触发时，会接收到一个事件通知（实现了 `Event` 接口的对象）对象。`listener` 必须是一个实现了 `EventListener` 接口的对象，或者是一个函数。有关回调本身的详细信息，请参阅事件监听回调
+  - `options` <Tag :bordered="false" color="cyan">可选</Tag> 一个指定有关 `listener` 属性的可选参数对象。可用的选项如下：
+    - `capture` <Tag :bordered="false" color="cyan">可选</Tag> 一个布尔值，表示 `listener` 会在该类型的事件捕获阶段传播到该 `EventTarget` 时触发。
+    - `once` <Tag :bordered="false" color="cyan">可选</Tag> 一个布尔值，表示 `listener` 在添加之后最多只调用一次。如果为 `true`，`listener` 会在其被调用之后自动移除。
+    - `passive` <Tag :bordered="false" color="cyan">可选</Tag> 一个布尔值，设置为 `true` 时，表示 `listener` 永远不会调用 `preventDefault()`。如果 `listener` 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告。查看使用 `passive` 改善滚屏性能以了解更多。
+    - `signal` <Tag :bordered="false" color="cyan">可选</Tag> `AbortSignal`，该 `AbortSignal` 的 `abort()` 方法被调用时，监听器会被移除。
   - `useCapture` <Tag :bordered="false" color="cyan">可选</Tag>
-  一个布尔值，表示在 DOM 树中注册了 listener 的元素，是否要先于它下面的 EventTarget 调用该 listener。当 useCapture（设为 true）时，沿着 DOM 树向上冒泡的事件不会触发 listener。当一个元素嵌套了另一个元素，并且两个元素都对同一事件注册了一个处理函数时，所发生的事件冒泡和事件捕获是两种不同的事件传播方式。事件传播模式决定了元素以哪个顺序接收事件。进一步的解释可以查看 DOM Level 3 事件及 JavaScript 事件顺序文档。如果没有指定，`useCapture` 默认为 `false`。
+  一个布尔值，表示在 `DOM` 树中注册了 `listener` 的元素，是否要先于它下面的 `EventTarget` 调用该 `listener`。当 `useCapture`（设为 `true`）时，沿着 `DOM` 树向上冒泡的事件不会触发 `listener`。当一个元素嵌套了另一个元素，并且两个元素都对同一事件注册了一个处理函数时，所发生的事件冒泡和事件捕获是两种不同的事件传播方式。事件传播模式决定了元素以哪个顺序接收事件。进一步的解释可以查看 `DOM Level 3` 事件及 `JavaScript` 事件顺序文档。如果没有指定，`useCapture` 默认为 `false`。
 
 `document.addEventListener()` 方法用于向文档添加事件句柄。
 
 ::: tip 提示
-可以使用 [document.removeEventListener()](https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/removeEventListener) 方法来移除 addEventListener() 方法添加的事件句柄。
+可以使用 [document.removeEventListener()](https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/removeEventListener) 方法来移除 `addEventListener()` 方法添加的事件句柄。
 :::
 
 ::: tip 提示
-使用 element.addEventListener() 方法为指定元素添加事件句柄。
+使用 `element.addEventListener()` 方法为指定元素添加事件句柄。
 :::
 
-- 语法：document.addEventListener(event, function, useCapture)
+- 语法：
+
+  ```js
+  document.addEventListener(event, function, useCapture)
+  ```
+
 - 参数值：
 
 参数 | 描述
 -- | --
-event <Tag :bordered="false" color="cyan">必需</Tag> | 描述事件名称的字符串<br>注意： 不要使用 "on" 前缀。例如，使用 "click" 来取代 "onclick"。<br>提示： 所有 HTML DOM 事件，可以查看我们完整的 HTML DOM Event 对象参考手册。
-function <Tag :bordered="false" color="cyan">必需</Tag> | 描述了事件触发后执行的函数。<br>当事件触发时，事件对象会作为第一个参数传入函数。事件对象的类型取决于特定的事件。<br>例如，`click` 事件属于 MouseEvent(鼠标事件) 对象。
-useCapture <Tag :bordered="false" color="cyan">可选</Tag> | 布尔值，指定事件是否在捕获或冒泡阶段执行。<br>可能值：<ul><li>true：事件句柄在捕获阶段执行</li><li>false：默认。事件句柄在冒泡阶段执行</li></ul>
+event <Tag :bordered="false" color="cyan">必需</Tag> | 描述事件名称的字符串<br>注意： 不要使用 `on` 前缀。例如，使用 `click` 来取代 `onclick`。<br>提示： 所有 `HTML` `DOM` 事件，可以查看我们完整的 `HTML` `DOM` `Event` 对象参考手册。
+function <Tag :bordered="false" color="cyan">必需</Tag> | 描述了事件触发后执行的函数。<br>当事件触发时，事件对象会作为第一个参数传入函数。事件对象的类型取决于特定的事件。<br>例如，`click` 事件属于 `MouseEvent`(鼠标事件) 对象。
+useCapture <Tag :bordered="false" color="cyan">可选</Tag> | 布尔值，指定事件是否在捕获或冒泡阶段执行。<br>可能值：<ul><li>`true`：事件句柄在捕获阶段执行</li><li>`false`：默认。事件句柄在冒泡阶段执行</li></ul>
 
 ```js
 // 禁用H5页面的下拉刷新
@@ -123,8 +128,8 @@ el.onclick = function (event) {
 ```
 
 - 阻止默认事件（即事件本身）
-  1. event.preventDefault()
-  2. return false
+  1. `event.preventDefault()`
+  2. `return false`
 
 ## window.location对象
 

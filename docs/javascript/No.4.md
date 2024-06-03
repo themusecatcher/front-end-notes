@@ -257,7 +257,7 @@ console.timeEnd('run time')
 
   ```js
   // 浏览器横向滚动距离：
-  const scrollLeft = window.pageXOffset || window.scrollX ||document.documentElement.scrollLeft ||  document.body.scrollLeft
+  const scrollLeft = window.pageXOffset || window.scrollX || document.documentElement.scrollLeft ||  document.body.scrollLeft
   
   e.pageX = e.clientX + window.pageXOffset //（浏览器横向滚动距离）
   ```
@@ -317,26 +317,30 @@ import { ref } from 'vue'
 import { useEventListener } from './event'
 
 // 按照惯例，组合式函数名以“use”开头
-export function useResize() {
+export function useResize () {
   // 被组合式函数封装和管理的状态
   const isMobile = ref(false)
   
-  // 防抖
-  function debounce (fn: Function, delay = 300): any {
-    let timer: any = null //借助闭包
+  // 节流
+  function throttle (fn: Function, delay = 300): any {
+    let valid = true
     return function () {
-      if (timer) {
-        clearTimeout(timer)
+      if (valid) {
+        valid = false // 将函数置为无效
+        rafTimeout(() => {
+          fn()
+          valid = true
+        }, delay)
       }
-      timer = setTimeout(fn, delay)
+      return false // valid为false时，函数不执行
     }
   }
 
   // 组合式函数可以随时更改其状态
-  function windowResize (event: any) {
+  function resizeEvent (event: any) {
     isMobile.value = (window.innerWidth <= 768 || window.innerHeight <= 768)
   }
-  const debounceResize = debounce(windowResize)
+  const debounceResize = debounce(resizeEvent)
 
 
   // 一个组合式函数也可以挂靠在所属组件的生命周期上
@@ -360,6 +364,48 @@ const { isMobile } = useResize()
 </script>
 
 <template>isMobile: {{ isMobile }}</template>
+```
+
+## 组合式函数：监听用户滚动方向
+
+通过监听滚动事件 `scroll`，计算滚动前后的位置变化来判断滚动方向
+
+- 创建 `useScroll.ts` 文件
+
+```ts
+import { ref } from 'vue'
+import { useEventListener } from './event'
+
+export function useScroll () {
+  const scrollDown = ref(false) // 是否向下滚动
+  let lastScrollPosition = 0 // 保存上一次滚动的位置
+
+  // 节流
+  function throttle (fn: Function, delay = 300): any {
+    let valid = true
+    return function () {
+      if (valid) {
+        valid = false // 将函数置为无效
+        setTimeout(() => {
+          fn()
+          valid = true
+        }, delay)
+      }
+      return false // valid为false时，函数不执行
+    }
+  }
+
+  function scrollEvent () {
+    // 获取当前滚动条的位置
+    const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+    // 比较当前位置和上一次记录的位置
+    scrollDown.value = currentScrollPosition > lastScrollPosition
+    // 更新上一次滚动的位置
+    lastScrollPosition = currentScrollPosition
+  }
+  const throttleScroll = throttle(scrollEvent)
+  useEventListener(window, 'scroll', throttleScroll)
+}
 ```
 
 ## 组合式函数：异步数据请求封装
