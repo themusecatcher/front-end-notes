@@ -381,7 +381,17 @@ export function useFetch (url: string) {
 
   return { data, error }
 }
-````
+```
+
+- 在组件中使用 `useFetch.ts`：
+
+```vue
+<script setup>
+import { useFetch } from './fetch.ts'
+
+const { data, error } = useFetch('...')
+</script>
+```
 
 ## 使用变量生成动态正则表达式
 
