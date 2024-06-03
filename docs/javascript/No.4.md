@@ -168,7 +168,7 @@ console.timeEnd('run time')
 
 - `innerHeight` 浏览器窗口的视口（`viewport`）高度（以像素为单位）；如果有**水平滚动条，也包括滚动条高度**。
   任何窗口对象，如 `window`、`frame`、`frameset` 或 `secondary window` 都支持 `innerHeight` 属性。
-  
+
   ```js
   let intViewportHeight = window.innerHeight
   ```
@@ -294,6 +294,94 @@ console.timeEnd('run time')
   ```
 
   ![Alt text](image-6.png)
+
+## 组合式函数：监听浏览器视口大小 & 判断是否是移动端
+
+- 将添加和清除 `DOM` 事件监听器的逻辑也封装进一个组合式函数中 `event.ts`:
+
+```ts
+import { onMounted, onUnmounted } from 'vue'
+
+export function useEventListener(target: any, event: string, callback: Function) {
+  // 如果你想的话，
+  // 也可以用字符串形式的 CSS 选择器来寻找目标 DOM 元素
+  onMounted(() => target.addEventListener(event, callback))
+  onUnmounted(() => target.removeEventListener(event, callback))
+}
+```
+
+- 创建 `useResize.ts` 文件：
+
+```ts
+import { ref } from 'vue'
+import { useEventListener } from './event'
+
+// 按照惯例，组合式函数名以“use”开头
+export function useResize() {
+  // 被组合式函数封装和管理的状态
+  const isMobile = ref(false)
+  
+  // 防抖
+  function debounce (fn: Function, delay = 300): any {
+    let timer: any = null //借助闭包
+    return function () {
+      if (timer) {
+        clearTimeout(timer)
+      }
+      timer = setTimeout(fn, delay)
+    }
+  }
+
+  // 组合式函数可以随时更改其状态
+  function windowResize (event: any) {
+    isMobile.value = (window.innerWidth <= 768 || window.innerHeight <= 768)
+  }
+  const debounceResize = debounce(windowResize)
+
+
+  // 一个组合式函数也可以挂靠在所属组件的生命周期上
+  // 来启动和卸载副作用
+  // onMounted(() => window.addEventListener('resize', debounceResize))
+  // onUnmounted(() => window.removeEventListener('resize', debounceResize))
+  useEventListener(window, 'resize', debounceResize)
+
+  // 通过返回值暴露所管理的状态
+  return { isMobile }
+}
+```
+
+- 在要是有的组件中引入使用：
+
+```vue
+<script setup>
+import { useResize } from './useResize'
+
+const { isMobile } = useResize()
+</script>
+
+<template>isMobile: {{ isMobile }}</template>
+```
+
+## 组合式函数：异步数据请求封装
+
+- 创建 `fetch.ts`:
+
+```ts
+// fetch.js
+import { ref } from 'vue'
+import { getAction } from '@/http'
+
+export function useFetch (url: string) {
+  const data = ref(null)
+  const error = ref(null)
+
+  getAction(url).then((res) => res.json())
+    .then((json) => (data.value = json))
+    .catch((err) => (error.value = err))
+
+  return { data, error }
+}
+````
 
 ## 使用变量生成动态正则表达式
 

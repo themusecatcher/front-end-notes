@@ -347,7 +347,7 @@ function showError (message: string, duration = 1500) {
 ```ts
 import { request } from '@/http/request'
 
-export function getAction (url: string, parameter: any, args = {}) {
+export function getAction (url: string, parameter = {}, args = {}) {
   return request({
     url: url,
     method: 'GET',
@@ -355,7 +355,7 @@ export function getAction (url: string, parameter: any, args = {}) {
     args: args
   })
 }
-export function postAction (url: string, parameter: any, args = {}) {
+export function postAction (url: string, parameter = {}, args = {}) {
   return request({
     url: url,
     method: 'POST',
@@ -374,7 +374,7 @@ export function postAction (url: string, parameter: any, args = {}) {
 <script setup lang="ts">
 import { ref } from 'vue'
 import Taro, { useLoad, usePullDownRefresh } from '@tarojs/taro'
-import { getAction } from '@/http/index'
+import { getAction } from '@/http'
 
 const url = {
   detail: '/api/detail'
