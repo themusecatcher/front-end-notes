@@ -157,7 +157,22 @@ console.timeEnd('run time')
   // 元素的高度（包括内边距padding和边框border）
   console.log('distance:', el.getBoundingClientRect().height)
   ```
+
+- `innerWidth` 只读的 `Window` 属性，返回以像素为单位的窗口的内部宽度。如果**垂直滚动条存在，则这个属性将包括它的宽度**。
+  如果你需要获取除去滚动条和边框的窗口宽度，请使用根元素 `<html>` 的 `clientWidth` 属性。
+  `innerWidth` 属性在任何表现类似于窗口的任何窗口或对象（例如框架或选项卡）上都是可用的。
+
+  ```js
+  let intViewportWidth = window.innerWidth
+  ```
+
+- `innerHeight` 浏览器窗口的视口（`viewport`）高度（以像素为单位）；如果有**水平滚动条，也包括滚动条高度**。
+  任何窗口对象，如 `window`、`frame`、`frameset` 或 `secondary window` 都支持 `innerHeight` 属性。
   
+  ```js
+  let intViewportHeight = window.innerHeight
+  ```
+
 - `clientWidth` 返回元素的像素宽度（**仅包含内边距padding，不包含边框border、外边距margin和滚动条**）：
 
   ```js
