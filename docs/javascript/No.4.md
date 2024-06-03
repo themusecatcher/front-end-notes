@@ -354,10 +354,10 @@ export function useResize () {
 }
 ```
 
-- 在要是有的组件中引入使用：
+- 在要使用的组件中引入使用：
 
 ```vue
-<script setup>
+<script setup lang="ts">
 import { useResize } from './useResize'
 
 const { isMobile } = useResize()
@@ -405,7 +405,21 @@ export function useScroll () {
   }
   const throttleScroll = throttle(scrollEvent)
   useEventListener(window, 'scroll', throttleScroll)
+
+  return { scrollDown }
 }
+```
+
+- 在要使用的组件中引入使用：
+
+```vue
+<script setup>
+import { useScroll } from './useResize'
+
+const { scrollDown } = useScroll()
+</script>
+
+<template>scrollDown: {{ scrollDown }}</template>
 ```
 
 ## 组合式函数：异步数据请求封装
