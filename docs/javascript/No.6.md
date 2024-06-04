@@ -259,38 +259,28 @@ uploadFile (files) {
   document.body.appendChild(myImage)
   ```
 
-## `MutationObserver` 监听DOM变化
-
-[MutationObserver](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver)
+## [`MutationObserver`](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver)监听DOM变化
 
 > MutationObserver 接口提供了监视对 DOM 树所做更改的能力。它被设计为旧的 Mutation Events 功能的替代品，该功能是 DOM3 Events 规范的一部分
 
-构造函数：
-- `MutationObserver()`：创建并返回一个新的 `MutationObserver` 它会**在指定的 DOM 发生变化时被调用**
+### 构造函数
 
-方法：
-- [`disconnect()`](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver/disconnect)
+-`MutationObserver()`：创建并返回一个新的 `MutationObserver` 它会**在指定的 DOM 发生变化时被调用**
 
-  阻止 MutationObserver 实例继续接收的通知，直到再次调用其 observe() 方法，该观察者对象包含的回调函数都不会再被调用。
-- [`observe()`](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver/observe)
+### 方法
 
-  配置 MutationObserver 在 DOM 更改匹配给定选项时，通过其回调函数开始接收通知。
+- [`disconnect()`](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver/disconnect): 阻止 MutationObserver 实例继续接收的通知，直到再次调用其 `observe()` 方法，该观察者对象包含的回调函数都不会再被调用。
+- [`observe()`](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver/observe): 配置 `MutationObserver` 在 `DOM` 更改匹配给定选项时，通过其回调函数开始接收通知。
   - 语法：
 
     ```js
-    mutationObserver.observe(target[, options])
+    var observer = new MutationObserver(callback);
     ```
 
   - 参数：
 
-    `target`
-
-    `DOM` 树中的一个要观察变化的 `DOM Node` (可能是一个 `Element`)，或者是被观察的子节点树的根节点。
-
-    `options`
-
-    此对象的配置项描述了 `DOM` 的哪些变化应该报告给 `MutationObserver` 的 `callback`。当调用 `observe()` 时，`childList`、`attributes` 和 `characterData` 中，**必须有一个参数为 true**。否则会抛出 `TypeError` 异常。
-
+    - `target`: `DOM` 树中的一个要观察变化的 `DOM Node` (可能是一个 `Element`)，或者是被观察的子节点树的根节点。
+    - `options`: 此对象的配置项描述了 `DOM` 的哪些变化应该报告给 `MutationObserver` 的 `callback`。当调用 `observe()` 时，`childList`、`attributes` 和 `characterData` 中，**必须有一个参数为 true**。否则会抛出 `TypeError` 异常。
     `options` 的属性如下：
       - `subtree` <Tag :bordered="false" color="cyan">可选</Tag>
 
@@ -324,9 +314,9 @@ uploadFile (files) {
 
     `undefined`。
 
-- [`takeRecords()`](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver/takeRecords)
+- [`takeRecords()`](https://developer.mozilla.org/zh-CN/docs/Web/API/MutationObserver/takeRecords): 从 `MutationObserver` 的通知队列中删除所有待处理的通知，并将它们返回到 `MutationRecord` 对象的新 `Array` 中。
 
-  从 MutationObserver 的通知队列中删除所有待处理的通知，并将它们返回到 MutationRecord 对象的新 Array 中。
+### 示例
 
 ```vue
 <script setup lang="ts">
@@ -367,4 +357,90 @@ const callback = function (mutationsList: any, observer: any) {
 <template>
   <textarea ref="textarea" />
 </template>
+```
+
+## [`IntersectionObserver`](https://developer.mozilla.org/zh-CN/docs/Web/API/IntersectionObserver)监听元素交叉状态变化
+
+`IntersectionObserver` 接口（从属于 `Intersection Observer` API）提供了一种**异步观察目标元素与其祖先元素或顶级文档视口（viewport）交叉状态**的方法。其**祖先元素**或**视口**被称为**根（root）**。
+
+当一个 `IntersectionObserver` 对象被创建时，其被配置为监听根中一段给定比例的可见区域。一旦 `IntersectionObserver` 被创建，则无法更改其配置，所以**一个给定的观察者对象只能用来监听可见区域的特定变化值**；然而，你**可以在同一个观察者对象中配置监听多个目标元素**。
+
+### 构造函数
+
+`IntersectionObserver()`: 创建一个新的 `IntersectionObserver` 对象，当其监听到目标元素的可见部分（的比例）超过了一个或多个阈值（`threshold`）时，会执行指定的回调函数。
+如果指定 `rootMargin` 则会检查其是否符合语法规定，检查阈值以确保全部在 `0.0` 到 `1.0` 之间，并且阈值列表会按升序排列。如果阈值列表为空，则默认为一个 `[0.0]` 的数组。
+
+- 语法
+
+  ```js
+  var observer = new IntersectionObserver(callback[, options])
+  ```
+
+- 参数
+  - `callback`: 当元素可见比例超过指定阈值后，会调用一个回调函数，此回调函数接受两个参数：
+    - `entries`: 一个 `IntersectionObserverEntry` 对象的数组，每个被触发的阈值，都或多或少与指定阈值有偏差。
+    - `observer`: 被调用的 `IntersectionObserver` 实例。
+  - `options` <Tag :bordered="false" color="cyan">可选</Tag>: 一个可以用来配置 `observer` 实例的对象。如果 `options` 未指定，`observer` 实例默认使用文档视口作为 `root`，并且没有 `margin`，阈值为 `0%`（意味着即使一像素的改变都会触发回调函数）。你可以指定以下配置：
+    - `root`: 监听元素的祖先元素 `Element` 对象，其边界盒将被视作视口。目标在根的可见区域的任何不可见部分都会被视为不可见。
+    - `rootMargin`: 一个在计算交叉值时添加至根的边界盒 (bounding_box) 中的一组偏移量，类型为字符串 (string) ，可以有效的缩小或扩大根的判定范围从而满足计算需要。语法大致和 `CSS` 中的 `margin` 属性等同; 可以参考 `intersection root` 和 `root margin` 来深入了解 `margin` 的工作原理及其语法。默认值是"`0px 0px 0px 0px`"。
+    - `threshold`: 规定了一个监听目标与边界盒交叉区域的比例值，可以是一个具体的数值或是一组 `0.0` 到 `1.0` 之间的数组。若指定值为 `0.0`，则意味着监听元素即使与根有 `1` 像素交叉，此元素也会被视为可见。若指定值为 `1.0`，则意味着整个元素都在可见范围内时才算可见。可以参考阈值来深入了解阈值是如何使用的。阈值的默认值为 `0.0`。
+- 返回值
+  一个可以使用规定阈值监听目标元素可见部分与 `root` 交叉状况的新的 `IntersectionObserver` 实例。调用自身的 `observe()` 方法开始使用规定的阈值监听指定目标。
+
+### 实例属性
+
+- `IntersectionObserver.root` <Tag :bordered="false" color="cyan">只读</Tag>
+  测试交叉时，用作边界盒的元素或文档。如果构造函数未传入 `root` 或其值为 `null`，则**默认使用顶级文档的视口**。
+
+- `IntersectionObserver.rootMargin` <Tag :bordered="false" color="cyan">只读</Tag>
+  计算交叉时添加到根边界盒的矩形偏移量，可以有效的缩小或扩大根的判定范围从而满足计算需要。此属性返回的值可能与调用构造函数时指定的值不同，因此可能需要更改该值，以匹配内部要求。所有的偏移量均可用像素（**px**）或百分比（**%**）来表达，默认值为“`0px 0px 0px 0px`”。
+
+- `IntersectionObserver.thresholds` <Tag :bordered="false" color="cyan">只读</Tag>
+  一个包含阈值的列表，按升序排列，列表中的每个阈值都是监听对象的交叉区域与边界区域的比率。**当监听对象的任何阈值被越过时，都会生成一个通知**（`Notification`）。如果构造器未传入值，则默认值为 `0`。
+
+### 实例方法
+
+- `IntersectionObserver.disconnect()`: 使 `IntersectionObserver` 对象停止监听目标。
+- `IntersectionObserver.observe()`: 使 `IntersectionObserver` 开始监听一个目标元素。
+- `IntersectionObserver.takeRecords()`: 返回所有观察目标的 `IntersectionObserverEntry` 对象数组。
+- `IntersectionObserver.unobserve()`: 使 `IntersectionObserver` 停止监听特定目标元素。
+
+### 示例
+
+```js
+const intersectionObserver = new IntersectionObserver((entries) => {
+  // 如果 intersectionRatio 为 0，则目标在视野外，
+  // 我们不需要做任何事情。
+  if (entries[0].intersectionRatio <= 0) return
+
+  loadItems(10)
+  console.log("Loaded new items")
+})
+// 开始监听
+intersectionObserver.observe(document.querySelector(".scrollerFooter"))
+```
+
+```ts
+if ('IntersectionObserver' in window) {
+  console.log('window:', window.IntersectionObserver)
+  var observer = new IntersectionObserver(entries => {
+    console.log('entries:', entries)
+    entries.forEach(entry => {
+      console.log('entryRatio:', entry.intersectionRatio)
+      if (entry.intersectionRatio > 0) { // 如果元素可见
+        loadImage()
+      }
+    })
+  }, { threshold: [0, 1] }) // 第二个参数threshold默认为[0]，即交叉比例（intersectionRatio）达到0时触发回调函数，[0, 1]表示，当目标元素达到0%，100%可见时，触发回调函数
+  // 监听多个元素
+  var nodes = document.querySelectorAll('#about') // NodeList数组
+  console.log('nodes:', nodes)
+  nodes.forEach(node => {
+    observer.observe(node)
+    console.log('node:', node)
+  })
+  // 监听单个元素
+  var map = document.getElementById('#map') // 获取元素，等价于this.$refs.map
+  observer.observe(map) // 监听map对应的元素
+}
 ```

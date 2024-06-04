@@ -327,7 +327,7 @@ export function useResize () {
     return function () {
       if (valid) {
         valid = false // 将函数置为无效
-        rafTimeout(() => {
+        setTimeout(() => {
           fn()
           valid = true
         }, delay)
@@ -340,13 +340,13 @@ export function useResize () {
   function resizeEvent (event: any) {
     isMobile.value = (window.innerWidth <= 768 || window.innerHeight <= 768)
   }
-  const debounceResize = debounce(resizeEvent, 100)
+  const throttleResize = throttle(resizeEvent, 100)
 
   // 一个组合式函数也可以挂靠在所属组件的生命周期上
   // 来启动和卸载副作用
-  // onMounted(() => window.addEventListener('resize', debounceResize))
-  // onUnmounted(() => window.removeEventListener('resize', debounceResize))
-  useEventListener(window, 'resize', debounceResize)
+  // onMounted(() => window.addEventListener('resize', throttleResize))
+  // onUnmounted(() => window.removeEventListener('resize', throttleResize))
+  useEventListener(window, 'resize', throttleResize)
 
   // 通过返回值暴露所管理的状态
   return { isMobile }

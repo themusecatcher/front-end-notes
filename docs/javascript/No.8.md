@@ -84,7 +84,7 @@ element.scrollTo({
 })
 ```
 
-## [`Window.devicePixelRatio`](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/devicePixelRatio)
+## 设备像素比[`Window.devicePixelRatio`](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/devicePixelRatio)
 
 `Window` 接口的 `devicePixelRatio` 返回**当前显示设备的物理像素分辨率与CSS 像素分辨率之比**。此值也可以解释为像素大小的比率：**一个 CSS 像素的大小与一个物理像素的大小**。简单来说，它告诉浏览器应使用多少屏幕实际像素来绘制单个 CSS 像素。
 
@@ -140,6 +140,31 @@ var y = size / 2
 var textString = "I love MDN"
 ctx.fillText(textString, x, y)
 ```
+
+### `DPI` & `PPI`
+
+`DPI`（**dots per inch**）和 `PPI`（**pixels per inch**）都是用来衡量图像分辨率的单位，它们分别代表了**每英寸长度内可打印的点数**和**每英寸长度内显示的像素数**。尽管它们的名称不同，但在很多情况下，这两个术语可以互换使用，尤其是在讨论屏幕显示设备的分辨率时。
+
+- `DPI`（**每英寸点数**）
+- **定义**：`DPI` 最初用于打印技术，表示打印头在每英寸纸张上可以打印的墨点数量。一个较高的 `DPI` 值意味着打印输出具有更高的细节和清晰度。
+- **应用**：`DPI` 主要用于打印机、扫描仪和打印图像的质量讨论中。
+
+- `PPI`（**每英寸像素**）
+- **定义**：`PPI` 是显示技术中的一个术语，表示屏幕在每英寸长度内可以显示的像素数量。像素是构成数字图像的最小单元。
+- **应用**：`PPI` 主要用于屏幕显示设备，如智能手机、平板电脑、电脑显示器和电视。
+
+- `DPI` 和 `PPI` 的区别：
+  1. **上下文**：`DPI` 通常与打印相关，而 `PPI` 与显示设备相关。
+  2. **技术实现**：打印技术通过物理墨点来实现，而显示技术通过发光的像素来实现。
+  3. **视觉感受**：在相同的物理尺寸下，`PPI` 越高，屏幕显示的图像就越清晰，细节也越丰富。
+
+- 屏幕 PPI 的计算
+
+![alt text](image-12.png)
+
+- 总结
+
+尽管 DPI 和 PPI 可以互换使用，但它们在技术上有不同的含义和应用领域。**在现代显示技术中，PPI 是更常用的术语**，而在打印和图像质量讨论中，DPI 仍然是一个重要指标。
 
 ## [空值合并运算符（??）](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing)
 
