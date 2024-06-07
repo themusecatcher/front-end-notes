@@ -295,9 +295,9 @@ console.timeEnd('run time')
 
   ![Alt text](image-6.png)
 
-## 组合式函数：监听浏览器视口大小 & 判断是否是移动端
+## 组合式函数：自动添加和清除 `DOM` 事件监听器
 
-- 将添加和清除 `DOM` 事件监听器的逻辑也封装进一个组合式函数中 `event.ts`:
+- 创建组合式函数 `useEventListener.ts`：
 
 ```ts
 import { onMounted, onUnmounted } from 'vue'
@@ -310,7 +310,88 @@ export function useEventListener(target: any, event: string, callback: Function)
 }
 ```
 
-- 创建 `useResize.ts` 文件：
+## 组合式函数：监听目标元素上边缘距离浏览器底部距离触发动画
+
+目标元素上边缘距离视口底部距离超过`80px`，触发浮动显示动画
+### 参数
+
+- `target`: 要监听的目标元素引用
+- `offset`: 触发动画时的距离
+- `targetTop`: 以目标元素的上边缘 `true`或下边缘 `false` 来计算 `offset`
+
+### 创建 `useAnimation.ts` 函数：
+
+```ts
+import { ref } from 'vue'
+import { useEventListener } from './event'
+
+export function useAnimation (target: any, offset = 80, targetTop = true) {
+  const visible = ref(false)
+  // 节流
+  function throttle (fn: Function, delay = 300): any {
+    let valid = true
+    return function () {
+      if (valid) {
+        valid = false // 将函数置为无效
+        setTimeout(() => {
+          fn()
+          valid = true
+        }, delay)
+      }
+      return false // valid为false时，函数不执行
+    }
+  }
+  function scrollEvent () {
+    const rect = target.value.getBoundingClientRect()
+    let distance
+    if (targetTop) { // 元素上边缘距离视口底部的距离
+      distance = window.innerHeight - rect.top
+    } else { // 元素下边缘距离视口底部的距离
+      distance = window.innerHeight - rect.bottom
+    }
+    if (distance > offset) {
+      visible.value = true
+    } else {
+      visible.value = false
+    }
+  }
+  const throttleScroll = throttle(scrollEvent, 100)
+  useEventListener(window, 'scroll', throttleScroll)
+  return { visible }
+}
+```
+
+- 在要使用的组件引入：
+
+```vue
+<script setup lang="ts">
+import { ref } from 'head'
+import { useAnimation } from './useAnimation'
+
+const head = ref()
+const { visible } = useAnimation(head)
+</script>
+<template>
+  <h2 ref="head" class="text-animation" :class="{'text-visible': visible}">定睛细看</h2>
+</template>
+<style lang="less" scoped>
+.text-animation {
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(25px);
+  transition: transform 500ms cubic-bezier(0, 0, 0.5, 1), opacity 500ms cubic-bezier(0, 0, 0.5, 1);
+}
+.text-visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+</style>
+```
+
+## 组合式函数：监听浏览器视口大小 & 判断是否是移动端
+
+- 创建 `useResize.ts` 函数：
 
 ```ts
 import { ref } from 'vue'
@@ -327,7 +408,7 @@ export function useResize () {
     return function () {
       if (valid) {
         valid = false // 将函数置为无效
-        setTimeout(() => {
+        Timeout(() => {
           fn()
           valid = true
         }, delay)
@@ -369,7 +450,7 @@ const { isMobile } = useResize()
 
 通过监听滚动事件 `scroll`，计算滚动前后的位置变化来判断滚动方向
 
-- 创建 `useScroll.ts` 文件
+- 创建 `useScroll.ts` 函数：
 
 ```ts
 import { ref } from 'vue'
@@ -413,7 +494,7 @@ export function useScroll () {
 
 ```vue
 <script setup>
-import { useScroll } from './useResize'
+import { useScroll } from './useScroll'
 
 const { scrollDown } = useScroll()
 </script>

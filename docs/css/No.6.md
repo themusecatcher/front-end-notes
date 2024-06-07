@@ -102,6 +102,26 @@ CSS3 `box-sizing` 属性可以设置 `width` 和 `height` 属性中是否包含�
 
 ## 固定宽度内，实现不同字数人名左右对齐排列
 
+<p class="u-name">王二</p>
+<p class="u-name">王小二</p>
+
+<style lang="less">
+.u-name {
+  width: 120px;
+  height: 40px;
+  font-size: 28px;
+  font-weight: 400;
+  color: #333333;
+  line-height: 40px;
+  text-align: justify;
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 100%;
+  }
+}
+</style>
+
 ```html
 <p class="u-name">王二</p>
 <p class="u-name">王小二</p>
@@ -109,7 +129,7 @@ CSS3 `box-sizing` 属性可以设置 `width` 和 `height` 属性中是否包含�
 
 ```less
 .u-name {
-  width: 84px;
+  width: 120px;
   height: 40px;
   font-size: 28px;
   font-weight: 400;
