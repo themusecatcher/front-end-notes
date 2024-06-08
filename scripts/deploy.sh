@@ -20,5 +20,5 @@ git push -f git@github.com:themusecatcher/front-end-notes.git master:github-page
 # 提交所有代码到github
 cd ../../../
 git add .
-git cm -m 'update'
+git commit -m 'update'
 git push
