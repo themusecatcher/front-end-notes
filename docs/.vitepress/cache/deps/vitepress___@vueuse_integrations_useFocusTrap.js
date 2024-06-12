@@ -1,8 +1,8 @@
 import {
   tryOnScopeDispose,
   unrefElement
-} from "./chunk-KTBDPY2Z.js";
-import "./chunk-2SZK4226.js";
+} from "./chunk-A46LQD4E.js";
+import "./chunk-D4PKXASA.js";
 import {
   ref,
   watch
@@ -1022,7 +1022,7 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
   return trap;
 };
 
-// node_modules/.pnpm/@vueuse+integrations@10.10.0_async-validator@4.2.5_focus-trap@7.5.4_qrcode@1.5.3_sortablejs@1.15.2_vue@3.4.27/node_modules/@vueuse/integrations/useFocusTrap.mjs
+// node_modules/.pnpm/@vueuse+integrations@10.10.1_async-validator@4.2.5_focus-trap@7.5.4_qrcode@1.5.3_sortablejs@1.15.2_vue@3.4.27/node_modules/@vueuse/integrations/useFocusTrap.mjs
 function useFocusTrap(target, options = {}) {
   let trap;
   const { immediate, ...focusTrapOptions } = options;

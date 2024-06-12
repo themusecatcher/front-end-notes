@@ -423,7 +423,7 @@ intersectionObserver.observe(document.querySelector(".scrollerFooter"))
 ```ts
 if ('IntersectionObserver' in window) {
   console.log('window:', window.IntersectionObserver)
-  var observer = new IntersectionObserver(entries => {
+  const observer = new IntersectionObserver(entries => {
     console.log('entries:', entries)
     entries.forEach(entry => {
       console.log('entryRatio:', entry.intersectionRatio)
@@ -433,14 +433,14 @@ if ('IntersectionObserver' in window) {
     })
   }, { threshold: [0, 1] }) // 第二个参数threshold默认为[0]，即交叉比例（intersectionRatio）达到0时触发回调函数，[0, 1]表示，当目标元素达到0%，100%可见时，触发回调函数
   // 监听多个元素
-  var nodes = document.querySelectorAll('#about') // NodeList数组
+  const nodes = document.querySelectorAll('#about') // NodeList数组
   console.log('nodes:', nodes)
   nodes.forEach(node => {
     observer.observe(node)
     console.log('node:', node)
   })
   // 监听单个元素
-  var map = document.getElementById('#map') // 获取元素，等价于this.$refs.map
+  const map = document.getElementById('#map') // 获取元素，等价于this.$refs.map
   observer.observe(map) // 监听map对应的元素
 }
 ```

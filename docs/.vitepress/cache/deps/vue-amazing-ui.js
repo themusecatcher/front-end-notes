@@ -3,8 +3,8 @@ import {
   isClient,
   toRef as toRef2,
   useTransition
-} from "./chunk-KTBDPY2Z.js";
-import "./chunk-2SZK4226.js";
+} from "./chunk-A46LQD4E.js";
+import "./chunk-D4PKXASA.js";
 import {
   Fragment,
   Teleport,
@@ -11124,7 +11124,7 @@ Object.entries(vo).forEach(([e, t]) => {
   e !== "default" && (Hn[e] = t);
 });
 
-// node_modules/.pnpm/@vueuse+integrations@10.10.0_async-validator@4.2.5_focus-trap@7.5.4_qrcode@1.5.3_sortablejs@1.15.2_vue@3.4.27/node_modules/@vueuse/integrations/useQRCode.mjs
+// node_modules/.pnpm/@vueuse+integrations@10.10.1_async-validator@4.2.5_focus-trap@7.5.4_qrcode@1.5.3_sortablejs@1.15.2_vue@3.4.27/node_modules/@vueuse/integrations/useQRCode.mjs
 var import_qrcode = __toESM(require_browser(), 1);
 function useQRCode(text, options) {
   const src = toRef2(text);
