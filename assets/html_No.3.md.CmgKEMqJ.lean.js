@@ -1,1 +1,0 @@
-import{_ as s,o as i,c as t,aj as e}from"./chunks/framework.vXY2ZOXy.js";const E=JSON.parse('{"title":"Note 3","description":"","frontmatter":{},"headers":[],"relativePath":"html/No.3.md","filePath":"html/No.3.md"}'),a={name:"html/No.3.md"},o=e("",32),l=[o];function d(h,n,c,r,p,k){return i(),t("div",null,l)}const u=s(a,[["render",d]]);export{E as __pageData,u as default};
