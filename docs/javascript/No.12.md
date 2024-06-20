@@ -91,3 +91,52 @@
 'abc'.padEnd(1) // 'abc'
 
 ```
+
+## [String.prototype.replace()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/replace#%E6%8C%87%E5%AE%9A%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E6%9B%BF%E6%8D%A2%E9%A1%B9)
+
+`replace()` 方法返回一个新字符串，其中一个、多个或所有匹配的 `pattern` 被替换为 `replacement`。`pattern` 可以是字符串或 `RegExp`，`replacement` 可以是字符串或一个在每次匹配时调用的函数。如果 `pattern` 是字符串，则只会替换第一个匹配项。**原始的字符串不会改变**。
+
+### 语法
+
+```js
+replace(pattern, replacement)
+```
+
+### 参数
+
+- `pattern`: 可以是字符串或者一个带有 Symbol.replace 方法的对象，典型的例子就是正则表达式。任何没有 Symbol.replace 方法的值都会被强制转换为字符串。
+
+- `replacement`: 可以是字符串或函数。
+  - 如果是字符串，它将替换由 `pattern` 匹配的子字符串。支持一些特殊的替换模式，请参阅下面的指定字符串作为替换项部分。
+  - **如果是函数，将为每个匹配调用该函数，并将其返回值用作替换文本**。下面的指定函数作为替换项部分描述了提供给此函数的参数。
+
+### 返回值
+
+一个新的字符串，其中一个、多个或所有的匹配项都被指定的替换项替换。
+
+### 描述
+
+**该方法并不改变调用它的字符串本身**，而是返回一个新的字符串。
+
+字符串模式只会被替换一次。要执行全局搜索和替换，请使用带有 `g` 标志的正则表达式或使用 `replaceAll()`。
+
+如果 `pattern` 是一个带有 `Symbol.replace` 方法的对象（包括 `RegExp` 对象），则该方法将被调用，传入目标字符串和 `replacement` 作为参数。它的返回值成为 `replace()` 的返回值。在这种情况下，`replace()` 的行为完全由 `@@replace` 方法定义——例如，下面的说明中提到的任何"捕获组"都实际上是由 `RegExp.prototype[@@replace]` 提供的功能。
+
+如果 pattern 是一个空字符串，则替换项将被插入到字符串的开头。
+
+```js
+'xxx'.replace('', '_') // '_xxx'
+
+function replacement (match: string) {
+  console.log('match', match)
+  /*
+    match YYYY
+    match MM
+    match HH
+    match mm
+    match ss
+    match SSS
+  */
+}
+'YYYY-MM HH:mm:ss:SSS'.replace(/(YYYY|YY|M{1,2}|D{1,2}|H{1,2}|m{1,2}|s{1,2}|SSS)/g, replacement)
+```

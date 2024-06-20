@@ -450,16 +450,16 @@ const { isMobile } = useResize()
 
 通过监听滚动事件 `scroll`，计算滚动前后的位置变化来判断滚动方向
 
-- 创建 `useScroll.ts` 函数：
+- 创建 `useScrollDirection.ts` 函数：
 
 ```ts
 import { ref } from 'vue'
 import { useEventListener } from './event'
-
-export function useScroll () {
-  const scrollDown = ref(false) // 是否向下滚动
-  let lastScrollPosition = 0 // 保存上一次滚动的位置
-
+export function useScrollDirection(throttleDelay = 100) {
+  // 使用ref定义一个响应式变量，指示当前滚动方向是否向下
+  const scrollDown = ref(false)
+  // 记录上一次滚动的位置
+  let lastScrollY = 0
   // 节流
   function throttle (fn: Function, delay = 300): any {
     let valid = true
@@ -474,18 +474,19 @@ export function useScroll () {
       return false // valid为false时，函数不执行
     }
   }
-
-  function scrollEvent () {
-    // 获取当前滚动条的位置
-    const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
-    // 比较当前位置和上一次记录的位置
-    scrollDown.value = currentScrollPosition > lastScrollPosition
-    // 更新上一次滚动的位置
-    lastScrollPosition = currentScrollPosition
+  // 监听滚动事件的函数
+  const scrollEvent = () => {
+    // 获取当前的滚动位置
+    const currentScrollY = window.pageYOffset || document.documentElement.scrollTop
+    // 比较当前位置和上一次记录的位置，来确定滚动方向
+    scrollDown.value = currentScrollY > lastScrollY
+    // 更新上次滚动位置
+    lastScrollY = currentScrollY
   }
-  const throttleScroll = throttle(scrollEvent, 100)
+  // 使用节流函数封装scrollEvent，以减少滚动事件的触发频率
+  const throttleScroll = throttle(scrollEvent, throttleDelay)
   useEventListener(window, 'scroll', throttleScroll)
-
+  // 返回一个对象，包含我们想要暴露给组件的状态或方法
   return { scrollDown }
 }
 ```
@@ -494,9 +495,9 @@ export function useScroll () {
 
 ```vue
 <script setup>
-import { useScroll } from './useScroll'
+import { useScrollDirection } from './useScrollDirection'
 
-const { scrollDown } = useScroll()
+const { scrollDown } = useScrollDirection()
 </script>
 
 <template>scrollDown: {{ scrollDown }}</template>
