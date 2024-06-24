@@ -140,3 +140,56 @@ function replacement (match: string) {
 }
 'YYYY-MM HH:mm:ss:SSS'.replace(/(YYYY|YY|M{1,2}|D{1,2}|H{1,2}|m{1,2}|s{1,2}|SSS)/g, replacement)
 ```
+
+## 键盘按键事件[keydown](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/keydown_event) & [keyup](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/keyup_event)
+
+### Element：keydown 事件
+
+<br/>
+
+`keydown` 事件触发于键盘按键按下的时候。
+与 `keypress` 事件不同的是，所有按键均会触发 `keydown` 事件，无论这些按键是否会产生字符值。
+
+键盘事件只能由 `<inputs>`, `<textarea>` 以及任何具有 `contentEditable` 或 `tabindex="-1"`属性的组件触发。
+
+- 这个例子展示了当你在`<input>`元素中按下一个按键时， `KeyboardEvent.code` 的取值
+
+```html
+<input placeholder="Click here, then press down a key." size="40" />
+<p id="log"></p>
+```
+
+```js
+const input = document.querySelector('input')
+const log = document.getElementById('log')
+
+input.addEventListener('keydown', logKey)
+
+function logKey(e) {
+  log.textContent += ` ${e.code}`
+}
+```
+
+### Element: keyup 事件
+
+<br/>
+
+`keyup` 事件在按键被松开时触发。
+
+- 在这个例子中，每当你在 `<input>` 元素里松开一个键，将会打印 `KeyboardEvent.code` 的值。
+
+```html
+<input placeholder="Click here, then press and release a key." size="40" />
+<p id="log"></p>
+```
+
+```js
+const input = document.querySelector('input')
+const log = document.getElementById('log')
+
+input.addEventListener('keyup', logKey)
+
+function logKey(e) {
+  log.textContent += ` ${e.code}`
+}
+```
