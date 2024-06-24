@@ -50,16 +50,16 @@ div设置样式时，可正常使用 `:hover` 设置悬浮样式，但无法使�
 5. `<select></select>` 标签
 6. `<textarea></textarea>` 标签
 
-以上的元素默认都可以使用 `Tab` 键，以及 JS focus() 方法聚焦
+以上的元素默认都可以使用 `Tab` 键，以及 `JS` `focus()` 方法聚焦
 例如：
 
 ```js
 document.querySelector('a').focus()
 ```
 
-如何设置div元素的focus样式？ 使用 CSS伪类 [`:focus-within`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/:focus-within)
+如何设置 `div` 元素的 `focus` 样式？ 使用 CSS伪类 [`:focus-within`](https://developer.mozilla.org/zh-CN/docs/Web/CSS/:focus-within)
 
-`:focus-within` 是一个CSS 伪类 ，表示一个元素获得焦点 或 该元素的后代元素获得焦点。换句话说，元素自身或者它的某个后代匹配 :focus 伪类。
+`:focus-within` 是一个 `CSS` 伪类 ，表示一个元素获得焦点 或 该元素的后代元素获得焦点。换句话说，元素自身或者它的某个后代匹配 `:focus` 伪类。
 
 ```css
 /* 当 <div> 的某个后代获得焦点时，匹配 <div> */
@@ -67,6 +67,17 @@ div:focus-within {
   background: cyan;
 }
 ```
+
+::: tip 注
+设置 `tabindex` 后，元素变为可聚焦状态，而当元素被聚焦时，浏览器会在元素周围显示一个蓝色的轮廓，这属于浏览器的默认行为，可通过在元素上添加以下 `CSS` 样式来隐藏:
+
+```css
+div {
+  outline: none;
+}
+```
+
+:::
 
 ## HTML5 新属性
 
