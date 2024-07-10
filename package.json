@@ -13,9 +13,9 @@
   "dependencies": {
     "@codemirror/lang-vue": "^0.1.3",
     "@codemirror/theme-one-dark": "^6.1.2",
-    "echarts": "^5.5.0",
-    "vue": "^3.4.29",
-    "vue-amazing-ui": "^1.0.18",
+    "echarts": "^5.5.1",
+    "vue": "^3.4.31",
+    "vue-amazing-ui": "^1.0.24",
     "vue-codemirror": "^6.1.1",
     "vue3-lazyload": "^0.3.8",
     "vue3-pdf-app": "^1.0.3",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "less": "^4.2.0",
-    "vitepress": "^1.2.3"
+    "vitepress": "^1.3.0"
   },
   "description": "Front-end development study notes",
   "directories": {
