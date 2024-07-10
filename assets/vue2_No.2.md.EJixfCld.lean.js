@@ -1,1 +1,0 @@
-import{_ as s,o as i,c as a,ak as n}from"./chunks/framework.CO3DR_ef.js";const c=JSON.parse('{"title":"Note 2","description":"","frontmatter":{},"headers":[],"relativePath":"vue2/No.2.md","filePath":"vue2/No.2.md"}'),t={name:"vue2/No.2.md"},l=n("",38),h=[l];function k(p,e,E,d,g,r){return i(),a("div",null,h)}const o=s(t,[["render",k]]);export{c as __pageData,o as default};
