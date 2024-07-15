@@ -21,8 +21,8 @@ importers:
         specifier: ^3.4.31
         version: 3.4.31
       vue-amazing-ui:
-        specifier: ^1.0.26
-        version: 1.0.26(async-validator@4.2.5)(focus-trap@7.5.4)(sortablejs@1.15.2)
+        specifier: ^1.0.29
+        version: 1.0.29(async-validator@4.2.5)(focus-trap@7.5.4)(sortablejs@1.15.2)
       vue-codemirror:
         specifier: ^6.1.1
         version: 6.1.1(codemirror@6.0.1(@lezer/common@1.2.1))(vue@3.4.31)
@@ -134,8 +134,8 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  '@babel/runtime@7.24.7':
-    resolution: {integrity: sha512-UwgBRMjJP+xv857DCngvqXI3Iq6J4v0wXmwc6sapg+zyhbwmQX67LUEFrkK5tbyJ30jGuG3ZvWpBiB9LCy1kWw==}
+  '@babel/runtime@7.24.8':
+    resolution: {integrity: sha512-5F7SDGs1T72ZczbRwbGO9lQi0NLjQxzl6i4lJxLxfW9U5UluCSyEJeniWvnhl3/euNiqQVbo8zruhsDfid0esA==}
     engines: {node: '>=6.9.0'}
 
   '@babel/types@7.24.7':
@@ -988,8 +988,8 @@ packages:
       postcss:
         optional: true
 
-  vue-amazing-ui@1.0.26:
-    resolution: {integrity: sha512-w3WJLrhgZpku51J3drngN+h55+MUt0eQvssNR1KMAgA5/PgP1JjWI/j9qXbwyaWJVYC0jgAdzUrJP6R2ksA7bA==}
+  vue-amazing-ui@1.0.29:
+    resolution: {integrity: sha512-IIImcyDbTuQQI0c0PmW2VYpjeHkE3yCV37V/TyAZmb+z7k2VhEDqLoHa2nxhlzfiru96fFR/rW1Ln2EDGrRkcA==}
 
   vue-codemirror@6.1.1:
     resolution: {integrity: sha512-rTAYo44owd282yVxKtJtnOi7ERAcXTeviwoPXjIc6K/IQYUsoDkzPvw/JDFtSP6T7Cz/2g3EHaEyeyaQCKoDMg==}
@@ -1210,7 +1210,7 @@ snapshots:
     dependencies:
       '@babel/types': 7.24.7
 
-  '@babel/runtime@7.24.7':
+  '@babel/runtime@7.24.8':
     dependencies:
       regenerator-runtime: 0.14.1
 
@@ -1665,7 +1665,7 @@ snapshots:
     dependencies:
       '@ant-design/colors': 6.0.0
       '@ant-design/icons-vue': 7.0.1(vue@3.4.31)
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@ctrl/tinycolor': 3.6.1
       '@emotion/hash': 0.9.1
       '@emotion/unitless': 0.8.1
@@ -2078,7 +2078,7 @@ snapshots:
       - typescript
       - universal-cookie
 
-  vue-amazing-ui@1.0.26(async-validator@4.2.5)(focus-trap@7.5.4)(sortablejs@1.15.2):
+  vue-amazing-ui@1.0.29(async-validator@4.2.5)(focus-trap@7.5.4)(sortablejs@1.15.2):
     dependencies:
       '@vuepic/vue-datepicker': 8.8.1(vue@3.4.31)
       '@vueuse/core': 10.11.0(vue@3.4.31)

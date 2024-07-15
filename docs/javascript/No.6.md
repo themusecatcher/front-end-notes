@@ -274,8 +274,11 @@ uploadFile (files) {
   - 语法：
 
     ```js
-    var observer = new MutationObserver(callback);
+    const observer = new MutationObserver(callback);
     ```
+
+    - `callback`: 一个回调函数，每当被指定的节点或子树以及配置项有 `DOM` 变动时会被调用。
+    回调函数拥有两个参数：一个是描述所有被触发改动的 `MutationRecord` 对象数组，另一个是调用该函数的 `MutationObserver` 对象。
 
   - 参数：
 
