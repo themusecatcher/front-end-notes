@@ -193,3 +193,165 @@ function logKey(e) {
   log.textContent += ` ${e.code}`
 }
 ```
+
+## [Window: resize事件](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/resize_event)
+
+`resize` 事件在文档视图（窗口）调整大小时触发。
+
+这个事件不可取消，不会冒泡。
+
+在一些早期的浏览器中，可以在任何 `HTML` 元素上注册 `resize` 事件处理器。现在仍然可以设置 `onresize` 属性或使用 `addEventListener()` 在任何元素上设置一个处理器。然而，`resize` 事件只在 `window` 对象（即由 `document.defaultView` 返回）上触发。只有在 `window` 对象上注册的处理器才能接收 `resize` 事件。
+
+虽然现在 `resize` 事件只针对窗口触发，但你可以使用 [`ResizeObserver API`](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserver) 获得其他元素的尺寸调整通知。
+
+如果对你的应用程序来说，调整大小事件被触发了太多次，请参阅[优化 `window.onresize`](https://bencentra.com/code/2015/02/27/optimizing-window-resize.html) 来控制事件触发的时间。
+
+### 语法
+
+在像 `addEventListener()` 这样的方法中使用事件名称，或者设置事件处理器属性。
+
+```js
+addEventListener('resize', (event: Event) => {})
+// 等价于 window.addEventListener('resize', reportWindowSize)
+
+onresize = (event: Event) => {}
+```
+
+## [ResizeObserver](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserver) 监听元素尺寸调整
+
+`ResizeObserver` 接口监视 `Element` 内容盒或边框盒或者 `SVGElement` 边界尺寸的变化。
+
+::: tip 提示
+内容盒是盒模型放置内容的部分，这意味着**边框盒减去内边距和边框的宽度就是内容盒**。**边框盒包含内容、内边距和边框**。有关进一步阐述，参见盒模型。
+:::
+
+`ResizeObserver` 避免了通过回调函数调整大小时，通常创建的无限回调循环和循环依赖项。它只能通过在后续的帧中处理 `DOM` 中更深层次的元素来做到这一点。如果它的实现遵循规范，则应在绘制前和布局后调用 `resize` 事件。
+
+### 构造函数 `ResizeObserver()`
+
+`ResizeObserver` 构造函数创建一个新的 `ResizeObserver` 对象，它可以用于监听 `Element` 内容盒或边框盒或者 `SVGElement` 边界尺寸的大小。
+
+- 语法
+
+  ```js
+  new ResizeObserver(callback)
+  ```
+
+- 参数
+  - `callback`: 每当观测的元素调整大小时，调用该函数。该函数接收两个参数：
+    - `entries`: 一个 `ResizeObserverEntry` 对象数组，可以**用于获取每个元素改变后的新尺寸**。
+    - `observer`: 对 `ResizeObserver` 自身的引用，因此**需要它的时候，你要从回调函数的内部访问**。例如，**这可用于在达到特定的情况时，自动取消对观察者的监听**，但如果你不需要它，可以省略它。
+  
+  ```js
+  function callback(entries, observer) {
+    for (const entry of entries) {
+      // Do something to each entry
+      // and possibly something to the observer itself
+    }
+  }
+  ```
+
+- 示例
+
+  ```js
+  const resizeObserver = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.contentBoxSize) {
+        if (entry.contentBoxSize[0]) {
+          h1Elem.style.fontSize = `${Math.max(
+            1.5,
+            entry.contentBoxSize[0].inlineSize / 200,
+          )}rem`
+          pElem.style.fontSize = `${Math.max(
+            1,
+            entry.contentBoxSize[0].inlineSize / 600,
+          )}rem`
+        } else {
+          // legacy path
+          h1Elem.style.fontSize = `${Math.max(
+            1.5,
+            entry.contentBoxSize.inlineSize / 200,
+          )}rem`
+          pElem.style.fontSize = `${Math.max(
+            1,
+            entry.contentBoxSize.inlineSize / 600,
+          )}rem`
+        }
+      } else {
+        h1Elem.style.fontSize = `${Math.max(
+          1.5,
+          entry.contentRect.width / 200,
+        )}rem`
+        pElem.style.fontSize = `${Math.max(1, entry.contentRect.width / 600)}rem`
+      }
+    }
+    console.log('Size changed')
+  })
+  resizeObserver.observe(divElem)
+  ```
+
+### 方法
+
+- `ResizeObserver.disconnect()`: 取消特定观察者目标上所有对 `Element` 的监听。
+
+- `ResizeObserver.observe()`: 开始对指定 `Element` 的监听。
+
+- `ResizeObserver.unobserve()`: 结束对指定 `Element` 的监听。
+
+### 示例
+
+我们使用 `resize observer` 去更改头和段落的 `font-size`，随着 `slider` 的值被改变，也引起了包含的 `<div>` 的宽度改变。这展示了你可以响应元素大小的变化，即使它们与视口无关。
+
+我们也提供了一个 `checkbox` 来关闭和打开 `observer`。如果它是关闭的，文本将不会随着 `<div>` 的宽度改变而改变。
+
+```js
+const h1Elem = document.querySelector("h1")
+const pElem = document.querySelector("p")
+const divElem = document.querySelector("body > div")
+const slider = document.querySelector('input[type="range"]')
+const checkbox = document.querySelector('input[type="checkbox"]')
+
+divElem.style.width = "600px"
+
+slider.addEventListener("input", () => {
+  divElem.style.width = `${slider.value}px`
+})
+
+const resizeObserver = new ResizeObserver((entries) => {
+  for (const entry of entries) {
+    if (entry.contentBoxSize) {
+      // Firefox implements `contentBoxSize` as a single content rect, rather than an array
+      const contentBoxSize = Array.isArray(entry.contentBoxSize)
+        ? entry.contentBoxSize[0]
+        : entry.contentBoxSize
+
+      h1Elem.style.fontSize = `${Math.max(
+        1.5,
+        contentBoxSize.inlineSize / 200,
+      )}rem`
+      pElem.style.fontSize = `${Math.max(
+        1,
+        contentBoxSize.inlineSize / 600,
+      )}rem`
+    } else {
+      h1Elem.style.fontSize = `${Math.max(
+        1.5,
+        entry.contentRect.width / 200,
+      )}rem`
+      pElem.style.fontSize = `${Math.max(1, entry.contentRect.width / 600)}rem`
+    }
+  }
+
+  console.log("Size changed")
+})
+
+resizeObserver.observe(divElem)
+
+checkbox.addEventListener("change", () => {
+  if (checkbox.checked) {
+    resizeObserver.observe(divElem)
+  } else {
+    resizeObserver.unobserve(divElem)
+  }
+})
+```
