@@ -370,25 +370,28 @@ function quarter() {
 2. **当一个窗口里面含有一个以上的 Tab 时，无法设置窗口的大小**。
 :::
 
-## [window.scrollTo()](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/scrollTo)
+## [Window: scrollTo()](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/scrollTo)
 
-滚动到文档中的某个坐标。
+`Window.scrollTo()` 会滚动到文档中的一组特定坐标。
 
 ### 语法
 
 ```js
-window.scrollTo(x-coord,y-coord )
-window.scrollTo(options)
+scrollTo(x-coord, y-coord)
+scrollTo(options)
 ```
 
 ### 参数
 
-- `x-coord` 是文档中的横轴坐标。
-- `y-coord` 是文档中的纵轴坐标。
+- `x-coord` 是你希望显示在左上角的文档水平轴像素。
+- `y-coord` 是你希望显示在左上角的文档垂直轴像素。
 - `options` 是一个包含三个属性的对象：
-  1. `top` 等同于 `y-coord`
-  2. `left` 等同于 `x-coord`
-  3. `behavior` 类型 `String`，表示滚动行为，支持参数 `smooth`(平滑滚动),`instant`(瞬间滚动),默认值 `auto`
+  1. `top` 指定沿 `Y` 轴滚动窗口或元素的像素数量。
+  2. `left` 指定沿 `X` 轴滚动窗口或元素的像素数量。
+  3. `behavior` 确定滚动是即时完成还是以平滑动画进行。该选项是一个字符串，必须取以下值之一：
+    - `smooth`：滚动应该平滑地进行动画展示
+    - `instant`：滚动应在一次跳转中即时完成
+    - `auto`：滚动行为由 `scroll-behavior` 的计算值来决定
 
 ### 例子
 
@@ -398,6 +401,79 @@ window.scrollTo( 0, 1000 )
 // 设置滚动行为改为平滑的滚动
 window.scrollTo({
     top: 1000,
-    behavior: "smooth"
+    behavior: 'smooth'
+})
+```
+
+## [Element.scrollTo()](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/scrollTo)
+
+`Element` 的 `scrollTo()` 方法可以使界面滚动到给定元素的指定坐标位置。
+
+### 语法
+
+```js
+scrollTo(x-coord, y-coord)
+scrollTo(options)
+```
+
+### 参数
+
+- `x-coord`: 是你想要显示在左上角的元素沿水平轴的像素。
+- `y-coord`: 是你想要显示在左上角的元素沿垂直轴的像素。
+- `options`: 是一个包含三个属性的对象：
+  1. `top`: 指定沿 `Y` 轴滚动窗口或元素的像素数。
+  2. `left`: 指定沿 `X` 轴滚动窗口或元素的像素数。
+  3. `behavior`: `smooth` 表示平滑滚动并产生过渡效果、`instant` 表示滚动会直接跳转到目标位置，没有过渡效果。`auto` 或缺省值表示浏览器会自动选择滚动时的过渡效果。
+
+### 示例
+
+```js
+element.scrollTo(0, 1000)
+```
+
+使用 `options`:
+
+```js
+element.scrollTo({
+  top: 100,
+  left: 100,
+  behavior: 'smooth'
+})
+```
+
+## [Element.scrollBy()](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/scrollBy)
+
+`scrollBy()` 方法是使得元素滚动一段特定距离的 `Element` 接口。
+
+### 语法
+
+```js
+element.scrollBy(x-coord, y-coord)
+element.scrollBy(options)
+```
+
+### 参数
+
+- `x-coord` 是元素要在横轴上滚动的距离。
+- `y-coord` 是元素要在纵轴上滚动的距离。
+
+*or*
+
+- `options` 是一个 `ScrollToOptions` 字典。
+
+### 例子
+
+```js
+// 让元素滚动
+element.scrollBy(300, 300)
+```
+
+使用 `options`:
+
+```js
+element.scrollBy({
+  top: 100,
+  left: 100,
+  behavior: 'smooth'
 })
 ```

@@ -15,7 +15,7 @@
     "@codemirror/theme-one-dark": "^6.1.2",
     "echarts": "^5.5.1",
     "vue": "^3.4.31",
-    "vue-amazing-ui": "^1.0.29",
+    "vue-amazing-ui": "^1.1.0",
     "vue-codemirror": "^6.1.1",
     "vue3-lazyload": "^0.3.8",
     "vue3-pdf-app": "^1.0.3",

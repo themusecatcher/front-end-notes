@@ -21,8 +21,8 @@ importers:
         specifier: ^3.4.31
         version: 3.4.31
       vue-amazing-ui:
-        specifier: ^1.0.29
-        version: 1.0.29(async-validator@4.2.5)(focus-trap@7.5.4)(sortablejs@1.15.2)
+        specifier: ^1.1.0
+        version: 1.1.0(async-validator@4.2.5)(focus-trap@7.5.4)(sortablejs@1.15.2)
       vue-codemirror:
         specifier: ^6.1.1
         version: 6.1.1(codemirror@6.0.1(@lezer/common@1.2.1))(vue@3.4.31)
@@ -182,6 +182,9 @@ packages:
 
   '@codemirror/view@6.28.4':
     resolution: {integrity: sha512-QScv95fiviSQ/CaVGflxAvvvDy/9wi0RFyDl4LkHHWiMr/UPebyuTspmYSeN5Nx6eujcPYwsQzA6ZIZucKZVHQ==}
+
+  '@codemirror/view@6.28.5':
+    resolution: {integrity: sha512-NkUtfUa1lV7Jqg5DfHE/uLl7jKyoymDkaueMQXzePYuezL7FwX3ATANy74iAGlHCGe25hBGB0R+I5dC5EZ5JBg==}
 
   '@ctrl/tinycolor@3.6.1':
     resolution: {integrity: sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==}
@@ -533,8 +536,9 @@ packages:
   '@vue/shared@3.4.31':
     resolution: {integrity: sha512-Yp3wtJk//8cO4NItOPpi3QkLExAr/aLBGZMmTtW9WpdwBCJpRM6zj9WgWktXAl8IDIozwNMByT45JP3tO3ACWA==}
 
-  '@vuepic/vue-datepicker@8.8.1':
-    resolution: {integrity: sha512-8ehfUz1m69Vuc16Pm4ukgb3Mg1VT14x4EsG1ag4O/qbSNRWztTo+pUV4JnFt0FGLl5gGb6NXlxIvR7EjLgD7Gg==}
+  '@vuepic/vue-datepicker@9.0.0':
+    resolution: {integrity: sha512-8ChUOw6F5Sk4iPzu30OOeEYjalSnnOEJKbq9ZehJdkpCEz1s5GFXuxc2A/JsMMdxW9L0Ek9H9MZbJDNTV5RfFA==}
+    engines: {node: '>=18.12.0'}
     peerDependencies:
       vue: '>=3.2.0'
 
@@ -927,8 +931,8 @@ packages:
     resolution: {integrity: sha512-8iGv75BYOa0xRJHK5vRLEjE2H/i4lulTjzpUXic3Eg8akftYjkmQDa8JARQ42rlczXyFR3IeRoeFCc7RxHsYZA==}
     engines: {node: '>=16'}
 
-  swiper@11.1.4:
-    resolution: {integrity: sha512-1n7kbYJB2dFEpUHRFszq7gys/ofIBrMNibwTiMvPHwneKND/t9kImnHt6CfGPScMHgI+dWMbGTycCKGMoOO1KA==}
+  swiper@11.1.5:
+    resolution: {integrity: sha512-JJQWFXdxiMGC2j6ZGTYat5Z7NN9JORJBgHp0/joX9uPod+cRj0wr5H5VnWSNIz9JeAamQvYKaG7aFrGHIF9OEg==}
     engines: {node: '>= 4.7.0'}
 
   tabbable@6.2.0:
@@ -988,8 +992,8 @@ packages:
       postcss:
         optional: true
 
-  vue-amazing-ui@1.0.29:
-    resolution: {integrity: sha512-IIImcyDbTuQQI0c0PmW2VYpjeHkE3yCV37V/TyAZmb+z7k2VhEDqLoHa2nxhlzfiru96fFR/rW1Ln2EDGrRkcA==}
+  vue-amazing-ui@1.1.0:
+    resolution: {integrity: sha512-KqISQ7UL6+aSYhw82b8DNVNrL5SMkCqoX5g6qt2gWv45ZWZfDYzuxaJAJ7QQUJQadB3vUouAOTs5RQIhmzM4Bg==}
 
   vue-codemirror@6.1.1:
     resolution: {integrity: sha512-rTAYo44owd282yVxKtJtnOi7ERAcXTeviwoPXjIc6K/IQYUsoDkzPvw/JDFtSP6T7Cz/2g3EHaEyeyaQCKoDMg==}
@@ -1227,6 +1231,13 @@ snapshots:
       '@codemirror/view': 6.28.4
       '@lezer/common': 1.2.1
 
+  '@codemirror/autocomplete@6.17.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.5)(@lezer/common@1.2.1)':
+    dependencies:
+      '@codemirror/language': 6.10.2
+      '@codemirror/state': 6.4.1
+      '@codemirror/view': 6.28.5
+      '@lezer/common': 1.2.1
+
   '@codemirror/commands@6.6.0':
     dependencies:
       '@codemirror/language': 6.10.2
@@ -1293,7 +1304,7 @@ snapshots:
   '@codemirror/search@6.5.6':
     dependencies:
       '@codemirror/state': 6.4.1
-      '@codemirror/view': 6.28.4
+      '@codemirror/view': 6.28.5
       crelt: 1.0.6
 
   '@codemirror/state@6.4.1': {}
@@ -1306,6 +1317,12 @@ snapshots:
       '@lezer/highlight': 1.2.0
 
   '@codemirror/view@6.28.4':
+    dependencies:
+      '@codemirror/state': 6.4.1
+      style-mod: 4.1.2
+      w3c-keyname: 2.2.8
+
+  '@codemirror/view@6.28.5':
     dependencies:
       '@codemirror/state': 6.4.1
       style-mod: 4.1.2
@@ -1599,7 +1616,7 @@ snapshots:
 
   '@vue/shared@3.4.31': {}
 
-  '@vuepic/vue-datepicker@8.8.1(vue@3.4.31)':
+  '@vuepic/vue-datepicker@9.0.0(vue@3.4.31)':
     dependencies:
       date-fns: 3.6.0
       vue: 3.4.31
@@ -1703,13 +1720,13 @@ snapshots:
 
   codemirror@6.0.1(@lezer/common@1.2.1):
     dependencies:
-      '@codemirror/autocomplete': 6.17.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.4)(@lezer/common@1.2.1)
+      '@codemirror/autocomplete': 6.17.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.28.5)(@lezer/common@1.2.1)
       '@codemirror/commands': 6.6.0
       '@codemirror/language': 6.10.2
       '@codemirror/lint': 6.8.1
       '@codemirror/search': 6.5.6
       '@codemirror/state': 6.4.1
-      '@codemirror/view': 6.28.4
+      '@codemirror/view': 6.28.5
     transitivePeerDependencies:
       - '@lezer/common'
 
@@ -2010,7 +2027,7 @@ snapshots:
     dependencies:
       copy-anything: 3.0.5
 
-  swiper@11.1.4: {}
+  swiper@11.1.5: {}
 
   tabbable@6.2.0: {}
 
@@ -2078,16 +2095,16 @@ snapshots:
       - typescript
       - universal-cookie
 
-  vue-amazing-ui@1.0.29(async-validator@4.2.5)(focus-trap@7.5.4)(sortablejs@1.15.2):
+  vue-amazing-ui@1.1.0(async-validator@4.2.5)(focus-trap@7.5.4)(sortablejs@1.15.2):
     dependencies:
-      '@vuepic/vue-datepicker': 8.8.1(vue@3.4.31)
+      '@vuepic/vue-datepicker': 9.0.0(vue@3.4.31)
       '@vueuse/core': 10.11.0(vue@3.4.31)
       '@vueuse/integrations': 10.11.0(async-validator@4.2.5)(focus-trap@7.5.4)(qrcode@1.5.3)(sortablejs@1.15.2)(vue@3.4.31)
       ant-design-vue: 4.2.3(vue@3.4.31)
       core-js: 3.37.1
       date-fns: 3.6.0
       qrcode: 1.5.3
-      swiper: 11.1.4
+      swiper: 11.1.5
       vue: 3.4.31
       vue-router: 4.4.0(vue@3.4.31)
     transitivePeerDependencies:
