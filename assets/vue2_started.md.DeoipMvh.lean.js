@@ -1,0 +1,1 @@
+import{_ as e,o as a,c as t,al as r}from"./chunks/framework.CzBioyEM.js";const m=JSON.parse('{"title":"开始","description":"","frontmatter":{},"headers":[],"relativePath":"vue2/started.md","filePath":"vue2/started.md"}'),o={name:"vue2/started.md"},s=r("",4),n=[s];function i(l,_,d,c,h,u){return a(),t("div",null,n)}const p=e(o,[["render",i]]);export{m as __pageData,p as default};
