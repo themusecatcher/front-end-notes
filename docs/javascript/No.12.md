@@ -355,3 +355,51 @@ checkbox.addEventListener("change", () => {
   }
 })
 ```
+
+## [Window.matchMedia()](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/matchMedia) 媒体查询
+
+`Window` 的 `matchMedia()` 方法返回一个新的 `MediaQueryList` 对象，表示指定的媒体查询字符串解析后的结果。返回的 `MediaQueryList` 可被用于判定 `Document` 是否匹配媒体查询，或者监控一个 `document` 来判定它匹配了或者停止匹配了此媒体查询。
+
+### 语法
+
+```js
+const mqList = window.matchMedia(mediaQueryString)
+```
+
+### 参数
+
+- `mediaQueryString`：一个被用于媒体查询解析的字符串。
+
+### 返回值
+
+- 一个用来媒体查询的新的 `MediaQueryList` 对象
+
+### 使用说明
+
+要执行一次瞬时检查以查看文档是否与媒体查询匹配，请查看 `matches` 属性的值，当 `document` 满足媒体查询条件的时候将会返回`true`。
+
+如果你需要始终了解 `document` 是否与媒体查询匹配，则可以查看将要传递给对象的 `change` 事件。`Window.devicePixelRatio`上的文章中有一个很好的例子。
+
+### [MediaQueryList: change event](https://developer.mozilla.org/zh-CN/docs/Web/API/MediaQueryList/change_event)
+
+当媒体查询的支持状况改变时，`MediaQueryList` 接口的 `change` 事件触发。
+
+- 语法:
+
+  在像 `addEventListener()` 这样的方法中使用该事件的名字，或者设置一个事件处理函数属性。
+
+  ```js
+  const mediaQueryList = window.matchMedia(mediaQuery)
+  // 处理媒体查询状态改变的事件
+  const updateChange = (e: MediaQueryListEvent) => {
+    console.log('matches', e.matches)
+    console.log('media', e.media)
+  }
+  mediaQueryList.addEventListener('change', updateChange)
+  ```
+
+- 事件属性:
+
+  - `MediaQueryListEvent` 接口的属性继承自它的父接口 `Event`.
+  - `MediaQueryListEvent.matches` 只读：一个布尔值，如果 `document` 当前匹配媒体查询列表，该值为 `true`，反之为 `false`。
+  - `MediaQueryListEvent.media` 只读：一个字符串，代表着一个序列化后的媒体查询。
