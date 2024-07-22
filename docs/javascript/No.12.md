@@ -239,7 +239,27 @@ onresize = (event: Event) => {}
 
 - 参数
   - `callback`: 每当观测的元素调整大小时，调用该函数。该函数接收两个参数：
-    - `entries`: 一个 `ResizeObserverEntry` 对象数组，可以**用于获取每个元素改变后的新尺寸**。
+    - `entries`: 一个 [`ResizeObserverEntry`](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserverEntry) 对象数组，可以**用于获取每个元素改变后的新尺寸**。
+      > `ResizeObserverEntry`: `ResizeObserverEntry` 接口是传递给 `ResizeObserver()` 构造函数中的回调函数参数的对象，它允许你获取真正在观察的 `Element` 或 `SVGElement` 最新的大小。
+      - 属性:
+        - [`ResizeObserverEntry.borderBoxSize`](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserverEntry/borderBoxSize) <Tag :bordered="false" color="cyan">只读</Tag>
+          一个对象，当运行回调时，该对象包含着正在观察元素的新边框盒的大小。
+
+        - [`ResizeObserverEntry.contentBoxSize`](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserverEntry/contentBoxSize) <Tag :bordered="false" color="cyan">只读</Tag>
+          一个对象，当运行回调时，该对象包含着正在观察元素的新内容盒的大小。
+
+        - [`ResizeObserverEntry.devicePixelContentBoxSize`](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserverEntry/devicePixelContentBoxSize) <Tag :bordered="false" color="cyan">只读</Tag>
+          一个对象，当运行回调时，该对象包含着正在观察元素的新内容盒的大小（以设备像素为单位）。
+
+        - [`ResizeObserverEntry.contentRect`](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserverEntry/contentRect) <Tag :bordered="false" color="cyan">只读</Tag>
+          一个对象，当运行回调时，该对象包含着正在观察元素新大小的 `DOMRectReadOnly` 对象。请注意，这比以上两个属性有着更好的支持，但是它是 `Resize Observer API` 早期实现遗留下来的，出于对浏览器的兼容性原因，仍然被保留在规范中，并且在未来的版本中可能被弃用。
+
+        - [`ResizeObserverEntry.target`](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserverEntry/target) <Tag :bordered="false" color="cyan">只读</Tag>
+          对正在观察 `Element` 或 `SVGElement` 的引用。
+
+        ::: tip 备注
+        内容盒是放置内容的盒子，**即边框盒减去内边距和边框宽度**。**边框盒包含内容、内边距和边框**。更多解释参见盒模型。
+        :::
     - `observer`: 对 `ResizeObserver` 自身的引用，因此**需要它的时候，你要从回调函数的内部访问**。例如，**这可用于在达到特定的情况时，自动取消对观察者的监听**，但如果你不需要它，可以省略它。
   
   ```js
@@ -294,9 +314,42 @@ onresize = (event: Event) => {}
 
 - `ResizeObserver.disconnect()`: 取消特定观察者目标上所有对 `Element` 的监听。
 
-- `ResizeObserver.observe()`: 开始对指定 `Element` 的监听。
+  `ResizeObserver` 接口的 `disconnect()` 方法取消所有的对 `Element` 或 `SVGElement` 目标的监听。
+  - 语法:
 
-- `ResizeObserver.unobserve()`: 结束对指定 `Element` 的监听。
+    ```js
+    disconnect()
+    ```
+
+- [`ResizeObserver.observe()`](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserver/observe): 开始对指定 `Element` 的监听。
+
+  `ResizeObserver` 接口的 `observe()` 方法用于监听指定的 `Element` 或 `SVGElement`。
+  - 语法:
+
+    ```js
+    observe(target)
+    observe(target, options)
+    ```
+
+  - 参数:
+    - `target`: 要监听的 `Element` 或 `SVGElement` 的引用。
+    - `options`: 一个可选的对象，允许你为监听的对象设置参数。目前，这只有一个参数：
+      - `box`: 设置 `observer` 将监听的盒模型。可能的值是：
+        - `content-box`（默认）: `CSS` 中定义的内容区域的大小。
+        - `border-box`: `CSS` 中定义的边框区域的大小。
+        - `device-pixel-content-box`: 在对元素或其祖先应用任何 `CSS` 转换之前，`CSS` 中定义的内容区域的大小，以设备像素为单位。
+
+- [`ResizeObserver.unobserve()`](https://developer.mozilla.org/zh-CN/docs/Web/API/ResizeObserver/unobserve): 结束对指定 `Element` 的监听。
+
+  `ResizeObserver` 接口的 `unobserve()` 方法结束对指定的 `Element` 或 `SVGElement` 的监听。
+  - 语法:
+
+    ```js
+    unobserve(target)
+    ```
+
+  - 参数:
+    - `target`: 对不要监听的 `Element` 或 `SVGElement` 的引用。
 
 ### 示例
 
