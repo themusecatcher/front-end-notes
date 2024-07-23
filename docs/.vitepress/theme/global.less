@@ -123,7 +123,7 @@
 }
 /* Transition by color instead of opacity */
 .dark .vp-doc .custom-block a {
-  transition: color .25s;
+  transition: color 0.25s;
 }
 .custom-block.tip p {
   color: var(--vp-custom-block-tip-text) !important;
@@ -174,19 +174,54 @@ html.dark .VPHome {
   margin-bottom: 0 !important;
   padding-bottom: 104px !important;
 }
+@-webkit-keyframes pulsate {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+@keyframes pulsate {
+  0% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
 .VPHero {
-  .name, .text, .tagline {
-    transition: transform .3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-    transform-origin: 0% 50%;
+  .name {
+    font-size: 64px;
+  }
+  .text {
+    font-size: 52px;
+    padding-top: 16px;
+  }
+  .name { // 标题悬浮动画效果
+    transition: all 0.3s ease-in-out;
     &:hover {
-      transform: scale(1.2);
+      -webkit-animation: pulsate 0.5s ease-in-out infinite both;
+	        animation: pulsate 0.5s ease-in-out infinite both;
     }
   }
   .text {
     color: var(--vp-c-text-1);
   }
   .image-src {
-    transition: transform .5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    transition: transform 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     &:hover {
       transform: translate(-50%, -50%) scale(1.2);
     }
@@ -208,7 +243,7 @@ html.dark .VPHome {
     padding: 24px 32px;
     .container {
       display: inline-block;
-      transition: all .25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      transition: all 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
       .message, .copyright {
         color: var(--vp-c-text-1);
       }
@@ -220,9 +255,6 @@ html.dark .VPHome {
       }
     }
   }
-}
-.VPSidebar {
-  z-index: 8 !important;
 }
 .VPNavBar:not(.has-sidebar):not(.top) {
   border: none;
@@ -245,16 +277,16 @@ html.dark .VPHome {
   }
 }
 .VPNavBarTitle .title {
-  transition: all .25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  transition: all 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  .VPImage {
+    transition: transform 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  }
   &:hover {
     transform: scale(1.1);
     color: #bd34fe;
     .VPImage {
       transform: scale(1.25);
     }
-  }
-  .VPImage {
-    transition: transform .5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
   }
 }
 .VPButton {
@@ -265,17 +297,17 @@ html.dark .VPHome {
   font-weight: 700;
   border: none;
   background: linear-gradient(to right, #09c8ce, #e4c31b, #eb2f96);
-  transition: all .25s;
+  transition: all 0.25s;
   &:hover {
     background: linear-gradient(to right, #eb2f96, #09c8ce, #e4c31b);
   }
 }
 .VPButton.alt {
   background-color: transparent !important;
-  transition: all .25s;
+  transition: all 0.25s;
   &:hover {
     border-color: #41d1ff !important;
-    box-shadow: 0 0 3px 3px rgba(65, 209, 255, .12);
+    box-shadow: 0 0 3px 3px rgba(65, 209, 255, 0.12);
   }
 }
 .VPSwitch {
@@ -283,18 +315,18 @@ html.dark .VPHome {
   background-color: transparent !important;
   &:hover {
     border-color: #e4c31b !important;
-    box-shadow: 0 0 3px 3px rgba(228, 195, 27, .12);
+    box-shadow: 0 0 3px 3px rgba(228, 195, 27, 0.12);
   }
 }
 .DocSearch-Button {
   border-radius: 12px;
-  background-color: rgba(0, 0, 0, .36);
-  transition: all .25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  background-color: rgba(0, 0, 0, 0.36);
+  transition: all 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
   &:hover {
     transform: scale(1.1);
     border-color: #bd34fe;
-    background-color: rgba(0, 0, 0, .36);
-    box-shadow: 0 0 3px 3px rgba(189, 52, 254, .12);
+    background-color: rgba(0, 0, 0, 0.36);
+    box-shadow: 0 0 3px 3px rgba(189, 52, 254, 0.12);
     .DocSearch-Search-Icon,
     .DocSearch-Button-Placeholder {
       color: #FFF;
@@ -318,19 +350,19 @@ html.dark .VPHome {
 }
 .VPFeatures .container .items .item {
   cursor: pointer;
-  transition: all .25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  transition: all 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
   .VPFeature {
     border-radius: 36px;
     border: none;
-    background-color: rgba(0, 0, 0, .36);
-    transition: all .25s;
+    background-color: rgba(0, 0, 0, 0.36);
+    transition: all 0.25s;
     .icon, .title, .details {
       font-size: 18px;
       color: #FFF;
-      transition: all .25s;
+      transition: all 0.25s;
     }
     .details {
-      color: rgba(255, 255, 255, .88);
+      color: rgba(255, 255, 255, 0.88);
     }
     .icon {
       width: 72px;
@@ -351,7 +383,7 @@ html.dark .VPHome {
     .VPFeature {
       border-color: #fbdf93;
       background: linear-gradient(to right, #09c8ce, #e4c31b, #eb2f96);
-      box-shadow: 0 6px 16px 0 rgba(0, 0, 0, .08), 0 3px 6px -4px rgba(0, 0, 0, .12), 0 9px 28px 8px rgba(0, 0, 0, .05);
+      box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
       .icon {
         background-image: radial-gradient(circle at 0%, #ffd666, #f669bb, #98e8de);
       }
@@ -359,7 +391,7 @@ html.dark .VPHome {
   }
 }
 .VPLink .text {
-  transition: all .25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  transition: all 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
   transform-origin: 0% 50%;
   &:hover {
     transform: scale(1.1);
@@ -373,10 +405,10 @@ html.dark .VPHome {
 }
 .pager-link {
   border-radius: 12px !important;
-  transition: all .25s cubic-bezier(0.18, 0.89, 0.32, 1.28) !important;
+  transition: all 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28) !important;
   &:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 3px 3px rgba(100, 108, 255, .12);
+    box-shadow: 0 0 3px 3px rgba(100, 108, 255, 0.12);
   }
 }
 .tag-version {
