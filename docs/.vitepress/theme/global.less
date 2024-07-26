@@ -256,6 +256,68 @@ html.dark .VPHome {
     }
   }
 }
+@media (min-width: 960px) {
+  .VPLocalNav.has-sidebar {
+    background-color: transparent;
+    border: none;
+    .VPLocalNavOutlineDropdown {
+      padding: 0;
+      button {
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border: 1px solid var(--vp-c-text-1);
+        border-left: none;
+        padding: 6px 12px;
+        color: var(--vp-c-text-1);
+        transition: all 0.2s;
+        &:hover {
+          font-weight: 600;
+          color: var(--vp-c-brand);
+          border-color: var(--vp-c-brand);
+        }
+      }
+      .outline-link {
+        transition: all 0.2s;
+        &:hover {
+          color: var(--vp-c-brand-1);
+        }
+      }
+    }
+  }
+}
+.VPLocalNav.has-sidebar {
+  .menu {
+    transition: all 0.2s;
+    &:hover {
+      font-weight: 600;
+      color: var(--vp-c-brand);
+    }
+  }
+  button {
+    .menu-text,
+    .vpi-chevron-right {
+      transition: all 0.2s;
+    }
+    &:hover {
+      .menu-text {
+        color: var(--vp-c-brand);
+        font-weight: 600;
+      }
+      .vpi-chevron-right {
+        color: var(--vp-c-brand);
+      }
+    }
+  }
+  .VPLocalNavOutlineDropdown {
+    .outline-link {
+      transition: all 0.2s;
+      &:hover {
+        color: var(--vp-c-brand-1);
+      }
+    }
+  }
+}
+
 .VPNavBar:not(.has-sidebar):not(.top) {
   border: none;
   background-color: transparent !important;
@@ -311,11 +373,10 @@ html.dark .VPHome {
   }
 }
 .VPSwitch {
-  border-color: transparent !important;
   background-color: transparent !important;
   &:hover {
     border-color: #e4c31b !important;
-    box-shadow: 0 0 3px 3px rgba(228, 195, 27, 0.12);
+    box-shadow: 0 0 0.5px 3.5px rgba(228, 195, 27, 0.3);
   }
 }
 .DocSearch-Button {

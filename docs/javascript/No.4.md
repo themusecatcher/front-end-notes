@@ -163,14 +163,15 @@ console.timeEnd('run time')
   `innerWidth` 属性在任何表现类似于窗口的任何窗口或对象（例如框架或选项卡）上都是可用的。
 
   ```js
-  let intViewportWidth = window.innerWidth
+  let intViewportWidth = window.innerWidth // 视口宽度
+  // document.documentElement.clientWidth
   ```
 
 - `innerHeight` 浏览器窗口的视口（`viewport`）高度（以像素为单位）；如果有**水平滚动条，也包括滚动条高度**。
   任何窗口对象，如 `window`、`frame`、`frameset` 或 `secondary window` 都支持 `innerHeight` 属性。
 
   ```js
-  let intViewportHeight = window.innerHeight
+  let intViewportHeight = window.innerHeight // 视口高度
   ```
 
 - `clientWidth` 返回元素的像素宽度（**仅包含内边距padding，不包含边框border、外边距margin和滚动条**）：
