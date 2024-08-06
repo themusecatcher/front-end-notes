@@ -325,3 +325,35 @@ IE 返回 `boolean` 类型值，其他返回 `undefined`
 document.getElementById("div1").removeAttribute("align")
 // Now: <div id="div1" width="200px">
 ```
+
+## [CSSStyleDeclaration.setProperty()](https://developer.mozilla.org/zh-CN/docs/Web/API/CSSStyleDeclaration/setProperty)
+
+`CSSStyleDeclaration.setProperty()` 方法接口为一个声明了 `CSS` 样式的对象设置一个新的值。
+
+### 语法
+
+```js
+style.setProperty(propertyName, value, priority)
+```
+
+### 参数
+
+- `propertyName` 是一个 `DOMString` ，代表被更改的 `CSS` 属性。
+- `value` <Tag :bordered="false" color="cyan">可选</Tag> 是一个 `DOMString` ，含有新的属性值。如果没有指定，则当作空字符串。
+  - 注意：`value` 不能包含 "**!important**" --那个应该使用 `priority` 参数。
+- `priority` <Tag :bordered="false" color="cyan">可选</Tag> 是一个 `DOMString` 允许设置 "`important`" `CSS` 优先级。如果没有指定，则当作空字符串。
+
+> `JavaScript` 有一个特别的，更简单的在 `CSSStyleDeclaration` 对象上设置 `CSS` 属性值的语法
+
+```js
+style.cssPropertyName = 'value'
+```
+
+### 示例
+
+```js
+var declaration = document.styleSheets[0].rules[0].style
+declaration.setProperty('margin', '1px 2px')
+// Equivalent to:
+// declaration.margin = '1px 2px'
+```
