@@ -180,6 +180,7 @@ CSS3 `box-sizing` 属性可以设置 `width` 和 `height` 属性中是否包含�
 - 父级元素设置为 `flex` 布局后，所有的子元素都变成了行内块 `inline-block` 元素
 
 [MDN flex 布局基本概念](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_flexible_box_layout/Basic_concepts_of_flexbox)
+
 [`flex` 布局](https://www.runoob.com/w3cnote/flex-grammar.html)
 
 > flex 属性用于设置或检索弹性盒模型对象的子元素如何分配空间。<br>flex 属性是 flex-grow、flex-shrink 和 flex-basis 属性的简写属性。<br>**`flex: 1;` 让所有弹性盒模型对象的子元素都有相同的长度，且忽略它们内部的内容**
