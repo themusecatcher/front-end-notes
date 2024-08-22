@@ -266,10 +266,10 @@ export default {
 
 ## CSS单位：`em，rem，%，vh，vw，vmin，vmax，px`
 
-- `em`：相对于应用在当前元素的字体尺寸，一般浏览器字体大小默认为16px，则 2em == 32px；
+- `em`：相对于应用在当前元素的字体尺寸，一般浏览器字体大小默认为 `16px`，则 `2em == 32px`；
   - 如果元素自身设置了 `font-size`，那参考文本大小就是自身的 `font-size` 大小
   - 如果元素自身没有设置 `font-size`，那参考文本大小就是父元素的 `font-size` 大小
-  - 为元素设置 `font-size` 时，如果使用em作为单位，那么参考文本大小是父元素的 `font-size` 大小
+  - 为元素设置 `font-size` 时，如果使用 `em` 作为单位，那么参考文本大小是父元素的 `font-size` 大小
   - 子元素中除了 `font-size` 的 `em` 是根据父元素的 `font-size` 确定的，其他所有 `em` 都是根据自身的 `font-size` 确定的
 
   例如：
@@ -293,8 +293,8 @@ export default {
   - `rem`：**rem 是根 em（root em）的缩写**
     - 使用 `rem` 为元素设定字体大小时，仍然是相对大小，但**相对的只是HTML（document.documentElement）根元素**。
     - `rem` 作用于非根元素时，相对于根元素字体大小；`rem` 作用于根元素字体大小时，相对于其出初始字体大小。
-  - `vw`：viewpoint width，视窗宽度，**1vw = 视窗宽度的1%**
-  - `vh`：viewpoint height，视窗高度，**1vh = 视窗高度的1%**
+  - `vw`：`viewpoint width`，视窗宽度，**1vw = 视窗宽度的1%**
+  - `vh`：`viewpoint height`，视窗高度，**1vh = 视窗高度的1%**
   - `vmin`：`vw` 和 `vh` 中较小的那个
   - `vmax`：`vw` 和 `vh` 中较大的那个
   - `%`：百分比，相对长度单位，相对于父元素的百分比值，**使用时必须从根容器就设置好百分比**
@@ -308,7 +308,7 @@ export default {
 
 **`currentColor` 是 CSS3的一个关键字，用于描述当前元素的颜色，默认继承当前元素的 `color` 颜色，如果当前元素未显式指明 `color`，则继承父元素的 `color` 颜色**
 
-`currentColor` 关键字代表原始的 color 属性的计算值。它允许让继承自属性或子元素的属性颜色属性以默认值不再继承。
+`currentColor` 关键字代表原始的 `color` 属性的计算值。它允许让继承自属性或子元素的属性颜色属性以默认值不再继承。
 
-它也能用于那些继承了元素的 color 属性计算值的属性，相当于在这些元素上使用 inherit 关键字，如果这些元素有该关键字的话。
+它也能用于那些继承了元素的 `color` 属性计算值的属性，相当于在这些元素上使用 `inherit` 关键字，如果这些元素有该关键字的话。
 :::
