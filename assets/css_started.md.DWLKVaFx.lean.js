@@ -1,0 +1,1 @@
+import{_ as a,o as e,c as t,ak as r}from"./chunks/framework.DABdXjFc.js";const p=JSON.parse('{"title":"开始","description":"","frontmatter":{},"headers":[],"relativePath":"css/started.md","filePath":"css/started.md"}'),s={name:"css/started.md"},o=r("",4),c=[o];function l(n,d,i,_,h,f){return e(),t("div",null,c)}const u=a(s,[["render",l]]);export{p as __pageData,u as default};
