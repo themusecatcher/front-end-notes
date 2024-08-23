@@ -1,0 +1,1 @@
+import{_ as t,o as e,c as o,ak as d}from"./chunks/framework.D5ifC-GA.js";const b=JSON.parse('{"title":"Note 8","description":"","frontmatter":{},"headers":[],"relativePath":"css/No.8.md","filePath":"css/No.8.md"}'),c={name:"css/No.8.md"},r=d("",14),i=[r];function s(n,l,a,g,h,P){return e(),o("div",null,i)}const f=t(c,[["render",s]]);export{b as __pageData,f as default};
