@@ -257,8 +257,26 @@ console.log('reactiveData:', reactiveData)
   // "duck" now contains the property "eyes: 'black'"
   ```
 
-## 登录成功后进入首页，点击返回不会回到登录页
+## vue3 登录拦截与跳转相关
 
-```vue
-router.push({ path: '/mobile/position', replace: true })
+- 登录跳转逻辑
+
+```ts
+const router = useRouter()
+// 登录成功之后跳转到 mine 页面，添加 replace 属性，避免点击返回时回到登录页
+router.push({ path: '/mine', replace: true })
+```
+
+- 在 `router/index.ts` 中添加全局前置守卫 `router.beforeEach`
+
+```ts
+router.beforeEach((to, from) => {
+  console.log('beforeEach', to)
+  const isAuthenticated = Boolean(store.get('token')) // 是否已登录
+  // 检查用户是否已登录；避免无限重定向
+  if (!isAuthenticated && to.name !== 'Login') {
+     // 将用户重定向到登录页面
+     return { name: 'Login' }
+   }
+})
 ```
