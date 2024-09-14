@@ -71,12 +71,12 @@ export default defineConfig({
           {
             items: [
               {
-                text: 'npm',
-                link: 'https://www.npmjs.com/'
+                text: 'Vue',
+                link: 'https://cn.vuejs.org/'
               },
               {
-                text: 'pnpm',
-                link: 'https://www.pnpm.cn/'
+                text: 'TypeScript',
+                link: 'https://ts.nodejs.cn/docs/'
               },
               {
                 text: 'Vite',
@@ -87,12 +87,24 @@ export default defineConfig({
                 link: 'https://cn.rollupjs.org/'
               },
               {
+                text: 'Less',
+                link: 'https://less.bootcss.com/'
+              },
+              {
                 text: 'VitePress',
                 link: 'https://vitepress.dev/'
               },
               {
                 text: 'Markdown',
                 link: 'https://markdown.com.cn/'
+              },
+              {
+                text: 'npm',
+                link: 'https://www.npmjs.com/'
+              },
+              {
+                text: 'pnpm',
+                link: 'https://www.pnpm.cn/'
               }
             ]
           }

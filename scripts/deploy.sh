@@ -22,3 +22,5 @@ cd ../../../
 git add .
 git commit -m 'update'
 git push
+
+echo ⏰ "$(date '+%Y-%m-%d %H:%M:%S')"

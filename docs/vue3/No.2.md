@@ -256,3 +256,9 @@ console.log('reactiveData:', reactiveData)
   // returns "true" if successful
   // "duck" now contains the property "eyes: 'black'"
   ```
+
+## 登录成功后进入首页，点击返回不会回到登录页
+
+```vue
+router.push({ path: '/mobile/position', replace: true })
+```
