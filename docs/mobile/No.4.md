@@ -103,3 +103,47 @@ useLoad(() => {
 })
 </script>
 ```
+
+## [env()](https://developer.mozilla.org/zh-CN/docs/Web/CSS/env) CSS 函数
+
+最初由 `iOS` 浏览器提供，用于允许开发人员将其内容放置在视口的安全区域中，该规范中定义的 `safe-area-inset-*` 值可用于确保内容即使在非矩形的视区中也可以完全显示。
+
+### 语法
+
+<br/>
+
+`env()`的第二个参数可选，如果环境变量不可用，该参数可让你设置备用值
+
+```css
+/* Using the four safe area inset values with no fallback values */
+env(safe-area-inset-top)
+env(safe-area-inset-right)
+env(safe-area-inset-bottom)
+env(safe-area-inset-left)
+
+/* Using them with fallback values */
+env(safe-area-inset-top, 20px)
+env(safe-area-inset-right, 1em)
+env(safe-area-inset-bottom, 0.5vh)
+env(safe-area-inset-left, 1.4rem)
+```
+
+### Values
+
+<br/>
+
+`safe-area-inset-top`, `safe-area-inset-right`, `safe-area-inset-bottom`, `safe-area-inset-left`
+`safe-area-inset-*`由四个定义了视口边缘内矩形的 `top`, `right`, `bottom` 和 `left` 的环境变量组成，这样可以安全地放入内容，而不会有被非矩形的显示切断的风险。对于矩形视口，例如普通的笔记本电脑显示器，其值等于零。对于非矩形显示器（如圆形表盘，iPhoneX 屏幕），在用户代理设置的四个值形成的矩形内，所有内容均可见。
+
+注意: 不同于其他的 `CSS` 属性，用户代理定义的属性名字对大小写敏感。
+
+`env(safe-area-inset-bottom)` 是一种 `CSS` 环境变量，用于获取设备屏幕底部的安全区域大小，这通常是指屏幕底部可能被系统 `UI`（如状态栏、导航栏等）占据的空间。在微信小程序中，使用这种变量可以确保你的界面设计不会与系统 `UI` 重叠，从而提供更好的用户体验。
+
+- `env(safe-area-inset-bottom)`: 获取屏幕**低部的安全区域大小**
+- `env(safe-area-inset-top)`: 获取屏幕**顶部的安全区域大小**
+- `env(safe-area-inset-left)`: 获取屏幕**左边的安全区域大小**
+- `env(safe-area-inset-right)`: 获取屏幕**右边的安全区域大小**
+
+这些环境变量允许开发者在设计小程序界面时，能够适应不同设备的屏幕形状和系统 `UI` 布局，避免内容被系统 `UI` 遮挡。
+
+使用这些环境变量时，应该注意它们的支持情况，因为它们是 `CSS` 的较新特性，可能不是所有浏览器或环境中都可用。在微信小程序中，这些环境变量被用于适配不同的设备，确保小程序的 `UI` 设计能够适应各种屏幕形状和系统 `UI` 的布局。

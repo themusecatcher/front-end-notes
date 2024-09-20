@@ -507,39 +507,6 @@ export default defineConfig(async (merge, { command, mode }) => {
 })
 ```
 
-## 微信小程序使用 [env()](https://developer.mozilla.org/zh-CN/docs/Web/CSS/env) 函数
-
-### 语法
-
-<br/>
-
-`env()`的第二个参数可选，如果环境变量不可用，该参数可让你设置备用值
-
-```css
-/* Using the four safe area inset values with no fallback values */
-env(safe-area-inset-top)
-env(safe-area-inset-right)
-env(safe-area-inset-bottom)
-env(safe-area-inset-left)
-
-/* Using them with fallback values */
-env(safe-area-inset-top, 20px)
-env(safe-area-inset-right, 1em)
-env(safe-area-inset-bottom, 0.5vh)
-env(safe-area-inset-left, 1.4rem)
-```
-
-`env(safe-area-inset-bottom)` 是一种 CSS 环境变量，用于获取设备屏幕底部的安全区域大小，这通常是指屏幕底部可能被系统 UI（如状态栏、导航栏等）占据的空间。在微信小程序中，使用这种变量可以确保你的界面设计不会与系统 UI 重叠，从而提供更好的用户体验。
-
-- `env(safe-area-inset-bottom)`: 获取屏幕**低部的安全区域大小**
-- `env(safe-area-inset-top)`: 获取屏幕**顶部的安全区域大小**
-- `env(safe-area-inset-left)`: 获取屏幕**左边的安全区域大小**
-- `env(safe-area-inset-right)`: 获取屏幕**右边的安全区域大小**
-
-这些环境变量允许开发者在设计小程序界面时，能够适应不同设备的屏幕形状和系统 UI 布局，避免内容被系统 UI 遮挡。
-
-使用这些环境变量时，应该注意它们的支持情况，因为它们是 CSS 的较新特性，可能不是所有浏览器或环境中都可用。在微信小程序中，这些环境变量被用于适配不同的设备，确保小程序的 UI 设计能够适应各种屏幕形状和系统 UI 的布局。
-
 ## 微信小程序 [`<image/>`](https://taro-docs.jd.com/docs/components/media/image) 图片缩放 & 长按识别码
 
 ```vue
