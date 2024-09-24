@@ -1,4 +1,10 @@
-// node_modules/.pnpm/vitepress@1.3.4_@algolia+client-search@5.5.2_async-validator@4.2.5_less@4.2.0_postcss@8.4.47__3xepf354tpy3x2wjkce57m25ym/node_modules/vitepress/lib/vue-demi.mjs
+import {
+  init_vue_runtime_esm_bundler
+} from "./chunk-3MDCYLEG.js";
+
+// node_modules/.pnpm/vitepress@1.3.4_@algolia+client-search@5.5.3_async-validator@4.2.5_less@4.2.0_postcss@8.4.47__sk2y4zxk3mrpzfeq5qargxf4ru/node_modules/vitepress/lib/vue-demi.mjs
+init_vue_runtime_esm_bundler();
+init_vue_runtime_esm_bundler();
 var isVue2 = false;
 var isVue3 = true;
 function set(target, key, val) {
@@ -33,4 +39,4 @@ vitepress/lib/vue-demi.mjs:
    * @license MIT
    *)
 */
-//# sourceMappingURL=chunk-TLS2OHCV.js.map
+//# sourceMappingURL=chunk-4ZXLWKAY.js.map

@@ -48,13 +48,13 @@ export default defineConfig({
     },
 
     nav: [
-      { text: 'JavaScript', link: '/javascript/No.1', activeMatch: '/javascript/' },
-      { text: 'HTML', link: '/html/No.1', activeMatch: '/html/' },
-      { text: 'CSS', link: '/css/No.1', activeMatch: '/css/' },
-      { text: 'Vue2', link: '/vue2/No.1', activeMatch: '/vue2/' },
-      { text: 'Vue3', link: '/vue3/No.1', activeMatch: '/vue3/' },
-      { text: 'Mobile', link: '/mobile/No.1', activeMatch: '/mobile/' },
-      { text: 'Http', link: '/http/No.1', activeMatch: '/http/' },
+      { text: 'JavaScript', link: '/javascript/started', activeMatch: '/javascript/' },
+      { text: 'HTML', link: '/html/started', activeMatch: '/html/' },
+      { text: 'CSS', link: '/css/started', activeMatch: '/css/' },
+      { text: 'Vue2', link: '/vue2/started', activeMatch: '/vue2/' },
+      { text: 'Vue3', link: '/vue3/started', activeMatch: '/vue3/' },
+      { text: 'Mobile', link: '/mobile/started', activeMatch: '/mobile/' },
+      { text: 'Http', link: '/http/started', activeMatch: '/http/' },
       { text: 'Plugins', link: '/plugins/started', activeMatch: '/plugins/' },
       {
         text: 'Links',
@@ -161,55 +161,55 @@ export default defineConfig({
           items: [
             {
               text: 'No.1',
-              link: '/javascript/No.1'
+              link: '/javascript/notes/No.1'
             },
             {
               text: 'No.2',
-              link: '/javascript/No.2'
+              link: '/javascript/notes/No.2'
             },
             {
               text: 'No.3',
-              link: '/javascript/No.3'
+              link: '/javascript/notes/No.3'
             },
             {
               text: 'No.4',
-              link: '/javascript/No.4'
+              link: '/javascript/notes/No.4'
             },
             {
               text: 'No.5',
-              link: '/javascript/No.5'
+              link: '/javascript/notes/No.5'
             },
             {
               text: 'No.6',
-              link: '/javascript/No.6'
+              link: '/javascript/notes/No.6'
             },
             {
               text: 'No.7',
-              link: '/javascript/No.7'
+              link: '/javascript/notes/No.7'
             },
             {
               text: 'No.8',
-              link: '/javascript/No.8'
+              link: '/javascript/notes/No.8'
             },
             {
               text: 'No.9',
-              link: '/javascript/No.9'
+              link: '/javascript/notes/No.9'
             },
             {
               text: 'No.10',
-              link: '/javascript/No.10'
+              link: '/javascript/notes/No.10'
             },
             {
               text: 'No.11',
-              link: '/javascript/No.11'
+              link: '/javascript/notes/No.11'
             },
             {
               text: 'No.12',
-              link: '/javascript/No.12'
+              link: '/javascript/notes/No.12'
             },
             {
               text: 'No.13',
-              link: '/javascript/No.13'
+              link: '/javascript/notes/No.13'
             }
           ]
         }
@@ -229,15 +229,15 @@ export default defineConfig({
           items: [
             {
               text: 'No.1',
-              link: '/html/No.1'
+              link: '/html/notes/No.1'
             },
             {
               text: 'No.2',
-              link: '/html/No.2'
+              link: '/html/notes/No.2'
             },
             {
               text: 'No.3',
-              link: '/html/No.3'
+              link: '/html/notes/No.3'
             }
           ]
         }
@@ -257,35 +257,35 @@ export default defineConfig({
           items: [
             {
               text: 'No.1',
-              link: '/css/No.1'
+              link: '/css/notes/No.1'
             },
             {
               text: 'No.2',
-              link: '/css/No.2'
+              link: '/css/notes/No.2'
             },
             {
               text: 'No.3',
-              link: '/css/No.3'
+              link: '/css/notes/No.3'
             },
             {
               text: 'No.4',
-              link: '/css/No.4'
+              link: '/css/notes/No.4'
             },
             {
               text: 'No.5',
-              link: '/css/No.5'
+              link: '/css/notes/No.5'
             },
             {
               text: 'No.6',
-              link: '/css/No.6'
+              link: '/css/notes/No.6'
             },
             {
               text: 'No.7',
-              link: '/css/No.7'
+              link: '/css/notes/No.7'
             },
             {
               text: 'No.8',
-              link: '/css/No.8'
+              link: '/css/notes/No.8'
             }
           ]
         }
@@ -305,19 +305,19 @@ export default defineConfig({
           items: [
             {
               text: 'No.1',
-              link: '/vue2/No.1'
+              link: '/vue2/notes/No.1'
             },
             {
               text: 'No.2',
-              link: '/vue2/No.2'
+              link: '/vue2/notes/No.2'
             },
             {
               text: 'No.3',
-              link: '/vue2/No.3'
+              link: '/vue2/notes/No.3'
             },
             {
               text: 'No.4',
-              link: '/vue2/No.4'
+              link: '/vue2/notes/No.4'
             }
           ]
         }
@@ -337,15 +337,15 @@ export default defineConfig({
           items: [
             {
               text: 'No.1',
-              link: '/vue3/No.1'
+              link: '/vue3/notes/No.1'
             },
             {
               text: 'No.2',
-              link: '/vue3/No.2'
+              link: '/vue3/notes/No.2'
             },
             {
               text: 'No.3',
-              link: '/vue3/No.3'
+              link: '/vue3/notes/No.3'
             }
           ]
         }
@@ -365,19 +365,19 @@ export default defineConfig({
           items: [
             {
               text: 'No.1',
-              link: '/mobile/No.1'
+              link: '/mobile/notes/No.1'
             },
             {
               text: 'No.2',
-              link: '/mobile/No.2'
+              link: '/mobile/notes/No.2'
             },
             {
               text: 'No.3',
-              link: '/mobile/No.3'
+              link: '/mobile/notes/No.3'
             },
             {
               text: 'No.4',
-              link: '/mobile/No.4'
+              link: '/mobile/notes/No.4'
             }
           ]
         }
@@ -397,15 +397,15 @@ export default defineConfig({
           items: [
             {
               text: 'No.1',
-              link: '/http/No.1'
+              link: '/http/notes/No.1'
             },
             {
               text: 'No.2',
-              link: '/http/No.2'
+              link: '/http/notes/No.2'
             },
             {
               text: 'No.3',
-              link: '/http/No.3'
+              link: '/http/notes/No.3'
             }
           ]
         }
@@ -425,19 +425,19 @@ export default defineConfig({
           items: [
             {
               text: '拖拽 Draggable',
-              link: '/plugins/draggable'
+              link: '/plugins/plugin/draggable'
             },
             {
               text: '引擎图 GaugeChart',
-              link: '/plugins/gaugechart'
+              link: '/plugins/plugin/gaugechart'
             },
             {
               text: '懒加载 Lazyload',
-              link: '/plugins/lazyload'
+              link: '/plugins/plugin/lazyload'
             },
             {
               text: '树图 TreeChart',
-              link: '/plugins/treechart'
+              link: '/plugins/plugin/treechart'
             }
           ]
         }

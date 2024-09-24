@@ -285,8 +285,8 @@ function initChart () {
 :::
 
 <script setup lang="ts">
-import pkg from '../../package.json'
-import TreeChart from './components/TreeChart.vue'
+import pkg from '../../../package.json'
+import TreeChart from '../components/TreeChart.vue'
 import { ref, onMounted } from 'vue'
 
 const tree = ref()

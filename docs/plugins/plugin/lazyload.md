@@ -1,7 +1,7 @@
 # 懒加载 vue3-lazyload<Tag color="volcano" style="vertical-align: top; margin-left: 6px;">{{ pkg.dependencies['vue3-lazyload'] }}</Tag><BackTop />
 
 <script lang="ts" setup>
-import pkg from '../../package.json'
+import pkg from '../../../package.json'
 import { ref } from 'vue'
 
 const Image1 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/5.jpg'

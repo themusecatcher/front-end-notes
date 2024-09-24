@@ -1,7 +1,7 @@
 # 拖拽 vuedraggable@next<Tag color="volcano" style="vertical-align: top; margin-left: 6px;">{{ pkg.dependencies.vuedraggable }}</Tag><BackTop />
 
 <script lang="ts" setup>
-import pkg from '../../package.json'
+import pkg from '../../../package.json'
 import { ref, watchEffect } from 'vue'
 import Draggable from 'vuedraggable'
 

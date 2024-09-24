@@ -411,8 +411,8 @@ function initChart () {
 :::
 
 <script setup lang="ts">
-import pkg from '../../package.json'
-import GaugeChart from './components/GaugeChart.vue'
+import pkg from '../../../package.json'
+import GaugeChart from '../components/GaugeChart.vue'
 import { ref, onMounted } from 'vue'
 
 const gauge = ref()
