@@ -326,6 +326,56 @@ document.getElementById("div1").removeAttribute("align")
 // Now: <div id="div1" width="200px">
 ```
 
+## [CSSStyleDeclaration.getPropertyValue()](https://developer.mozilla.org/zh-CN/docs/Web/API/CSSStyleDeclaration/getPropertyValue)
+
+`CSSStyleDeclaration.getPropertyValue()` 接口返回一个 `DOMString` ，其中包含请求的 `CSS` 属性的值。
+
+### 语法
+
+```js
+var value = style.getPropertyValue(property)
+```
+
+### 参数
+
+- `property` 是一个 `DOMString`，是需要查询的 `CSS` 属性名称。
+
+### 返回值
+
+- `value` 是 `DOMString` ，包含查找属性的值。若对应属性没有设置，则返回空字符串。
+
+### 示例
+
+```js
+var declaration = document.styleSheets[0].cssRules[0].style
+var value = declaration.getPropertyValue('margin') // '1px 2px'
+```
+
+## [CSSStyleDeclaration.removeProperty()](https://developer.mozilla.org/zh-CN/docs/Web/API/CSSStyleDeclaration/removeProperty)
+
+`CSSStyleDeclaration.removeProperty()` 方法移除 `style` 对象的一个属性。
+
+### 语法
+
+```js
+var oldValue = style.removeProperty(property)
+```
+
+### 参数
+
+- `property` 是一个 `DOMString` ，代表要移除的属性名。注意由**多个单词组成的属性要用连字符连接各个单词，不接收驼峰命名法的形式**。
+
+### 返回值
+
+- `oldValue` 是一个 `DOMString` ，等于被移除的属性在移除前的属性值。
+
+### 示例
+
+```js
+var declaration = document.styleSheets[0].rules[0].style
+var oldValue = declaration.removeProperty('margin')
+```
+
 ## [CSSStyleDeclaration.setProperty()](https://developer.mozilla.org/zh-CN/docs/Web/API/CSSStyleDeclaration/setProperty)
 
 `CSSStyleDeclaration.setProperty()` 方法接口为一个声明了 `CSS` 样式的对象设置一个新的值。
@@ -342,6 +392,10 @@ style.setProperty(propertyName, value, priority)
 - `value` <Tag :bordered="false" color="cyan">可选</Tag> 是一个 `DOMString` ，含有新的属性值。如果没有指定，则当作空字符串。
   - 注意：`value` 不能包含 "**!important**" --那个应该使用 `priority` 参数。
 - `priority` <Tag :bordered="false" color="cyan">可选</Tag> 是一个 `DOMString` 允许设置 "`important`" `CSS` 优先级。如果没有指定，则当作空字符串。
+
+### 返回值 
+
+- undefined
 
 > `JavaScript` 有一个特别的，更简单的在 `CSSStyleDeclaration` 对象上设置 `CSS` 属性值的语法
 
