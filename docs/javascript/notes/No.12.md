@@ -1,5 +1,7 @@
 # Note 12
 
+<BackTop />
+
 ## [String()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String) & [toString()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/toString) 比较
 
 在JavaScript中，`toString()`和`String()`都可以用来将其他类型的值转换为字符串。尽管两者都能达到相似的目的，但它们在用法和场景上有所不同。了解这些差异可以帮助你更好地决定在特定情况下使用哪个方法。

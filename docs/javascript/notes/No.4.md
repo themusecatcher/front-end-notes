@@ -1,5 +1,7 @@
 # Note 4
 
+<BackTop />
+
 ## 监听当前页面是否处于激活状态 [`visibilitychange`](https://developer.mozilla.org/zh-CN/docs/Web/API/Document/visibilitychange_event)
 
 - 方法一：监听 `visibilitychange` 事件

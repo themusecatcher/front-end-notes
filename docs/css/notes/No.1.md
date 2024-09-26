@@ -1,5 +1,7 @@
 # Note 1
 
+<BackTop />
+
 ## 非CJK脚本的换行规则 <Tag :bordered="false" color="magenta">长字母和数字</Tag>
 
 *CJK脚本是中国，日本和韩国（"中日韩"）脚本*

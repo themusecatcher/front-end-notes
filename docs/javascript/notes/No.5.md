@@ -1,5 +1,7 @@
 # Note 5
 
+<BackTop />
+
 ## 向DOM树中添加元素（标签）
 
 - [`Node.cloneNode`](https://developer.mozilla.org/zh-CN/docs/Web/API/Node/cloneNode)

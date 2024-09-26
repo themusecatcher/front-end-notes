@@ -1,5 +1,7 @@
 # Note 5
 
+<BackTop />
+
 ## 表格详情页样式
 
 ![Alt text](image-6.png)

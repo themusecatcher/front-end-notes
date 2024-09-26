@@ -1,5 +1,7 @@
 # Note 11
 
+<BackTop />
+
 ## [WeakSet()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) & [WeakMap()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)
 
 `WeakSet` 结构与 `Set` 类似，也是不重复的值的集合，具备:

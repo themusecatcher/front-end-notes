@@ -1,5 +1,7 @@
 # Note 1
 
+<BackTop />
+
 ## 数组去重
 
 ```js

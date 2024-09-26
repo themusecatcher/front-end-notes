@@ -1,5 +1,7 @@
 # Note 3
 
+<BackTop />
+
 ## js判断对象是否包含某个属性key
 
 - `in` 关键字，会返回 `true` 和 `false`

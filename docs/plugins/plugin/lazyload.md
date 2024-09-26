@@ -1,4 +1,6 @@
-# 懒加载 vue3-lazyload<Tag color="volcano" style="vertical-align: top; margin-left: 6px;">{{ pkg.dependencies['vue3-lazyload'] }}</Tag><BackTop />
+# 懒加载 vue3-lazyload<Tag color="volcano" style="vertical-align: top; margin-left: 6px;">{{ pkg.dependencies['vue3-lazyload'] }}</Tag>
+
+<BackTop />
 
 <script lang="ts" setup>
 import pkg from '../../../package.json'

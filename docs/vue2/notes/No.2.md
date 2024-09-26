@@ -1,5 +1,7 @@
 # Note 2
 
+<BackTop />
+
 ## 过渡效果
 
 ```html

@@ -1,5 +1,7 @@
 # Note 2
 
+<BackTop />
+
 ## 水平垂直居中
 
 ```html

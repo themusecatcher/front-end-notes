@@ -1,5 +1,7 @@
 # Note 3
 
+<BackTop />
+
 ## 块级元素 `block` & 内联元素 `inline` & 行内块元素 `inline-block` & 浮动元素 `float`
 
 样式 | 说明

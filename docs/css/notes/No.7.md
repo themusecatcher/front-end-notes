@@ -1,5 +1,7 @@
 # Note 7
 
+<BackTop />
+
 ## `scoped` & `:deep()` & `:slotted` & `:global()` & 动态 `CSS（v-bind）` & `CSS module`
 
 vue中的 `scoped` 通过在 `DOM` 结构以及 `CSS` 样式上加唯一不重复的标记 `:data-v-hash` 的方式，以保证唯一（而这个工作是由过`PostCSS`转译实现的），达到样式私有化模块化的目的。

@@ -1,5 +1,7 @@
 # Note 3
 
+<BackTop />
+
 ## Vue3+TypeScript+Vite+Less 开发 H5 项目（amfe-flexible + postcss-pxtorem）
 
 ### 参考文档

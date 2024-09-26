@@ -1,5 +1,7 @@
 # Note 10
 
+<BackTop />
+
 ## [innerText](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/innerText)
 
 `HTMLElement` 接口的 `innerText` 属性表示一个节点及其后代所渲染文本的内容。

@@ -1,5 +1,7 @@
 # Note 8
 
+<BackTop />
+
 ## [scrollHeight详情](/javascript/notes/No.4.html#浏览器窗口宽高和元素坐标-尺寸)
 
 ### 判断元素是否有滚动条

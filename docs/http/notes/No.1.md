@@ -1,5 +1,7 @@
 # Note 1
 
+<BackTop />
+
 ## [cookie](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Cookies) & [localStorage](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage) & [sessionStorage](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/sessionStorage)
 
 前端开发时，在网页刷新的时候，所有数据都会被清空，这时候就要用到本地存储的技术，前端本地存储的方式有三种，分别是`cookie`，`localstorage`和`sessionStorage`

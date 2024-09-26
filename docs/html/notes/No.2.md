@@ -1,5 +1,7 @@
 # Note 2
 
+<BackTop />
+
 ## [tabindex](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Global_attributes/tabindex) & 让div具有 `focus` 和 `blur` 事件
 
 `tabindex` 全局属性 指示其元素是否可以聚焦，以及它是否/在何处参与顺序键盘导航（通常使用Tab键，因此得名）。

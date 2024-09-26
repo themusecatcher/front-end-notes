@@ -1,5 +1,7 @@
 # Note 9
 
+<BackTop />
+
 ## [Element.append()](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/append)
 
 DOMString 即字符串
