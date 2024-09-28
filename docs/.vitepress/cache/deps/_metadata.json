@@ -1,112 +1,70 @@
 {
-  "hash": "1e757d13",
-  "configHash": "4a2b1a68",
-  "lockfileHash": "4dc1abcd",
-  "browserHash": "9c4727ad",
+  "hash": "64fec309",
+  "configHash": "680f597a",
+  "lockfileHash": "45d29631",
+  "browserHash": "ee3143e9",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/.pnpm/vue@3.5.8/node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "1a67ab5a",
+      "fileHash": "f50ce26c",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
-      "src": "../../../../node_modules/.pnpm/@vue+devtools-api@7.4.5/node_modules/@vue/devtools-api/dist/index.js",
+      "src": "../../../../node_modules/.pnpm/@vue+devtools-api@7.4.6/node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "e4d6e91d",
+      "fileHash": "afd17107",
       "needsInterop": false
     },
     "vitepress > @vueuse/core": {
       "src": "../../../../node_modules/.pnpm/@vueuse+core@11.1.0_vue@3.5.8/node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "657783fe",
+      "fileHash": "dd9c53fe",
       "needsInterop": false
     },
     "vitepress > @vueuse/integrations/useFocusTrap": {
       "src": "../../../../node_modules/.pnpm/@vueuse+integrations@11.1.0_async-validator@4.2.5_focus-trap@7.6.0_qrcode@1.5.4_sortablejs@1.15.3_vue@3.5.8/node_modules/@vueuse/integrations/useFocusTrap.mjs",
       "file": "vitepress___@vueuse_integrations_useFocusTrap.js",
-      "fileHash": "81dd6dd5",
+      "fileHash": "af0c277a",
       "needsInterop": false
     },
     "vitepress > mark.js/src/vanilla.js": {
       "src": "../../../../node_modules/.pnpm/mark.js@8.11.1/node_modules/mark.js/src/vanilla.js",
       "file": "vitepress___mark__js_src_vanilla__js.js",
-      "fileHash": "a972c5bf",
+      "fileHash": "e9580710",
       "needsInterop": false
     },
     "vitepress > minisearch": {
       "src": "../../../../node_modules/.pnpm/minisearch@7.1.0/node_modules/minisearch/dist/es/index.js",
       "file": "vitepress___minisearch.js",
-      "fileHash": "3ec6db00",
+      "fileHash": "920e3813",
       "needsInterop": false
     },
     "vue3-lazyload": {
       "src": "../../../../node_modules/.pnpm/vue3-lazyload@0.3.8_vue@3.5.8/node_modules/vue3-lazyload/dist/index.mjs",
       "file": "vue3-lazyload.js",
-      "fileHash": "96d693ab",
+      "fileHash": "fc0db083",
       "needsInterop": false
     },
     "vue-amazing-ui": {
-      "src": "../../../../node_modules/.pnpm/vue-amazing-ui@1.6.7_async-validator@4.2.5_focus-trap@7.6.0_rollup@4.22.4_sortablejs@1.15.3/node_modules/vue-amazing-ui/dist/vue-amazing-ui.js",
+      "src": "../../../../node_modules/.pnpm/vue-amazing-ui@1.6.9_async-validator@4.2.5_focus-trap@7.6.0_rollup@4.22.4_sortablejs@1.15.3/node_modules/vue-amazing-ui/dist/vue-amazing-ui.js",
       "file": "vue-amazing-ui.js",
-      "fileHash": "5da79ccf",
-      "needsInterop": false
-    },
-    "vuedraggable": {
-      "src": "../../../../node_modules/.pnpm/vuedraggable@4.1.0_vue@3.5.8/node_modules/vuedraggable/dist/vuedraggable.umd.js",
-      "file": "vuedraggable.js",
-      "fileHash": "adbf1843",
-      "needsInterop": true
-    },
-    "echarts/core": {
-      "src": "../../../../node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/core.js",
-      "file": "echarts_core.js",
-      "fileHash": "b5970105",
-      "needsInterop": false
-    },
-    "echarts/charts": {
-      "src": "../../../../node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/charts.js",
-      "file": "echarts_charts.js",
-      "fileHash": "0598692a",
-      "needsInterop": false
-    },
-    "echarts/components": {
-      "src": "../../../../node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/components.js",
-      "file": "echarts_components.js",
-      "fileHash": "aa400470",
-      "needsInterop": false
-    },
-    "echarts/renderers": {
-      "src": "../../../../node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/renderers.js",
-      "file": "echarts_renderers.js",
-      "fileHash": "a957acc0",
+      "fileHash": "14963314",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-XLWB7PFW": {
-      "file": "chunk-XLWB7PFW.js"
+    "chunk-WYXPEXRY": {
+      "file": "chunk-WYXPEXRY.js"
     },
-    "chunk-4ZXLWKAY": {
-      "file": "chunk-4ZXLWKAY.js"
+    "chunk-FWXUNOVW": {
+      "file": "chunk-FWXUNOVW.js"
     },
-    "chunk-MOMREF3Z": {
-      "file": "chunk-MOMREF3Z.js"
+    "chunk-DNZWIXCN": {
+      "file": "chunk-DNZWIXCN.js"
     },
-    "chunk-K6EHK4LB": {
-      "file": "chunk-K6EHK4LB.js"
-    },
-    "chunk-5IMU4R72": {
-      "file": "chunk-5IMU4R72.js"
-    },
-    "chunk-JJPFZTJF": {
-      "file": "chunk-JJPFZTJF.js"
-    },
-    "chunk-3MDCYLEG": {
-      "file": "chunk-3MDCYLEG.js"
-    },
-    "chunk-EWTE5DHJ": {
-      "file": "chunk-EWTE5DHJ.js"
+    "chunk-EQCVQC35": {
+      "file": "chunk-EQCVQC35.js"
     }
   }
 }

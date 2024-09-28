@@ -3,7 +3,7 @@ import {
   isVue2,
   isVue3,
   set
-} from "./chunk-4ZXLWKAY.js";
+} from "./chunk-FWXUNOVW.js";
 import {
   Fragment,
   TransitionGroup,
@@ -40,7 +40,7 @@ import {
   version,
   watch,
   watchEffect
-} from "./chunk-3MDCYLEG.js";
+} from "./chunk-DNZWIXCN.js";
 
 // node_modules/.pnpm/@vueuse+shared@11.1.0_vue@3.5.8/node_modules/@vueuse/shared/index.mjs
 function computedEager(fn, options) {
@@ -9285,4 +9285,4 @@ export {
   useWindowScroll,
   useWindowSize
 };
-//# sourceMappingURL=chunk-XLWB7PFW.js.map
+//# sourceMappingURL=chunk-WYXPEXRY.js.map
