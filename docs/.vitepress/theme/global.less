@@ -160,31 +160,17 @@ h1 { // h1 标签渐变色文本
   background-image: linear-gradient(to right, #09c8ce, #eb2f96);
   margin-bottom: 20px;
 }
-html:not(.dark) .VPHome {
-  background: url(/light-sea.jpeg) no-repeat center;
-  background-size: cover;
-  min-height: 100vh;
-}
-html.dark .VPHome {
-  background: url(/dark-sea.jpg) no-repeat center;
-  background-size: cover;
-  min-height: 100vh;
-}
 .VPHome {
   margin-bottom: 0 !important;
   padding-bottom: 104px !important;
 }
 .VPHero {
   .name {
-    font-size: 64px;
+    font-size: 60px;
+    line-height: 72px;
   }
   .text {
-    font-size: 52px;
-    color: rgba(0, 0, 0, 0.72) !important;
     padding-top: 16px;
-  }
-  .tagline {
-    color: rgba(0, 0, 0, 0.6) !important;
   }
   .name { // 标题悬浮动画效果
     transition: all 0.3s ease-in-out;
@@ -192,23 +178,10 @@ html.dark .VPHome {
       transform: scale(1.02);
     }
   }
-  .text {
-    color: var(--vp-c-text-1);
-  }
   .image-src {
     transition: transform 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     &:hover {
       transform: translate(-50%, -50%) scale(1.2);
-    }
-  }
-}
-.dark {
-  .VPHero {
-    .text {
-      color: rgba(255, 255, 255, 0.88) !important;
-    }
-    .tagline {
-      color: rgba(255, 255, 255, 0.5) !important;
     }
   }
 }
@@ -355,7 +328,6 @@ html.dark .VPHome {
   .actions {
     .action {
       .VPButton {
-        color: rgba(0, 0, 0, 0.88);
         border-color: transparent !important;
         border-radius: 12px !important;
       }
@@ -372,7 +344,7 @@ html.dark .VPHome {
     }
     .action {
       .VPButton.alt {
-        background-color: rgba(255, 255, 255, 0.45) !important;
+        background-color: rgba(235, 235, 235, 0.85) !important;
         transition: all 0.25s;
       }
       .VPButton.alt {
@@ -387,13 +359,11 @@ html.dark .VPHome {
 .dark {
   .VPHero {
     .actions .action {
-      .VPButton {
-        color: rgba(255, 255, 255, 0.88);
-      }
       .VPButton.alt {
         background-color: rgba(0, 0, 0, 0.45) !important;
         &:hover {
-          border-color: #09c8ce !important;
+          border-color: rgb(9, 200, 206) !important;
+          box-shadow: 0 0 3px 3px rgba(9, 200, 206, 0.12);
         }
       }
     }
@@ -403,40 +373,27 @@ html.dark .VPHome {
   background-color: transparent !important;
   &:hover {
     border-color: #e4c31b !important;
-    box-shadow: 0 0 0.5px 3.5px rgba(228, 195, 27, 0.3);
+    box-shadow: 0 0 1.5px 3px rgba(228, 195, 27, 0.24);
   }
 }
 .DocSearch-Button {
   border-radius: 12px;
-  background-color: rgba(0, 0, 0, 0.36);
+  background-color: rgba(235, 235, 235, 0.6);
   transition: all 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
     border-color: #bd34fe;
-    background-color: rgba(0, 0, 0, 0.36);
+    background-color: rgba(235, 235, 235, 0.6);
     box-shadow: 0 0 3px 3px rgba(189, 52, 254, 0.12);
-    .DocSearch-Search-Icon,
-    .DocSearch-Button-Placeholder {
-      color: #FFF;
-    }
-  }
-  .DocSearch-Search-Icon,
-  .DocSearch-Button-Placeholder {
-    color: #FFF;
-  }
-  .DocSearch-Button-Keys {
-    .DocSearch-Button-Key {
-      color: #FFF;
-      &::after {
-        color: #FFF;
-      }
-    }
   }
 }
 .dark {
   .DocSearch-Button {
+    background-color: rgba(22, 22, 22, 0.6);
     &:hover {
       border-color: #09c8ce;
+      background-color: rgba(22, 22, 22, 0.6);
+      box-shadow: 0 0 3px 3px rgba(9, 200, 206, 0.12);
     }
   }
 }
@@ -449,16 +406,13 @@ html.dark .VPHome {
       .VPFeature {
         border-radius: 32px;
         border: none;
-        background-color: rgba(255, 255, 255, 0.45);
         transition: all 0.25s;
         .icon, .title {
           font-size: 18px;
-          color: rgba(0, 0, 0, 0.8);
           transition: all 0.25s;
         }
         .details {
           font-size: 16px;
-          color: rgba(0, 0, 0, 0.68);
         }
         .icon {
           width: 72px;
@@ -466,7 +420,6 @@ html.dark .VPHome {
           font-size: 20px;
           font-weight: 700;
           border-radius: 24px;
-          background-color: rgba(0, 0, 0, 0.1);
           .logo {
             width: 32px;
             height: 32px;
@@ -480,17 +433,6 @@ html.dark .VPHome {
           box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
         }
       }
-    }
-  }
-}
-.dark {
-  .VPFeature {
-    background-color: rgba(0, 0, 0, 0.45) !important;
-    .title {
-      color: rgba(255, 255, 255, 0.8) !important;
-    }
-    .details {
-      color: rgba(255, 255, 255, 0.6) !important;
     }
   }
 }

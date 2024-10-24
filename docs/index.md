@@ -15,9 +15,6 @@ hero:
     - theme: brand
       text: 开始使用
       link: /javascript/started
-    - theme: alt
-      text: View on GitHub
-      link: https://github.com/themusecatcher/front-end-notes
 features:
   - icon: JS
     title: JavaScript 相关
