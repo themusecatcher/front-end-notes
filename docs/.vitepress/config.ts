@@ -9,17 +9,27 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/svg+xml', href: 'https://cn.vitejs.dev/viteconf.svg' }],
     // ['link', { rel: 'icon', type: 'image/x-icon', href: 'favicon.ico' }],
   ],
-  appearance: true, // 默认 true，设为 false 则无法切换dark/light主题，可选 'dark' true false
+  appearance: true, // 默认 true，设为 false 则无法切换 dark/light 主题，可选 'dark' true false
   markdown: {
-    lineNumbers: false // 是否显示行数，默认false
+    lineNumbers: false // 是否显示行数，默认 false
   },
   themeConfig: {
     logo: '/amazing-icon.svg',
 
     editLink: {
       pattern: 'https://github.com/themusecatcher/front-end-notes/tree/master/docs/:path',
-      text: 'Suggest changes to this page'
+      text: '在 GitHub 上编辑此页面' // Edit this page on GitHub
     },
+
+    // lastUpdated: true, // 最后更新时间戳
+    lastUpdated: {
+      text: '最后更新于', // Last updated
+      formatOptions: {
+        dateStyle: 'short',
+        timeStyle: 'medium'
+      }
+    },
+
     // 默认支持icon包括：'discord'|'facebook'|'github'|'instagram'|'linkedin'|'mastodon'|'slack'|'twitter'|'youtube'
     socialLinks: [
       { icon: 'github', link: 'https://github.com/themusecatcher/front-end-notes' }
@@ -44,7 +54,7 @@ export default defineConfig({
 
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2023-present The Muse Catcher'
+      copyright: 'Copyright © 2023-present the Muse Catcher'
     },
 
     nav: [

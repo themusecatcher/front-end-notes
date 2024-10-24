@@ -13,7 +13,7 @@ hero:
     alt: Front-end Notes
   actions:
     - theme: brand
-      text: Get Started
+      text: 开始使用
       link: /javascript/started
     - theme: alt
       text: View on GitHub
