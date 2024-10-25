@@ -180,12 +180,14 @@ console.timeEnd('run time')
 
   ```js
   document.body.clientWidth
+  document.documentElement.clientWidth // 视口宽度(不包括滚动条)
   ```
 
 - `clientHeight` 返回元素的像素高度（**仅包含内边距padding，不包含边框border、外边距margin和滚动条**）：
   
   ```js
   document.body.clientHeight
+  document.documentElement.clientHeight // 视口高度(不包括滚动条)
   ```
   
 - `scrollWidth` 返回元素的像素宽度（**包含内边距padding，不包含边框border、外边距margin**）：
