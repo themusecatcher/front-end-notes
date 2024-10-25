@@ -23,6 +23,7 @@ export default {
       //     console.log('loaded', el)
       //   }
       // }
-    }).use(VueAmazingUI)
+    })
+    app.use(VueAmazingUI)
   },
 }
