@@ -14,3 +14,48 @@ document.addEventListener('contextmenu', (event) => {
   event.preventDefault()
 })
 ```
+
+## 获取目标元素最近的可滚动父元素并监听其滚动事件
+
+```vue
+<script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+const target = ref<HTMLElement | null>(null)
+const scrollParent = ref<HTMLElement | null>(null)
+onMounted(() => {
+  observeScroll()
+})
+onBeforeUnmount(() => {
+  cleanup()
+})
+function cleanup() {
+  scrollParent.value && scrollParent.value.removeEventListener('scroll', scrollEvent)
+  scrollParent.value = null
+}
+function scrollEvent (e: Event) {
+  console.log('scrollTop', e.target.scrollTop)
+  console.log('scrollLeft', e.target.scrollLeft)
+}
+function observeScroll() { // 监听可滚动父元素的滚动事件
+  cleanup()
+  scrollParent.value = getScrollParent(target.value?.parentElement ?? null)
+  scrollParent.value && scrollParent.value.addEventListener('scroll', scrollEvent)
+}
+function getScrollParent(el: HTMLElement | null): HTMLElement | null {
+  const isScrollable = (el: HTMLElement): boolean => {
+    const style = window.getComputedStyle(el)
+    if (
+      (el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth) &&
+      (style.overflow === 'scroll' || style.overflow === 'auto')
+    ) {
+      return true
+    }
+    return false
+  }
+  if (el) {
+    return isScrollable(el) ? el : getScrollParent(el.parentElement ?? null)
+  }
+  return null
+}
+</script>
+```
