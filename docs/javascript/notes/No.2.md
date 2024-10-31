@@ -2,14 +2,14 @@
 
 <BackTop />
 
-## 向指定元素添加事件句柄（监听事件）
+## 向指定元素添加事件句柄（监听事件）[`EventTarget.addEventListener()`](https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/addEventListener)
 
-[`EventTarget.addEventListener()`](https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/addEventListener)方法将指定的监听器注册到 EventTarget 上，当该对象触发指定的事件时，指定的回调函数就会被执行。事件目标可以是一个文档上的元素 Element、Document 和 Window，也可以是任何支持事件的对象（比如 XMLHttpRequest）。
+该方法将指定的监听器注册到 `EventTarget` 上，当该对象触发指定的事件时，指定的回调函数就会被执行。事件目标可以是一个文档上的元素 `Element`、`Document` 和 `Window`，也可以是任何支持事件的对象（比如 `XMLHttpRequest`）。
 
 ::: tip 备注
 推荐使用 `addEventListener()` 来注册一个事件监听器，理由如下：
 
-- 它允许为一个事件添加多个监听器。特别是对库、JavaScript 模块和其他需要兼容第三方库/插件的代码来说，这一功能很有用。
+- 它允许为一个事件添加多个监听器。特别是对库、`JavaScript` 模块和其他需要兼容第三方库/插件的代码来说，这一功能很有用。
 - 相比于 `onXYZ` 属性绑定来说，它提供了一种更精细的手段来控制 `listener` 的触发阶段。（即可以选择捕获或者冒泡）。
 - 它对任何事件都有效，而不仅仅是 `HTML` 或 `SVG` 元素。
 :::
@@ -132,6 +132,55 @@ el.onclick = function (event) {
 - 阻止默认事件（即事件本身）
   1. `event.preventDefault()`
   2. `return false`
+
+## 移除事件监听器 [EventTarget.removeEventListener()](https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/removeEventListener)
+
+`EventTarget` 的 `removeEventListener()` 方法可以删除使用 `EventTarget.addEventListener()` 方法添加的事件。可以使用事件类型，事件侦听器函数本身，以及可能影响匹配过程的各种可选择的选项的组合来标识要删除的事件侦听器。参见下文的匹配要删除的事件监听器。
+
+调用 `removeEventListener()` 时，若传入的参数不能用于确定当前注册过的任何一个事件监听器，该函数不会起任何作用。
+
+如果一个 `EventTarget` 上的事件监听器在另一监听器处理该事件时被移除，那么它将不能被事件触发。不过，它可以被重新绑定。
+
+::: warning 警告
+如果同一个事件监听器分别为“事件捕获（`capture` 为 `true`）”和“事件冒泡（`capture` 为 `false`）”注册了一次，这两个版本的监听器需要分别移除。移除捕获监听器不会影响非捕获版本的相同监听器，反之亦然。
+:::
+
+### 语法
+
+```js
+removeEventListener(type, listener)
+removeEventListener(type, listener, options)
+removeEventListener(type, listener, useCapture)
+```
+
+### 参数
+
+- `type`：一个字符串，表示需要移除的事件类型。
+- `listener`：需要从目标事件移除的事件监听器函数。
+- `options` <Tag :bordered="false" color="cyan">可选</Tag>：一个指定事件侦听器特征的可选对象。可选项有：
+  - `capture`: 一个布尔值，指定需要移除的事件监听器函数是否为捕获监听器。如果未指定此参数，默认值为 `false`。
+- `capture`: <Tag :bordered="false" color="cyan">可选</Tag>：一个布尔值，指定需要移除的事件监听器函数是否为捕获监听器。如果未指定此参数，默认值为 `false`。
+
+### 示例
+
+```js
+const body = document.querySelector('body')
+const clickTarget = document.getElementById('click-target')
+const mouseOverTarget = document.getElementById('mouse-over-target')
+
+let toggle = false
+function makeBackgroundYellow() {
+  body.style.backgroundColor = toggle ? 'white' : 'yellow'
+
+  toggle = !toggle
+}
+
+clickTarget.addEventListener('click', makeBackgroundYellow, false)
+
+mouseOverTarget.addEventListener('mouseover', () => {
+  clickTarget.removeEventListener('click', makeBackgroundYellow, false)
+})
+```
 
 ## window.location对象
 

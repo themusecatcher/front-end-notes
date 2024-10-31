@@ -133,7 +133,7 @@ console.timeEnd('run time')
 
 ## 浏览器窗口宽高和元素坐标，尺寸
 
-- `el.getBoundingClientRect()`获取DOM元素的大小及其各边缘相对于浏览器可视窗口的位置（不包括滚动条）：
+- [`el.getBoundingClientRect()`](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/getBoundingClientRect) 获取DOM元素的大小及其各边缘相对于浏览器可视窗口的位置（不包括滚动条）：
   
   ```js
   var docEl = document.documentElement // window.document.documentElement
@@ -147,11 +147,11 @@ console.timeEnd('run time')
   const el = document.getElementById('animate') // 获取DOM元素
   // 或者 const el = this.$refs.animate
   // 元素上边缘距浏览器窗口上边界的距离，可正，可负，可为0
-  console.log('distance:', el.getBoundingClientRect().top) 
+  console.log('distance:', el.getBoundingClientRect().top) // y 
   // 元素下边缘距浏览器窗口上边界的距离，可正，可负，可为0
   console.log('distance:', el.getBoundingClientRect().bottom) 
   // 元素左边缘距浏览器窗口左边界的距离，可正，可负，可为0
-  console.log('distance:', el.getBoundingClientRect().left) 
+  console.log('distance:', el.getBoundingClientRect().left) // x 
   // 元素右边缘距浏览器窗口左边界的距离，可正，可负，可为0
   console.log('distance:', el.getBoundingClientRect().right) 
   // 元素的宽度（包括内边距padding和边框border）
