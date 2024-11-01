@@ -1,4 +1,10 @@
+import {
+  init_vue_runtime_esm_bundler
+} from "./chunk-HDBOUNJA.js";
+
 // node_modules/.pnpm/vitepress@1.4.2_@algolia+client-search@5.12.0_async-validator@4.2.5_less@4.2.0_postcss@8.4.47_yk2l43jmgie4dckx7e3kvddofu/node_modules/vitepress/lib/vue-demi.mjs
+init_vue_runtime_esm_bundler();
+init_vue_runtime_esm_bundler();
 var isVue2 = false;
 var isVue3 = true;
 function set(target, key, val) {
@@ -33,4 +39,4 @@ vitepress/lib/vue-demi.mjs:
    * @license MIT
    *)
 */
-//# sourceMappingURL=chunk-25R462LT.js.map
+//# sourceMappingURL=chunk-5PLECX6K.js.map

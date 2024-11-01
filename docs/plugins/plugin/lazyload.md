@@ -35,7 +35,7 @@ function onClick () {
 
 - [使用文档](https://www.npmjs.com/package/vue3-lazyload)
 
-## Register
+## 引入并注册
 
 ::: details Show Code
 
@@ -46,8 +46,8 @@ import App from './App.vue'
 
 const app = createApp(App)
 app.use(VueLazyLoad, {
-  loading: '...',
-  error: '...',
+  loading: '...', // 加载中占位图
+  error: '...', // 加载失败占位图
   lifecycle: {
     loading: (el: Element) => {
       console.log('loading', el)
@@ -76,7 +76,6 @@ app.mount('#app')
 ```vue
 <script lang="ts" setup>
 import { ref } from 'vue'
-
 const Image1 = ref('https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/5.jpg')
 </script>
 <template>
@@ -123,11 +122,9 @@ const Image1 = ref('https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/5
 import { ref } from 'vue'
 import { Space, Button } from 'vue-amazing-ui'
 import 'vue-amazing-ui/css'
-
 const Image1 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/5.jpg'
 const Image2 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/8.jpg'
 const Image3 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/9.jpg'
-
 const lazyOptions = ref({
   src: Image1,
   // loading: Image2,
@@ -195,11 +192,9 @@ function onClick () {
 import { ref } from 'vue'
 import { Space, Button } from 'vue-amazing-ui'
 import 'vue-amazing-ui/css'
-
 const Image1 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/5.jpg'
 const Image2 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/8.jpg'
 const Image3 = 'https://cdn.jsdelivr.net/gh/themusecatcher/resources@0.0.5/9.jpg'
-
 const lazyOptions = ref({
   src: Image1,
   // loading: Image2,
