@@ -3,6 +3,8 @@
 # 确保脚本抛出遇到的错误
 set -e
 
+commitDesc=$1
+
 # 打包生成静态文件
 pnpm docs:build
 
@@ -20,7 +22,13 @@ git push -f git@github.com:themusecatcher/front-end-notes.git master:github-page
 # 提交所有代码到github
 cd ../../../
 git add .
-git commit -m 'update'
+
+if [ -z ${commitDesc} ]; then
+  git commit -m 'update'
+else
+  git commit -m ${commitDesc}
+fi
+
 git push
 
 echo ⏰ "$(date '+%Y-%m-%d %H:%M:%S')"

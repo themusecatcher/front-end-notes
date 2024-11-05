@@ -21,8 +21,8 @@ importers:
         specifier: ^3.5.12
         version: 3.5.12
       vue-amazing-ui:
-        specifier: ^1.9.0
-        version: 1.9.0(async-validator@4.2.5)(focus-trap@7.6.0)(sortablejs@1.15.3)
+        specifier: ^1.9.2
+        version: 1.9.2(async-validator@4.2.5)(focus-trap@7.6.0)(sortablejs@1.15.3)
       vue-codemirror:
         specifier: ^6.1.1
         version: 6.1.1(codemirror@6.0.1(@lezer/common@1.2.3))(vue@3.5.12)
@@ -191,8 +191,8 @@ packages:
   '@codemirror/lint@6.8.2':
     resolution: {integrity: sha512-PDFG5DjHxSEjOXk9TQYYVjZDqlZTFaDBfhQixHnQOEVDDNHUbEh/hstAjcQJaA6FQdZTD1hquXTK0rVBLADR1g==}
 
-  '@codemirror/search@6.5.6':
-    resolution: {integrity: sha512-rpMgcsh7o0GuCDUXKPvww+muLA1pDJaFrpq/CCHtpQJYz8xopu4D1hPcKRoDD0YlF8gZaqTNIRa4VRBWyhyy7Q==}
+  '@codemirror/search@6.5.7':
+    resolution: {integrity: sha512-6+iLsXvITWKHYlkgHPCs/qiX4dNzn8N78YfhOFvPtPYCkuXqZq10rAfsUMhOq7O/1VjJqdXRflyExlfVcu/9VQ==}
 
   '@codemirror/state@6.4.1':
     resolution: {integrity: sha512-QkEyUiLhsJoZkbumGZlswmAhA7CBU02Wrz7zvH4SrcifbsqwlXShVXg65f3v/ts57W3dqyamEriMhij1Z3Zz4A==}
@@ -1185,8 +1185,8 @@ packages:
     peerDependencies:
       vue: ^3.0.0
 
-  vue-amazing-ui@1.9.0:
-    resolution: {integrity: sha512-Li7l5UFsFwjZKS1WfSu+Hbr6tn66au4H8dadHXIP2T1uFfsvQww3nuO2ieqlJdsM8yYPcD+GX03610RoOn8q/w==}
+  vue-amazing-ui@1.9.2:
+    resolution: {integrity: sha512-+PF5XLSmxRqwoN6SGOWS+6XXpfnHnazRWQjOsIuwCFkNaU7hnRa5ECKHyw4909QkgoLnhDy6OUI9omDDitkwpQ==}
 
   vue-codemirror@6.1.1:
     resolution: {integrity: sha512-rTAYo44owd282yVxKtJtnOi7ERAcXTeviwoPXjIc6K/IQYUsoDkzPvw/JDFtSP6T7Cz/2g3EHaEyeyaQCKoDMg==}
@@ -1515,7 +1515,7 @@ snapshots:
       '@codemirror/view': 6.34.1
       crelt: 1.0.6
 
-  '@codemirror/search@6.5.6':
+  '@codemirror/search@6.5.7':
     dependencies:
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.34.1
@@ -1993,7 +1993,7 @@ snapshots:
       '@codemirror/commands': 6.7.1
       '@codemirror/language': 6.10.3
       '@codemirror/lint': 6.8.2
-      '@codemirror/search': 6.5.6
+      '@codemirror/search': 6.5.7
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.34.1
     transitivePeerDependencies:
@@ -2528,7 +2528,7 @@ snapshots:
       evtd: 0.2.4
       vue: 3.5.12
 
-  vue-amazing-ui@1.9.0(async-validator@4.2.5)(focus-trap@7.6.0)(sortablejs@1.15.3):
+  vue-amazing-ui@1.9.2(async-validator@4.2.5)(focus-trap@7.6.0)(sortablejs@1.15.3):
     dependencies:
       '@ant-design/icons-vue': 7.0.1(vue@3.5.12)
       '@vuepic/vue-datepicker': 9.0.3(vue@3.5.12)
