@@ -14,11 +14,6 @@ export default defineConfig({
   markdown: {
     lineNumbers: false // 是否显示行数，默认 false
   },
-  vite: {
-    ssr: {
-      noExternal: ['vue3-pdf-app']
-    }
-  },
   themeConfig: {
     logo: '/amazing-icon.svg',
 
