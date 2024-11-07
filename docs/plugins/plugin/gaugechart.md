@@ -6,7 +6,7 @@
 
 ```vue
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 /*
   按需引入
 */
@@ -65,8 +65,8 @@ interface Gauge {
 }
 interface Props {
   gaugeData: Gauge[] // 仪表盘数据源
-  width?: string|number // 容器宽度
-  height?: string|number // 容器高度
+  width?: string | number // 容器宽度
+  height?: string | number // 容器高度
   themeColor?: string // 主题色
 }
 const props = withDefaults(defineProps<Props>(), {
@@ -77,14 +77,14 @@ const props = withDefaults(defineProps<Props>(), {
 })
 const chartWidth = computed(() => {
   if (typeof props.width === 'number') {
-    return props.width + 'px'
+    return `${props.width}px`
   } else {
     return props.width
   }
 })
 const chartHeight = computed(() => {
   if (typeof props.height === 'number') {
-    return props.height + 'px'
+    return `${props.height}px`
   } else {
     return props.height
   }
@@ -414,7 +414,6 @@ function initChart () {
 
 <script setup lang="ts">
 import pkg from '../../../package.json'
-import GaugeChart from '../components/GaugeChart.vue'
 import { ref, onMounted } from 'vue'
 
 const gauge = ref()
@@ -446,15 +445,14 @@ function getGaugeData () {
 <GaugeChart
   ref="gauge"
   :gaugeData="gaugeData"
-  :height="500" />
+  :height="500"
+/>
 
 ::: details Show Code
 
 ```vue
 <script setup lang="ts">
-import GaugeChart from './components/GaugeChart.vue'
 import { ref, onMounted } from 'vue'
-
 const gauge = ref()
 const gaugeData = ref<any[]>([])
 onMounted(() => {

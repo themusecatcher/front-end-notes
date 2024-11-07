@@ -42,13 +42,13 @@ interface Tree {
 }
 interface Props {
   treeData: Tree[] // 树图数据源
-  width?: string|number // 容器宽度
-  height?: string|number // 容器高度
+  width?: string | number // 容器宽度
+  height?: string | number // 容器高度
   themeColor?: string // 主题色
-  edgeShape?: 'curve'|'polyline' // 树图边的形状，有曲线curve和折线polyline两种，只有正交布局下生效
+  edgeShape?: 'curve' | 'polyline' // 树图边的形状，有曲线curve和折线polyline两种，只有正交布局下生效
 }
 const props = withDefaults(defineProps<Props>(), {
-  treeData: () => ([]),
+  treeData: () => [],
   width: '100%',
   height: '100%',
   themeColor: '#1677FF',
@@ -56,14 +56,14 @@ const props = withDefaults(defineProps<Props>(), {
 })
 const chartWidth = computed(() => {
   if (typeof props.width === 'number') {
-    return props.width + 'px'
+    return `${props.width}px`
   } else {
     return props.width
   }
 })
 const chartHeight = computed(() => {
   if (typeof props.height === 'number') {
-    return props.height + 'px'
+    return `${props.height}px`
   } else {
     return props.height
   }
@@ -288,9 +288,7 @@ function initChart () {
 
 <script setup lang="ts">
 import pkg from '../../../package.json'
-import TreeChart from '../components/TreeChart.vue'
 import { ref, onMounted } from 'vue'
-
 const tree = ref()
 const treeData = ref<any[]>([])
 onMounted(() => {
@@ -368,15 +366,14 @@ function onClickNode (data: any) {
   ref="tree"
   :treeData="treeData"
   :height="500"
-  @click-node="onClickNode" />
+  @click-node="onClickNode"
+/>
 
 ::: details Show Code
 
 ```vue
 <script setup lang="ts">
-import TreeChart from './components/TreeChart.vue'
 import { ref, onMounted } from 'vue'
-
 const tree = ref()
 const treeData = ref<any[]>([])
 onMounted(() => {
@@ -445,10 +442,9 @@ function onClickNode (data: any) {
     ref="tree"
     :treeData="treeData"
     :height="500"
-    @click-node="onClickNode" />
+    @click-node="onClickNode"
+  />
 </template>
-
-
 ```
 
 :::

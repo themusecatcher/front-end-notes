@@ -59,3 +59,42 @@ function getScrollParent(el: HTMLElement | null): HTMLElement | null {
 }
 </script>
 ```
+
+## [overflow](https://developer.mozilla.org/zh-CN/docs/Web/CSS/overflow) 属性
+
+`overflow` 是 `CSS` 的简写属性，其设置了元素溢出时所需的行为——即当元素的内容太大而无法适应它的区块格式化上下文时。
+
+### 构成的属性
+
+这个属性是以下 CSS 属性的简写：
+
+- [overflow-x](https://developer.mozilla.org/zh-CN/docs/Web/CSS/overflow-x)
+- [overflow-y](https://developer.mozilla.org/zh-CN/docs/Web/CSS/overflow-y)
+
+### 默认值
+
+`visibile` // 等价于 `overflow-y: visible` 和 `overflow-x: visible`
+
+### 示例
+
+```vue
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+const testRef = ref()
+onMounted(() => {
+  const style = window.getComputedStyle(testRef.value)
+  console.log('style', style)
+  console.log('overflow', style.overflow) // scroll auto
+  console.log('overflowX', style.overflowX) // scroll
+  console.log('overflowY', style.overflowY) // auto
+})
+</script>
+<template>
+  <div class="test" ref="testRef"></div>
+</template>
+<style lang="less" scoped>
+.test {
+  overflow-x: scroll; // 其中一个为 scroll，则另一个默认为 auto
+}
+</style>
+```

@@ -1,70 +1,142 @@
 {
-  "hash": "a3bae509",
-  "configHash": "f7f0d329",
-  "lockfileHash": "aaa42ca7",
-  "browserHash": "ce651eae",
+  "hash": "de005860",
+  "configHash": "c750f177",
+  "lockfileHash": "88cebfc4",
+  "browserHash": "c9c77f2f",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/.pnpm/vue@3.5.12/node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "3aeb4903",
+      "fileHash": "b1950322",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
-      "src": "../../../../node_modules/.pnpm/@vue+devtools-api@7.6.1/node_modules/@vue/devtools-api/dist/index.js",
+      "src": "../../../../node_modules/.pnpm/@vue+devtools-api@7.6.2/node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "1482111a",
+      "fileHash": "9791c433",
       "needsInterop": false
     },
     "vitepress > @vueuse/core": {
       "src": "../../../../node_modules/.pnpm/@vueuse+core@11.2.0_vue@3.5.12/node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "fbfeb8b8",
+      "fileHash": "6d8a2399",
       "needsInterop": false
     },
     "vitepress > @vueuse/integrations/useFocusTrap": {
       "src": "../../../../node_modules/.pnpm/@vueuse+integrations@11.2.0_async-validator@4.2.5_focus-trap@7.6.0_qrcode@1.5.4_sortablejs@1.15.3_vue@3.5.12/node_modules/@vueuse/integrations/useFocusTrap.mjs",
       "file": "vitepress___@vueuse_integrations_useFocusTrap.js",
-      "fileHash": "7aebf01a",
+      "fileHash": "8b1a0ae1",
       "needsInterop": false
     },
     "vitepress > mark.js/src/vanilla.js": {
       "src": "../../../../node_modules/.pnpm/mark.js@8.11.1/node_modules/mark.js/src/vanilla.js",
       "file": "vitepress___mark__js_src_vanilla__js.js",
-      "fileHash": "1300f224",
+      "fileHash": "4cbee2e6",
       "needsInterop": false
     },
     "vitepress > minisearch": {
       "src": "../../../../node_modules/.pnpm/minisearch@7.1.0/node_modules/minisearch/dist/es/index.js",
       "file": "vitepress___minisearch.js",
-      "fileHash": "068f4dd4",
+      "fileHash": "3b3963e8",
       "needsInterop": false
     },
     "vue3-lazyload": {
       "src": "../../../../node_modules/.pnpm/vue3-lazyload@0.3.8_vue@3.5.12/node_modules/vue3-lazyload/dist/index.mjs",
       "file": "vue3-lazyload.js",
-      "fileHash": "02b13a8a",
+      "fileHash": "44d5c3cc",
       "needsInterop": false
     },
     "vue-amazing-ui": {
-      "src": "../../../../node_modules/.pnpm/vue-amazing-ui@1.9.2_async-validator@4.2.5_focus-trap@7.6.0_sortablejs@1.15.3/node_modules/vue-amazing-ui/dist/vue-amazing-ui.js",
+      "src": "../../../../node_modules/.pnpm/vue-amazing-ui@1.9.3_async-validator@4.2.5_focus-trap@7.6.0_sortablejs@1.15.3/node_modules/vue-amazing-ui/dist/vue-amazing-ui.js",
       "file": "vue-amazing-ui.js",
-      "fileHash": "4ebbd137",
+      "fileHash": "43b60ea9",
       "needsInterop": false
+    },
+    "vuedraggable": {
+      "src": "../../../../node_modules/.pnpm/vuedraggable@4.1.0_vue@3.5.12/node_modules/vuedraggable/dist/vuedraggable.umd.js",
+      "file": "vuedraggable.js",
+      "fileHash": "89fbb7ca",
+      "needsInterop": true
+    },
+    "vue-codemirror": {
+      "src": "../../../../node_modules/.pnpm/vue-codemirror@6.1.1_codemirror@6.0.1_@lezer+common@1.2.3__vue@3.5.12/node_modules/vue-codemirror/dist/vue-codemirror.esm.js",
+      "file": "vue-codemirror.js",
+      "fileHash": "1675f5ed",
+      "needsInterop": false
+    },
+    "@codemirror/lang-vue": {
+      "src": "../../../../node_modules/.pnpm/@codemirror+lang-vue@0.1.3/node_modules/@codemirror/lang-vue/dist/index.js",
+      "file": "@codemirror_lang-vue.js",
+      "fileHash": "ab130882",
+      "needsInterop": false
+    },
+    "@codemirror/theme-one-dark": {
+      "src": "../../../../node_modules/.pnpm/@codemirror+theme-one-dark@6.1.2/node_modules/@codemirror/theme-one-dark/dist/index.js",
+      "file": "@codemirror_theme-one-dark.js",
+      "fileHash": "38a6c5cf",
+      "needsInterop": false
+    },
+    "echarts/core": {
+      "src": "../../../../node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/core.js",
+      "file": "echarts_core.js",
+      "fileHash": "c7229c90",
+      "needsInterop": false
+    },
+    "echarts/charts": {
+      "src": "../../../../node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/charts.js",
+      "file": "echarts_charts.js",
+      "fileHash": "e4d8b5dd",
+      "needsInterop": false
+    },
+    "echarts/components": {
+      "src": "../../../../node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/components.js",
+      "file": "echarts_components.js",
+      "fileHash": "f43f56c3",
+      "needsInterop": false
+    },
+    "echarts/renderers": {
+      "src": "../../../../node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/renderers.js",
+      "file": "echarts_renderers.js",
+      "fileHash": "2bf353ee",
+      "needsInterop": false
+    },
+    "vue3-pdf-app": {
+      "src": "../../../../node_modules/.pnpm/vue3-pdf-app@1.0.3_vue@3.5.12/node_modules/vue3-pdf-app/dist/vue3-pdf-app.umd.js",
+      "file": "vue3-pdf-app.js",
+      "fileHash": "deb3e68e",
+      "needsInterop": true
     }
   },
   "chunks": {
-    "chunk-7XRJ2LS6": {
-      "file": "chunk-7XRJ2LS6.js"
+    "chunk-YB6MOJYX": {
+      "file": "chunk-YB6MOJYX.js"
     },
-    "chunk-25R462LT": {
-      "file": "chunk-25R462LT.js"
+    "chunk-RCHT3CGY": {
+      "file": "chunk-RCHT3CGY.js"
     },
-    "chunk-E3XMU3BF": {
-      "file": "chunk-E3XMU3BF.js"
+    "chunk-CHICZDI3": {
+      "file": "chunk-CHICZDI3.js"
     },
-    "chunk-EQCVQC35": {
-      "file": "chunk-EQCVQC35.js"
+    "chunk-3GTXPYBB": {
+      "file": "chunk-3GTXPYBB.js"
+    },
+    "chunk-ZSSIFBSU": {
+      "file": "chunk-ZSSIFBSU.js"
+    },
+    "chunk-F7QEN5LC": {
+      "file": "chunk-F7QEN5LC.js"
+    },
+    "chunk-JB3UMQ4X": {
+      "file": "chunk-JB3UMQ4X.js"
+    },
+    "chunk-ZNANQ2GF": {
+      "file": "chunk-ZNANQ2GF.js"
+    },
+    "chunk-HDBOUNJA": {
+      "file": "chunk-HDBOUNJA.js"
+    },
+    "chunk-EWTE5DHJ": {
+      "file": "chunk-EWTE5DHJ.js"
     }
   }
 }

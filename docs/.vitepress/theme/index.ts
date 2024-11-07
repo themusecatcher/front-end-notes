@@ -4,10 +4,14 @@ import VueLazyLoad from 'vue3-lazyload'
 import Default from '/default.jpg'
 import VueAmazingUI from 'vue-amazing-ui'
 import 'vue-amazing-ui/css'
+import GaugeChart from './components/GaugeChart.vue'
+import TreeChart from './components/TreeChart.vue'
 
 export default {
   extends: DefaultTheme, // or ...DefaultTheme
   enhanceApp({ app }) {
+    app.component('GaugeChart', GaugeChart)
+    app.component('TreeChart', TreeChart)
     app.use(VueLazyLoad, {
       // options...
       loading: Default,
