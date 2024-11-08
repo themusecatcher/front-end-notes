@@ -1,3 +1,5 @@
+import "./chunk-DC5AMYBS.js";
+
 // node_modules/.pnpm/@vue+devtools-shared@7.6.2/node_modules/@vue/devtools-shared/dist/index.js
 var __create = Object.create;
 var __defProp = Object.defineProperty;

@@ -15,8 +15,8 @@ importers:
         specifier: ^3.5.12
         version: 3.5.12
       vue-amazing-ui:
-        specifier: ^1.9.3
-        version: 1.9.3(async-validator@4.2.5)(focus-trap@7.6.0)(sortablejs@1.15.3)
+        specifier: ^1.9.4
+        version: 1.9.4(async-validator@4.2.5)(focus-trap@7.6.0)(sortablejs@1.15.3)
       vue3-lazyload:
         specifier: ^0.3.8
         version: 0.3.8(vue@3.5.12)
@@ -1105,8 +1105,8 @@ packages:
     peerDependencies:
       vue: ^3.0.0
 
-  vue-amazing-ui@1.9.3:
-    resolution: {integrity: sha512-oXTo2BrkdxAOlvWuT0c/7qyDep555+IcTia1D9jNKDMP9yexa3fqMlF/4dltM5JqfvHvO7GX6tAiQZ3Pr8v4pg==}
+  vue-amazing-ui@1.9.4:
+    resolution: {integrity: sha512-891iNhheUgYXmhSppzHSW/4HxWsTeq0okerUNJlS+qAn2/BX2ncBrB61zXuf3xZGgXBRgI+VwN/j3JcHdpE6ww==}
 
   vue-demi@0.12.5:
     resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}
@@ -2289,7 +2289,7 @@ snapshots:
       evtd: 0.2.4
       vue: 3.5.12
 
-  vue-amazing-ui@1.9.3(async-validator@4.2.5)(focus-trap@7.6.0)(sortablejs@1.15.3):
+  vue-amazing-ui@1.9.4(async-validator@4.2.5)(focus-trap@7.6.0)(sortablejs@1.15.3):
     dependencies:
       '@ant-design/icons-vue': 7.0.1(vue@3.5.12)
       '@vuepic/vue-datepicker': 10.0.0(vue@3.5.12)
