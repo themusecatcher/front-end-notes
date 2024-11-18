@@ -575,10 +575,10 @@ const { data, error } = useFetch('...')
 [`Wheel Event` 参考文档](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/wheel_event)
 
 `WheelEvent` 事件属性：
-- `WheelEvent.deltaX` 只读：返回一个浮点数（double），表示**水平方向的滚动量**。
-- `WheelEvent.deltaY` 只读：返回一个浮点数（double），表示**垂直方向的滚动量**。
-- `WheelEvent.deltaZ` 只读：返回一个浮点数（double）表示** z 轴方向的滚动量**。
-- `WheelEvent.deltaMode` 只读：返回一个无符号长整型数（unsigned long），表示 **delta\* 值滚动量的单位**。
+- `WheelEvent.deltaX` <Tag :bordered="false" color="cyan">只读</Tag>：返回一个浮点数（double），表示**水平方向的滚动量**。
+- `WheelEvent.deltaY` <Tag :bordered="false" color="cyan">只读</Tag>：返回一个浮点数（double），表示**垂直方向的滚动量**。
+- `WheelEvent.deltaZ` <Tag :bordered="false" color="cyan">只读</Tag>：返回一个浮点数（double）表示** z 轴方向的滚动量**。
+- `WheelEvent.deltaMode` <Tag :bordered="false" color="cyan">只读</Tag>：返回一个无符号长整型数（unsigned long），表示 **delta\* 值滚动量的单位**。
 
 ```html
 <div @wheel.prevent="showWheel ? onWheel($event) : e => false"></div>

@@ -98,3 +98,57 @@ onMounted(() => {
 }
 </style>
 ```
+
+## [Document：scroll 事件](https://developer.mozilla.org/zh-CN/docs/Web/API/Document/scroll_event) 和 [Element：滚轮事件 wheel](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/wheel_event)
+
+### `scroll` 事件
+
+<br/>
+
+当文档视图滚动后，`scroll` 事件就会触发。要检测滚动何时结束，请参阅 `Document：scrollend` 事件。关于元素滚动，请参见 `Element：scroll` 事件。
+
+- 语法
+
+  ```ts
+  target.addEventListener('scroll', (event: Event) => {})
+  onscroll = (event: Event) => {}
+  ```
+
+### `wheel` 事件
+
+<br/>
+
+滚轮（`wheel`）事件会在滚动鼠标滚轮或操作其他类似输入设备时触发。滚轮事件取代了已被弃用的非标准 `mousewheel` 事件。
+
+::: tip 备注
+不要将滚轮事件与 `scroll` 事件混淆。滚轮事件的默认行为是取决于实现的，所以不一定会触发 `scroll` 事件。
+即便如此，滚轮事件的 `delta*` 值也不一定能反映文档内容的实际滚动方向。因此，请不要依赖滚轮事件的 `delta*` 
+值来获得滚动方向。请通过检测目标的 `scroll` 事件的 `scrollLeft` 和 `scrollTop` 这两个值代替。
+:::
+
+- 语法
+
+  ```ts
+  addEventListener('wheel', (event: WheelEvent) => {})
+  onwheel = (event) => {}
+  ```
+
+- 事件属性
+
+  - `WheelEvent.deltaX` <Tag :bordered="false" color="cyan">只读</Tag>
+    返回一个浮点数（`double`），表示水平方向的滚动量。
+
+  - `WheelEvent.deltaY` <Tag :bordered="false" color="cyan">只读</Tag>
+    返回一个浮点数（`double`），表示垂直方向的滚动量。
+
+  - `WheelEvent.deltaZ` <Tag :bordered="false" color="cyan">只读</Tag>
+    返回一个浮点数（`double`）表示 z 轴方向的滚动量。
+
+  - `WheelEvent.deltaMode` <Tag :bordered="false" color="cyan">只读</Tag>
+    返回一个无符号长整型数（`unsigned long`），表示 `delta*` 值滚动量的单位。允许的值为：
+
+    常量 | 值 | 描述
+    :--- | :--- | :---
+    WheelEvent.DOM_DELTA_PIXEL | 0x00 | `delta*` 值以像素为单位
+    WheelEvent.DOM_DELTA_LINE | 0x01 | `delta*` 值以行为单位。每次鼠标单击都会滚动一行内容，其中行高计算的方法取决于浏览器
+    WheelEvent.DOM_DELTA_PAGE | 0x02 | `delta*` 值以页为单位。每次鼠标单击都会滚动一页内容
