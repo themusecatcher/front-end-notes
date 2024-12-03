@@ -15,8 +15,8 @@ importers:
         specifier: ^3.5.12
         version: 3.5.12
       vue-amazing-ui:
-        specifier: ^1.9.12
-        version: 1.9.12(async-validator@4.2.5)(focus-trap@7.6.1)(sortablejs@1.15.3)
+        specifier: ^1.10.1
+        version: 1.10.1(async-validator@4.2.5)(focus-trap@7.6.1)(sortablejs@1.15.3)
       vue3-lazyload:
         specifier: ^0.3.8
         version: 0.3.8(vue@3.5.12)
@@ -470,6 +470,9 @@ packages:
 
   '@types/mdurl@2.0.0':
     resolution: {integrity: sha512-RGdgjQUZba5p6QEFAVx2OGb8rQDL/cPRG7GiedRzMcJ1tYnUANBncjbSB1NRGwbvjcPeikRABz2nshyPk1bhWg==}
+
+  '@types/minimist@1.2.5':
+    resolution: {integrity: sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==}
 
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
@@ -1181,8 +1184,14 @@ packages:
     peerDependencies:
       vue: ^3.0.0
 
-  vue-amazing-ui@1.9.12:
-    resolution: {integrity: sha512-sci9mDfE73Iphcw7jnhrsST7D1zaLVWyW/PjQUwI4zE8mgcN1eh+MqFXsCh8h/6JQ2p0I4T23r6LV3yqEIWHHQ==}
+  vue-amazing-ui@1.10.0:
+    resolution: {integrity: sha512-w+QB/AKu3iLBwbQfpJ1bE1yAbUy4xt/nQN40HZKHBhR28QDs5ZSp7JVsYsFoBpWTG8weNVFDHr4BYomsao7CNA==}
+
+  vue-amazing-ui@1.10.0-beta.2:
+    resolution: {integrity: sha512-9qjlQwgw5vfNw8gxq2m5HjCbl2LLhrf4bw4iySxfDX7JxlGXweNb+h/hcTpBFqK76iD+OuB+1qN5tbjM8DCFQw==}
+
+  vue-amazing-ui@1.10.1:
+    resolution: {integrity: sha512-5xsPIQLwrkJxno8GZS9yP8tRZsB+icWye15ol/hO4QtWzA/oL6zVbwBuvtcx0zKs5QbKPcpduRWdeX36ROSrvw==}
 
   vue-demi@0.12.5:
     resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}
@@ -1650,6 +1659,8 @@ snapshots:
       '@types/unist': 3.0.3
 
   '@types/mdurl@2.0.0': {}
+
+  '@types/minimist@1.2.5': {}
 
   '@types/unist@3.0.3': {}
 
@@ -2456,9 +2467,10 @@ snapshots:
       evtd: 0.2.4
       vue: 3.5.13
 
-  vue-amazing-ui@1.9.12(async-validator@4.2.5)(focus-trap@7.6.1)(sortablejs@1.15.3):
+  vue-amazing-ui@1.10.0(async-validator@4.2.5)(focus-trap@7.6.1)(sortablejs@1.15.3):
     dependencies:
       '@ant-design/icons-vue': 7.0.1(vue@3.5.13)
+      '@types/minimist': 1.2.5
       '@vuepic/vue-datepicker': 10.0.0(vue@3.5.13)
       '@vueuse/core': 12.0.0
       '@vueuse/integrations': 12.0.0(async-validator@4.2.5)(focus-trap@7.6.1)(qrcode@1.5.4)(sortablejs@1.15.3)
@@ -2469,6 +2481,67 @@ snapshots:
       qrcode: 1.5.4
       swiper: 11.1.15
       vue: 3.5.13
+      vue-amazing-ui: 1.10.1(async-validator@4.2.5)(focus-trap@7.6.1)(sortablejs@1.15.3)
+      vue-router: 4.5.0(vue@3.5.13)
+    transitivePeerDependencies:
+      - async-validator
+      - axios
+      - change-case
+      - drauu
+      - focus-trap
+      - fuse.js
+      - idb-keyval
+      - jwt-decode
+      - nprogress
+      - sortablejs
+      - typescript
+      - universal-cookie
+
+  vue-amazing-ui@1.10.0-beta.2(async-validator@4.2.5)(focus-trap@7.6.1)(sortablejs@1.15.3):
+    dependencies:
+      '@ant-design/icons-vue': 7.0.1(vue@3.5.13)
+      '@types/minimist': 1.2.5
+      '@vuepic/vue-datepicker': 10.0.0(vue@3.5.13)
+      '@vueuse/core': 12.0.0
+      '@vueuse/integrations': 12.0.0(async-validator@4.2.5)(focus-trap@7.6.1)(qrcode@1.5.4)(sortablejs@1.15.3)
+      ant-design-vue: 4.2.6(vue@3.5.13)
+      core-js: 3.39.0
+      date-fns: 4.1.0
+      naive-ui: 2.40.3(vue@3.5.13)
+      qrcode: 1.5.4
+      swiper: 11.1.15
+      vue: 3.5.13
+      vue-amazing-ui: 1.10.0(async-validator@4.2.5)(focus-trap@7.6.1)(sortablejs@1.15.3)
+      vue-router: 4.5.0(vue@3.5.13)
+    transitivePeerDependencies:
+      - async-validator
+      - axios
+      - change-case
+      - drauu
+      - focus-trap
+      - fuse.js
+      - idb-keyval
+      - jwt-decode
+      - nprogress
+      - sortablejs
+      - typescript
+      - universal-cookie
+
+  vue-amazing-ui@1.10.1(async-validator@4.2.5)(focus-trap@7.6.1)(sortablejs@1.15.3):
+    dependencies:
+      '@ant-design/icons-vue': 7.0.1(vue@3.5.13)
+      '@types/minimist': 1.2.5
+      '@vuepic/vue-datepicker': 10.0.0(vue@3.5.13)
+      '@vueuse/core': 12.0.0
+      '@vueuse/integrations': 12.0.0(async-validator@4.2.5)(focus-trap@7.6.1)(qrcode@1.5.4)(sortablejs@1.15.3)
+      ant-design-vue: 4.2.6(vue@3.5.13)
+      core-js: 3.39.0
+      date-fns: 4.1.0
+      naive-ui: 2.40.3(vue@3.5.13)
+      qrcode: 1.5.4
+      swiper: 11.1.15
+      vue: 3.5.13
+      vue-amazing-ui: 1.10.0-beta.2(async-validator@4.2.5)(focus-trap@7.6.1)(sortablejs@1.15.3)
       vue-router: 4.5.0(vue@3.5.13)
     transitivePeerDependencies:
       - async-validator
