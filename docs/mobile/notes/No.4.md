@@ -106,6 +106,18 @@ useLoad(() => {
 </script>
 ```
 
+## 微信小程序使用 `<web-view />` 组件
+
+- [web-view](https://taro-docs.jd.com/docs/components/open/web-view)
+
+`web-view` 组件是一个可以用来承载网页的容器，会自动铺满整个小程序页面。个人类型与海外类型的小程序暂不支持使用。
+
+```vue
+<template>
+  <web-view src='https://mp.weixin.qq.com/' @message="handleMessage" />
+</template>
+```
+
 ## [env()](https://developer.mozilla.org/zh-CN/docs/Web/CSS/env) CSS 函数
 
 最初由 `iOS` 浏览器提供，用于允许开发人员将其内容放置在视口的安全区域中，该规范中定义的 `safe-area-inset-*` 值可用于确保内容即使在非矩形的视区中也可以完全显示。
