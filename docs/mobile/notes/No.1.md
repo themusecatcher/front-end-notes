@@ -454,8 +454,6 @@ onUnload(() => {
 
 - 使用 [useRouter](https://taro-docs.jd.com/docs/composition-api#userouter)
 
-![alt text](image-1.png)
-
 ```vue
 <script setup lang="ts">
 import { useRouter } from '@tarojs/taro'
@@ -467,9 +465,9 @@ console.log('params', params) // 页面路由参数
 </script>
 ```
 
-- 使用 [useLoad](https://taro-docs.jd.com/docs/composition-api#useload)
+![alt text](image-1.png)
 
-![alt text](image-2.png)
+- 使用 [useLoad](https://taro-docs.jd.com/docs/composition-api#useload)
 
 ```vue
 <script setup lang="ts">
@@ -480,6 +478,8 @@ useLoad((options) => {
 })
 </script>
 ```
+
+![alt text](image-2.png)
 
 ## 微信小程序配置`less`全局变量
 
