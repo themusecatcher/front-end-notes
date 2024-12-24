@@ -146,6 +146,8 @@ export default defineAppConfig({
 
 ## 微信小程序转发分享 [useShareAppMessage](https://taro-docs.jd.com/docs/composition-api#useshareappmessage)
 
+[onShareAppMessage](https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/miniapp/component/onShareAppMessage.html)
+
 监听用户点击页面内转发按钮（`Button` 组件 `openType='share'`）或右上角菜单“转发”按钮的行为，并自定义转发内容。
 
 ::: tip 注意：
@@ -182,7 +184,7 @@ Page = function (pageConfig) {
         console.log(res.target)
       }
       return {
-        title: '纵横命运之上', // 转发标题 当前小程序名称
+        title: '纵横命运之上', // 转发时的描述文字 默认为当前小程序名称
         // path: '/pages/index/index', // 转发路径，当前页面 path ，必须是以 / 开头的完整路径
         // 使用默认截图 设置转发显示的图片，可以使用网络图片 自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径。支持 PNG 及 JPG 。显示图片长宽比是 5:4
         imageUrl: LOGO, // 相对路径图片
