@@ -3,13 +3,13 @@ import {
   toValue,
   tryOnScopeDispose,
   unrefElement
-} from "./chunk-ZVRYKGT4.js";
-import "./chunk-DW6NUVZM.js";
+} from "./chunk-PGUKNS5Z.js";
+import "./chunk-H42K4GXY.js";
 import {
   computed,
   ref,
   watch
-} from "./chunk-E3XMU3BF.js";
+} from "./chunk-JN5NFW2R.js";
 import "./chunk-DC5AMYBS.js";
 
 // node_modules/.pnpm/tabbable@6.2.0/node_modules/tabbable/dist/index.esm.js
@@ -343,7 +343,7 @@ var isFocusable = function isFocusable2(node, options) {
   return isNodeMatchingSelectorFocusable(options, node);
 };
 
-// node_modules/.pnpm/focus-trap@7.6.1/node_modules/focus-trap/dist/focus-trap.esm.js
+// node_modules/.pnpm/focus-trap@7.6.2/node_modules/focus-trap/dist/focus-trap.esm.js
 function _arrayLikeToArray(r, a) {
   (null == a || a > r.length) && (a = r.length);
   for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
@@ -454,17 +454,6 @@ var isKeyBackward = function isKeyBackward2(e) {
 };
 var delay = function delay2(fn) {
   return setTimeout(fn, 0);
-};
-var findIndex = function findIndex2(arr, fn) {
-  var idx = -1;
-  arr.every(function(value, i) {
-    if (fn(value)) {
-      idx = i;
-      return false;
-    }
-    return true;
-  });
-  return idx;
 };
 var valueOrHandler = function valueOrHandler2(value) {
   for (var _len = arguments.length, params = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -716,7 +705,7 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
           destinationNode = state.tabbableGroups[0].firstTabbableNode;
         }
       } else if (isBackward) {
-        var startOfGroupIndex = findIndex(state.tabbableGroups, function(_ref4) {
+        var startOfGroupIndex = state.tabbableGroups.findIndex(function(_ref4) {
           var firstTabbableNode = _ref4.firstTabbableNode;
           return target === firstTabbableNode;
         });
@@ -731,7 +720,7 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
           destinationNode = containerGroup.nextTabbableNode(target, false);
         }
       } else {
-        var lastOfGroupIndex = findIndex(state.tabbableGroups, function(_ref5) {
+        var lastOfGroupIndex = state.tabbableGroups.findIndex(function(_ref5) {
           var lastTabbableNode = _ref5.lastTabbableNode;
           return target === lastTabbableNode;
         });
@@ -1054,7 +1043,7 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
   return trap;
 };
 
-// node_modules/.pnpm/@vueuse+integrations@11.2.0_async-validator@4.2.5_focus-trap@7.6.1_qrcode@1.5.4_sortablejs@1.15.3_vue@3.5.12/node_modules/@vueuse/integrations/useFocusTrap.mjs
+// node_modules/.pnpm/@vueuse+integrations@11.3.0_async-validator@4.2.5_focus-trap@7.6.2_qrcode@1.5.4_sortablejs@1.15.3_vue@3.5.13/node_modules/@vueuse/integrations/useFocusTrap.mjs
 function useFocusTrap(target, options = {}) {
   let trap;
   const { immediate, ...focusTrapOptions } = options;
@@ -1127,7 +1116,7 @@ tabbable/dist/index.esm.js:
 
 focus-trap/dist/focus-trap.esm.js:
   (*!
-  * focus-trap 7.6.1
+  * focus-trap 7.6.2
   * @license MIT, https://github.com/focus-trap/focus-trap/blob/master/LICENSE
   *)
 */
