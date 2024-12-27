@@ -118,6 +118,10 @@ useLoad(() => {
 </template>
 ```
 
+在微信公众平台登录后，添加配置业务域名，然后下载校验文件放到嵌入项目的 `public` 目录下即可：
+
+![alt text](image-5.png)
+
 ## [env()](https://developer.mozilla.org/zh-CN/docs/Web/CSS/env) CSS 函数
 
 最初由 `iOS` 浏览器提供，用于允许开发人员将其内容放置在视口的安全区域中，该规范中定义的 `safe-area-inset-*` 值可用于确保内容即使在非矩形的视区中也可以完全显示。
@@ -164,7 +168,75 @@ env(safe-area-inset-left, 1.4rem)
 
 ## 微信小程序使用自定义导航栏（custom）
 
-自定义导航栏；自定义导航标题操作图标；同时当页面向下滚动时，导航栏固定在顶部，背景自定义切换
+自定义导航栏/导航栏背景图；自定义导航标题操作图标；同时当页面向下滚动时，导航栏固定在顶部，背景自定义切换
+
+- [wx.getWindowInfo()](https://developers.weixin.qq.com/miniprogram/dev/api/base/system/wx.getWindowInfo.html)
+- [wx.getMenuButtonBoundingClientRect()](https://developers.weixin.qq.com/miniprogram/dev/api/ui/menu/wx.getMenuButtonBoundingClientRect.html)
 
 ```vue
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+// 获取状态栏的高度，单位 px
+const { statusBarHeight } = Taro.getWindowInfo() // 获取窗口信息
+// 获取胶囊按钮的高度，上边界坐标，单位 px
+const { height, top } = Taro.getMenuButtonBoundingClientRect() // 获取菜单按钮（右上角胶囊按钮）的布局位置信息。坐标信息以屏幕左上角为原点。
+const scrollTop = ref<number>(0)
+const navStyle = computed(() => {
+  return {
+    paddingTop: `${statusBarHeight}px`, // 排除状态栏高度的影响
+    height: `${statusBarHeight as number + height + (top - statusBarHeight as number) * 2}px`, // 导航栏 + 状态栏的整体高度
+    lineHeight:`${height + (top - statusBarHeight as number) * 2}px` // 导航栏实际高度
+  }
+})
+function onScroll (e: any) {
+  scrollTop.value = e.detail.scrollTop
+}
+function onBack () {
+  Taro.navigateBack()
+}
+</script>
+<template>
+  <scroll-view class="m-view" :scroll-y="true" @scroll="onScroll">
+    <view class="nav-bar" :class="{ 'white-bg': scrollTop > 0 }" :style="navStyle">
+      自定义的导航栏
+      <view class="m-image" :style="imageStyle">
+        <image class="back-arrow" @tap="onBack" src="@/images/arrow_back.png" />
+      </view>
+    </view>
+  </scroll-view>
+</template>
+<style lang="less" scoped>
+.m-view {
+  position: relative;
+  height: 100%;
+  text-align: center;
+  background: #F5F5F5 url('@/images/custom_bg.png') no-repeat top; // 自定义顶部背景图
+  background-size: contain;
+  .nav-bar {
+    position: fixed;
+    top: 0;
+    z-index: 99;
+    width: 100%;
+    font-size: 34px;
+    color: #000000;
+    text-align: center;
+    .m-image {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      text-align: left;
+      .back-arrow {
+        margin-left: 16px;
+        width: 56px;
+        height: 56px;
+        vertical-align: middle;
+      }
+    }
+  }
+  .white-bg { // 页面垂直滚动时，导航栏背景色变为白色
+    background: #fff;
+  }
+}
+</style>
 ```

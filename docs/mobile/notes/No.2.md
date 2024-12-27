@@ -80,6 +80,11 @@ usePullDownRefresh(() => {
     Taro.stopPullDownRefresh()
   }, 1000)
 })
+// 或者
+usePullDownRefresh(async () => {
+  await // 接口调用
+  Taro.stopPullDownRefresh()
+})
 </script>
 ```
 
@@ -230,7 +235,7 @@ useShareAppMessage((res) => {
   }
   return {
     title: '纵横命运之上',
-    path: '/page/index/index'
+    path: '/pages/index/index'
   }
 })
 </script>
@@ -243,7 +248,7 @@ useShareAppMessage((res) => {
 
 - [Taro.getCurrentPages()](https://taro-docs.jd.com/docs/apis/framework/getCurrentPages)
 
-获取当前页面栈。数组中第一个元素为首页，最后一个元素为当前页面。 
+获取当前页面栈。数组中第一个元素为首页，最后一个元素为当前页面。
 
 ::: tip 注意：
 - 不要尝试修改页面栈，会导致路由以及页面状态错误。
