@@ -240,3 +240,101 @@ function onBack () {
 }
 </style>
 ```
+
+## 微信小程序复制手机号或拨打电话
+
+[wx.makePhoneCall(Object object)](https://developers.weixin.qq.com/miniprogram/dev/api/device/phone/wx.makePhoneCall.html)
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import Taro from '@tarojs/taro'
+const mobile = ref('18866668888')
+const showPhone = ref(false)
+function onPhone () {
+  showPhone.value = true
+}
+interface Item {
+  name: string
+  key: number
+}
+const menuItems: Item[] = [
+  {
+    name: '拨打该号码',
+    key: 1
+  },
+  {
+    name: '复制该号码',
+    key: 2
+  }
+]
+function onChoose (item: Item) {
+  if (item.key === 1) {
+    Taro.makePhoneCall({
+      phoneNumber: mobile.value
+    })
+  } else {
+    Taro.setClipboardData({
+      data: mobile.value,
+      success: () => {
+        Taro.showToast({
+          title: '号码已复制',
+          icon: 'success'
+        })
+      },
+      fail: () => {
+        Taro.showToast({
+          title: '复制失败',
+          icon: 'none'
+        })
+      }
+    })
+  }
+}
+</script>
+<template>
+  <view>
+    <nut-button type="primary" @click="onPhone">拨打电话</nut-button>
+    <nut-action-sheet
+      v-model:visible="showPhone"
+      :menu-items="menuItems"
+      cancel-txt="取消"
+      @choose="onChoose"
+    />
+  </view>
+</template>
+```
+
+## 微信小程序添加通讯录
+
+[wx.addPhoneContact(Object object)](https://developers.weixin.qq.com/miniprogram/dev/api/device/contact/wx.addPhoneContact.html)
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import Taro from '@tarojs/taro'
+const useInfo = ref({
+  firstName: 'the Muse',
+  lastName: 'Catcher',
+  mobile: '18866668888',
+  wechat: 'themusecatcher',
+  email: 'themusecatcher@163.com',
+  url: 'https://themusecatcher.github.io/vue-amazing-ui/'
+})
+function onContact () {
+  Taro.addPhoneContact({
+    firstName: useInfo.value.name, // 名字
+    lastName: userInfo.value.lastName, // 姓氏
+    mobilePhoneNumber: useInfo.value.mobile, // 手机号
+    weChatNumber: useInfo.value.wechat, // 微信号
+    email: useInfo.value.email, // 电子邮件
+    url: useInfo.value.url // 网站
+  })
+}
+</script>
+<template>
+  <view>
+    <nut-button type="primary" @click="onContact">添加通讯录</nut-button>
+  </view>
+</template>
+```
