@@ -191,12 +191,15 @@ const navStyle = computed(() => {
 function onScroll (e: any) {
   scrollTop.value = e.detail.scrollTop
 }
+function onScrollToUpper () {
+  scrollTop.value = 0
+}
 function onBack () {
   Taro.navigateBack()
 }
 </script>
 <template>
-  <scroll-view class="m-view" :scroll-y="true" @scroll="onScroll">
+  <scroll-view class="m-view" :scroll-y="true" @scroll="onScroll" @scrollToUpper="onScrollToUpper">
     <view class="nav-bar" :class="{ 'white-bg': scrollTop > 0 }" :style="navStyle">
       自定义的导航栏
       <view class="m-image" :style="imageStyle">
