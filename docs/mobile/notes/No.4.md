@@ -312,6 +312,14 @@ function onChoose (item: Item) {
 
 [wx.addPhoneContact(Object object)](https://developers.weixin.qq.com/miniprogram/dev/api/device/contact/wx.addPhoneContact.html)
 
+提交审核小程序时选择采集用户隐私：
+
+![alt text](image-6.png)
+
+然后点击完善以下隐私信息：
+
+![alt text](image-7.png)
+
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
