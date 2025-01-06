@@ -324,14 +324,55 @@ const useInfo = ref({
   email: 'themusecatcher@163.com',
   url: 'https://themusecatcher.github.io/vue-amazing-ui/'
 })
-function onContact () {
+function addContact () {
   Taro.addPhoneContact({
-    firstName: useInfo.value.name, // 名字
-    lastName: userInfo.value.lastName, // 姓氏
-    mobilePhoneNumber: useInfo.value.mobile, // 手机号
-    weChatNumber: useInfo.value.wechat, // 微信号
-    email: useInfo.value.email, // 电子邮件
-    url: useInfo.value.url // 网站
+    firstName: cardData.value.name, // 名字
+    mobilePhoneNumber: cardData.value.mobile, // 手机号
+    title: cardData.value.position.join(' | '), // 职位
+    organization: cardData.value.companyName // 公司
+  })
+}
+function onContact () {
+  Taro.getSetting({
+    success(res) {
+      if (!res.authSetting['scope.addPhoneContact']) {
+        // 用户未授权，需要请求授权
+        Taro.authorize({
+          scope: 'scope.addPhoneContact',
+          success() {
+            // 用户同意授权
+            addContact()
+          },
+          fail() {
+            // 用户拒绝授权
+            Taro.showModal({
+              title: '提示',
+              content: '需要授权才能添加联系人',
+              showCancel: false,
+              success() {
+                Taro.openSetting({
+                  success(settingdata) {
+                    if (settingdata.authSetting['scope.addPhoneContact']) {
+                      // 用户在设置中开启了权限
+                      addContact()
+                    } else {
+                      // 用户仍然拒绝授权
+                      Taro.showToast({
+                        title: '授权失败',
+                        icon: 'error'
+                      })
+                    }
+                  }
+                })
+              }
+            })
+          }
+        })
+      } else {
+        // 用户已授权，可以直接调用接口
+        addContact()
+      }
+    }
   })
 }
 </script>
