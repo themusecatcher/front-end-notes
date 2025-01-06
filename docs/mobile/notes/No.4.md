@@ -326,10 +326,12 @@ const useInfo = ref({
 })
 function addContact () {
   Taro.addPhoneContact({
-    firstName: cardData.value.name, // 名字
-    mobilePhoneNumber: cardData.value.mobile, // 手机号
-    title: cardData.value.position.join(' | '), // 职位
-    organization: cardData.value.companyName // 公司
+    firstName: useInfo.value.name, // 名字
+    lastName: userInfo.value.lastName, // 姓氏
+    mobilePhoneNumber: useInfo.value.mobile, // 手机号
+    weChatNumber: useInfo.value.wechat, // 微信号
+    email: useInfo.value.email, // 电子邮件
+    url: useInfo.value.url // 网站
   })
 }
 function onContact () {
