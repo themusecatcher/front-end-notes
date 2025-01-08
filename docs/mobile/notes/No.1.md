@@ -543,11 +543,21 @@ tip：image组件进行缩放时，计算出来的宽高可能带有小数，在
 ```vue
 <script setup lang="ts">
 // 内容图片过大溢出问题
-content = content.replace(/<img/gi, '<img style="max-width:100%;"')
+function handleRichText (content: string) {
+  return content.replace(/<img/gi, '<img class="text-img"')
+}
+const targetContent = handleRichText(content)
 </script>
 <template>
-  <rich-text :nodes="content"></rich-text>
+  <rich-text :nodes="targetContent"></rich-text>
 </template>
+<style lang="less">
+.text-img {
+  display: inline-block;
+  object-fit: contain;
+  max-width: 100%;
+}
+</style>
 ```
 
 ## 微信小程序去掉 `<button>` 默认边框
