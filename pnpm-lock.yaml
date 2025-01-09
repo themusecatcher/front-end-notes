@@ -15,8 +15,8 @@ importers:
         specifier: ^3.5.13
         version: 3.5.13
       vue-amazing-ui:
-        specifier: ^2.0.7
-        version: 2.0.7(async-validator@4.2.5)(focus-trap@7.6.2)(sortablejs@1.15.3)(vue@3.5.13)
+        specifier: ^2.0.8
+        version: 2.0.8(async-validator@4.2.5)(focus-trap@7.6.2)(sortablejs@1.15.3)(vue@3.5.13)
       vue3-lazyload:
         specifier: ^0.3.8
         version: 0.3.8(vue@3.5.13)
@@ -886,6 +886,9 @@ packages:
   search-insights@2.17.2:
     resolution: {integrity: sha512-zFNpOpUO+tY2D85KrxJ+aqwnIfdEGi06UH2+xEb+Bp9Mwznmauqc9djbnBibJO5mpfUPPa8st6Sx65+vbeO45g==}
 
+  seemly@0.3.9:
+    resolution: {integrity: sha512-bMLcaEqhIViiPbaumjLN8t1y+JpD/N8SiyYOyp0i0W6RgdyLWboIsUWAbZojF//JyerxPZR5Tgda+x3Pdne75A==}
+
   semver@5.7.2:
     resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
     hasBin: true
@@ -1012,8 +1015,8 @@ packages:
       postcss:
         optional: true
 
-  vue-amazing-ui@2.0.7:
-    resolution: {integrity: sha512-C/YJ6Z4iYjXVNaDgHkC8MbEvO+h7ExE3WNXaiJS3x4ImPnAs2lTxTQ+MhQO/liEUGsdmBt2TXdoS2SLKzHIFVw==}
+  vue-amazing-ui@2.0.8:
+    resolution: {integrity: sha512-59rzTTRtlQjqeeN771jqqLsO+PcQuPoRkvyB7Sg5iZVMeSdtqUZlel00EwvyUOmQksXi1DKmVwjShoJwqig46A==}
 
   vue-demi@0.12.5:
     resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}
@@ -1901,6 +1904,8 @@ snapshots:
 
   search-insights@2.17.2: {}
 
+  seemly@0.3.9: {}
+
   semver@5.7.2:
     optional: true
 
@@ -2050,12 +2055,13 @@ snapshots:
       - typescript
       - universal-cookie
 
-  vue-amazing-ui@2.0.7(async-validator@4.2.5)(focus-trap@7.6.2)(sortablejs@1.15.3)(vue@3.5.13):
+  vue-amazing-ui@2.0.8(async-validator@4.2.5)(focus-trap@7.6.2)(sortablejs@1.15.3)(vue@3.5.13):
     dependencies:
       '@vuepic/vue-datepicker': 10.0.0(vue@3.5.13)
       '@vueuse/core': 12.3.0
       '@vueuse/integrations': 12.3.0(async-validator@4.2.5)(focus-trap@7.6.2)(qrcode@1.5.4)(sortablejs@1.15.3)
       qrcode: 1.5.4
+      seemly: 0.3.9
       swiper: 11.2.0
     transitivePeerDependencies:
       - async-validator
