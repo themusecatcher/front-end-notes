@@ -23,10 +23,10 @@ git push -f git@github.com:themusecatcher/front-end-notes.git master:github-page
 cd ../../../
 git add .
 
-if [ -z ${commitDesc} ]; then
+if [ -z "$commitDesc" ]; then
   git commit -m 'update'
 else
-  git commit -m ${commitDesc}
+  git commit -m "$commitDesc"
 fi
 
 git push
