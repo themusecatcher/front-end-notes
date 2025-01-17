@@ -2,7 +2,7 @@ import {
   __export
 } from "./chunk-DC5AMYBS.js";
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/env.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/env.js
 var Browser = /* @__PURE__ */ function() {
   function Browser2() {
     this.firefox = false;
@@ -35,7 +35,7 @@ if (typeof wx === "object" && typeof wx.getSystemInfoSync === "function") {
   env.touchEventsSupported = true;
 } else if (typeof document === "undefined" && typeof self !== "undefined") {
   env.worker = true;
-} else if (typeof navigator === "undefined" || navigator.userAgent.indexOf("Node.js") === 0) {
+} else if (!env.hasGlobalWindow || "Deno" in window) {
   env.node = true;
   env.svgSupported = true;
 } else {
@@ -73,7 +73,7 @@ function detect(ua, env2) {
 }
 var env_default = env;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/platform.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/platform.js
 var DEFAULT_FONT_SIZE = 12;
 var DEFAULT_FONT_FAMILY = "sans-serif";
 var DEFAULT_FONT = DEFAULT_FONT_SIZE + "px " + DEFAULT_FONT_FAMILY;
@@ -144,7 +144,7 @@ function setPlatformAPI(newPlatformApis) {
   }
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/util.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/util.js
 var util_exports = {};
 __export(util_exports, {
   HashMap: () => HashMap,
@@ -321,7 +321,7 @@ function extend(target, source) {
 }
 function defaults(target, source, overlay) {
   var keysArr = keys(source);
-  for (var i = 0; i < keysArr.length; i++) {
+  for (var i = 0, len2 = keysArr.length; i < len2; i++) {
     var key = keysArr[i];
     if (overlay ? source[key] != null : target[key] == null) {
       target[key] = source[key];
@@ -705,7 +705,7 @@ function noop() {
 }
 var RADIAN_TO_DEGREE = 180 / Math.PI;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/vector.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/vector.js
 var vector_exports = {};
 __export(vector_exports, {
   add: () => add,
@@ -844,7 +844,7 @@ function max(out, v1, v2) {
   return out;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/matrix.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/matrix.js
 var matrix_exports = {};
 __export(matrix_exports, {
   clone: () => clone3,
@@ -959,7 +959,7 @@ function clone3(a) {
   return b;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/tool/color.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/tool/color.js
 var color_exports = {};
 __export(color_exports, {
   fastLerp: () => fastLerp,
@@ -977,7 +977,7 @@ __export(color_exports, {
   toHex: () => toHex
 });
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/LRU.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/LRU.js
 var Entry = /* @__PURE__ */ function() {
   function Entry2(val) {
     this.value = val;
@@ -1083,7 +1083,7 @@ var LRU = function() {
 }();
 var LRU_default = LRU;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/tool/color.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/tool/color.js
 var kCSSColorTable = {
   "transparent": [0, 0, 0, 0],
   "aliceblue": [240, 248, 255, 1],
@@ -1569,7 +1569,7 @@ function liftColor(color) {
   return color;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/zrender.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/zrender.js
 var zrender_exports = {};
 __export(zrender_exports, {
   dispose: () => dispose,
@@ -1601,7 +1601,7 @@ function __extends(d, b) {
   d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/mixin/Draggable.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/mixin/Draggable.js
 var Param = /* @__PURE__ */ function() {
   function Param2(target, e) {
     this.target = target;
@@ -1669,7 +1669,7 @@ var Draggable = function() {
 }();
 var Draggable_default = Draggable;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/Eventful.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/Eventful.js
 var Eventful = function() {
   function Eventful2(eventProcessors) {
     if (eventProcessors) {
@@ -1822,7 +1822,7 @@ var Eventful = function() {
 }();
 var Eventful_default = Eventful;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/fourPointsTransform.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/fourPointsTransform.js
 var LN2 = Math.log(2);
 function determinant(rows, rank, rowStart, rowMask, colMask, detCache) {
   var cacheKey = rowMask + "-" + colMask;
@@ -1880,7 +1880,7 @@ function buildTransformer(src, dest) {
   };
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/dom.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/dom.js
 var EVENT_SAVED_PROP = "___zrEVENTSAVED";
 var _calcOut = [];
 function transformLocalCoord(out, elFrom, elTarget, inX, inY) {
@@ -1966,7 +1966,7 @@ function encodeHTML(source) {
   });
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/event.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/event.js
 var MOUSE_EVENT_REG = /^(?:mouse|pointer|contextmenu|drag|drop)|click/;
 var _calcOut2 = [];
 var firefoxNotSupportOffsetXY = env_default.browser.firefox && +env_default.browser.version.split(".")[0] < 39;
@@ -2057,7 +2057,7 @@ function isMiddleOrRightButtonOnMouseUpDown(e) {
   return e.which === 2 || e.which === 3;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/GestureMgr.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/GestureMgr.js
 var GestureMgr = function() {
   function GestureMgr2() {
     this._track = [];
@@ -2136,7 +2136,7 @@ var recognizers = {
   }
 };
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/Point.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/Point.js
 var Point = function() {
   function Point2(x, y) {
     this.x = x || 0;
@@ -2267,7 +2267,7 @@ var Point = function() {
 }();
 var Point_default = Point;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/BoundingRect.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/BoundingRect.js
 var mathMin = Math.min;
 var mathMax = Math.max;
 var lt = new Point_default();
@@ -2468,7 +2468,7 @@ var BoundingRect = function() {
 }();
 var BoundingRect_default = BoundingRect;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/Handler.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/Handler.js
 var SILENT = "silent";
 function makeEventPacket(eveType, targetInfo, event) {
   return {
@@ -2755,7 +2755,7 @@ function isOutsideBoundary(handlerInstance, x, y) {
 }
 var Handler_default = Handler;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/timsort.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/timsort.js
 var DEFAULT_MIN_MERGE = 32;
 var DEFAULT_MIN_GALLOPING = 7;
 function minRunLength(n) {
@@ -3264,12 +3264,12 @@ function sort(array, compare, lo, hi) {
   ts.forceMergeRuns();
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/graphic/constants.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/graphic/constants.js
 var REDRAW_BIT = 1;
 var STYLE_CHANGED_BIT = 2;
 var SHAPE_CHANGED_BIT = 4;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/Storage.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/Storage.js
 var invalidZErrorLogged = false;
 function logInvalidZError() {
   if (invalidZErrorLogged) {
@@ -3422,14 +3422,14 @@ var Storage = function() {
 }();
 var Storage_default = Storage;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/animation/requestAnimationFrame.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/animation/requestAnimationFrame.js
 var requestAnimationFrame;
 requestAnimationFrame = env_default.hasGlobalWindow && (window.requestAnimationFrame && window.requestAnimationFrame.bind(window) || window.msRequestAnimationFrame && window.msRequestAnimationFrame.bind(window) || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame) || function(func) {
   return setTimeout(func, 16);
 };
 var requestAnimationFrame_default = requestAnimationFrame;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/animation/easing.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/animation/easing.js
 var easingFuncs = {
   linear: function(k) {
     return k;
@@ -3616,7 +3616,7 @@ var easingFuncs = {
 };
 var easing_default = easingFuncs;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/curve.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/curve.js
 var mathPow = Math.pow;
 var mathSqrt = Math.sqrt;
 var EPSILON = 1e-8;
@@ -3945,7 +3945,7 @@ function quadraticLength(x0, y0, x1, y1, x2, y2, iteration) {
   return d;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/animation/cubicEasing.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/animation/cubicEasing.js
 var regexp = /cubic-bezier\(([0-9,\.e ]+)\)/;
 function createCubicEasingFunc(cubicEasingStr) {
   var cubic = cubicEasingStr && regexp.exec(cubicEasingStr);
@@ -3965,7 +3965,7 @@ function createCubicEasingFunc(cubicEasingStr) {
   }
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/animation/Clip.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/animation/Clip.js
 var Clip = function() {
   function Clip2(opts) {
     this._inited = false;
@@ -4025,7 +4025,7 @@ var Clip = function() {
 }();
 var Clip_default = Clip;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/svg/helper.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/svg/helper.js
 var mathRound = Math.round;
 function normalizeColor(color) {
   var opacity;
@@ -4153,7 +4153,7 @@ var encodeBase64 = function() {
   };
 }();
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/animation/Animator.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/animation/Animator.js
 var arraySlice = Array.prototype.slice;
 function interpolateNumber(p0, p1, percent) {
   return (p1 - p0) * percent + p0;
@@ -4847,7 +4847,7 @@ var Animator = function() {
 }();
 var Animator_default = Animator;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/animation/Animation.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/animation/Animation.js
 function getTime() {
   return (/* @__PURE__ */ new Date()).getTime();
 }
@@ -4988,7 +4988,7 @@ var Animation = function(_super) {
 }(Eventful_default);
 var Animation_default = Animation;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/dom/HandlerProxy.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/dom/HandlerProxy.js
 var TOUCH_CLICK_DELAY = 300;
 var globalEventSupported = env_default.domSupported;
 var localNativeListenerNames = function() {
@@ -5283,7 +5283,7 @@ var HandlerDomProxy = function(_super) {
 }(Eventful_default);
 var HandlerProxy_default = HandlerDomProxy;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/config.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/config.js
 var dpr = 1;
 if (env_default.hasGlobalWindow) {
   dpr = Math.max(window.devicePixelRatio || window.screen && window.screen.deviceXDPI / window.screen.logicalXDPI || 1, 1);
@@ -5294,7 +5294,7 @@ var DARK_LABEL_COLOR = "#333";
 var LIGHT_LABEL_COLOR = "#ccc";
 var LIGHTER_LABEL_COLOR = "#eee";
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/Transformable.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/Transformable.js
 var mIdentity = identity;
 var EPSILON3 = 5e-5;
 function isNotAroundZero2(val) {
@@ -5526,7 +5526,7 @@ function copyTransform(target, source) {
 }
 var Transformable_default = Transformable;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/contain/text.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/contain/text.js
 var textWidthCache = {};
 function getWidth(text, font) {
   font = font || DEFAULT_FONT;
@@ -5688,7 +5688,7 @@ function calculateTextPosition(out, opts, rect) {
   return out;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/Element.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/Element.js
 var PRESERVED_NORMAL_STATE = "__zr_normal__";
 var PRIMARY_STATES_KEYS = TRANSFORMABLE_PROPS.concat(["ignore"]);
 var DEFAULT_ANIMATABLE_MAP = reduce(TRANSFORMABLE_PROPS, function(obj, key) {
@@ -6682,7 +6682,7 @@ function animateToShallow(animatable, topKey, animateObj, target, cfg, animation
 }
 var Element_default = Element;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/graphic/Group.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/graphic/Group.js
 var Group = function(_super) {
   __extends(Group2, _super);
   function Group2(opts) {
@@ -6857,7 +6857,7 @@ var Group = function(_super) {
 Group.prototype.type = "group";
 var Group_default = Group;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/zrender.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/zrender.js
 var painterCtors = {};
 var instances = {};
 function delInstance(id) {
@@ -7157,9 +7157,9 @@ function getElementSSRData(el) {
 function registerSSRDataGetter(getter) {
   ssrDataGetter = getter;
 }
-var version = "5.6.0";
+var version = "5.6.1";
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/graphic/Displayable.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/graphic/Displayable.js
 var STYLE_MAGIC_KEY = "__zr_style_" + Math.round(Math.random() * 10);
 var DEFAULT_COMMON_STYLE = {
   shadowBlur: 0,
@@ -7466,7 +7466,7 @@ function isDisplayableCulled(el, width, height) {
 }
 var Displayable_default = Displayable;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/bbox.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/bbox.js
 var mathMin2 = Math.min;
 var mathMax2 = Math.max;
 var mathSin = Math.sin;
@@ -7589,7 +7589,7 @@ function fromArc(x, y, rx, ry, startAngle, endAngle, anticlockwise, min3, max3) 
   }
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/core/PathProxy.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/core/PathProxy.js
 var CMD = {
   M: 1,
   L: 2,
@@ -8276,7 +8276,7 @@ var PathProxy = function() {
 }();
 var PathProxy_default = PathProxy;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/graphic/helper/image.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/graphic/helper/image.js
 var globalImageCache = new LRU_default(50);
 function findExistImage(newImageOrSrc) {
   if (typeof newImageOrSrc === "string") {
@@ -8326,7 +8326,7 @@ function isImageReady(image) {
   return image && image.width && image.height;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/canvas/helper.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/canvas/helper.js
 function isSafeNum(num) {
   return isFinite(num);
 }
@@ -8403,7 +8403,7 @@ function getSize(root, whIdx, opts) {
   return (root[cwh] || parseInt10(stl[wh]) || parseInt10(root.style[wh])) - (parseInt10(stl[plt]) || 0) - (parseInt10(stl[prb]) || 0) | 0;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/contain/line.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/contain/line.js
 function containStroke(x0, y0, x1, y1, lineWidth, x, y) {
   if (lineWidth === 0) {
     return false;
@@ -8425,7 +8425,7 @@ function containStroke(x0, y0, x1, y1, lineWidth, x, y) {
   return _s <= _l / 2 * _l / 2;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/contain/cubic.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/contain/cubic.js
 function containStroke2(x0, y0, x1, y1, x2, y2, x3, y3, lineWidth, x, y) {
   if (lineWidth === 0) {
     return false;
@@ -8438,7 +8438,7 @@ function containStroke2(x0, y0, x1, y1, x2, y2, x3, y3, lineWidth, x, y) {
   return d <= _l / 2;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/contain/quadratic.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/contain/quadratic.js
 function containStroke3(x0, y0, x1, y1, x2, y2, lineWidth, x, y) {
   if (lineWidth === 0) {
     return false;
@@ -8451,7 +8451,7 @@ function containStroke3(x0, y0, x1, y1, x2, y2, lineWidth, x, y) {
   return d <= _l / 2;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/contain/util.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/contain/util.js
 var PI23 = Math.PI * 2;
 function normalizeRadian(angle) {
   angle %= PI23;
@@ -8461,7 +8461,7 @@ function normalizeRadian(angle) {
   return angle;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/contain/arc.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/contain/arc.js
 var PI24 = Math.PI * 2;
 function containStroke4(cx, cy, r, startAngle, endAngle, anticlockwise, lineWidth, x, y) {
   if (lineWidth === 0) {
@@ -8495,7 +8495,7 @@ function containStroke4(cx, cy, r, startAngle, endAngle, anticlockwise, lineWidt
   return angle >= startAngle && angle <= endAngle || angle + PI24 >= startAngle && angle + PI24 <= endAngle;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/contain/windingLine.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/contain/windingLine.js
 function windingLine(x0, y0, x1, y1, x, y) {
   if (y > y0 && y > y1 || y < y0 && y < y1) {
     return 0;
@@ -8512,7 +8512,7 @@ function windingLine(x0, y0, x1, y1, x, y) {
   return x_ === x ? Infinity : x_ > x ? dir : 0;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/contain/path.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/contain/path.js
 var CMD2 = PathProxy_default.CMD;
 var PI25 = Math.PI * 2;
 var EPSILON4 = 1e-4;
@@ -8792,7 +8792,7 @@ function containStroke5(pathProxy, lineWidth, x, y) {
   return containPath(pathProxy, lineWidth, true, x, y);
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/graphic/Path.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/graphic/Path.js
 var DEFAULT_PATH_STYLE = defaults({
   fill: "#000",
   stroke: null,
@@ -9174,7 +9174,7 @@ var Path = function(_super) {
 }(Displayable_default);
 var Path_default = Path;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/graphic/Image.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/graphic/Image.js
 var DEFAULT_IMAGE_STYLE = defaults({
   x: 0,
   y: 0
@@ -9241,7 +9241,7 @@ var ZRImage = function(_super) {
 ZRImage.prototype.type = "image";
 var Image_default = ZRImage;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/graphic/TSpan.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/graphic/TSpan.js
 var DEFAULT_TSPAN_STYLE = defaults({
   strokeFirst: true,
   font: DEFAULT_FONT,
@@ -9300,7 +9300,7 @@ var TSpan = function(_super) {
 TSpan.prototype.type = "tspan";
 var TSpan_default = TSpan;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/canvas/dashStyle.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/canvas/dashStyle.js
 function normalizeLineDash(lineType, lineWidth) {
   if (!lineType || lineType === "solid" || !(lineWidth > 0)) {
     return null;
@@ -9323,7 +9323,7 @@ function getLineDash(el) {
   return [lineDash, lineDashOffset];
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/canvas/graphic.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/canvas/graphic.js
 var pathProxyForDraw = new PathProxy_default(true);
 function styleHasStroke(style) {
   var stroke = style.stroke;
@@ -9830,18 +9830,30 @@ function brushIncremental(ctx, el, scope) {
   ctx.restore();
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/graphic/helper/parseText.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/graphic/helper/parseText.js
 var STYLE_REG = /\{([a-zA-Z0-9_]+)\|([^}]*)\}/g;
 function truncateText(text, containerWidth, font, ellipsis, options) {
+  var out = {};
+  truncateText2(out, text, containerWidth, font, ellipsis, options);
+  return out.text;
+}
+function truncateText2(out, text, containerWidth, font, ellipsis, options) {
   if (!containerWidth) {
-    return "";
+    out.text = "";
+    out.isTruncated = false;
+    return;
   }
   var textLines = (text + "").split("\n");
   options = prepareTruncateOptions(containerWidth, font, ellipsis, options);
+  var isTruncated = false;
+  var truncateOut = {};
   for (var i = 0, len2 = textLines.length; i < len2; i++) {
-    textLines[i] = truncateSingleLine(textLines[i], options);
+    truncateSingleLine(truncateOut, textLines[i], options);
+    textLines[i] = truncateOut.textLine;
+    isTruncated = isTruncated || truncateOut.isTruncated;
   }
-  return textLines.join("\n");
+  out.text = textLines.join("\n");
+  out.isTruncated = isTruncated;
 }
 function prepareTruncateOptions(containerWidth, font, ellipsis, options) {
   options = options || {};
@@ -9869,16 +9881,20 @@ function prepareTruncateOptions(containerWidth, font, ellipsis, options) {
   preparedOpts.containerWidth = containerWidth;
   return preparedOpts;
 }
-function truncateSingleLine(textLine, options) {
+function truncateSingleLine(out, textLine, options) {
   var containerWidth = options.containerWidth;
   var font = options.font;
   var contentWidth = options.contentWidth;
   if (!containerWidth) {
-    return "";
+    out.textLine = "";
+    out.isTruncated = false;
+    return;
   }
   var lineWidth = getWidth(textLine, font);
   if (lineWidth <= containerWidth) {
-    return textLine;
+    out.textLine = textLine;
+    out.isTruncated = false;
+    return;
   }
   for (var j = 0; ; j++) {
     if (lineWidth <= contentWidth || j >= options.maxIterations) {
@@ -9892,7 +9908,8 @@ function truncateSingleLine(textLine, options) {
   if (textLine === "") {
     textLine = options.placeholder;
   }
-  return textLine;
+  out.textLine = textLine;
+  out.isTruncated = true;
 }
 function estimateLength(text, contentWidth, ascCharWidth, cnCharWidth) {
   var width = 0;
@@ -9913,6 +9930,7 @@ function parsePlainText(text, style) {
   var lineHeight = retrieve2(style.lineHeight, calculatedLineHeight);
   var bgColorDrawn = !!style.backgroundColor;
   var truncateLineOverflow = style.lineOverflow === "truncate";
+  var isTruncated = false;
   var width = style.width;
   var lines;
   if (width != null && (overflow === "break" || overflow === "breakAll")) {
@@ -9924,6 +9942,7 @@ function parsePlainText(text, style) {
   var height = retrieve2(style.height, contentHeight);
   if (contentHeight > height && truncateLineOverflow) {
     var lineCount = Math.floor(height / lineHeight);
+    isTruncated = isTruncated || lines.length > lineCount;
     lines = lines.slice(0, lineCount);
   }
   if (text && truncate && width != null) {
@@ -9931,8 +9950,11 @@ function parsePlainText(text, style) {
       minChar: style.truncateMinChar,
       placeholder: style.placeholder
     });
+    var singleOut = {};
     for (var i = 0; i < lines.length; i++) {
-      lines[i] = truncateSingleLine(lines[i], options);
+      truncateSingleLine(singleOut, lines[i], options);
+      lines[i] = singleOut.textLine;
+      isTruncated = isTruncated || singleOut.isTruncated;
     }
   }
   var outerHeight = height;
@@ -9961,7 +9983,8 @@ function parsePlainText(text, style) {
     calculatedLineHeight,
     contentWidth,
     contentHeight,
-    width
+    width,
+    isTruncated
   };
 }
 var RichTextToken = /* @__PURE__ */ function() {
@@ -9987,6 +10010,7 @@ var RichTextContentBlock = /* @__PURE__ */ function() {
     this.outerWidth = 0;
     this.outerHeight = 0;
     this.lines = [];
+    this.isTruncated = false;
   }
   return RichTextContentBlock2;
 }();
@@ -10019,6 +10043,7 @@ function parseRichText(text, style) {
   var stlPadding = style.padding;
   var truncate = overflow === "truncate";
   var truncateLine = style.lineOverflow === "truncate";
+  var tmpTruncateOut = {};
   function finishLine(line2, lineWidth2, lineHeight2) {
     line2.width = lineWidth2;
     line2.lineHeight = lineHeight2;
@@ -10044,6 +10069,7 @@ function parseRichText(text, style) {
       token.align = tokenStyle && tokenStyle.align || style.align;
       token.verticalAlign = tokenStyle && tokenStyle.verticalAlign || "middle";
       if (truncateLine && topHeight != null && calculatedHeight + token.lineHeight > topHeight) {
+        var originalLength = contentBlock.lines.length;
         if (j > 0) {
           line.tokens = line.tokens.slice(0, j);
           finishLine(line, lineWidth, lineHeight);
@@ -10051,6 +10077,7 @@ function parseRichText(text, style) {
         } else {
           contentBlock.lines = contentBlock.lines.slice(0, i);
         }
+        contentBlock.isTruncated = contentBlock.isTruncated || contentBlock.lines.length < originalLength;
         break outer;
       }
       var styleTokenWidth = tokenStyle.width;
@@ -10076,7 +10103,9 @@ function parseRichText(text, style) {
             token.text = "";
             token.width = token.contentWidth = 0;
           } else {
-            token.text = truncateText(token.text, remainTruncWidth - paddingH, font, style.ellipsis, { minChar: style.truncateMinChar });
+            truncateText2(tmpTruncateOut, token.text, remainTruncWidth - paddingH, font, style.ellipsis, { minChar: style.truncateMinChar });
+            token.text = tmpTruncateOut.text;
+            contentBlock.isTruncated = contentBlock.isTruncated || tmpTruncateOut.isTruncated;
             token.width = token.contentWidth = getWidth(token.text, font);
           }
         } else {
@@ -10268,7 +10297,7 @@ function wrapText(text, font, lineWidth, isBreakAll, lastAccumWidth) {
   };
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/graphic/helper/roundRect.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/graphic/helper/roundRect.js
 function buildPath(ctx, shape) {
   var x = shape.x;
   var y = shape.y;
@@ -10340,7 +10369,7 @@ function buildPath(ctx, shape) {
   r1 !== 0 && ctx.arc(x + r1, y + r1, r1, Math.PI, Math.PI * 1.5);
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/graphic/helper/subPixelOptimize.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/graphic/helper/subPixelOptimize.js
 var round = Math.round;
 function subPixelOptimizeLine(outputShape, inputShape, style) {
   if (!inputShape) {
@@ -10396,7 +10425,7 @@ function subPixelOptimize(position, lineWidth, positiveOrNegative) {
   return (doubledPosition + round(lineWidth)) % 2 === 0 ? doubledPosition / 2 : (doubledPosition + (positiveOrNegative ? 1 : -1)) / 2;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/graphic/shape/Rect.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/graphic/shape/Rect.js
 var RectShape = /* @__PURE__ */ function() {
   function RectShape2() {
     this.x = 0;
@@ -10448,7 +10477,7 @@ var Rect = function(_super) {
 Rect.prototype.type = "rect";
 var Rect_default = Rect;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/graphic/Text.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/graphic/Text.js
 var DEFAULT_RICH_TEXT_COLOR = {
   fill: "#000"
 };
@@ -10629,6 +10658,7 @@ var ZRText = function(_super) {
     var textLines = contentBlock.lines;
     var lineHeight = contentBlock.lineHeight;
     var defaultStyle = this._defaultStyle;
+    this.isTruncated = !!contentBlock.isTruncated;
     var baseX = style.x || 0;
     var baseY = style.y || 0;
     var textAlign = style.align || defaultStyle.align || "left";
@@ -10686,7 +10716,7 @@ var ZRText = function(_super) {
       setSeparateFont(subElStyle, style);
       textY += lineHeight;
       if (fixedBoundingRect) {
-        el.setBoundingRect(new BoundingRect_default(adjustTextX(subElStyle.x, style.width, subElStyle.textAlign), adjustTextY2(subElStyle.y, calculatedLineHeight, subElStyle.textBaseline), contentWidth, calculatedLineHeight));
+        el.setBoundingRect(new BoundingRect_default(adjustTextX(subElStyle.x, contentWidth, subElStyle.textAlign), adjustTextY2(subElStyle.y, calculatedLineHeight, subElStyle.textBaseline), contentWidth, calculatedLineHeight));
       }
     }
   };
@@ -10703,6 +10733,7 @@ var ZRText = function(_super) {
     var defaultStyle = this._defaultStyle;
     var textAlign = style.align || defaultStyle.align;
     var verticalAlign = style.verticalAlign || defaultStyle.verticalAlign;
+    this.isTruncated = !!contentBlock.isTruncated;
     var boxX = adjustTextX(baseX, outerWidth, textAlign);
     var boxY = adjustTextY2(baseY, outerHeight, verticalAlign);
     var xLeft = boxX;
@@ -10938,7 +10969,7 @@ function needDrawBackground(style) {
 }
 var Text_default = ZRText;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/graphic/CompoundPath.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/graphic/CompoundPath.js
 var CompoundPath = function(_super) {
   __extends(CompoundPath2, _super);
   function CompoundPath2() {
@@ -11188,4 +11219,4 @@ zrender/lib/zrender.js:
   * https://github.com/ecomfe/zrender/blob/master/LICENSE.txt
   *)
 */
-//# sourceMappingURL=chunk-AET7CXJG.js.map
+//# sourceMappingURL=chunk-PS4J4BCH.js.map

@@ -67,10 +67,10 @@ import {
   requestAnimationFrame_default,
   retrieve2,
   round4
-} from "./chunk-AET7CXJG.js";
+} from "./chunk-PS4J4BCH.js";
 import "./chunk-DC5AMYBS.js";
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/svg/SVGPathRebuilder.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/svg/SVGPathRebuilder.js
 var mathSin = Math.sin;
 var mathCos = Math.cos;
 var PI = Math.PI;
@@ -170,7 +170,7 @@ var SVGPathRebuilder = function() {
 }();
 var SVGPathRebuilder_default = SVGPathRebuilder;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/svg/mapStyleToAttrs.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/svg/mapStyleToAttrs.js
 var NONE = "none";
 var mathRound = Math.round;
 function pathHasFill(style) {
@@ -241,7 +241,7 @@ function mapStyleToAttrs(updateAttr, style, el, forceUpdate) {
   }
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/svg/core.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/svg/core.js
 var SVGNS = "http://www.w3.org/2000/svg";
 var XLINKNS = "http://www.w3.org/1999/xlink";
 var XMLNS = "http://www.w3.org/2000/xmlns/";
@@ -345,13 +345,13 @@ function createSVGVNode(width, height, children, useViewBox) {
   }, children);
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/svg/cssClassId.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/svg/cssClassId.js
 var cssClassIdx = 0;
 function getClassId() {
   return cssClassIdx++;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/svg/cssAnimation.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/svg/cssAnimation.js
 var EASING_MAP = {
   cubicIn: "0.32,0,0.67,0",
   cubicOut: "0.33,1,0.68,1",
@@ -616,7 +616,7 @@ function createCSSAnimation(el, attrs, scope, onlyShape) {
   }
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/svg/cssEmphasis.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/svg/cssEmphasis.js
 function createCSSEmphasis(el, attrs, scope) {
   if (!el.ignore) {
     if (el.isSilent()) {
@@ -667,7 +667,7 @@ function setClassAttribute(style, attrs, scope, withHover) {
   attrs["class"] = attrs["class"] ? attrs["class"] + " " + className : className;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/svg/graphic.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/svg/graphic.js
 var round = Math.round;
 function isImageLike(val) {
   return val && isString(val.src);
@@ -682,10 +682,11 @@ function setStyleAttrs(attrs, style, el, scope) {
       setGradient(style, attrs, key, scope);
     } else if (isFillStroke && isPattern(val)) {
       setPattern(el, attrs, key, scope);
-    } else if (isFillStroke && val === "none") {
-      attrs[key] = "transparent";
     } else {
       attrs[key] = val;
+    }
+    if (isFillStroke && scope.ssr && val === "none") {
+      attrs["pointer-events"] = "visible";
     }
   }, style, el, false);
   setShadow(el, attrs, scope);
@@ -1102,7 +1103,7 @@ function setClipPath(clipPath, attrs, scope) {
   attrs["clip-path"] = getIdURL(clipPathId);
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/svg/domapi.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/svg/domapi.js
 function createTextNode(text) {
   return document.createTextNode(text);
 }
@@ -1125,7 +1126,7 @@ function setTextContent(node, text) {
   node.textContent = text;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/svg/patch.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/svg/patch.js
 var colonChar = 58;
 var xChar = 120;
 var emptyNode = createVNode("", "");
@@ -1351,7 +1352,7 @@ function patch(oldVnode, vnode) {
   return vnode;
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/svg/Painter.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/svg/Painter.js
 var svgId = 0;
 var SVGPainter = function() {
   function SVGPainter2(root, storage, opts) {
@@ -1414,6 +1415,7 @@ var SVGPainter = function() {
     scope.willUpdate = opts.willUpdate;
     scope.compress = opts.compress;
     scope.emphasis = opts.emphasis;
+    scope.ssr = this._opts.ssr;
     var children = [];
     var bgVNode = this._bgVNode = createBackgroundVNode(width, height, this._backgroundColor, scope);
     bgVNode && children.push(bgVNode);
@@ -1593,12 +1595,12 @@ function createBackgroundVNode(width, height, backgroundColor, scope) {
 }
 var Painter_default = SVGPainter;
 
-// node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/lib/renderer/installSVGRenderer.js
+// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/renderer/installSVGRenderer.js
 function install(registers) {
   registers.registerPainter("svg", Painter_default);
 }
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/canvas/Layer.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/canvas/Layer.js
 function createDom(id, painter, dpr) {
   var newDom = platformApi.createCanvas();
   var width = painter.getWidth();
@@ -1876,7 +1878,7 @@ var Layer = function(_super) {
 }(Eventful_default);
 var Layer_default = Layer;
 
-// node_modules/.pnpm/zrender@5.6.0/node_modules/zrender/lib/canvas/Painter.js
+// node_modules/.pnpm/zrender@5.6.1/node_modules/zrender/lib/canvas/Painter.js
 var HOVER_LAYER_ZLEVEL = 1e5;
 var CANVAS_ZLEVEL = 314159;
 var EL_AFTER_INCREMENTAL_INC = 0.01;
@@ -2484,7 +2486,7 @@ var CanvasPainter = function() {
 }();
 var Painter_default2 = CanvasPainter;
 
-// node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/lib/renderer/installCanvasRenderer.js
+// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/renderer/installCanvasRenderer.js
 function install2(registers) {
   registers.registerPainter("canvas", Painter_default2);
 }

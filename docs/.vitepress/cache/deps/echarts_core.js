@@ -4,7 +4,7 @@ import {
   getLabelLineStatesModels,
   setLabelLineStyle,
   updateLabelLinePoints
-} from "./chunk-SW5RTBOO.js";
+} from "./chunk-CDM32NO6.js";
 import {
   Arc_default,
   AxisModelCommonMixin,
@@ -117,7 +117,7 @@ import {
   updateProps,
   use,
   version
-} from "./chunk-IBR4FUJM.js";
+} from "./chunk-BWNYY6KT.js";
 import {
   BoundingRect_default,
   CompoundPath_default,
@@ -156,12 +156,12 @@ import {
   util_exports,
   vector_exports,
   zrender_exports
-} from "./chunk-AET7CXJG.js";
+} from "./chunk-PS4J4BCH.js";
 import {
   __export
 } from "./chunk-DC5AMYBS.js";
 
-// node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/lib/export/api/helper.js
+// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/export/api/helper.js
 var helper_exports = {};
 __export(helper_exports, {
   createDimensions: () => createDimensions,
@@ -201,7 +201,7 @@ function createTextStyle2(textStyleModel, opts) {
   return createTextStyle(textStyleModel, null, null, opts.state !== "normal");
 }
 
-// node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/lib/export/api/number.js
+// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/export/api/number.js
 var number_exports = {};
 __export(number_exports, {
   MAX_SAFE_INTEGER: () => MAX_SAFE_INTEGER,
@@ -224,14 +224,14 @@ __export(number_exports, {
   round: () => round
 });
 
-// node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/lib/export/api/time.js
+// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/export/api/time.js
 var time_exports = {};
 __export(time_exports, {
   format: () => format,
   parse: () => parseDate
 });
 
-// node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/lib/export/api/graphic.js
+// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/export/api/graphic.js
 var graphic_exports = {};
 __export(graphic_exports, {
   Arc: () => Arc_default,
@@ -268,7 +268,7 @@ __export(graphic_exports, {
   updateProps: () => updateProps
 });
 
-// node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/lib/export/api/format.js
+// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/export/api/format.js
 var format_exports = {};
 __export(format_exports, {
   addCommas: () => addCommas,
@@ -283,7 +283,7 @@ __export(format_exports, {
   truncateText: () => truncateText
 });
 
-// node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/lib/export/api/util.js
+// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/export/api/util.js
 var util_exports2 = {};
 __export(util_exports2, {
   bind: () => bind,
@@ -304,7 +304,7 @@ __export(util_exports2, {
   reduce: () => reduce
 });
 
-// node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/lib/export/api.js
+// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/export/api.js
 function extendComponentModel(proto) {
   var Model = Component_default.extend(proto);
   Component_default.registerClass(Model);
@@ -326,7 +326,7 @@ function extendChartView(proto) {
   return View;
 }
 
-// node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/lib/label/LabelManager.js
+// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/label/LabelManager.js
 function cloneArr(points) {
   if (points) {
     var newPoints = [];
@@ -681,7 +681,7 @@ var LabelManager = (
 );
 var LabelManager_default = LabelManager;
 
-// node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/lib/label/installLabelLayout.js
+// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/label/installLabelLayout.js
 var getLabelManager = makeInner();
 function installLabelLayout(registers) {
   registers.registerUpdateLifecycle("series:beforeupdate", function(ecModel, api, params) {
@@ -702,7 +702,7 @@ function installLabelLayout(registers) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.5.1/node_modules/echarts/lib/export/core.js
+// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/export/core.js
 use(installLabelLayout);
 export {
   Axis_default as Axis,
