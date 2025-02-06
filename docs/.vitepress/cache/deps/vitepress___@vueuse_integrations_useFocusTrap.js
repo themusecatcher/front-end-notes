@@ -1,13 +1,13 @@
 import {
   notNullish,
-  toValue,
+  toArray,
   tryOnScopeDispose,
   unrefElement
-} from "./chunk-EUYJJFY3.js";
-import "./chunk-COUGI6EI.js";
+} from "./chunk-SRMGAYXL.js";
 import {
   computed,
   ref,
+  toValue,
   watch
 } from "./chunk-JN5NFW2R.js";
 import "./chunk-DC5AMYBS.js";
@@ -1066,7 +1066,7 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
   return trap;
 };
 
-// node_modules/.pnpm/@vueuse+integrations@11.3.0_async-validator@4.2.5_focus-trap@7.6.4_qrcode@1.5.4_sortablejs@1.15.3_vue@3.5.13/node_modules/@vueuse/integrations/useFocusTrap.mjs
+// node_modules/.pnpm/@vueuse+integrations@12.5.0_async-validator@4.2.5_focus-trap@7.6.4_qrcode@1.5.4_sortablejs@1.15.3/node_modules/@vueuse/integrations/useFocusTrap.mjs
 function useFocusTrap(target, options = {}) {
   let trap;
   const { immediate, ...focusTrapOptions } = options;
@@ -1088,7 +1088,7 @@ function useFocusTrap(target, options = {}) {
   };
   const targets = computed(() => {
     const _targets = toValue(target);
-    return (Array.isArray(_targets) ? _targets : [_targets]).map((el) => {
+    return toArray(_targets).map((el) => {
       const _el = toValue(el);
       return typeof _el === "string" ? _el : unrefElement(_el);
     }).filter(notNullish);
