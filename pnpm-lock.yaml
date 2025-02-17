@@ -15,8 +15,8 @@ importers:
         specifier: ^3.5.13
         version: 3.5.13
       vue-amazing-ui:
-        specifier: ^2.2.3
-        version: 2.2.3(async-validator@4.2.5)(focus-trap@7.6.4)(sortablejs@1.15.3)(vue@3.5.13)
+        specifier: ^2.2.4
+        version: 2.2.4(async-validator@4.2.5)(focus-trap@7.6.4)(sortablejs@1.15.3)(vue@3.5.13)
       vue3-lazyload:
         specifier: ^0.3.8
         version: 0.3.8(vue@3.5.13)
@@ -492,8 +492,8 @@ packages:
   '@vueuse/core@12.5.0':
     resolution: {integrity: sha512-GVyH1iYqNANwcahAx8JBm6awaNgvR/SwZ1fjr10b8l1HIgDp82ngNbfzJUgOgWEoxjL+URAggnlilAEXwCOZtg==}
 
-  '@vueuse/core@12.6.1':
-    resolution: {integrity: sha512-FpgM1tXGAHsAC5n4Tflyg0vSoJUmdevfKaAhKFdxiK9BTIdHOHOiWmo+xivwdzjYFIvI8cEeJWYuqs646jOM2w==}
+  '@vueuse/core@12.7.0':
+    resolution: {integrity: sha512-jtK5B7YjZXmkGNHjviyGO4s3ZtEhbzSgrbX+s5o+Lr8i2nYqNyHuPVOeTdM1/hZ5Tkxg/KktAuAVDDiHMraMVA==}
 
   '@vueuse/integrations@12.5.0':
     resolution: {integrity: sha512-HYLt8M6mjUfcoUOzyBcX2RjpfapIwHPBmQJtTmXOQW845Y/Osu9VuTJ5kPvnmWJ6IUa05WpblfOwZ+P0G4iZsQ==}
@@ -536,8 +536,8 @@ packages:
       universal-cookie:
         optional: true
 
-  '@vueuse/integrations@12.6.1':
-    resolution: {integrity: sha512-TsX9noygHqZGGoAcvvu+DoSGtbeuVl49V6gZZLgNxmKGeAxH2wQrlS3/7TM2wNczIkKV541bbOmhcQH6D+CM4Q==}
+  '@vueuse/integrations@12.7.0':
+    resolution: {integrity: sha512-IEq7K4bCl7mn3uKJaWtNXnd1CAPaHLUMuyj5K1/k/pVcItt0VONZW8xiGxdIovJcQjkzOHjImhX5t6gija+0/g==}
     peerDependencies:
       async-validator: ^4
       axios: ^1
@@ -580,14 +580,14 @@ packages:
   '@vueuse/metadata@12.5.0':
     resolution: {integrity: sha512-Ui7Lo2a7AxrMAXRF+fAp9QsXuwTeeZ8fIB9wsLHqzq9MQk+2gMYE2IGJW48VMJ8ecvCB3z3GsGLKLbSasQ5Qlg==}
 
-  '@vueuse/metadata@12.6.1':
-    resolution: {integrity: sha512-2094HNXGdsU3aqRbad0vmlRgGncMC4u2f6nFdW1mUn7b7ym4hORrDZfyeq8G5BfGvX4y0zZynWfCdtB2WwpyVw==}
+  '@vueuse/metadata@12.7.0':
+    resolution: {integrity: sha512-4VvTH9mrjXqFN5LYa5YfqHVRI6j7R00Vy4995Rw7PQxyCL3z0Lli86iN4UemWqixxEvYfRjG+hF9wL8oLOn+3g==}
 
   '@vueuse/shared@12.5.0':
     resolution: {integrity: sha512-vMpcL1lStUU6O+kdj6YdHDixh0odjPAUM15uJ9f7MY781jcYkIwFA4iv2EfoIPO6vBmvutI1HxxAwmf0cx5ISQ==}
 
-  '@vueuse/shared@12.6.1':
-    resolution: {integrity: sha512-ukTb2na19KT1/YVjj4CYBDOgiV/xmsSJRL6TcKeiz2db+P5bT3I0OJxy38eRR3WSN8CmSnt7MdVJ16vX6VZFxg==}
+  '@vueuse/shared@12.7.0':
+    resolution: {integrity: sha512-coLlUw2HHKsm7rPN6WqHJQr18WymN4wkA/3ThFaJ4v4gWGWAQQGK+MJxLuJTBs4mojQiazlVWAKNJNpUWGRkNw==}
 
   algoliasearch@5.20.1:
     resolution: {integrity: sha512-SiCOCVBCQUg/aWkfMnjT+8TQxNNFlPZTI7v8y4+aZXzJg6zDIzKy9KcYVS4sc+xk5cwW5hyJ+9z836f4+wvgzA==}
@@ -931,8 +931,8 @@ packages:
     resolution: {integrity: sha512-5JRxVqC8I8NuOUjzBbvVJAKNM8qoVuH0O77h4WInc/qC2q5IreqKxYwgkga3PfA22OayK2ikceb/B26dztPl+Q==}
     engines: {node: '>=16'}
 
-  swiper@11.2.3:
-    resolution: {integrity: sha512-24m5tqHCd1Wmp9+86aKDoIGMsZGEjIL++3nuB1UjhAhIlvwj4k0Jikxu9PGQ/VswLpoje6JtMDWo12uu4aS2FA==}
+  swiper@11.2.4:
+    resolution: {integrity: sha512-DTtglrsFfMYytid+oNy4QI3t2N2+XhhwSYbnyOhlwBmvY8Bkoj3ombK1/b80w8vDpQ+Lqlnbm+0737+i32MrcA==}
     engines: {node: '>= 4.7.0'}
 
   tabbable@6.2.0:
@@ -1011,8 +1011,8 @@ packages:
       postcss:
         optional: true
 
-  vue-amazing-ui@2.2.3:
-    resolution: {integrity: sha512-kxzEBukagfscyMMG6uZhEQAkLaXzLhCzCq7zVw/Qy2DF5A174bg8CGUxGXKHRVMYnNZ9W5eYw1lm3qXgt1r01g==}
+  vue-amazing-ui@2.2.4:
+    resolution: {integrity: sha512-qiHilvO2cKaW3qjfAzlSmFo7QT3F2OW75BFHlmEWSOPcvQHmMEQGyWYbppHeWwaos+5pF50KV+O1f/FicMa+Lw==}
 
   vue-demi@0.12.5:
     resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}
@@ -1505,11 +1505,11 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/core@12.6.1':
+  '@vueuse/core@12.7.0':
     dependencies:
       '@types/web-bluetooth': 0.0.20
-      '@vueuse/metadata': 12.6.1
-      '@vueuse/shared': 12.6.1
+      '@vueuse/metadata': 12.7.0
+      '@vueuse/shared': 12.7.0
       vue: 3.5.13
     transitivePeerDependencies:
       - typescript
@@ -1527,10 +1527,10 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/integrations@12.6.1(async-validator@4.2.5)(focus-trap@7.6.4)(qrcode@1.5.4)(sortablejs@1.15.3)':
+  '@vueuse/integrations@12.7.0(async-validator@4.2.5)(focus-trap@7.6.4)(qrcode@1.5.4)(sortablejs@1.15.3)':
     dependencies:
-      '@vueuse/core': 12.6.1
-      '@vueuse/shared': 12.6.1
+      '@vueuse/core': 12.7.0
+      '@vueuse/shared': 12.7.0
       vue: 3.5.13
     optionalDependencies:
       async-validator: 4.2.5
@@ -1542,7 +1542,7 @@ snapshots:
 
   '@vueuse/metadata@12.5.0': {}
 
-  '@vueuse/metadata@12.6.1': {}
+  '@vueuse/metadata@12.7.0': {}
 
   '@vueuse/shared@12.5.0':
     dependencies:
@@ -1550,7 +1550,7 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/shared@12.6.1':
+  '@vueuse/shared@12.7.0':
     dependencies:
       vue: 3.5.13
     transitivePeerDependencies:
@@ -1946,7 +1946,7 @@ snapshots:
     dependencies:
       copy-anything: 3.0.5
 
-  swiper@11.2.3: {}
+  swiper@11.2.4: {}
 
   tabbable@6.2.0: {}
 
@@ -2047,14 +2047,15 @@ snapshots:
       - typescript
       - universal-cookie
 
-  vue-amazing-ui@2.2.3(async-validator@4.2.5)(focus-trap@7.6.4)(sortablejs@1.15.3)(vue@3.5.13):
+  vue-amazing-ui@2.2.4(async-validator@4.2.5)(focus-trap@7.6.4)(sortablejs@1.15.3)(vue@3.5.13):
     dependencies:
       '@vuepic/vue-datepicker': 11.0.1(vue@3.5.13)
-      '@vueuse/core': 12.6.1
-      '@vueuse/integrations': 12.6.1(async-validator@4.2.5)(focus-trap@7.6.4)(qrcode@1.5.4)(sortablejs@1.15.3)
+      '@vueuse/core': 12.7.0
+      '@vueuse/integrations': 12.7.0(async-validator@4.2.5)(focus-trap@7.6.4)(qrcode@1.5.4)(sortablejs@1.15.3)
+      date-fns: 4.1.0
       qrcode: 1.5.4
       seemly: 0.3.10
-      swiper: 11.2.3
+      swiper: 11.2.4
     transitivePeerDependencies:
       - async-validator
       - axios
