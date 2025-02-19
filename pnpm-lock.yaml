@@ -15,8 +15,8 @@ importers:
         specifier: ^3.5.13
         version: 3.5.13
       vue-amazing-ui:
-        specifier: ^2.2.5
-        version: 2.2.5(async-validator@4.2.5)(focus-trap@7.6.4)(sortablejs@1.15.3)(vue@3.5.13)
+        specifier: ^2.2.6
+        version: 2.2.6(vue@3.5.13)
       vue3-lazyload:
         specifier: ^0.3.8
         version: 0.3.8(vue@3.5.13)
@@ -542,47 +542,6 @@ packages:
       universal-cookie:
         optional: true
 
-  '@vueuse/integrations@12.7.0':
-    resolution: {integrity: sha512-IEq7K4bCl7mn3uKJaWtNXnd1CAPaHLUMuyj5K1/k/pVcItt0VONZW8xiGxdIovJcQjkzOHjImhX5t6gija+0/g==}
-    peerDependencies:
-      async-validator: ^4
-      axios: ^1
-      change-case: ^5
-      drauu: ^0.4
-      focus-trap: ^7
-      fuse.js: ^7
-      idb-keyval: ^6
-      jwt-decode: ^4
-      nprogress: ^0.2
-      qrcode: ^1.5
-      sortablejs: ^1
-      universal-cookie: ^7
-    peerDependenciesMeta:
-      async-validator:
-        optional: true
-      axios:
-        optional: true
-      change-case:
-        optional: true
-      drauu:
-        optional: true
-      focus-trap:
-        optional: true
-      fuse.js:
-        optional: true
-      idb-keyval:
-        optional: true
-      jwt-decode:
-        optional: true
-      nprogress:
-        optional: true
-      qrcode:
-        optional: true
-      sortablejs:
-        optional: true
-      universal-cookie:
-        optional: true
-
   '@vueuse/metadata@12.5.0':
     resolution: {integrity: sha512-Ui7Lo2a7AxrMAXRF+fAp9QsXuwTeeZ8fIB9wsLHqzq9MQk+2gMYE2IGJW48VMJ8ecvCB3z3GsGLKLbSasQ5Qlg==}
 
@@ -1020,8 +979,8 @@ packages:
       postcss:
         optional: true
 
-  vue-amazing-ui@2.2.5:
-    resolution: {integrity: sha512-WB/XFXxjk+zGKj3/ReaXBKSEAHZr+o5H1lmqmP+KoA2Y2Rnpb1czaX4skVPtguzv6zdVgek+Ii9MyL8emIsF9g==}
+  vue-amazing-ui@2.2.6:
+    resolution: {integrity: sha512-L3QQA+xAhxKvLYeelP3MpmZ8X5JnaEbf1Skc3p3s1WwN7lHNzYXet7o55wSCNaTe4iP/MWahopRL4OyHRlwwVA==}
 
   vue-demi@0.12.5:
     resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}
@@ -1544,19 +1503,6 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/integrations@12.7.0(async-validator@4.2.5)(focus-trap@7.6.4)(qrcode@1.5.4)(sortablejs@1.15.3)':
-    dependencies:
-      '@vueuse/core': 12.7.0
-      '@vueuse/shared': 12.7.0
-      vue: 3.5.13
-    optionalDependencies:
-      async-validator: 4.2.5
-      focus-trap: 7.6.4
-      qrcode: 1.5.4
-      sortablejs: 1.15.3
-    transitivePeerDependencies:
-      - typescript
-
   '@vueuse/metadata@12.5.0': {}
 
   '@vueuse/metadata@12.7.0': {}
@@ -2067,29 +2013,17 @@ snapshots:
       - typescript
       - universal-cookie
 
-  vue-amazing-ui@2.2.5(async-validator@4.2.5)(focus-trap@7.6.4)(sortablejs@1.15.3)(vue@3.5.13):
+  vue-amazing-ui@2.2.6(vue@3.5.13):
     dependencies:
       '@types/qrcode': 1.5.5
       '@vuepic/vue-datepicker': 11.0.1(vue@3.5.13)
       '@vueuse/core': 12.7.0
-      '@vueuse/integrations': 12.7.0(async-validator@4.2.5)(focus-trap@7.6.4)(qrcode@1.5.4)(sortablejs@1.15.3)
       date-fns: 4.1.0
       qrcode: 1.5.4
       seemly: 0.3.10
       swiper: 11.2.4
     transitivePeerDependencies:
-      - async-validator
-      - axios
-      - change-case
-      - drauu
-      - focus-trap
-      - fuse.js
-      - idb-keyval
-      - jwt-decode
-      - nprogress
-      - sortablejs
       - typescript
-      - universal-cookie
       - vue
 
   vue-demi@0.12.5(vue@3.5.13):
