@@ -15,8 +15,8 @@ importers:
         specifier: ^3.5.13
         version: 3.5.13
       vue-amazing-ui:
-        specifier: ^2.2.6
-        version: 2.2.6(vue@3.5.13)
+        specifier: ^2.2.9
+        version: 2.2.9(vue@3.5.13)
       vue3-lazyload:
         specifier: ^0.3.8
         version: 0.3.8(vue@3.5.13)
@@ -29,7 +29,7 @@ importers:
         version: 4.2.2
       vitepress:
         specifier: ^1.6.3
-        version: 1.6.3(@algolia/client-search@5.20.1)(@types/node@22.13.4)(async-validator@4.2.5)(less@4.2.2)(postcss@8.5.2)(qrcode@1.5.4)(search-insights@2.17.2)(sortablejs@1.15.3)
+        version: 1.6.3(@algolia/client-search@5.20.1)(@types/node@22.13.5)(async-validator@4.2.5)(less@4.2.2)(postcss@8.5.2)(qrcode@1.5.4)(search-insights@2.17.2)(sortablejs@1.15.3)
 
 packages:
 
@@ -429,8 +429,8 @@ packages:
   '@types/mdurl@2.0.0':
     resolution: {integrity: sha512-RGdgjQUZba5p6QEFAVx2OGb8rQDL/cPRG7GiedRzMcJ1tYnUANBncjbSB1NRGwbvjcPeikRABz2nshyPk1bhWg==}
 
-  '@types/node@22.13.4':
-    resolution: {integrity: sha512-ywP2X0DYtX3y08eFVx5fNIw7/uIv8hYUKgXoK8oayJlLnKcRfEYCxWMVE1XagUdVtCJlZT1AU4LXEABW+L1Peg==}
+  '@types/node@22.13.5':
+    resolution: {integrity: sha512-+lTU0PxZXn0Dr1NBtC7Y8cR21AJr87dLLU953CWA6pMxxv/UDc7jYAY90upcrie1nRcD6XNG5HOYEDtgW5TxAg==}
 
   '@types/qrcode@1.5.5':
     resolution: {integrity: sha512-CdfBi/e3Qk+3Z/fXYShipBT13OJ2fDO2Q2w5CIP5anLTLIndQG9z6P1cnm+8zCWSpm5dnxMFd/uREtb0EXuQzg==}
@@ -979,8 +979,8 @@ packages:
       postcss:
         optional: true
 
-  vue-amazing-ui@2.2.6:
-    resolution: {integrity: sha512-L3QQA+xAhxKvLYeelP3MpmZ8X5JnaEbf1Skc3p3s1WwN7lHNzYXet7o55wSCNaTe4iP/MWahopRL4OyHRlwwVA==}
+  vue-amazing-ui@2.2.9:
+    resolution: {integrity: sha512-xQxF2qFByDymzkE89ZbE9TfsM5fElAv5iUnvyrIAYcQa+crPzKzaxHVZIjXn6Hisrsp8Z/Pi3LMPKe4kWHlSDg==}
 
   vue-demi@0.12.5:
     resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}
@@ -1376,13 +1376,13 @@ snapshots:
 
   '@types/mdurl@2.0.0': {}
 
-  '@types/node@22.13.4':
+  '@types/node@22.13.5':
     dependencies:
       undici-types: 6.20.0
 
   '@types/qrcode@1.5.5':
     dependencies:
-      '@types/node': 22.13.4
+      '@types/node': 22.13.5
 
   '@types/unist@3.0.3': {}
 
@@ -1390,9 +1390,9 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@vitejs/plugin-vue@5.2.1(vite@5.4.14(@types/node@22.13.4)(less@4.2.2))(vue@3.5.13)':
+  '@vitejs/plugin-vue@5.2.1(vite@5.4.14(@types/node@22.13.5)(less@4.2.2))(vue@3.5.13)':
     dependencies:
-      vite: 5.4.14(@types/node@22.13.4)(less@4.2.2)
+      vite: 5.4.14(@types/node@22.13.5)(less@4.2.2)
       vue: 3.5.13
 
   '@vue/compiler-core@3.5.13':
@@ -1954,17 +1954,17 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite@5.4.14(@types/node@22.13.4)(less@4.2.2):
+  vite@5.4.14(@types/node@22.13.5)(less@4.2.2):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.5.2
       rollup: 4.34.6
     optionalDependencies:
-      '@types/node': 22.13.4
+      '@types/node': 22.13.5
       fsevents: 2.3.3
       less: 4.2.2
 
-  vitepress@1.6.3(@algolia/client-search@5.20.1)(@types/node@22.13.4)(async-validator@4.2.5)(less@4.2.2)(postcss@8.5.2)(qrcode@1.5.4)(search-insights@2.17.2)(sortablejs@1.15.3):
+  vitepress@1.6.3(@algolia/client-search@5.20.1)(@types/node@22.13.5)(async-validator@4.2.5)(less@4.2.2)(postcss@8.5.2)(qrcode@1.5.4)(search-insights@2.17.2)(sortablejs@1.15.3):
     dependencies:
       '@docsearch/css': 3.8.2
       '@docsearch/js': 3.8.2(@algolia/client-search@5.20.1)(search-insights@2.17.2)
@@ -1973,7 +1973,7 @@ snapshots:
       '@shikijs/transformers': 2.3.2
       '@shikijs/types': 2.3.2
       '@types/markdown-it': 14.1.2
-      '@vitejs/plugin-vue': 5.2.1(vite@5.4.14(@types/node@22.13.4)(less@4.2.2))(vue@3.5.13)
+      '@vitejs/plugin-vue': 5.2.1(vite@5.4.14(@types/node@22.13.5)(less@4.2.2))(vue@3.5.13)
       '@vue/devtools-api': 7.7.1
       '@vue/shared': 3.5.13
       '@vueuse/core': 12.5.0
@@ -1982,7 +1982,7 @@ snapshots:
       mark.js: 8.11.1
       minisearch: 7.1.1
       shiki: 2.3.2
-      vite: 5.4.14(@types/node@22.13.4)(less@4.2.2)
+      vite: 5.4.14(@types/node@22.13.5)(less@4.2.2)
       vue: 3.5.13
     optionalDependencies:
       postcss: 8.5.2
@@ -2013,7 +2013,7 @@ snapshots:
       - typescript
       - universal-cookie
 
-  vue-amazing-ui@2.2.6(vue@3.5.13):
+  vue-amazing-ui@2.2.9(vue@3.5.13):
     dependencies:
       '@types/qrcode': 1.5.5
       '@vuepic/vue-datepicker': 11.0.1(vue@3.5.13)
