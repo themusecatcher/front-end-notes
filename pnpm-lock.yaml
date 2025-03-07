@@ -15,8 +15,8 @@ importers:
         specifier: ^3.5.13
         version: 3.5.13
       vue-amazing-ui:
-        specifier: ^2.2.14
-        version: 2.2.14(vue@3.5.13)
+        specifier: ^2.2.15
+        version: 2.2.15(vue@3.5.13)
       vue3-lazyload:
         specifier: ^0.3.8
         version: 0.3.8(vue@3.5.13)
@@ -979,8 +979,8 @@ packages:
       postcss:
         optional: true
 
-  vue-amazing-ui@2.2.14:
-    resolution: {integrity: sha512-kfDxhctBfAksXVM6FYl4Haixd4iAvj8lmsphm7/M0kOs5xuRF99w+pJGzIceQUuWTRGgSRxSMy4XOH5n5SvPZA==}
+  vue-amazing-ui@2.2.15:
+    resolution: {integrity: sha512-bXiEB4PZE8kt/LV1EJuKnDCqaPDVrShuSArZtqhuMNaN64uM9+J+OtX/8Zhho4nM9Y0OqCyCcoFPG+58V4qSKA==}
 
   vue-demi@0.12.5:
     resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}
@@ -2013,7 +2013,7 @@ snapshots:
       - typescript
       - universal-cookie
 
-  vue-amazing-ui@2.2.14(vue@3.5.13):
+  vue-amazing-ui@2.2.15(vue@3.5.13):
     dependencies:
       '@vuepic/vue-datepicker': 11.0.1(vue@3.5.13)
       '@vueuse/core': 12.8.2
