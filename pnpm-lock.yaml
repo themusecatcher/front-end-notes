@@ -15,8 +15,8 @@ importers:
         specifier: ^3.5.13
         version: 3.5.13
       vue-amazing-ui:
-        specifier: ^2.2.15
-        version: 2.2.15(vue@3.5.13)
+        specifier: ^2.3.1
+        version: 2.3.1(vue@3.5.13)
       vue3-lazyload:
         specifier: ^0.3.8
         version: 0.3.8(vue@3.5.13)
@@ -105,6 +105,13 @@ packages:
     resolution: {integrity: sha512-4npKo1qpLG5xusFoFUj4xIIR/6y3YoCuS/uhagv2blGFotDj+D6OLTML3Pp6JCVcES4zDbkoY7pmNBA8ARtidQ==}
     engines: {node: '>= 14.0.0'}
 
+  '@ant-design/colors@7.2.0':
+    resolution: {integrity: sha512-bjTObSnZ9C/O8MB/B4OUtd/q9COomuJAR2SYfhxLyHvCKn4EKwCN3e+fWGMo7H5InAyV0wL17jdE9ALrdOW/6A==}
+
+  '@ant-design/fast-color@2.0.6':
+    resolution: {integrity: sha512-y2217gk4NqL35giHl72o6Zzqji9O7vHh9YmhUVkPtAOpoTCH4uWxo/pr4VE8t0+ChEPs0qo4eJRC5Q1eXWo3vA==}
+    engines: {node: '>=8.x'}
+
   '@babel/helper-string-parser@7.25.9':
     resolution: {integrity: sha512-4A/SCr/2KLd5jrtOMFzaKjVtAei3+2r/NChoBNoZ3EyP/+GlhoaEGoWOZUmFmoITP7zOJyHIMm+DYRd8o3PvHA==}
     engines: {node: '>=6.9.0'}
@@ -118,9 +125,17 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
+  '@babel/runtime@7.26.10':
+    resolution: {integrity: sha512-2WJMeRQPHKSPemqk/awGrAiuFfzBmOIPXKizAsVhWH9YJqLZ0H+HS4c8loHGgW6utJ3E/ejXQUsiGaQy2NZ9Fw==}
+    engines: {node: '>=6.9.0'}
+
   '@babel/types@7.26.8':
     resolution: {integrity: sha512-eUuWapzEGWFEpHFxgEaBG8e3n6S8L3MSu0oda755rOfabWPnh0Our1AozNFVUxGFIhbKgd1ksprsoDGMinTOTA==}
     engines: {node: '>=6.9.0'}
+
+  '@ctrl/tinycolor@4.1.0':
+    resolution: {integrity: sha512-WyOx8cJQ+FQus4Mm4uPIZA64gbk3Wxh0so5Lcii0aJifqwoVOlfFtorjLE0Hen4OYyHZMXDWqMmaQemBhgxFRQ==}
+    engines: {node: '>=14'}
 
   '@docsearch/css@3.8.2':
     resolution: {integrity: sha512-y05ayQFyUmCXze79+56v/4HpycYF3uFqB78pLPrSV5ZKAlDuIAAJNhaRi8tTdRNXh05yxX/TyNnzD6LwSM89vQ==}
@@ -814,6 +829,9 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
+  regenerator-runtime@0.14.1:
+    resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
+
   regex-recursion@6.0.2:
     resolution: {integrity: sha512-0YCaSCq2VRIebiaUviZNs0cBz1kg5kVS2UKUfNIx8YVs1cN3AV7NTctO5FOKBA+UT2BPJIWZauYHPqJODG50cg==}
 
@@ -979,8 +997,8 @@ packages:
       postcss:
         optional: true
 
-  vue-amazing-ui@2.2.15:
-    resolution: {integrity: sha512-bXiEB4PZE8kt/LV1EJuKnDCqaPDVrShuSArZtqhuMNaN64uM9+J+OtX/8Zhho4nM9Y0OqCyCcoFPG+58V4qSKA==}
+  vue-amazing-ui@2.3.1:
+    resolution: {integrity: sha512-50ATBDqkjOOnztw4hW6nmkiGb0EnXLFLEIddhRqipFiDP3zdWJhEy6GC0D5MFkvnRMpLRAm32xT6Bgjs/afKSg==}
 
   vue-demi@0.12.5:
     resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}
@@ -1146,6 +1164,14 @@ snapshots:
     dependencies:
       '@algolia/client-common': 5.20.1
 
+  '@ant-design/colors@7.2.0':
+    dependencies:
+      '@ant-design/fast-color': 2.0.6
+
+  '@ant-design/fast-color@2.0.6':
+    dependencies:
+      '@babel/runtime': 7.26.10
+
   '@babel/helper-string-parser@7.25.9': {}
 
   '@babel/helper-validator-identifier@7.25.9': {}
@@ -1154,10 +1180,16 @@ snapshots:
     dependencies:
       '@babel/types': 7.26.8
 
+  '@babel/runtime@7.26.10':
+    dependencies:
+      regenerator-runtime: 0.14.1
+
   '@babel/types@7.26.8':
     dependencies:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
+
+  '@ctrl/tinycolor@4.1.0': {}
 
   '@docsearch/css@3.8.2': {}
 
@@ -1808,6 +1840,8 @@ snapshots:
       pngjs: 5.0.0
       yargs: 15.4.1
 
+  regenerator-runtime@0.14.1: {}
+
   regex-recursion@6.0.2:
     dependencies:
       regex-utilities: 2.3.0
@@ -2013,8 +2047,10 @@ snapshots:
       - typescript
       - universal-cookie
 
-  vue-amazing-ui@2.2.15(vue@3.5.13):
+  vue-amazing-ui@2.3.1(vue@3.5.13):
     dependencies:
+      '@ant-design/colors': 7.2.0
+      '@ctrl/tinycolor': 4.1.0
       '@vuepic/vue-datepicker': 11.0.1(vue@3.5.13)
       '@vueuse/core': 12.8.2
       date-fns: 4.1.0
