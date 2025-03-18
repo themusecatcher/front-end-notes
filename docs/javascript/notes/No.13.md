@@ -20,42 +20,48 @@ document.addEventListener('contextmenu', (event) => {
 ```vue
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-const target = ref<HTMLElement | null>(null)
-const scrollParent = ref<HTMLElement | null>(null)
+const targetRef = ref<HTMLElement | null>(null)
+const scrollTarget = ref<HTMLElement | null>(null)
 onMounted(() => {
   observeScroll()
 })
 onBeforeUnmount(() => {
   cleanup()
+  targetRef.value?.remove()
 })
 function cleanup() {
-  scrollParent.value && scrollParent.value.removeEventListener('scroll', scrollEvent)
-  scrollParent.value = null
+  scrollTarget.value && scrollTarget.value.removeEventListener('scroll', scrollEvent)
+  scrollTarget.value = null
+  mutationObserver.stop()
 }
 function scrollEvent (e: Event) {
   console.log('scrollTop', e.target.scrollTop)
   console.log('scrollLeft', e.target.scrollLeft)
 }
-function observeScroll() { // 监听可滚动父元素的滚动事件
+// 监听可滚动父元素的滚动事件
+function observeScroll() {
   cleanup()
-  scrollParent.value = getScrollParent(target.value?.parentElement ?? null)
-  scrollParent.value && scrollParent.value.addEventListener('scroll', scrollEvent)
+  scrollTarget.value = getScrollParent(targetRef.value)
+  scrollTarget.value && scrollTarget.value.addEventListener('scroll', scrollEvent)
+}
+function getParentElement(el: HTMLElement): HTMLElement | null {
+  // Document
+  if (el === document.documentElement) return null
+  return el.parentElement
 }
 function getScrollParent(el: HTMLElement | null): HTMLElement | null {
+  if (el === null) return null
+  const parentElement = getParentElement(el)
+  if (parentElement === null) return null
+  // Document
+  if (parentElement === document.documentElement) return document.documentElement
   const isScrollable = (el: HTMLElement): boolean => {
-    const style = window.getComputedStyle(el)
-    if (
-      (el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth) &&
-      (style.overflow === 'scroll' || style.overflow === 'auto')
-    ) {
-      return true
-    }
-    return false
+    const { overflow, overflowX, overflowY } = getComputedStyle(el)
+    return /(auto|scroll|overlay)/.test(overflow + overflowY + overflowX)
   }
-  if (el) {
-    return isScrollable(el) ? el : getScrollParent(el.parentElement ?? null)
-  }
-  return null
+  // Element
+  if (isScrollable(parentElement)) return parentElement
+  return getScrollParent(parentElement)
 }
 </script>
 ```
