@@ -15,8 +15,8 @@ importers:
         specifier: ^3.5.13
         version: 3.5.13
       vue-amazing-ui:
-        specifier: ^2.3.4
-        version: 2.3.4(vue@3.5.13)
+        specifier: ^2.4.0
+        version: 2.4.0(vue@3.5.13)
       vue3-lazyload:
         specifier: ^0.3.8
         version: 0.3.8(vue@3.5.13)
@@ -918,8 +918,8 @@ packages:
     resolution: {integrity: sha512-5JRxVqC8I8NuOUjzBbvVJAKNM8qoVuH0O77h4WInc/qC2q5IreqKxYwgkga3PfA22OayK2ikceb/B26dztPl+Q==}
     engines: {node: '>=16'}
 
-  swiper@11.2.5:
-    resolution: {integrity: sha512-nG0kbIyBfeE2BPFt9nPUX03qUBF75o6+enzjIT/DfCmbh8ORlwhc4eZz1+4H/yseAgb3H+OoEYzmb64i0tYNnQ==}
+  swiper@11.2.6:
+    resolution: {integrity: sha512-8aXpYKtjy3DjcbzZfz+/OX/GhcU5h+looA6PbAzHMZT6ESSycSp9nAjPCenczgJyslV+rUGse64LMGpWE3PX9Q==}
     engines: {node: '>= 4.7.0'}
 
   tabbable@6.2.0:
@@ -1001,8 +1001,8 @@ packages:
       postcss:
         optional: true
 
-  vue-amazing-ui@2.3.4:
-    resolution: {integrity: sha512-sBi2f9zcwauaXs7anYjRhXte8Rgxrz451KIhC40tSj7+DRoZ1CH3BCqAA7QehJG4sH3o4c+QoSn7s0hKK+RGdQ==}
+  vue-amazing-ui@2.4.0:
+    resolution: {integrity: sha512-hF1imG5Kg0VwZYiOXPWDvrh5WdKMxdhSNl0732yDbP7wSHw7Ej2MNHJRivP+/4pcB+n5sEQpVjV161gDiRdFog==}
 
   vue-demi@0.12.5:
     resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}
@@ -1942,7 +1942,7 @@ snapshots:
     dependencies:
       copy-anything: 3.0.5
 
-  swiper@11.2.5: {}
+  swiper@11.2.6: {}
 
   tabbable@6.2.0: {}
 
@@ -2047,7 +2047,7 @@ snapshots:
       - typescript
       - universal-cookie
 
-  vue-amazing-ui@2.3.4(vue@3.5.13):
+  vue-amazing-ui@2.4.0(vue@3.5.13):
     dependencies:
       '@ant-design/colors': 7.2.0
       '@ctrl/tinycolor': 4.1.0
@@ -2056,7 +2056,7 @@ snapshots:
       date-fns: 4.1.0
       qrcode: 1.5.4
       seemly: 0.3.10
-      swiper: 11.2.5
+      swiper: 11.2.6
     transitivePeerDependencies:
       - vue
 
