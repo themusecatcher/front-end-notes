@@ -158,3 +158,73 @@ onMounted(() => {
     WheelEvent.DOM_DELTA_PIXEL | 0x00 | `delta*` 值以像素为单位
     WheelEvent.DOM_DELTA_LINE | 0x01 | `delta*` 值以行为单位。每次鼠标单击都会滚动一行内容，其中行高计算的方法取决于浏览器
     WheelEvent.DOM_DELTA_PAGE | 0x02 | `delta*` 值以页为单位。每次鼠标单击都会滚动一页内容
+
+## [Object.is()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/is)
+
+`Object.is()` 静态方法确定两个值是否为相同值。
+
+- 语法
+
+  ```ts
+  Object.is(value1, value2)
+  ```
+
+- 参数
+
+  - `value1`：要比较的第一个值。
+
+  - `value2`：要比较的第二个值。
+
+- 返回值
+
+  一个布尔值，指示两个参数是否为相同的值。
+
+- 描述
+
+  `Object.is()` 确定两个值是否为相同值。如果以下其中一项成立，则两个值相同：
+
+  - 都是 `undefined`
+  - 都是 `null`
+  - 都是 `true` 或者都是 `false`
+  - 都是长度相同、字符相同、顺序相同的字符串
+  - 都是相同的对象（意味着两个值都引用了内存中的同一对象）
+  - 都是 `BigInt` 且具有相同的数值
+  - 都是 `symbol` 且引用相同的 `symbol` 值
+  - 都是数字且
+    - 都是 `+0`
+    - 都是 `-0`
+    - 都是 `NaN`
+    - 都有相同的值，非零且都不是 `NaN`
+      
+`Object.is()` 与 `==` 运算符并不等价。`==` 运算符在测试相等性之前，会对两个操作数进行类型转换（如果它们不是相同的类型），这可能会导致一些非预期的行为，例如 `"" == false` 的结果是 `true`，但是 `Object.is()` 不会对其操作数进行类型转换。
+<br/>
+<br/>
+`Object.is()` 也不等价于 `===` 运算符。`Object.is()` 和 `===` 之间的**唯一区别在于它们处理带符号的 `0` 和 `NaN` 值的时候**。`===` 运算符（和 `==` 运算符）将数值 `-0` 和 `+0` 视为相等，但是会将 `NaN` 视为彼此不相等。
+
+### 示例
+
+```ts
+// 案例 1：评估结果和使用 === 相同
+Object.is(25, 25) // true
+Object.is('foo', 'foo') // true
+Object.is('foo', 'bar') // false
+Object.is(null, null) // true
+Object.is(undefined, undefined) // true
+Object.is(window, window) // true
+Object.is([], []) // false
+const foo = { a: 1 }
+const bar = { a: 1 }
+const sameFoo = foo
+Object.is(foo, foo) // true
+Object.is(foo, bar) // false
+Object.is(foo, sameFoo) // true
+
+// 案例 2: 带符号的 0
+Object.is(0, -0) // false 与 ===/== 不同
+Object.is(+0, -0) // false 与 ===/== 不同
+Object.is(-0, -0) // true
+
+// 案例 3: NaN
+Object.is(NaN, 0 / 0) // true 与 ===/== 不同
+Object.is(NaN, Number.NaN) // true 与 ===/== 不同
+```
