@@ -23,6 +23,10 @@
   ::: tip 附注
   克隆一个元素节点会拷贝它所有的属性以及属性值，当然也就包括了属性上绑定的事件 (比如`onclick="alert(1)"`)，但不会拷贝那些使用`addEventListener()`方法或者`node.onclick = fn`这种用 `JavaScript` **动态绑定的事件**。
 
+  而 Vue 组件上定义的事件，正是通过使用浏览器的 `addEventListener` 方法来绑定事件监听器，而当组件被销毁（如 `onBeforeUnmount` 或 `onUnmounted` 生命周期钩子触发时），`Vue` 会使用 `removeEventListener` 方法来自动移除所有事件监听器，以避免内存泄漏。
+
+  因此，若使用 `node.cloneNode()` 克隆一个包括 `Vue` 组件的 `DOM` 节点时，该 `Vue` 组件上绑定的事件会失效，因为克隆节点时并不会拷贝这些事件监听器。
+
   在使用`Node.appendChild()`或其他类似的方法将拷贝的节点添加到文档中之前，那个拷贝节点并不属于当前文档树的一部分，也就是说，它没有父节点。
 
   如果 `deep` 参数设为 `false`，则**不克隆它的任何子节点**。该**节点所包含的所有文本也不会被克隆**，因为**文本本身也是一个或多个的Text节点**。
