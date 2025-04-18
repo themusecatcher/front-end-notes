@@ -15,8 +15,8 @@ importers:
         specifier: ^3.5.13
         version: 3.5.13
       vue-amazing-ui:
-        specifier: ^2.4.1
-        version: 2.4.1(vue@3.5.13)
+        specifier: ^2.4.4
+        version: 2.4.4(vue@3.5.13)
       vue3-lazyload:
         specifier: ^0.3.8
         version: 0.3.8(vue@3.5.13)
@@ -125,8 +125,8 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  '@babel/runtime@7.26.10':
-    resolution: {integrity: sha512-2WJMeRQPHKSPemqk/awGrAiuFfzBmOIPXKizAsVhWH9YJqLZ0H+HS4c8loHGgW6utJ3E/ejXQUsiGaQy2NZ9Fw==}
+  '@babel/runtime@7.27.0':
+    resolution: {integrity: sha512-VtPOkrdPHZsKc/clNqyi9WUA8TINkZ4cGk63UUE3u4pmB2k+ZMQRDuIOagv8UVd6j7k0T3+RRIb7beKTebNbcw==}
     engines: {node: '>=6.9.0'}
 
   '@babel/types@7.26.8':
@@ -513,8 +513,8 @@ packages:
   '@vueuse/core@12.5.0':
     resolution: {integrity: sha512-GVyH1iYqNANwcahAx8JBm6awaNgvR/SwZ1fjr10b8l1HIgDp82ngNbfzJUgOgWEoxjL+URAggnlilAEXwCOZtg==}
 
-  '@vueuse/core@13.0.0':
-    resolution: {integrity: sha512-rkgb4a8/0b234lMGCT29WkCjPfsX0oxrIRR7FDndRoW3FsaC9NBzefXg/9TLhAgwM11f49XnutshM4LzJBrQ5g==}
+  '@vueuse/core@13.1.0':
+    resolution: {integrity: sha512-PAauvdRXZvTWXtGLg8cPUFjiZEddTqmogdwYpnn60t08AA5a8Q4hZokBnpTOnVNqySlFlTcRYIC8OqreV4hv3Q==}
     peerDependencies:
       vue: ^3.5.0
 
@@ -562,14 +562,14 @@ packages:
   '@vueuse/metadata@12.5.0':
     resolution: {integrity: sha512-Ui7Lo2a7AxrMAXRF+fAp9QsXuwTeeZ8fIB9wsLHqzq9MQk+2gMYE2IGJW48VMJ8ecvCB3z3GsGLKLbSasQ5Qlg==}
 
-  '@vueuse/metadata@13.0.0':
-    resolution: {integrity: sha512-TRNksqmvtvqsuHf7bbgH9OSXEV2b6+M3BSN4LR5oxWKykOFT9gV78+C2/0++Pq9KCp9KQ1OQDPvGlWNQpOb2Mw==}
+  '@vueuse/metadata@13.1.0':
+    resolution: {integrity: sha512-+TDd7/a78jale5YbHX9KHW3cEDav1lz1JptwDvep2zSG8XjCsVE+9mHIzjTOaPbHUAk5XiE4jXLz51/tS+aKQw==}
 
   '@vueuse/shared@12.5.0':
     resolution: {integrity: sha512-vMpcL1lStUU6O+kdj6YdHDixh0odjPAUM15uJ9f7MY781jcYkIwFA4iv2EfoIPO6vBmvutI1HxxAwmf0cx5ISQ==}
 
-  '@vueuse/shared@13.0.0':
-    resolution: {integrity: sha512-9MiHhAPw+sqCF/RLo8V6HsjRqEdNEWVpDLm2WBRW2G/kSQjb8X901sozXpSCaeLG0f7TEfMrT4XNaA5m1ez7Dg==}
+  '@vueuse/shared@13.1.0':
+    resolution: {integrity: sha512-IVS/qRRjhPTZ6C2/AM3jieqXACGwFZwWTdw5sNTSKk2m/ZpkuuN+ri+WCVUP8TqaKwJYt/KuMwmXspMAw8E6ew==}
     peerDependencies:
       vue: ^3.5.0
 
@@ -1001,8 +1001,8 @@ packages:
       postcss:
         optional: true
 
-  vue-amazing-ui@2.4.1:
-    resolution: {integrity: sha512-iVV9jcDOwqJNIiZz4H9+AXQ0Z72OxfGdn7y1Xf/iwruF14whUm9yFYb7GR2WwQtTTLOwH43z2JChepbsHwoiIA==}
+  vue-amazing-ui@2.4.4:
+    resolution: {integrity: sha512-rSiKbYOAmirYIxldyPWCefO81uchUdg+OZ69m7R0D+Husy3L+QzH0Sm15+b+MWoO7Rw6CRvQCyGBHV3xVivHOA==}
 
   vue-demi@0.12.5:
     resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}
@@ -1174,7 +1174,7 @@ snapshots:
 
   '@ant-design/fast-color@2.0.6':
     dependencies:
-      '@babel/runtime': 7.26.10
+      '@babel/runtime': 7.27.0
 
   '@babel/helper-string-parser@7.25.9': {}
 
@@ -1184,7 +1184,7 @@ snapshots:
     dependencies:
       '@babel/types': 7.26.8
 
-  '@babel/runtime@7.26.10':
+  '@babel/runtime@7.27.0':
     dependencies:
       regenerator-runtime: 0.14.1
 
@@ -1516,11 +1516,11 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/core@13.0.0(vue@3.5.13)':
+  '@vueuse/core@13.1.0(vue@3.5.13)':
     dependencies:
       '@types/web-bluetooth': 0.0.21
-      '@vueuse/metadata': 13.0.0
-      '@vueuse/shared': 13.0.0(vue@3.5.13)
+      '@vueuse/metadata': 13.1.0
+      '@vueuse/shared': 13.1.0(vue@3.5.13)
       vue: 3.5.13
 
   '@vueuse/integrations@12.5.0(async-validator@4.2.5)(focus-trap@7.6.4)(qrcode@1.5.4)(sortablejs@1.15.3)':
@@ -1538,7 +1538,7 @@ snapshots:
 
   '@vueuse/metadata@12.5.0': {}
 
-  '@vueuse/metadata@13.0.0': {}
+  '@vueuse/metadata@13.1.0': {}
 
   '@vueuse/shared@12.5.0':
     dependencies:
@@ -1546,7 +1546,7 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/shared@13.0.0(vue@3.5.13)':
+  '@vueuse/shared@13.1.0(vue@3.5.13)':
     dependencies:
       vue: 3.5.13
 
@@ -2047,12 +2047,12 @@ snapshots:
       - typescript
       - universal-cookie
 
-  vue-amazing-ui@2.4.1(vue@3.5.13):
+  vue-amazing-ui@2.4.4(vue@3.5.13):
     dependencies:
       '@ant-design/colors': 7.2.0
       '@ctrl/tinycolor': 4.1.0
       '@vuepic/vue-datepicker': 11.0.2(vue@3.5.13)
-      '@vueuse/core': 13.0.0(vue@3.5.13)
+      '@vueuse/core': 13.1.0(vue@3.5.13)
       date-fns: 4.1.0
       qrcode: 1.5.4
       seemly: 0.3.10
