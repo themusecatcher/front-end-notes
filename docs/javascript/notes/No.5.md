@@ -91,6 +91,33 @@
   el.remove() // id 为 'div-02' 的 div 被删掉了
   ```
 
+## [Node：insertBefore()](https://developer.mozilla.org/zh-CN/docs/Web/API/Node/insertBefore) 方法
+
+`Node` 接口的 `insertBefore()` 方法是**将一个节点插入到指定父节点的子节点中，并位于参考节点之前**。
+
+如果给定的节点已经存在于文档中，`insertBefore()` 会将其从当前位置移动到新位置。（也就是说，它会在附加到指定的新父节点之前自动从现有的父节点中移除。）这意味着一个节点不能同时存在于文档的两个位置。
+
+如果给定的子节点是 `DocumentFragment`，则该 `DocumentFragment` 的全部内容将被移动到指定父节点的子节点列表中。
+
+### 语法
+
+```js
+insertBefore(newNode, referenceNode)
+```
+
+### 参数
+
+- `newNode`：要插入的节点。
+- `referenceNode`：在其之前插入 · 的节点。如果为 `null`，`newNode` 将被插入到节点的子节点列表末尾。
+
+::: tip 备注
+`referenceNode` 不是可选参数。你必须显式传递 `Node` 或 `null`。未能提供它或传递无效值，可能会在不同的浏览器版本中具有不同的表现。
+:::
+
+### 返回值
+
+返回添加的子节点（除非 `newNode` 是 `DocumentFragment`，此时将返回空的 `DocumentFragment`）。
+
 - [`element.innerHTML`](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/innerHTML)（**常用于替换内容**）
 
   `Element.innerHTML` 属性设置或获取 `HTML` 语法表示的元素的后代
@@ -98,6 +125,46 @@
   ::: tip
   备注： 如果一个 `<div>`, `<span>`, 或 `<noembed>` 节点有一个文本子节点，该节点包含字符 (&), (\<), 或 (>), innerHTML 将这些字符分别返回为 &amp;, &lt; 和 &gt;。使用Node.textContent 可获取一个这些文本节点内容的正确副本。
   :::
+
+### 示例 1
+
+```html
+<div id="parentElement">
+  <span id="childElement">foo bar</span>
+</div>
+<script>
+  // 创建新的普通 <span> 元素
+  let sp1 = document.createElement("span")
+  // 获取引用元素
+  let sp2 = document.getElementById("childElement")
+  // 获取父元素
+  let parentDiv = sp2.parentNode
+
+  // 在 sp2 之前插入新元素
+  parentDiv.insertBefore(sp1, sp2)
+</script>
+```
+
+### 示例 2
+
+```js
+// 获取父元素
+let parentElement = document.getElementById("parentElement")
+// 获取父元素的第一个子元素
+let theFirstChild = parentElement.firstChild
+
+// 创建新元素
+let newElement = document.createElement("div")
+
+// 在第一个子元素之前插入新元素
+parentElement.insertBefore(newElement, theFirstChild)
+```
+
+::: tip 备注
+如果元素没有第一个子元素，则 `firstChild` 为 `null`。该元素仍然会被追加到父元素的最后一个子元素之后。
+
+由于父元素没有第一个子元素，所以也没有最后一个子元素。因此，新插入的元素是唯一的元素。
+:::
 
 - [`element.insertAdjacentHTML`](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/insertAdjacentHTML)
 
