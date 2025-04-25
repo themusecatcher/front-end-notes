@@ -277,3 +277,131 @@ export default {
 }
 </script>
 ```
+
+## Vue2 使用事件总线
+
+以下是一个 `Vue2` 事件总线（Event Bus）的完整示例，用于实现非父子组件间的通信：
+
+### 1. 创建事件总线
+
+```js
+// event-bus.js
+import Vue from 'vue'
+export const EventBus = new Vue()
+```
+
+### 2. 发送事件的组件
+
+```vue
+<!-- ComponentA.vue -->
+<template>
+  <div>
+    <button @click="sendMessage">发送消息</button>
+  </div>
+</template>
+<script>
+import { EventBus } from './event-bus.js'
+export default {
+  methods: {
+    sendMessage() {
+      EventBus.$emit('message-event', {
+        text: '来自ComponentA的消息',
+        time: new Date()
+      })
+    }
+  }
+}
+</script>
+```
+
+### 3. 接收事件的组件
+
+```vue
+<!-- ComponentB.vue -->
+<template>
+  <div>
+    <p>收到消息: {{ receivedMessage }}</p>
+  </div>
+</template>
+<script>
+import { EventBus } from './event-bus.js'
+export default {
+  data() {
+    return {
+      receivedMessage: null
+    }
+  },
+  created() {
+    EventBus.$on('message-event', this.handleMessage)
+  },
+  beforeDestroy() {
+    EventBus.$off('message-event', this.handleMessage)
+  },
+  methods: {
+    handleMessage(payload) {
+      this.receivedMessage = `${payload.text} @ ${payload.time.toLocaleTimeString()}`
+    }
+  }
+}
+</script>
+```
+
+### 4. 在父组件中使用
+
+```vue
+<!-- App.vue -->
+<template>
+  <div id="app">
+    <component-a/>
+    <component-b/>
+  </div>
+</template>
+<script>
+import ComponentA from './ComponentA.vue'
+import ComponentB from './ComponentB.vue'
+export default {
+  components: {
+    ComponentA,
+    ComponentB
+  }
+}
+</script>
+```
+
+### 关键点说明
+
+1. **事件总线创建**：通过创建新的 `Vue` 实例作为中央事件总线
+2. **发送（发布）事件**：使用 `$emit(eventName, payload)` 发送事件
+3. **接收（订阅）事件**：使用 `$on(eventName, callback)` 监听事件
+4. **移除（取消订阅）监听**：在组件销毁前使用 `$off()` 移除事件监听，避免内存泄漏
+
+### 注意事项
+
+- 事件名称建议使用常量，避免拼写错误
+- 对于复杂应用，建议使用 `Vuex` 进行状态管理
+- 组件销毁时务必移除事件监听
+- 事件总线适合小型应用或简单场景，大型项目建议使用更正式的状态管理方案
+
+### 其他用法
+
+**一次性监听**
+
+```js
+EventBus.$once('one-time-event', () => {
+  console.log('这个监听只会触发一次')
+})
+```
+
+**移除所有监听**
+
+```js
+EventBus.$off() // 移除所有事件监听
+```
+
+**发送无参数事件**
+
+```js
+EventBus.$emit('notification')
+```
+
+这个模式实现了发布-订阅模式，使得任意组件之间都可以进行通信，但需要注意合理使用以避免代码变得难以维护。
