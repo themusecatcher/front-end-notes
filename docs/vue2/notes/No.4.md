@@ -288,6 +288,8 @@ export default {
 // event-bus.js
 import Vue from 'vue'
 export const EventBus = new Vue()
+// 或者使用 Vue.prototype 作为全局事件总线
+// Vue.prototype.$eventBus = new Vue()
 ```
 
 ### 2. 发送事件的组件

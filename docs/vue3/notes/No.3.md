@@ -74,9 +74,10 @@ export default defineConfig(({ command, mode }: ConfigEnv): UserConfig => {
 
 ## Vue3 使用事件总线
 
+### 发布-订阅模式 使用 Map 和 Set 实现
+
 ```js
 // eventBus.js
-// 发布-订阅模式 使用 Map 和 Set 实现
 export class EventBus {
   constructor() {
     this.eventsMap = new Map() // 存储事件及其回调列表
@@ -151,11 +152,31 @@ export class EventBus {
 }
 ```
 
+### 使用 `app.config.globalProperties.$eventBus` 添加全局事件总线
+
+```ts
+// main.ts
+import { createApp } from 'vue'
+import App from './App.vue'
+ 
+const app = createApp(App)
+import { EventBus } from './EventBus'
+app.config.globalProperties.$eventBus = new EventBus()
+ 
+app.mount('#app')
+```
+
 ```vue
 <script setup>
+// 引入使用
 import { EventBus } from './EventBus'
-// 使用示例
 const eventBus = new EventBus()
+
+// 全局事件总线使用
+import { getCurrentInstance } from 'vue'
+const { proxy }: any = getCurrentInstance()
+console.log('proxy:', proxy.$eventBus)
+const eventBus = proxy.$eventBus
 
 // 订阅 message 事件
 const logMessage = (msg) => console.log('Message:', msg)
