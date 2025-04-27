@@ -200,3 +200,66 @@ eventBus.emit('greet', 'Alice') // 输出: Hello, Alice!
 eventBus.emit('greet', 'Bob')   // 无输出
 </script>
 ```
+
+### 使用第三方库 `mitt`
+
+参考文档： [mitt](https://www.npmjs.com/package/mitt)
+
+- 安装
+
+  ```sh
+  pnpm add mitt
+  ```
+
+- 使用
+
+  ```js
+  import mitt from 'mitt'
+
+  const emitter = mitt()
+
+  // listen to an event
+  emitter.on('foo', e => console.log('foo', e) )
+
+  // listen to all events
+  emitter.on('*', (type, e) => console.log(type, e) )
+
+  // fire an event
+  emitter.emit('foo', { a: 'b' })
+
+  // clearing all events
+  emitter.all.clear()
+
+  // working with handler references:
+  function onFoo() {}
+  emitter.on('foo', onFoo)   // listen
+  emitter.off('foo', onFoo)  // unlisten
+  ```
+
+  ```ts
+  import mitt from 'mitt';
+
+  type Events = {
+    foo: string
+    bar?: number
+  }
+
+  const emitter = mitt<Events>() // inferred as Emitter<Events>
+
+  emitter.on('foo', (e) => {}) // 'e' has inferred type 'string'
+
+  emitter.emit('foo', 42) // Error: Argument of type 'number' is not assignable to parameter of type 'string'. (2345)
+  ```
+
+  或者
+
+  ```ts
+  import mitt, { Emitter } from 'mitt'
+
+  type Events = {
+    foo: string
+    bar?: number
+  }
+
+  const emitter: Emitter<Events> = mitt<Events>()
+  ```
