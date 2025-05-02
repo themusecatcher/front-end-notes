@@ -30,10 +30,16 @@ features:
     details: Vue2/3 相关学习、使用和开发笔记
   - icon: Mobile
     title: Mobile 相关
-    details: Mobile 相关学习、使用和开发笔记
+    details: 移动端相关学习、使用和开发笔记
+  - icon: 🛠️
+    title: Engineering 相关
+    details: 工程化相关学习、使用和开发笔记
+  - icon: HTTP
+    title: HTTP 相关
+    details: 计算机网络相关学习、使用和开发笔记
   - icon: Plugins
     title: Plugins 相关
-    details: 各种常用插件相关学习、使用和开发笔记
+    details: 常用插件相关学习、使用和开发笔记
 ---
 
 <script setup lang="ts">

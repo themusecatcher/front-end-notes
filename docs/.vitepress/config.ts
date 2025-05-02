@@ -1,5 +1,4 @@
 import { defineConfig } from 'vitepress'
-import Vue from 'vue'
 
 export default defineConfig({
   title: `Front-end Notes`,
@@ -65,6 +64,7 @@ export default defineConfig({
       { text: 'Vue2', link: '/vue2/started', activeMatch: '/vue2/' },
       { text: 'Vue3', link: '/vue3/started', activeMatch: '/vue3/' },
       { text: 'Mobile', link: '/mobile/started', activeMatch: '/mobile/' },
+      { text: 'Engineering', link: '/engineering/started', activeMatch: '/engineering/' },
       { text: 'Http', link: '/http/started', activeMatch: '/http/' },
       { text: 'Plugins', link: '/plugins/started', activeMatch: '/plugins/' },
       {
@@ -389,6 +389,34 @@ export default defineConfig({
             {
               text: 'No.4',
               link: '/mobile/notes/No.4'
+            }
+          ]
+        }
+      ],
+      '/engineering/': [
+        {
+          text: '指引',
+          items: [
+            {
+              text: '开始',
+              link: '/engineering/started'
+            }
+          ]
+        },
+        {
+          text: 'Engineering Notes',
+          items: [
+            {
+              text: 'No.1',
+              link: '/engineering/notes/No.1'
+            },
+            {
+              text: 'No.2',
+              link: '/engineering/notes/No.2'
+            },
+            {
+              text: 'No.3',
+              link: '/engineering/notes/No.3'
             }
           ]
         }
