@@ -18,7 +18,7 @@
     "vuedraggable": "4.1.0"
   },
   "devDependencies": {
-    "less": "^4.2.2",
+    "less": "^4.3.0",
     "vitepress": "^1.6.3"
   },
   "description": "Front-end development study notes",
