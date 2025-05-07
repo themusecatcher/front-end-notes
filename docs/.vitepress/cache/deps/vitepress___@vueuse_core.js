@@ -29,6 +29,7 @@ import {
   createFilterWrapper,
   createGlobalState,
   createInjectionState,
+  createRef,
   createReusableTemplate,
   createSharedComposable,
   createSingletonPromise,
@@ -280,7 +281,7 @@ import {
   watchTriggerable,
   watchWithFilter,
   whenever
-} from "./chunk-SRMGAYXL.js";
+} from "./chunk-6ODFCPKZ.js";
 import "./chunk-JN5NFW2R.js";
 import "./chunk-DC5AMYBS.js";
 export {
@@ -318,6 +319,7 @@ export {
   createGlobalState,
   createInjectionState,
   reactify as createReactiveFn,
+  createRef,
   createReusableTemplate,
   createSharedComposable,
   createSingletonPromise,
