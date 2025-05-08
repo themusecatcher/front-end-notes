@@ -389,6 +389,10 @@ export default defineConfig({
             {
               text: 'No.4',
               link: '/mobile/notes/No.4'
+            },
+            {
+              text: 'No.5',
+              link: '/mobile/notes/No.5'
             }
           ]
         }
