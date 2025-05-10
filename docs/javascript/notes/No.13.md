@@ -229,62 +229,197 @@ Object.is(NaN, 0 / 0) // true 与 ===/== 不同
 Object.is(NaN, Number.NaN) // true 与 ===/== 不同
 ```
 
-## [`arguments` 对象](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/arguments) 和 [剩余参数](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/rest_parameters) `...args`
+## `IIFE` 立即执行函数表达式
 
-### `arguments` 是一个对应于传递给函数的参数的类数组对象。
+`JavaScript` 中的 `IIFE`（立即调用函数表达式）是一种常见的设计模式，用于创建独立的作用域并立即执行函数。以下是其核心要点及详细说明：
 
-::: tip 备注
-如果你编写兼容 `ES6` 的代码，那么优先推荐使用 剩余参数 (`...args`) 语法
-:::
+---
 
-`arguments` 对象是**所有（非箭头）函数中**都可用的局部变量。你可以使用 `arguments` 对象在函数中引用函数的参数。此对象包含传递给函数的每个参数，第一个参数在索引 `0` 处。例如，如果一个函数传递了三个参数，你可以以如下方式引用他们：
-
-```js
-arguments[0]
-arguments[1]
-arguments[2]
-```
-
-通过索引赋值，参数也可以被设置：
-
-```js
-arguments[1] = 'new value'
-```
-
-`arguments` 对象不是一个 `Array`。它类似于 `Array`，但除了 `length` 属性和索引元素之外没有任何 `Array` 属性。例如，它没有 `pop` 方法。但是它可以被转换为一个真正的 `Array`：
-
-```js
-// 将 arguments 对象转换为真正的 Array
-var args = Array.prototype.slice.call(arguments)
-// 或
-var args = [].slice.call(arguments);
-
-// ES2015
-const args = Array.from(arguments)
-// 或
-const args = [...arguments] // 扩展运算符
-```
-
-### 剩余参数 `...args`
+### **一、IIFE 的定义与结构**
 
 <br/>
 
-剩余参数语法允许我们将一个不定数量的参数表示为一个数组。
+**IIFE**（Immediately Invoked Function Expression）即定义后立即执行的函数表达式。其基本结构如下：
 
-- 语法
+```js
+(function() {
+  // 内部代码
+})()
+
+// 或
+(() => {
+  // 箭头函数形式
+})()
+```
+
+- **外层括号**：将函数声明转换为表达式，避免语法错误。
+- **末尾的 `()`**：立即调用函数。
+
+### **二、IIFE 的核心作用**
+
+#### 1. **创建独立作用域**
+
+- **避免全局污染**：`IIFE` 内部的变量和函数不会暴露到全局作用域。
 
   ```js
-  function(a, b, ...args) {
-    // ...
+  (function() {
+    var privateVar = '局部变量'
+    console.log(privateVar) // 正常输出
+  })()
+  console.log(privateVar) // 报错：privateVar 未定义
+  ```
+
+#### 2. **封装私有变量与方法**
+
+- **模块模式**：通过返回对象暴露公共接口，隐藏内部实现。
+
+  ```js
+  const counterModule = (function() {
+    let count = 0
+    return {
+      increment: () => count++,
+      getCount: () => count
+    }
+  })()
+  counterModule.increment()
+  console.log(counterModule.getCount()) // 1
+  ```
+
+#### 3. **解决循环中的闭包问题**
+
+- **传统 `var` 循环**：通过 `IIFE` 捕获每次迭代的值。
+
+  ```js
+  for (var i = 0; i < 3; i++) {
+    (function(j) {
+      setTimeout(() => console.log(j), 100) // 输出 0,1,2
+    })(i)
   }
   ```
 
-  如果函数的最后一个命名参数以 `...` 为前缀，则它将成为一个由剩余参数组成的真数组，其中从 `0`（包括）到 `theArgs.length`（排除）的元素由传递给函数的实际参数提供。
+### **三、IIFE 的变体与参数传递**
 
-  在上面的例子中，`args` 将收集该函数的第三个参数（因为第一个参数被映射到 `a`，而第二个参数映射到 `b`）和所有后续参数。
+#### 1. **传递全局对象**
 
-### 剩余参数 `...args` 和 `arguments` 对象的区别
+- **安全引用**：将 `window` 或 `undefined` 作为参数传入，确保变量未被篡改。
 
-- 剩余参数只包含那些没有对应形参的实参，而 `arguments` 对象包含了传给函数的所有实参。
-- `arguments` 对象不是一个真正的数组，而剩余参数是真正的 `Array` 实例，也就是说你能够在它上面直接使用所有的数组方法，比如 `sort`，`map`，`forEach` 或 `pop`。
-- `arguments` 对象还有一些附加的属性（如 `callee` 属性）。
+  ```js
+  (function(global, undefined) {
+    // global 指向 window，undefined 确保为真值
+    console.log(global === window) // true
+    console.log(undefined) // undefined
+  })(window)
+  ```
+
+#### 2. **其他操作符触发执行**
+
+- **利用一元运算符**：如 `!`、`+`、`void`、`~`、`-` 等。
+
+  - `!`（逻辑非）
+
+    ```js
+    !function() {
+      console.log('IIFE 执行')
+    }()
+    ```
+
+    执行逻辑：
+    - 将函数转换为布尔值（函数对象为 true）。
+    - 对布尔值取反（!true → false）。
+    - 忽略返回值，仅触发函数执行。
+
+  - `+`（一元正号）
+
+    ```js
+    +function() {
+      console.log("IIFE 通过 + 触发");
+      return 42 // 返回值会被转换为数值
+    }()
+    // 输出：IIFE 通过 + 触发
+    // 表达式值为 42，但未使用该值
+    ```
+
+    执行逻辑：
+    - 将函数转换为数值（函数本身返回的值为 42）。
+    - 表达式结果为 +42（即 42）。
+
+  - `void`（返回 undefined）
+
+    ```js
+    void function() {
+      console.log("IIFE 通过 void 触发")
+    }()
+    // 输出：IIFE 通过 void 触发
+    ```
+
+    执行逻辑：
+    - 执行函数并返回 undefined。
+    - 明确表示不关心返回值，直接执行函数。
+
+  - `~`（按位非）
+
+    ```js
+    ~function() {
+      console.log("IIFE 通过 ~ 触发")
+    }()
+    // 输出：IIFE 通过 ~ 触发
+    ```
+
+    执行逻辑：
+    - 执行函数，对返回值进行按位非运算（若函数未返回值，则默认 undefined → 0 → ~0 → -1）。
+
+  - `-`（一元负号）
+
+    ```js
+    -function() {
+      console.log("IIFE 通过 - 触发")
+    }()
+    // 输出：IIFE 通过 - 触发
+    ```
+
+### **四、IIFE 与现代 JavaScript 的对比**
+
+#### 1. **与 ES6 块级作用域**
+
+- **`let`/`const`**：提供块级作用域，减少对 `IIFE` 的依赖。
+
+  ```js
+  {
+    let privateVar = '块级作用域'
+    console.log(privateVar) // 正常输出
+  }
+  console.log(privateVar) // 报错
+  ```
+
+#### 2. **ES6 模块化**
+
+- **`import`/`export`**：更标准的模块化方案，替代IIFE的封装功能。
+
+  ```js
+  // module.js
+  let count = 0
+  export const increment = () => count++
+  export const getCount = () => count
+  ```
+
+### **五、应用场景总结**
+
+| **场景** | **IIFE 方案** | **现代替代方案** |
+|--|--|--|
+| **作用域隔离** | 使用 `IIFE` 包裹代码 | `{}` 块 + `let`/`const` |
+| **模块封装** | `IIFE` 返回公共接口 | `ES6` 模块 (`export/import`) |
+| **循环变量捕获** | `IIFE` 传参或 `var` + 闭包 | `let` 声明循环变量 |
+| **依赖注入** | `IIFE` 参数传递全局对象 | 模块导入 (`import`) |
+
+### **六、注意事项**
+
+- **代码压缩优化**：`IIFE` 的参数传递（如 `window`）可被压缩工具重命名，提升压缩率。
+- **箭头函数限制**：箭头函数IIFE无自己的 `this`，需根据场景选择。
+
+### **总结**
+
+`IIFE` 是 `JavaScript` 早期实现模块化和作用域隔离的核心工具，其通过立即执行函数表达式创建独立作用域，避免全局污染并封装逻辑。尽管现代特性（如块级作用域、ES6模块）减少了其使用频率，但理解 `IIFE` 仍对维护旧代码和深入理解闭包机制至关重要。关键点：
+
+- **立即执行**：函数定义后立即调用。
+- **作用域隔离**：保护变量不泄露至全局。
+- **灵活传参**：优化依赖管理和代码安全。
