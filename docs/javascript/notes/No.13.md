@@ -228,3 +228,63 @@ Object.is(-0, -0) // true
 Object.is(NaN, 0 / 0) // true 与 ===/== 不同
 Object.is(NaN, Number.NaN) // true 与 ===/== 不同
 ```
+
+## [`arguments` 对象](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/arguments) 和 [剩余参数](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/rest_parameters) `...args`
+
+### `arguments` 是一个对应于传递给函数的参数的类数组对象。
+
+::: tip 备注
+如果你编写兼容 `ES6` 的代码，那么优先推荐使用 剩余参数 (`...args`) 语法
+:::
+
+`arguments` 对象是**所有（非箭头）函数中**都可用的局部变量。你可以使用 `arguments` 对象在函数中引用函数的参数。此对象包含传递给函数的每个参数，第一个参数在索引 `0` 处。例如，如果一个函数传递了三个参数，你可以以如下方式引用他们：
+
+```js
+arguments[0]
+arguments[1]
+arguments[2]
+```
+
+通过索引赋值，参数也可以被设置：
+
+```js
+arguments[1] = 'new value'
+```
+
+`arguments` 对象不是一个 `Array`。它类似于 `Array`，但除了 `length` 属性和索引元素之外没有任何 `Array` 属性。例如，它没有 `pop` 方法。但是它可以被转换为一个真正的 `Array`：
+
+```js
+// 将 arguments 对象转换为真正的 Array
+var args = Array.prototype.slice.call(arguments)
+// 或
+var args = [].slice.call(arguments);
+
+// ES2015
+const args = Array.from(arguments)
+// 或
+const args = [...arguments] // 扩展运算符
+```
+
+### 剩余参数 `...args`
+
+<br/>
+
+剩余参数语法允许我们将一个不定数量的参数表示为一个数组。
+
+- 语法
+
+  ```js
+  function(a, b, ...args) {
+    // ...
+  }
+  ```
+
+  如果函数的最后一个命名参数以 `...` 为前缀，则它将成为一个由剩余参数组成的真数组，其中从 `0`（包括）到 `theArgs.length`（排除）的元素由传递给函数的实际参数提供。
+
+  在上面的例子中，`args` 将收集该函数的第三个参数（因为第一个参数被映射到 `a`，而第二个参数映射到 `b`）和所有后续参数。
+
+### 剩余参数 `...args` 和 `arguments` 对象的区别
+
+- 剩余参数只包含那些没有对应形参的实参，而 `arguments` 对象包含了传给函数的所有实参。
+- `arguments` 对象不是一个真正的数组，而剩余参数是真正的 `Array` 实例，也就是说你能够在它上面直接使用所有的数组方法，比如 `sort`，`map`，`forEach` 或 `pop`。
+- `arguments` 对象还有一些附加的属性（如 `callee` 属性）。
