@@ -150,3 +150,134 @@ h2 ~ p {
 - **`~`**：用于批量选择**后续所有符合条件的**兄弟元素。
 
 合理使用兄弟选择器可以减少冗余的类名定义，提升代码可维护性。
+
+## `width: 100%` 的百分比参考什么？
+
+在 CSS 中，**`width: 100%` 的百分比是相对于元素的包含块（Containing Block）的宽度计算的**，但具体参考的是包含块的 **内容区域（content box）** 还是 **边框盒（border box）**，取决于元素的定位方式和包含块的定义。
+
+### **一、包含块（Containing Block）的定义**
+
+<br/>
+
+包含块是 `CSS` 布局中计算元素尺寸和位置的参考基准，其确定规则如下：
+
+| **元素定位方式** | **包含块的定义** |
+|--|--|
+| **静态定位（static）** | 最近的**块级祖先元素**的**内容区域（content box）**。|
+| **相对定位（relative）** | 同静态定位，但元素自身可通过 `top/right/bottom/left` 偏移。|
+| **绝对定位（absolute）** | 最近的**非 `static` 定位祖先元素**的**内边距区域（padding box）**。|
+| **固定定位（fixed）** | 视口（viewport）的**内边距区域**（通常等同于视口尺寸）。|
+| **粘性定位（sticky）** | 最近的滚动祖先的内容区域，若没有则同相对定位。|
+
+### **二、`width: 100%` 的具体行为**
+
+- **默认行为**：  
+  若未显式设置 `box-sizing`，元素的 `width: 100%` 是相对于包含块的 **内容区域宽度（content box）** 计算的。  
+  
+  ```css
+  .parent {
+    width: 200px;       /* 内容区域宽度为 200px */
+    padding: 20px;      /* 内边距增加 40px（左右各 20px） */
+    border: 5px solid;  /* 边框增加 10px（左右各 5px） */
+  }
+
+  .child {
+    width: 100%;        /* 实际宽度为 200px（父元素内容区域宽度） */
+  }
+  ```
+
+  - 子元素的 `width: 100%` 仅覆盖父元素的内容区域，**不包含父元素的 padding 和 border**。  
+  - 若子元素自身有 `padding` 或 `border`，可能导致溢出父容器（需结合 `box-sizing` 调整）。
+
+- **绝对定位的特殊情况**：  
+  绝对定位元素的 `width: 100%` 是相对于包含块的 **内边距区域宽度（padding box）** 计算的（即包含 `padding` 的宽度）。
+
+  ```css
+  .parent {
+    position: relative;
+    width: 200px;
+    padding: 20px;      /* 内边距增加 40px */
+  }
+
+  .child {
+    position: absolute;
+    width: 100%;        /* 实际宽度为 240px（父内容区域 200px + 内边距 40px） */
+  }
+  ```
+
+### **三、`box-sizing` 的影响**
+
+<br/>
+
+通过 `box-sizing` 属性，可以改变 `width` 的参考基准：
+
+| **`box-sizing` 值** | **`width: 100%` 的参考基准** |
+|--|--|
+| `content-box`（默认）| 包含块的**内容区域宽度**（不包含 padding/border）。|
+| `border-box` | 包含块的**边框盒宽度**（包含 padding 和 border）。|
+
+#### 示例：
+
+```css
+.parent {
+  width: 200px;
+  padding: 20px;
+  border: 5px solid;
+}
+
+.child {
+  box-sizing: border-box;  /* 宽度包含 padding 和 border */
+  width: 100%;             /* 实际宽度为 200px（父内容区域宽度） */
+  padding: 10px;           /* 内边距从 200px 中扣除 */
+  border: 2px solid;       /* 边框从 200px 中扣除 */
+}
+```
+
+### **四、常见问题与场景**
+
+#### 1. **子元素溢出父容器**
+
+```html
+<div class="parent">
+  <div class="child">内容</div>
+</div>
+```
+
+```css
+.parent {
+  width: 200px;
+  padding: 20px;
+}
+
+.child {
+  width: 100%; /* 200px */
+  padding: 20px; /* 总宽度变为 200px + 40px = 240px → 溢出父容器 */
+}
+```
+
+**解决方案**：
+
+- 为子元素设置 `box-sizing: border-box`，使其宽度包含内边距和边框。
+
+#### 2. **绝对定位元素的宽度适配**
+
+```css
+.parent {
+  position: relative;
+  width: 200px;
+  padding: 20px;
+}
+
+.child {
+  position: absolute;
+  width: 100%; /* 240px（父内容区域 200px + 内边距 40px） */
+}
+```
+
+### **五、总结**
+
+- **`width: 100%` 默认相对于包含块的 `content-box` 宽度**。  
+- **绝对定位元素**的 `width: 100%` 相对于包含块的 `padding-box` 宽度。  
+- 使用 `box-sizing: border-box` 可让 `width` 包含 `padding` 和 `border`，避免布局溢出。  
+
+理解包含块的定义和 `box-sizing` 的作用，是控制元素尺寸和实现精准布局的关键。
