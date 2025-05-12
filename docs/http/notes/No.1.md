@@ -163,13 +163,15 @@ field.addEventListener('change', function () {
 
 ### 关键概念和用法
 
-`IndexedDB` 是一个事务型数据库系统，类似于基于 SQL 的 RDBMS。然而，不像 RDBMS 使用固定列表，`IndexedDB` 是一个基于 `JavaScript` 的面向对象数据库。`IndexedDB` 允许你**存储和检索用键索引的对象**；**可以存储结构化克隆算法支持的任何对象**。你只需要指定数据库模式，打开与数据库的连接，然后检索和更新一系列事务。
+<br/>
+
+`IndexedDB` 是一个事务型数据库系统，类似于基于 `SQL` 的 `RDBMS`。然而，不像 `RDBMS` 使用固定列表，`IndexedDB` 是一个基于 `JavaScript` 的面向对象数据库。`IndexedDB` 允许你**存储和检索用键索引的对象**；**可以存储结构化克隆算法支持的任何对象**。你只需要指定数据库模式，打开与数据库的连接，然后检索和更新一系列事务。
 
 ## DOMContentLoaded & Load & Finish
 
 ![alt text](1.png)
 
-- `DOMContentLoaded`：DOM树构建完成。即HTML页面由上向下解析HTML结构到末尾封闭标签`</html>`
+- `DOMContentLoaded`：`DOM` 树构建完成。即 `HTML` 页面由上向下解析 `HTML` 结构到末尾封闭标签`</html>`
 
   ```js
   window.addEventListener('DOMContentLoaded', () => {
@@ -270,6 +272,6 @@ field.addEventListener('change', function () {
 将 `Expires` 设为一年或者更长 ，则浏览器不会主动请求 URL。但在 URL 后面加上类似时间戳的参数
 例如：`https://www.test.com?time=1676257395166`，后面跟的参数其实是没有实际意义的，但是，**每次在我们需要客户端同步对应文件时，仅需要修改对应文件 URL 的 time 参数即可，浏览器发现 URL 为新 URL，将即刻更新**。
 
-百度、淘宝等对 JS、CSS缓存处理用的基本都是上面的策略，这样做的好处是：
+百度、淘宝等对 JS、CSS 缓存处理用的基本都是上面的策略，这样做的好处是：
 
 - **浏览器默认任何时候都仅使用缓存，加快了加载。而当文件需要更新时，通过修改参数又能让浏览器及时更新**。

@@ -1,4 +1,4 @@
-# Note 13
+# Note 14
 
 <BackTop />
 
@@ -158,7 +158,7 @@ increment() // 输出 2
 | 调用方式 | 示例 | 函数中的 `this` 指向 |
 |--|--|--|
 | 通过 `new` 调用 | `new Method()` | `new` 出来的实例，即新对象 |
-| 直接调用 | `method()` | 全局对象（浏览器里是 window，node 里是 global） |
+| 直接调用 | `method()` | 全局对象（浏览器里是 `window`，`node` 里是 `global`） |
 | 通过对象调用 | `obj.method()` | 前面的对象 |
 | 通过 `apply`、`call`、`bind` 调用 | `method.call(context)` | 第一个参数，即 `context` |
 
