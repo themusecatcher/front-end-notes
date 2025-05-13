@@ -186,6 +186,14 @@ CSS3 `box-sizing` 属性可以设置 `width` 和 `height` 属性中是否包含�
 [`flex` 布局](https://www.runoob.com/w3cnote/flex-grammar.html)
 
 > flex 属性用于设置或检索弹性盒模型对象的子元素如何分配空间。<br>flex 属性是 flex-grow、flex-shrink 和 flex-basis 属性的简写属性。<br>**`flex: 1;` 让所有弹性盒模型对象的子元素都有相同的长度，且忽略它们内部的内容**
+```css
+/* flex: 1; */
+.item {
+  flex-grow: 1;   /* 允许元素扩展（占满剩余空间） */
+  flex-shrink: 1; /* 允许元素收缩（避免溢出容器） */
+  flex-basis: 0;  /* 初始大小为 0（基于剩余空间分配） */
+}
+```
 
 [flex 简写属性](https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex)
 
