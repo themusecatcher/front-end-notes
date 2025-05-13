@@ -263,3 +263,173 @@ eventBus.emit('greet', 'Bob')   // 无输出
 
   const emitter: Emitter<Events> = mitt<Events>()
   ```
+
+## `Vue2` 和 `Vue3` 在响应式依赖收集
+
+`Vue2` 和 `Vue3` 在响应式依赖收集的实现上有显著差异，主要源于底层响应式系统的重构。
+
+### **Vue2 的响应式依赖收集（基于 `Object.defineProperty`）**
+
+#### **1. 数据劫持**
+
+- **实现方式**：  
+  通过 `Object.defineProperty` 递归遍历对象的每个属性，将其转换为 getter/setter。
+
+  ```js
+  function defineReactive(obj, key) {
+    const dep = new Dep() // 每个属性对应一个 Dep 实例
+    let val = obj[key]
+    Object.defineProperty(obj, key, {
+      get() {
+        if (Dep.target) { // Dep.target 是当前 Watcher
+          dep.depend()   // 收集依赖（将 Watcher 添加到 Dep 中）
+        }
+        return val
+      },
+      set(newVal) {
+        val = newVal
+        dep.notify()     // 通知所有依赖的 Watcher 更新
+      }
+    })
+  }
+  ```
+
+#### **2. 依赖管理**
+
+- **Dep 类**：
+  每个响应式属性关联一个 `Dep` 实例，用于存储依赖该属性的 `Watcher`。
+
+  ```js
+  class Dep {
+    constructor() {
+      this.subs = [] // 存储 Watcher 列表
+    }
+    depend() {
+      if (Dep.target) {
+        Dep.target.addDep(this) // Watcher 订阅当前 Dep
+      }
+    }
+    notify() {
+      this.subs.forEach(watcher => watcher.update())
+    }
+  }
+  ```
+
+- **Watcher 类**：  
+  代表一个依赖（如组件渲染函数、计算属性等），在求值过程中触发 `getter` 收集依赖。
+
+  ```js
+  class Watcher {
+    constructor(vm, expOrFn) {
+      this.vm = vm
+      this.getter = expOrFn
+      this.value = this.get()
+    }
+    get() {
+      Dep.target = this // 设置当前 Watcher 为全局目标
+      const value = this.getter.call(this.vm)
+      Dep.target = null // 收集完成后清空
+      return value
+    }
+    update() {
+      this.get() // 重新求值以触发更新
+    }
+  }
+  ```
+
+#### **3. 局限**
+
+- **对于对象，无法属性的添加/删除**：需通过 `Vue.set`/`Vue.delete` 手动处理。
+- **对于数组，不能检测以下数组的变动**：
+  - 当你利用索引直接设置一个数组项时，例如：`vm.items[indexOfItem] = newValue`，需使用 `Vue.set(vm.items, indexOfItem, newValue)`
+  - 当你修改数组的长度时，例如：`vm.items.length = newLength`，需使用 `vm.items.splice(newLength)` 来代替。
+  - 另外，需重写数组方法（如 `push`、`pop`）来触发更新。
+- **性能开销**：递归初始化所有属性的 `getter/setter`，数据量大时影响性能。
+
+### **Vue3 的响应式依赖收集（基于 `Proxy`）**
+
+#### **1. 数据劫持**
+
+- **实现方式**：  
+  使用 `Proxy` 代理对象，动态拦截属性的访问和修改。
+
+  ```js
+  function reactive(obj) {
+    return new Proxy(obj, {
+      get(target, key, receiver) {
+        track(target, key) // 收集依赖
+        return Reflect.get(target, key, receiver)
+      },
+      set(target, key, value, receiver) {
+        Reflect.set(target, key, value, receiver)
+        trigger(target, key) // 触发更新
+        return true
+      }
+    })
+  }
+  ```
+
+#### **2. 依赖管理**
+
+- **全局依赖映射**：  
+  使用 `WeakMap` 结构存储对象与依赖关系。
+
+  ```js
+  const targetMap = new WeakMap() // 存储对象 -> 键 -> 依赖集合
+
+  function track(target, key) {
+    if (!activeEffect) return
+    let depsMap = targetMap.get(target)
+    if (!depsMap) {
+      targetMap.set(target, (depsMap = new Map()))
+    }
+    let dep = depsMap.get(key)
+    if (!dep) {
+      depsMap.set(key, (dep = new Set()))
+    }
+    dep.add(activeEffect) // 将当前 effect 添加到依赖集合
+  }
+
+  function trigger(target, key) {
+    const depsMap = targetMap.get(target)
+    if (!depsMap) return
+    const effects = depsMap.get(key)
+    effects && effects.forEach(effect => effect.run())
+  }
+  ```
+
+- **Effect 函数**：  
+  代替 `Vue2` 的 `Watcher`，代表副作用（如渲染函数）。
+
+  ```js
+  let activeEffect = null
+
+  function effect(fn) {
+    activeEffect = fn
+    fn() // 执行函数时会触发 track
+    activeEffect = null
+  }
+  ```
+
+#### **3. 优势**
+
+- **全面监听**：支持对象属性的新增、删除及数组索引变化。
+- **按需收集**：仅在访问属性时动态创建代理，减少初始化开销。
+- **高效更新**：通过依赖映射精准触发相关副作用，避免无效更新。
+
+### **核心对比**
+
+| **特性** | **Vue2** | **Vue3** |
+|--|--|--|
+| **底层实现** | `Object.defineProperty` | `Proxy` |
+| **依赖存储结构** | 每个属性对应一个 `Dep` 实例 | 全局 `WeakMap` 嵌套 `Map` 和 `Set` |
+| **数组监听** | 需重写数组方法 | 直接监听索引变化 |
+| **新增/删除属性** | 需手动处理（`Vue.set`/`Vue.delete`）| 自动检测 |
+| **性能优化** | 初始化递归遍历，数据量大时性能差 | 按需代理，减少初始开销 |
+| **嵌套对象处理** | 递归劫持所有子属性 | 惰性代理（仅在访问时处理）|
+
+### **总结**
+
+- **Vue2** 通过 `Object.defineProperty` 和 `Dep/Watcher` 实现依赖收集，简单但存在性能和功能限制。
+- **Vue3** 利用 `Proxy` 和全局依赖映射，提供更高效、灵活的响应式系统，支持更全面的数据变化检测。  
+- **升级意义**：`Vue3` 的响应式机制不仅提升了性能，还为 `Composition API` 和更复杂的状态管理提供了基础。
