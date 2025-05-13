@@ -365,6 +365,10 @@ export default defineConfig({
             {
               text: 'No.3',
               link: '/vue3/notes/No.3'
+            },
+            {
+              text: 'No.4',
+              link: '/vue3/notes/No.4'
             }
           ]
         }
@@ -384,23 +388,32 @@ export default defineConfig({
           items: [
             {
               text: 'No.1',
-              link: '/mobile/notes/No.1'
+              link: '/mobile/notes/miniprogram/No.1'
             },
             {
               text: 'No.2',
-              link: '/mobile/notes/No.2'
+              link: '/mobile/notes/miniprogram/No.2'
             },
             {
               text: 'No.3',
-              link: '/mobile/notes/No.3'
+              link: '/mobile/notes/miniprogram/No.3'
             },
             {
               text: 'No.4',
-              link: '/mobile/notes/No.4'
+              link: '/mobile/notes/miniprogram/No.4'
             },
             {
               text: 'No.5',
-              link: '/mobile/notes/No.5'
+              link: '/mobile/notes/miniprogram/No.5'
+            }
+          ]
+        },
+        {
+          text: 'H5',
+          items: [
+            {
+              text: 'No.1',
+              link: '/mobile/notes/h5/No.1'
             }
           ]
         }
@@ -429,6 +442,10 @@ export default defineConfig({
             {
               text: 'No.3',
               link: '/engineering/notes/No.3'
+            },
+            {
+              text: 'No.4',
+              link: '/engineering/notes/No.4'
             }
           ]
         }
