@@ -143,3 +143,159 @@ for (const num of obj) {
   遍历对象的可枚举属性（包括原型链），适合调试或处理动态属性。
 - **用 `for...of`**：  
   遍历可迭代对象的元素值，适合数组、字符串等结构化数据。
+
+## JS 回调地狱（Callback Hell）
+
+`JavaScript` 中的 **回调地狱（Callback Hell）** 是由于多个异步操作嵌套回调函数导致的代码结构混乱、难以维护的问题。其典型特征是代码呈现“金字塔”形状，嵌套层级过深，导致可读性和可维护性变差。
+
+### **1. 回调地狱的示例**
+
+```js
+// 多层嵌套的回调函数，形成回调地狱
+getData(function(a) {
+  getMoreData(a, function(b) {
+    getMoreData(b, function(c) {
+      getMoreData(c, function(d) {
+        console.log("最终结果:", d)
+      })
+    })
+  })
+})
+```
+
+### **2. 回调地狱的根本原因**
+
+- **嵌套过深**：多个异步操作依赖前一个操作的结果，必须层层嵌套。
+- **错误处理困难**：每个回调需单独处理错误，代码重复且分散。
+- **代码不可读**：横向扩展时代码结构混乱，难以追踪执行流程。
+
+### **3. 解决方案**
+
+#### **(1) 使用 Promise**
+
+<br/>
+
+`Promise` 通过链式调用（`.then()`）取代嵌套回调，使代码扁平化：
+
+```js
+function getData() {
+  return new Promise((resolve) => {
+    // 模拟异步操作
+    setTimeout(() => resolve("数据A"), 1000)
+  })
+}
+
+getData()
+  .then(a => getMoreData(a))
+  .then(b => getMoreData(b))
+  .then(c => getMoreData(c))
+  .then(d => console.log("最终结果:", d))
+  .catch(error => console.error("错误:", error))
+```
+
+- **优点**：链式结构清晰，统一错误处理（`.catch()`）。
+- **注意**：需确保每个函数返回 Promise。
+
+#### **(2) 使用 Async/Await**
+
+<br/>
+
+`async/await` 以同步写法处理异步操作，彻底消除回调：
+
+```js
+async function fetchData() {
+  try {
+    const a = await getData()
+    const b = await getMoreData(a)
+    const c = await getMoreData(b)
+    const d = await getMoreData(c)
+    console.log("最终结果:", d)
+  } catch (error) {
+    console.error("错误:", error)
+  }
+}
+
+fetchData()
+```
+
+- **优点**：代码结构类似同步代码，可读性极佳，错误处理集中（`try/catch`）。
+- **要求**：需在 `async` 函数中使用 `await`。
+
+#### **(3) 拆分命名函数**
+
+<br/>
+
+将嵌套的回调拆分为独立的命名函数，减少嵌套深度：
+
+```js
+function handleA(a) {
+  getMoreData(a, handleB)
+}
+
+function handleB(b) {
+  getMoreData(b, handleC)
+}
+
+function handleC(c) {
+  getMoreData(c, handleD)
+}
+
+function handleD(d) {
+  console.log("最终结果:", d)
+}
+
+getData(handleA)
+```
+
+- **优点**：简单直接，适合小规模代码。
+- **缺点**：仍需手动串联流程，无法解决错误处理分散的问题。
+
+#### **(4) 使用事件监听或观察者模式**
+
+<br/>
+
+通过事件驱动（如 `Node.js` 的 `EventEmitter`）解耦异步操作：
+
+```js
+const EventEmitter = require('events')
+const emitter = new EventEmitter()
+
+emitter
+  .on("dataA", a => getMoreData(a, b => emitter.emit("dataB", b)))
+  .on("dataB", b => getMoreData(b, c => emitter.emit("dataC", c)))
+  .on("dataC", c => getMoreData(c, d => console.log("结果:", d)))
+
+getData(a => emitter.emit("dataA", a))
+```
+
+- **适用场景**：松散耦合的异步操作，如 GUI 事件或复杂状态机。
+
+#### **(5) 使用工具库**
+
+<br/>
+
+利用第三方库（如 `Async.js`）简化流程控制：
+
+```js
+const async = require('async')
+
+async.waterfall([
+  callback => getData(callback),
+  (a, callback) => getMoreData(a, callback),
+  (b, callback) => getMoreData(b, callback),
+  (c, callback) => getMoreData(c, callback)
+], (error, d) => {
+  if (error) console.error(error)
+  else console.log("结果:", d)
+})
+```
+
+- **优点**：提供多种流程控制方法（如串行、并行）。
+
+### **4. 总结**
+
+- **优先使用 `async/await`**：现代 JavaScript 的首选方案，代码简洁易维护。
+- **Promise 作为基础**：理解 Promise 是使用 `async/await` 的前提。
+- **其他场景灵活选择**：如事件驱动、工具库等，根据项目需求决定。
+
+通过合理选择异步编程模式，可以彻底避免回调地狱，提升代码质量和开发效率。
