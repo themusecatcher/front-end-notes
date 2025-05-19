@@ -299,3 +299,72 @@ async.waterfall([
 - **其他场景灵活选择**：如事件驱动、工具库等，根据项目需求决定。
 
 通过合理选择异步编程模式，可以彻底避免回调地狱，提升代码质量和开发效率。
+
+## [`in`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/in) 操作符
+
+如果指定的属性在指定的对象或其原型链中，则 `in` 运算符返回 `true`。
+
+### 语法
+
+```js
+prop in object
+```
+
+### 参数
+
+- `prop`：一个字符串类型或者 `symbol` 类型的属性名或者数组索引（非 `symbol` 类型将会强制转为字符串）。
+- `objectName`：检查它（或其原型链）是否包含具有指定名称的属性的对象。
+
+### 返回值
+
+如果指定的属性存在于给定的对象中，则返回 `true`；否则返回 `false`。
+
+### 示例
+
+```js
+// 数组
+var trees = new Array("redwood", "bay", "cedar", "oak", "maple")
+0 in trees // 返回 true
+3 in trees // 返回 true
+6 in trees // 返回 false
+"bay" in trees // 返回 false (必须使用索引号，而不是数组元素的值)
+
+"length" in trees // 返回 true (length 是一个数组属性)
+
+Symbol.iterator in trees // 返回 true (数组可迭代，只在 ES2015+ 上有效)
+
+// 内置对象
+"PI" in Math // 返回 true
+
+// 自定义对象
+var mycar = { make: "Honda", model: "Accord", year: 1998 }
+"make" in mycar // 返回 true
+"model" in mycar // 返回 true
+```
+
+#### 检查对象的自有属性
+
+```js
+const person = { name: "Alice", age: 25 }
+console.log("name" in person) // true, 因为 'name' 是 person 的自有属性
+console.log("toString" in person) // true, 因为 toString 是 Object 的方法
+```
+
+#### 检查原型链中的属性
+
+```js
+function Person(name) {
+  this.name = name
+}
+Person.prototype.greet = function() {
+  return `Hello, my name is ${this.name}`
+}
+
+const alice = new Person("Alice")
+console.log("greet" in alice) // true, 因为 greet 在 alice 的原型上
+```
+
+#### 使用 Symbol 作为键
+
+```js
+const uniqueKey =
