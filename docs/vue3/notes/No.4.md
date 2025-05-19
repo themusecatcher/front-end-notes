@@ -279,3 +279,59 @@
 ### 总结
 
 `Vue3` 的 `Diff` 算法通过**静态提升、PatchFlag、LIS 优化**等策略，显著减少了无效计算和 DOM 操作，适用于高复杂度场景。而 `Vue2` 的双端比较虽能满足一般需求，但在处理动态内容时性能较弱。升级到 `Vue3` 可显著提升应用的响应速度和渲染效率。
+
+## Vue 中父子组件的生命周期执行顺序
+
+在 `Vue2` 和 `Vue3` 中，父子组件的生命周期执行顺序基本一致，主要区别在于部分钩子名称的变化（如卸载阶段的钩子）。
+
+### **`Vue2` 生命周期执行顺序**
+
+1. **加载阶段**  
+   - 父组件：`beforeCreate` → `created` → `beforeMount`  
+   - 子组件：`beforeCreate` → `created` → `beforeMount` → `mounted`  
+   - 父组件：`mounted`  
+
+2. **更新阶段**（父组件数据变化触发子组件更新时）  
+   - 父组件：`beforeUpdate`  
+   - 子组件：`beforeUpdate` → `updated`  
+   - 父组件：`updated`  
+
+3. **卸载阶段**  
+   - 父组件：`beforeDestroy`  
+   - 子组件：`beforeDestroy` → `destroyed`  
+   - 父组件：`destroyed`  
+
+### **Vue3 生命周期执行顺序**
+
+1. **加载阶段**  
+   - 父组件：`beforeCreate` → `created` → `beforeMount`  
+   - 子组件：`beforeCreate` → `created` → `beforeMount` → `mounted`  
+   - 父组件：`mounted`  
+
+   *（注意：`Vue3`中可通过`setup()`替代`beforeCreate`和`created`，但执行顺序不变）*
+
+2. **更新阶段**  
+   - 父组件：`beforeUpdate`  
+   - 子组件：`beforeUpdate` → `updated`  
+   - 父组件：`updated`  
+
+3. **卸载阶段**  
+   - 父组件：`beforeUnmount`  
+   - 子组件：`beforeUnmount` → `unmounted`  
+   - 父组件：`unmounted`  
+
+### **关键区别**
+
+1. **钩子名称变化**  
+   - `Vue2` 的 `beforeDestroy` 和 `destroyed` 在 `Vue3` 中更名为 `beforeUnmount` 和 `unmounted`。
+
+2. **Composition API 的影响**  
+   - `Vue3` 的 `setup()` 函数在 `beforeCreate` 之前执行，但不影响父子组件的执行顺序逻辑。
+
+### **总结**
+
+- **挂载顺序**：父组件初始化 → 子组件挂载 → 父组件完成挂载。  
+- **更新顺序**：父组件触发更新 → 子组件更新 → 父组件完成更新。  
+- **卸载顺序**：父组件开始卸载 → 子组件卸载 → 父组件完成卸载。  
+
+`Vue2` 和 `Vue3` 的差异仅体现在钩子命名上，核心执行逻辑保持一致。
