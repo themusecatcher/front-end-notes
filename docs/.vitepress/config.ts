@@ -59,6 +59,7 @@ export default defineConfig({
 
     nav: [
       { text: 'JavaScript', link: '/javascript/started', activeMatch: '/javascript/' },
+      { text: 'TypeScript', link: '/typescript/started', activeMatch: '/typescript/' },
       { text: 'HTML', link: '/html/started', activeMatch: '/html/' },
       { text: 'CSS', link: '/css/started', activeMatch: '/css/' },
       { text: 'Vue2', link: '/vue2/started', activeMatch: '/vue2/' },
@@ -233,6 +234,34 @@ export default defineConfig({
             {
               text: 'No.16',
               link: '/javascript/notes/No.16'
+            }
+          ]
+        }
+      ],
+      '/typescript/': [
+        {
+          text: '指引',
+          items: [
+            {
+              text: '开始',
+              link: '/typescript/started'
+            }
+          ]
+        },
+        {
+          text: 'TypeScript Notes',
+          items: [
+            {
+              text: 'No.1',
+              link: '/typescript/notes/No.1'
+            },
+            {
+              text: 'No.2',
+              link: '/typescript/notes/No.2'
+            },
+            {
+              text: 'No.3',
+              link: '/typescript/notes/No.3'
             }
           ]
         }
