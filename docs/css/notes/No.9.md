@@ -163,3 +163,105 @@
 ### **总结**
 
 `BEM` 通过严格的命名规则，将 `CSS` 类名与 `HTML` 结构、组件状态解耦，显著提升代码可维护性和团队协作效率。尽管类名可能较长，但其带来的结构清晰性和可预测性，使其成为中大型项目的首选 `CSS` 命名规范。
+
+## 左右两侧固定宽度、中间自适应的布局实现
+
+可以通过以下几种方法实现左右两侧固定宽度、中间自适应的布局：
+
+### 方法 1：Flexbox 布局（推荐）
+
+```html
+<div class="container">
+  <div class="left">左侧固定宽度</div>
+  <div class="center">中间自适应</div>
+  <div class="right">右侧固定宽度</div>
+</div>
+```
+
+```css
+.container {
+  display: flex;
+  min-height: 100vh; /* 容器高度占满屏幕 */
+}
+
+.left, .right {
+  flex: 0 0 200px; /* 不放大、不缩小，固定宽度 200px */
+  background: #eee;
+}
+
+.center {
+  flex: 1; /* 占据剩余空间 */
+  background: #ddd;
+}
+```
+
+### 方法 2：CSS Grid 布局（更现代）
+
+```html
+<div class="container">
+  <div class="left">左侧固定宽度</div>
+  <div class="center">中间自适应</div>
+  <div class="right">右侧固定宽度</div>
+</div>
+```
+
+```css
+.container {
+  display: grid;
+  grid-template-columns: 200px 1fr 200px; /* 左右固定，中间自适应 */
+  min-height: 100vh;
+}
+
+.left, .right {
+  background: #eee;
+}
+
+.center {
+  background: #ddd;
+}
+```
+
+### 方法 3：传统浮动布局（兼容旧浏览器）
+
+```html
+<div class="container">
+  <div class="left">左侧固定宽度</div>
+  <div class="right">右侧固定宽度</div>
+  <div class="center">中间自适应</div>
+</div>
+```
+
+```css
+.left {
+  float: left;
+  width: 200px;
+  background: #eee;
+}
+
+.right {
+  float: right;
+  width: 200px;
+  background: #eee;
+}
+
+.center {
+  margin-left: 200px; /* 左侧宽度 */
+  margin-right: 200px; /* 右侧宽度 */
+  background: #ddd;
+}
+
+/* 清除浮动 */
+.container::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+```
+
+### 关键点总结
+
+1. **Flexbox**：通过 `flex: 1` 让中间自适应，代码简洁且控制灵活。
+2. **CSS Grid**：通过 `grid-template-columns` 直接定义三列布局，语义明确。
+3. **浮动布局**：需要手动处理外边距和清除浮动，适合兼容旧项目。
+
+根据项目需求（如浏览器兼容性、代码简洁性）选择最合适的方法。现代项目推荐优先使用 **Flexbox** 或 **Grid**。
