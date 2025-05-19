@@ -342,6 +342,8 @@ var mycar = { make: "Honda", model: "Accord", year: 1998 }
 "model" in mycar // 返回 true
 ```
 
+`in`右操作数必须是一个对象值。例如，你可以指定使用`String`构造函数创建的字符串，但不能指定字符串文字。
+
 #### 检查对象的自有属性
 
 ```js
