@@ -312,7 +312,7 @@ prop in object
 
 ### 参数
 
-- `prop`：一个字符串类型或者 `symbol` 类型的属性名或者数组索引（非 `symbol` 类型将会强制转为字符串）。
+- `prop`：一个字符串类型或者 `symbol` 类型的属性名或者数组索引（非 `symbol` 类型将**会强制转为字符串**）。
 - `objectName`：检查它（或其原型链）是否包含具有指定名称的属性的对象。
 
 ### 返回值
@@ -344,6 +344,49 @@ var mycar = { make: "Honda", model: "Accord", year: 1998 }
 
 `in`右操作数必须是一个对象值。例如，你可以指定使用`String`构造函数创建的字符串，但不能指定字符串文字。
 
+```js
+var color1 = new String("green")
+"length" in color1 // 返回 true
+var color2 = "coral"
+"length" in color2 // 报错 (color2 不是对象)
+```
+
+#### 对被删除或值为 `undefined` 的属性使用 `in`
+
+<br/>
+
+如果你使用 `delete` 运算符删除了一个属性，则 `in` 运算符对所删除属性返回 `false`。
+
+```js
+var mycar = { make: "Honda", model: "Accord", year: 1998 }
+delete mycar.make
+"make" in mycar // 返回 false
+
+var trees = new Array("redwood", "bay", "cedar", "oak", "maple")
+delete trees[3]
+3 in trees // 返回 false
+```
+
+如果你只是将一个属性的值赋值为 `undefined`，而没有删除它，则 `in` 运算仍然会返回 `true`。
+
+```js
+var mycar = { make: "Honda", model: "Accord", year: 1998 }
+mycar.make = undefined
+"make" in mycar // 返回 true
+
+var trees = new Array("redwood", "bay", "cedar", "oak", "maple")
+trees[3] = undefined
+3 in trees // 返回 true
+```
+
+#### 继承属性
+
+如果一个属性是从原型链上继承来的，`in` 运算符也会返回 `true`。
+
+```js
+"toString" in {} // 返回 true
+```
+
 #### 检查对象的自有属性
 
 ```js
@@ -369,4 +412,47 @@ console.log("greet" in alice) // true, 因为 greet 在 alice 的原型上
 #### 使用 Symbol 作为键
 
 ```js
-const uniqueKey =
+const uniqueKey = Symbol("key")
+const obj = { [uniqueKey]: "value" }
+console.log(uniqueKey in obj); // true
+```
+
+#### 与 hasOwnProperty 的区别
+
+<br/>
+
+`in` 会检查原型链上的属性，而 `hasOwnProperty` 仅检查对象自身属性：
+
+```js
+const obj = {}
+console.log("toString" in obj) // true
+console.log(obj.hasOwnProperty("toString")) // false
+```
+
+### 应用场景
+
+1. 安全检测 `DOM` 属性
+
+```js
+const element = document.getElementById("myElement")
+if ("hidden" in element) {
+  element.hidden = true // 安全操作
+}
+```
+
+2. 动态检查对象属性
+
+```js
+const config = { apiUrl: "https://api.example.com", timeout: 5000 }
+if ("apiUrl" in config) {
+  fetch(config.apiUrl)
+}
+```
+
+### 总结
+
+- `JavaScript` 的 `in`：核心是检查对象属性（包括继承属性），而非元素值。
+- 适用场景：动态属性检查、避免访问未定义属性时的错误。
+- 替代方案：
+  - 检查值是否存在：`Array.includes()`、`Set.has()`、`Map.has()`。
+  - 检查自身属性：`Object.hasOwnProperty()` 或 `Object.hasOwn()`。
