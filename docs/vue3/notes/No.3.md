@@ -264,7 +264,7 @@ eventBus.emit('greet', 'Bob')   // 无输出
   const emitter: Emitter<Events> = mitt<Events>()
   ```
 
-## `Vue2` 和 `Vue3` 在响应式依赖收集
+## `Vue2` 和 `Vue3` 响应式依赖收集
 
 `Vue2` 和 `Vue3` 在响应式依赖收集的实现上有显著差异，主要源于底层响应式系统的重构。
 
