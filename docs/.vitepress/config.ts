@@ -234,6 +234,14 @@ export default defineConfig({
             {
               text: 'No.16',
               link: '/javascript/notes/No.16'
+            },
+            {
+              text: 'No.17',
+              link: '/javascript/notes/No.17'
+            },
+            {
+              text: 'No.18',
+              link: '/javascript/notes/No.18'
             }
           ]
         }
@@ -262,6 +270,14 @@ export default defineConfig({
             {
               text: 'No.3',
               link: '/typescript/notes/No.3'
+            },
+            {
+              text: 'No.4',
+              link: '/typescript/notes/No.4'
+            },
+            {
+              text: 'No.5',
+              link: '/typescript/notes/No.5'
             }
           ]
         }
