@@ -527,6 +527,10 @@ export default defineConfig({
             {
               text: 'No.3',
               link: '/http/notes/No.3'
+            },
+            {
+              text: 'No.4',
+              link: '/http/notes/No.4'
             }
           ]
         }
