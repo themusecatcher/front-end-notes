@@ -96,3 +96,180 @@ console.log(0.1 + 0.2 === 0.3) // false
 3. 误差在运算过程中被放大。
 
 理解这一机制后，可以通过数学方法或第三方库规避精度问题。
+
+## 定义类的私有属性
+
+在 `JavaScript` 中，定义类的私有属性可以通过以下几种方式实现：
+
+### 1. **使用 `#` 语法（ES2022+ 官方私有字段）**
+
+<br/>
+
+**实现方式**：
+在类中通过 `#` 前缀声明属性，该属性仅在类的内部可访问。 
+
+```js
+class MyClass {
+  #privateProp = 'secret' // 私有属性
+  getPrivate() {
+    return this.#privateProp // 内部可访问
+  }
+}
+
+const instance = new MyClass()
+console.log(instance.getPrivate()) // 'secret'
+console.log(instance.#privateProp) // 语法错误：外部无法访问
+```
+
+**特点**：
+
+- 语言原生支持，严格意义上的私有属性。  
+- 外部访问会直接报错（语法错误）。  
+- 子类也无法访问父类的私有属性。  
+- 需要较新的运行环境支持（如 Node.js 12+、现代浏览器）。
+
+---
+
+### 2. **闭包 + 特权方法**
+
+<br/>
+
+**实现方式**：
+
+在构造函数中通过局部变量保存私有属性，并通过闭包暴露访问方法。
+
+```js
+class MyClass {
+  constructor() {
+    let privateProp = 'secret' // 局部变量
+    this.getPrivate = () => privateProp // 特权方法
+  }
+}
+
+const instance = new MyClass()
+console.log(instance.getPrivate()) // 'secret'
+console.log(instance.privateProp) // undefined（无法直接访问）
+```
+
+**特点**：
+
+- 兼容性好（支持所有 ES6 环境）。  
+- 每个实例会创建独立的方法，可能占用更多内存。  
+- 私有属性通过闭包隐藏，外部无法直接访问。
+
+### 3. **WeakMap 存储私有属性**
+
+<br/>
+
+**实现方式**：
+
+使用 `WeakMap` 以实例为键存储私有属性，避免内存泄漏。
+
+```js
+const _privateProps = new WeakMap()
+
+class MyClass {
+  constructor() {
+    _privateProps.set(this, { privateProp: 'secret' })
+  }
+
+  getPrivate() {
+    return _privateProps.get(this).privateProp
+  }
+}
+
+const instance = new MyClass()
+console.log(instance.getPrivate()) // 'secret'
+console.log(instance.privateProp) // undefined
+```
+
+**特点**：
+
+- 私有属性完全隐藏，外部无法通过实例或反射获取。  
+- 需要维护额外的 `WeakMap`，代码稍显繁琐。  
+- 适合需要多个私有属性的场景（可存储为对象）。
+
+### 4. **Symbol 作为属性键**
+
+<br/>
+
+**实现方式**：
+
+用 `Symbol` 作为属性名，外部无法直接获取 `Symbol` 引用。  
+
+```js
+// 在模块或闭包中定义 Symbol（确保外部无法访问）
+const _privateProp = Symbol('privateProp')
+
+class MyClass {
+  constructor() {
+    this[_privateProp] = 'secret'
+  }
+
+  getPrivate() {
+    return this[_privateProp]
+  }
+}
+
+const instance = new MyClass()
+console.log(instance.getPrivate()) // 'secret'
+console.log(instance[_privateProp]) // 需要 _privateProp 才能访问
+```
+
+**说明**
+
+- `Symbol` 的唯一性：每个 `Symbol('name')` 都是唯一的，只要不将 `_name` 暴露给外部，外部无法直接通过属性名访问。
+- 模块化封装：如果将上述代码放在模块中，且不导出 `_name`，则外部无法获取该 `Symbol`。
+- 反射方法的局限：通过 `Object.getOwnPropertySymbols(person)` 可以获取对象的所有 `Symbol` 属性，但需要主动遍历才能找到对应属性，增加了访问成本。
+
+**特点**：
+
+- 外部需持有 `Symbol` 才能访问，否则无法直接读取。  
+- 通过 `Object.getOwnPropertySymbols()` 仍可获取属性键，并非严格私有。  
+- 适合模块内私有（不导出 `Symbol` 时）。
+
+### 5. **命名约定（如 `_` 前缀）**
+
+<br/>
+
+**实现方式**：
+
+通过代码规范（如 `_privateProp`）约定私有属性，但不强制限制访问。
+
+```js
+class MyClass {
+  constructor() {
+    this._privateProp = 'secret'
+  }
+
+  getPrivate() {
+    return this._privateProp
+  }
+}
+
+const instance = new MyClass()
+console.log(instance.getPrivate()) // 'secret'
+console.log(instance._privateProp) // 'secret'（外部仍可访问）
+```
+
+**特点**：
+
+- 仅通过命名约定提示开发者“不要直接访问”。
+- 无强制保护，属性实际是公开的。
+- 兼容性最好，但依赖团队规范。
+
+### **总结对比**
+
+| 方法 | 严格私有性 | 内存效率 | 兼容性 | 代码简洁性 |
+|--|--|--|--|--|
+| `#` 语法 | ✅ | ✅ | 需现代环境 | ✅ |
+| 闭包 + 特权方法 | ✅ | ❌ | 所有 ES6+ | ❌ |
+| WeakMap | ✅ | ✅ | 所有 ES6+ | ❌ |
+| Symbol | ❌ | ✅ | 所有 ES6+ | ✅ |
+| 命名约定 | ❌ | ✅ | 所有环境 | ✅ |
+
+**推荐选择**：
+
+- **现代项目**：优先使用 `#` 语法（ES2022+）。  
+- **兼容旧环境**：选择 **WeakMap** 或 **闭包**。  
+- 避免依赖 **Symbol** 或 **命名约定** 实现严格私有。
