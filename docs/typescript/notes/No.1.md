@@ -513,6 +513,18 @@ type UserBasicInfo = {
 */
 ```
 
+#### **源码实现**
+
+```ts
+type Pick<T, K extends keyof T> = {
+  [P in K]: T[P]
+}
+```
+
+- **泛型约束**：`K` 必须是 `T` 的键的子集（`K extends keyof T`）。
+- **映射类型**：遍历 `K` 中的每个属性 `P`，将 `T[P]` 的类型复制到新类型中。
+- **限制**：`K` 必须包含 `T` 中实际存在的键，否则报错。
+
 #### **应用场景**
 
 - 需要从复杂类型中提取部分属性。
@@ -521,6 +533,8 @@ type UserBasicInfo = {
 ### **2. `Omit<T, K>`**
 
 #### **功能**
+
+<br/>
 
 从类型 `T` 中 **排除指定的属性集合 `K`**，生成新的类型。
 
@@ -554,6 +568,24 @@ type UserWithoutSensitiveInfo = {
 };
 */
 ```
+
+#### 源码实现
+
+```ts
+type Omit<T, K extends keyof any> = Pick<T, Exclude<keyof T, K>>
+// 或者
+type Omit<T, K extends keyof T> = { [P in Exclude<keyof T, K>]: T[P] }
+```
+
+- **泛型约束**：`K` 可以是任意合法键类型（`string | number | symbol`）。
+- **实现原理**：
+  1. 通过 `Exclude<keyof T, K>` 从 `T` 的键中排除 `K`。
+  2. 用 `Pick` 选择剩余键，生成新类型。
+- **关键工具**：`Exclude<T, U>` 是 `TypeScript` 内置类型，用于从联合类型 `T` 中排除属于 `U` 的部分：
+
+  ```ts
+  type Exclude<T, U> = T extends U ? never : T
+  ```
 
 #### **应用场景**
 

@@ -101,7 +101,7 @@ function safeFunction(data: unknown) {
 
 <br/>
 
-`extends` 用于**继承另一个类型或类**，表示子类型必须满足父类型的约束。
+`extends` 用于**继承(来自)另一个类型或类**，表示子类型必须满足父类型的约束。
 
 #### 1. 接口继承
 
