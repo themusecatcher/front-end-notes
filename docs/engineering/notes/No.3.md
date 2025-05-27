@@ -8,7 +8,7 @@
 
 - [ESlint](https://eslint.nodejs.cn/)（在源码中进行检测并提示）、[Terser](https://terser.org/)（打包后自动完成一些裁剪）：读取源码文件 -> 生成抽象语法树（`AST`） -> 分析 -> ...     都只能针对 `JS` 文件不支持 `CSS` 且只能是单模块（单文件），例如一个模块导出，单另一个模块未使用，这种情况无法处理。
 
-比如：在 .eslintrc 配置文件中 `rules` 配置 `no-unused-vars` 规则，在编辑器中会提示未使用的变量和函数。
+比如：在 `.eslintrc` 配置文件中 `rules` 配置 `no-unused-vars` 规则，在编辑器中会提示未使用的变量和函数。
 
 ```js
 {
@@ -60,7 +60,7 @@ new PurgeCSSPlugin({
 | **作用域** | 模块内局部作用域 | 模块级词法作用域 |
 | **循环依赖处理** | 支持但需谨慎处理 | 支持更安全的静态分析 |
 | **Tree Shaking** | 不支持（动态特性导致难以静态分析）| 天然支持（利于打包工具优化代码体积）|
-| **浏览器兼容性** | 需构建工具转换（如 Webpack/Babel）| 现代浏览器原生支持 |
+| **浏览器兼容性** | 需构建工具转换（如 `Webpack/Babel`）| 现代浏览器原生支持 |
 | **Node.js 支持** | 原生支持 | `.mjs` 扩展名或 `"type": "module"`|
 
 ### **二、关键差异详解**
@@ -182,13 +182,13 @@ new PurgeCSSPlugin({
   - **内存占用高**：模块多次加载时缓存副本。
 
 - **ESM**  
-  - **编译时优化**：静态分析支持 Tree Shaking，减少打包体积。
-  - **高效缓存**：浏览器通过 URL 缓存模块，避免重复加载。
+  - **编译时优化**：静态分析支持 `Tree Shaking`，减少打包体积。
+  - **高效缓存**：浏览器通过 `URL` 缓存模块，避免重复加载。
 
 #### 5. **互操作性**
 
 - **Node.js 中混合使用**  
-  - **ESM 导入 CommonJS**：可直接使用 `import` 导入 CommonJS 模块。
+  - **ESM 导入 CommonJS**：可直接使用 `import` 导入 `CommonJS` 模块。
 
     ```js
     // ESM 中导入 CommonJS
@@ -363,3 +363,101 @@ console.log(__moduleA_exports.b)
 | 模块包含副作用代码 | **副作用代码仅执行一次** | 单例特性保证 |
 
 **最佳实践**：无需担心多次 `import` 同一模块的性能问题，打包工具会优化冗余代码。但需避免无意义的重复导入以保持代码可读性。
+
+## CommonJS、ESM 和 AMD 的对比
+
+在 `JavaScript` 生态中，**CommonJS**、**ESM（ES Modules）** 和 **AMD（Asynchronous Module Definition）** 是三种主流的模块化规范，它们解决了代码组织、依赖管理和加载的问题，但设计目标和适用场景有所不同。
+
+### **1. CommonJS**
+
+#### 特点：
+
+- **同步加载**：模块在运行时**同步加载**（适合服务端）。
+- **语法**：`require()` 引入模块，`module.exports` 或 `exports` 导出模块。
+- **适用场景**：`Node.js` 的默认模块系统，主要用于服务端开发。
+- **示例**：
+
+  ```js
+  // 导入
+  const fs = require('fs')
+  // 导出
+  module.exports = { myFunction }
+  ```
+
+#### 关键点：
+
+- **模块缓存**：模块首次加载后会被缓存，后续调用 `require()` 直接读取缓存。
+- **动态性**：依赖关系在运行时确定，支持条件加载。
+- **局限性**：同步加载不适合浏览器环境（会阻塞渲染）。
+
+### **2. ESM（ES Modules）**
+
+#### 特点：
+
+- **静态分析**：依赖在编译时确定，支持**静态优化**（如 `Tree Shaking`）。
+- **语法**：`import` 和 `export` 关键字。
+- **适用场景**：现代浏览器和构建工具（如 `Webpack、Rollup`）的官方标准。
+- **示例**：
+
+  ```js
+  // 导入
+  import { func } from './module.js'
+  // 导出
+  export const myVar = 42
+  ```
+
+#### 关键点：
+
+- **异步加载**：浏览器中通过 `<script type="module">` 异步加载。
+- **严格模式**：默认启用严格模式。
+- **浏览器兼容性**：现代浏览器原生支持，旧浏览器需通过构建工具转译。
+- **Node.js 支持**：`Node v12+` 通过 `.mjs` 扩展名或 `package.json` 的 `"type": "module"` 启用。
+
+### **3. AMD（Asynchronous Module Definition）**
+
+#### 特点：
+
+- **异步加载**：专为浏览器设计，**非阻塞加载**模块。
+- **语法**：通过 `define()` 定义模块，`require()` 异步加载。
+- **适用场景**：传统浏览器端项目（如 `RequireJS` 库）。
+- **示例**：
+
+  ```js
+  // 定义模块
+  define(['dep1', 'dep2'], function (dep1, dep2) {
+    return { myFunction }
+  })
+  // 加载模块
+  require(['module'], function (module) {})
+  ```
+
+#### 关键点：
+
+- **依赖前置**：模块依赖需提前声明。
+- **动态加载**：适合按需加载的复杂前端应用。
+- **复杂性**：配置和语法相对繁琐。
+
+### **对比总结**
+
+| 特性 | `CommonJS` | `ESM` | `AMD` |
+|--|--|--|--|
+| **加载方式** | 同步（服务端）| 静态/异步（浏览器）| 异步（浏览器）|
+| **语法** | `require/exports` | `import/export` | `define/require`  |
+| **运行环境** | `Node.js` | 浏览器/`Node.js` | 浏览器 |
+| **静态分析** | 不支持 | 支持（`Tree Shaking`）| 不支持 |
+| **循环依赖处理** | 支持 | 支持 | 复杂 |
+| **典型工具/库** | `Node.js` | `Webpack`, `Rollup` | `RequireJS` |
+
+### **演进与现状**
+
+1. **ESM 是未来**：作为 `ECMAScript` 标准，`ESM` 逐渐统一浏览器和 `Node.js` 的模块化方案。
+2. **Node.js 的双模块**：`Node.js` 同时支持 `CommonJS` 和 `ESM`（需配置），但两者混用需谨慎（如 `import` 无法直接引入 `CommonJS` 模块的具名导出）。
+3. **AMD 的淡出**：随着 `ESM` 的普及和构建工具的成熟，`AMD` 主要用于旧项目维护。
+
+### **如何选择？**
+
+- **现代前端项目**：优先使用 **ESM**（通过 `Webpack/Rollup` 打包）。
+- **Node.js 服务端**：`CommonJS` 仍是主流，但新项目推荐逐步迁移到 `ESM`。
+- **旧浏览器兼容**：`AMD` 或 `ESM +` 构建工具降级处理。
+
+理解这些规范的差异，有助于在不同场景下合理组织代码和优化加载性能。
