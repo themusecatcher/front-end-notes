@@ -27,23 +27,97 @@
 - 语法：
 
 ```js
-addEventListener(type, listener);
-addEventListener(type, listener, options);
-addEventListener(type, listener, useCapture);
+addEventListener(type, listener)
+addEventListener(type, listener, options)
+addEventListener(type, listener, useCapture)
 ```
 
 - 参数：
-  - `type`：表示监听事件类型的大小写敏感的字符串。
+  - `type`：表示监听事件类型的**大小写敏感**的字符串。
   - `listener`：当所监听的事件类型触发时，会接收到一个事件通知（实现了 `Event` 接口的对象）对象。`listener` 必须是一个实现了 `EventListener` 接口的对象，或者是一个函数。有关回调本身的详细信息，请参阅事件监听回调
-  - `options` <Tag :bordered="false" color="cyan">可选</Tag> 一个指定有关 `listener` 属性的可选参数对象。可用的选项如下：
-    - `capture` <Tag :bordered="false" color="cyan">可选</Tag> 一个布尔值，表示 `listener` 会在该类型的事件捕获阶段传播到该 `EventTarget` 时触发。
-    - `once` <Tag :bordered="false" color="cyan">可选</Tag> 一个布尔值，表示 `listener` 在添加之后最多只调用一次。如果为 `true`，`listener` 会在其被调用之后自动移除。
-    - `passive` <Tag :bordered="false" color="cyan">可选</Tag> 一个布尔值，设置为 `true` 时，表示 `listener` 永远不会调用 `preventDefault()`。如果 `listener` 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告。查看使用 `passive` 改善滚屏性能以了解更多。
-    - `signal` <Tag :bordered="false" color="cyan">可选</Tag> `AbortSignal`，该 `AbortSignal` 的 `abort()` 方法被调用时，监听器会被移除。
+  - `options` <Tag :bordered="false" color="cyan">可选</Tag>
+    一个指定有关 `listener` 属性的可选参数对象。可用的选项如下：
+    - `capture` <Tag :bordered="false" color="cyan">可选</Tag>
+
+      一个布尔值，表示 `listener` 会在该类型的事件捕获阶段传播到该 `EventTarget` 时触发。
+    - `once` <Tag :bordered="false" color="cyan">可选</Tag>
+
+      一个布尔值，表示 `listener` 在添加之后最多只调用一次。如果为 `true`，`listener` 会在其被调用之后自动移除。
+    - `passive` <Tag :bordered="false" color="cyan">可选</Tag>
+
+      一个布尔值，设置为 `true` 时，表示 `listener` 永远不会调用 `preventDefault()`。如果 `listener` 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告。查看使用 `passive` 改善滚屏性能以了解更多。
+    - `signal` <Tag :bordered="false" color="cyan">可选</Tag>
+
+      [`AbortSignal`](https://developer.mozilla.org/zh-CN/docs/Web/API/AbortSignal)，该 `AbortSignal` 的 `abort()` 方法被调用时，监听器会被移除。
   - `useCapture` <Tag :bordered="false" color="cyan">可选</Tag>
-  一个布尔值，表示在 `DOM` 树中注册了 `listener` 的元素，是否要先于它下面的 `EventTarget` 调用该 `listener`。当 `useCapture`（设为 `true`）时，沿着 `DOM` 树向上冒泡的事件不会触发 `listener`。当一个元素嵌套了另一个元素，并且两个元素都对同一事件注册了一个处理函数时，所发生的事件冒泡和事件捕获是两种不同的事件传播方式。事件传播模式决定了元素以哪个顺序接收事件。进一步的解释可以查看 `DOM Level 3` 事件及 `JavaScript` 事件顺序文档。如果没有指定，`useCapture` 默认为 `false`。
+  
+    一个布尔值，表示在 `DOM` 树中注册了 `listener` 的元素，是否要先于它下面的 `EventTarget` 调用该 `listener`。当 `useCapture`（设为 `true`）时，沿着 `DOM` 树向上冒泡的事件不会触发 `listener`。当一个元素嵌套了另一个元素，并且两个元素都对同一事件注册了一个处理函数时，所发生的事件冒泡和事件捕获是两种不同的事件传播方式。事件传播模式决定了元素以哪个顺序接收事件。进一步的解释可以查看 `DOM Level 3` 事件及 `JavaScript` 事件顺序文档。如果没有指定，`useCapture` 默认为 `false`。
 
 `document.addEventListener()` 方法用于向文档添加事件句柄。
+
+### `option` 支持的安全检测
+
+<br/>
+
+在旧版本的 `DOM` 的规定中，`addEventListener()` 的第三个参数是一个布尔值，表示是否在捕获阶段调用事件处理程序。随着时间的推移，很明显需要更多的选项。与其在方法之中添加更多参数（传递可选值将会变得异常复杂），倒不如把第三个参数改为一个包含了各种属性的对象，这些属性的值用来被配置删除事件侦听器的过程。
+
+因为旧版本的浏览器（以及一些相对不算古老的）仍然假定第三个参数是布尔值，你需要编写一些代码来有效地处理这种情况。你可以对每一个你感兴趣的 `options` 值进行特性检测。
+
+如果你想检测 `passive` 值，可以参考下面这个例子：
+
+```js
+let passiveSupported = false
+
+try {
+  const options = {
+    get passive() {
+      // 该函数会在浏览器尝试访问 passive 值时被调用。
+      passiveSupported = true
+      return false
+    },
+  }
+
+  window.addEventListener("test", null, options)
+  window.removeEventListener("test", null, options)
+} catch (err) {
+  passiveSupported = false
+}
+```
+
+### 示例
+
+添加一个可被移除的监听器
+
+这个例子用来展示如何使用 `addEventListenter()` 添加一个可被 `AbortSignal` 移除的侦听器。
+
+```html
+<table id="outside">
+  <tr>
+    <td id="t1">one</td>
+  </tr>
+  <tr>
+    <td id="t2">two</td>
+  </tr>
+</table>
+```
+
+```js
+// 为 table 添加可被移除的事件监听器
+const controller = new AbortController()
+const el = document.getElementById("outside")
+el.addEventListener("click", modifyText, { signal: controller.signal })
+
+// 改变 t2 内容的函数
+function modifyText() {
+  const t2 = document.getElementById("t2")
+  if (t2.firstChild.nodeValue === "three") {
+    t2.firstChild.nodeValue = "two"
+  } else {
+    t2.firstChild.nodeValue = "three"
+    controller.abort() // 当值变为 "three" 后，移除监听器
+  }
+}
+```
 
 ::: tip 提示
 可以使用 [document.removeEventListener()](https://developer.mozilla.org/zh-CN/docs/Web/API/EventTarget/removeEventListener) 方法来移除 `addEventListener()` 方法添加的事件句柄。
@@ -53,22 +127,8 @@ addEventListener(type, listener, useCapture);
 使用 `element.addEventListener()` 方法为指定元素添加事件句柄。
 :::
 
-- 语法：
-
-  ```js
-  document.addEventListener(event, function, useCapture)
-  ```
-
-- 参数值：
-
-参数 | 描述
--- | --
-event <Tag :bordered="false" color="cyan">必需</Tag> | 描述事件名称的字符串<br>注意： 不要使用 `on` 前缀。例如，使用 `click` 来取代 `onclick`。<br>提示： 所有 `HTML` `DOM` 事件，可以查看我们完整的 `HTML` `DOM` `Event` 对象参考手册。
-function <Tag :bordered="false" color="cyan">必需</Tag> | 描述了事件触发后执行的函数。<br>当事件触发时，事件对象会作为第一个参数传入函数。事件对象的类型取决于特定的事件。<br>例如，`click` 事件属于 `MouseEvent`(鼠标事件) 对象。
-useCapture <Tag :bordered="false" color="cyan">可选</Tag> | 布尔值，指定事件是否在捕获或冒泡阶段执行。<br>可能值：<ul><li>`true`：事件句柄在捕获阶段执行</li><li>`false`：默认。事件句柄在冒泡阶段执行</li></ul>
-
 ```js
-// 禁用H5页面的下拉刷新
+// 禁用 H5 页面的下拉刷新
 document.body.addEventListener('touchmove', this.touchMove, { passive: false })
 touchMove (e) {
   e.preventDefault()
@@ -87,7 +147,7 @@ touchMove (e) {
 </div>
 ```
 
-如果子元素p和父元素div都有一个click的处理函数，那么哪一个函数会首先被触发呢？
+如果子元素 p 和父元素 div 都有一个 click 的处理函数，那么哪一个函数会首先被触发呢？
 
 为了解决这个问题微软和网景提出了两种几乎完全相反的概念，微软提出了名为事件冒泡(`event bubbling`)的事件流，网景提出另一种事件流名为事件捕获(`event capturing`)。
 
