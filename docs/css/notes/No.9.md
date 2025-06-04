@@ -265,3 +265,115 @@
 3. **浮动布局**：需要手动处理外边距和清除浮动，适合兼容旧项目。
 
 根据项目需求（如浏览器兼容性、代码简洁性）选择最合适的方法。现代项目推荐优先使用 **Flexbox** 或 **Grid**。
+
+## `transform` 与合成层
+
+在 `CSS` 中，**不是所有使用 `transform` 的元素都会被自动提升到合成层**。浏览器对合成层的创建有一套复杂的优化规则，`transform` 只是可能触发提升的条件之一，但并非绝对条件。
+
+### 一、`transform` 触发合成层的条件
+
+<br/>
+
+元素被提升到合成层需要满足以下 **至少一个条件**：
+
+1. **使用 3D 变换**
+
+   ```css
+   transform: translate3d(0, 0, 0);  /* 最常用技巧 */
+   transform: translateZ(0);         /* 强制开启 GPU 加速 */
+   transform: perspective(500px);    /* 3D 透视 */
+   ```
+
+   > ✅ 这类 3D 变换会强制创建独立的合成层。
+
+2. **包含动画或过渡**
+
+   ```css
+   .element {
+     transform: translateX(0);
+     transition: transform 0.3s; /* 有过渡动画 */
+   }
+   .element:hover {
+     transform: translateX(50px);
+   }
+   ```
+
+   > ✅ 当元素有正在运行的 `transform` 动画时会被提升。
+
+3. **与其他合成层重叠**
+
+   如果一个普通元素与 **已有合成层** 重叠，浏览器可能将其提升以避免重绘：
+
+   ```css
+   .layer {
+     transform: translateZ(0); /* 已有合成层 */
+   }
+   .overlap {
+     transform: scale(1.1); /* 与此层重叠时可能被提升 */
+   }
+   ```
+
+### 二、不会触发合成层的 `transform` 场景
+
+1. **静态 2D 变换**
+
+   ```css
+   .static {
+     transform: translate(10px, 10px); /* 无动画的 2D 位移 */
+   }
+   ```
+  
+   > ❌ 无过渡/动画的简单 2D 变换通常 **不会创建合成层**。
+
+2. **未实际生效的变换**
+
+   ```css
+   .hidden {
+     transform: scale(0); /* 元素实际不显示 */
+   }
+   ```
+
+   > ❌ 对布局无影响的变换可能被浏览器忽略。
+
+### 三、强制提升到合成层的方法
+
+<br/>
+
+若需确保元素被提升，可显式提示浏览器：
+
+```css
+.element {
+  transform: translateZ(0);     /* 经典 hack */
+  will-change: transform;       /* 现代标准方法 */
+  backface-visibility: hidden;  /* 间接触发 3D 层 */
+}
+```
+
+> 💡 `will-change` 是官方推荐方式，提前告知浏览器元素将变化。
+
+### 四、浏览器开发者工具验证
+
+<br/>
+
+在 **Chrome DevTools** 中检查是否被提升：
+
+1. 打开 `Rendering` 面板 → 勾选 `Layer borders`
+   - **合成层会显示为橙色边框**
+2. 在 `Layers` 面板查看分层情况：
+   - 提升成功的元素会出现在独立图层中
+
+### 五、合成层创建规则总结
+
+| **场景** | 是否创建合成层 | 原因 |
+|--|--|--|
+| `transform: translate3d()` | ✅ 是 | `3D` 变换强制提升 |
+| `transform: scale()` + 动画 | ✅ 是 | 动画进行中提升 |
+| `will-change: transform` | ✅ 是 | 显式声明未来变化 |
+| 静态 `transform: rotate(30deg)`  | ❌ 否 | 无动画的 `2D` 变换 |
+| `transform: none` | ❌ 否 | 未使用变换 |
+
+### 关键结论
+
+1. **`transform` 不保证创建合成层**，需要配合 **3D/动画/重叠**等条件
+2. **优先使用 `will-change` 或 `translate3d` 主动提升**
+3. 过度创建合成层会导致内存增加（层爆炸问题），应仅在需要高性能动画时使用
