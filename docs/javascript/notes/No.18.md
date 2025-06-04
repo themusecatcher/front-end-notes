@@ -18,7 +18,7 @@
 
 1. **执行同步代码**：所有同步任务按顺序执行，形成调用栈（Call Stack）。
 2. **处理异步任务**：
-   - **宏任务**：如 `setTimeout`、`setInterval`、`I/O` 操作等，会被推入宏任务队列。
+   - **宏任务**：如 `setTimeout`、`setInterval`、`click/scroll` 交互回调、`I/O` 操作等，会被推入宏任务队列。
    - **微任务**：如 `Promise.then`、`MutationObserver` 等，会被推入微任务队列。
 3. **调用栈清空后**：
    - **优先执行所有微任务**：清空微任务队列中的任务。
