@@ -6,6 +6,10 @@
 
 ### JavaScript 事件循环：宏任务与微任务详解
 
+::: tip 备注
+- 单线程是异步产生的原因
+- 事件循环是异步的实现方式
+:::
 <br/>
 
 `JavaScript` 是单线程语言，通过**事件循环（Event Loop）**处理异步任务。事件循环的核心是**协调同步任务、宏任务（Macro Task）和微任务（Micro Task）的执行顺序**。
@@ -189,3 +193,36 @@ Promise.resolve().then(() => {
 3. **避免阻塞**：长时间运行的微任务会阻塞渲染和后续任务，需谨慎使用。
 
 通过理解宏任务和微任务的执行机制，可以更好地优化代码性能，避免异步陷阱。
+
+## [requestIdleCallback](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestIdleCallback)
+
+`window.requestIdleCallback()` 方法插入一个函数，这个**函数将在浏览器空闲时期被调用**。这使开发者能够在主事件循环上执行后台和低优先级工作，而不会影响延迟关键事件，如动画和输入响应。函数一般会按先进先调用的顺序执行，然而，如果回调函数指定了执行超时时间 `timeout`，则有可能为了在超时前执行函数而打乱执行顺序。
+
+你可以在空闲回调函数中调用 `requestIdleCallback()`，以便在下一次通过事件循环之前调度另一个回调。
+
+:::tip 备注
+强烈建议为必要的工作设置 timeout 选项，否则在回调触发之前可能已经过去了多秒。
+:::
+
+### 语法
+
+```js
+requestIdleCallback(callback)
+requestIdleCallback(callback, options)
+```
+
+### 参数
+
+- `callback`
+
+  一个在事件循环空闲时即将被调用的函数的引用。函数会接收到一个名为 `IdleDeadline` 的参数，这个参数可以获取当前空闲时间以及回调是否在超时时间前已经执行的状态。
+
+- `options` <Tag :bordered="false" color="cyan">可选</Tag>
+  包括可选的配置参数。具有如下属性：
+  - `timeout`：如果指定了 `timeout`，并且有一个正值，而回调在 `timeout` 毫秒过后还没有被调用，那么回调任务将放入事件循环中排队，即使这样做有可能对性能产生负面影响。
+
+### 返回值
+
+<br/>
+
+一个 `ID`，可以把它传入 `Window.cancelIdleCallback()` 方法来结束回调。
