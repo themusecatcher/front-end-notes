@@ -317,6 +317,8 @@ prop in object
 
 ### 返回值
 
+<br/>
+
 如果指定的属性存在于给定的对象中，则返回 `true`；否则返回 `false`。
 
 ### 示例
@@ -381,6 +383,8 @@ trees[3] = undefined
 
 #### 继承属性
 
+<br/>
+
 如果一个属性是从原型链上继承来的，`in` 运算符也会返回 `true`。
 
 ```js
@@ -417,7 +421,7 @@ const obj = { [uniqueKey]: "value" }
 console.log(uniqueKey in obj); // true
 ```
 
-#### 与 hasOwnProperty 的区别
+#### 与 `hasOwnProperty` 的区别
 
 <br/>
 
