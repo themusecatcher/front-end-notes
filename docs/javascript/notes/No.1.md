@@ -5,10 +5,23 @@
 ## 数组去重
 
 ```js
-var values = [1, 1, 2, 3, 3, 4]
-var mySet = new Set(values)
-values = [...mySet]
-console.log(values) // [1, 2, 3, 4]
+const arr = [1, 2, 3, 4, 5, 2, 5, 6, 7, 8, 3, 9]
+console.log('使用set除重:', [...new Set(arr)])
+const res = arr.filter(item => arr.indexOf(item) === -1)
+console.log('filter去重:', res)
+function removingDuplicate (arr) {
+  const len = arr.length
+  let i = 0
+  const res = []
+  while (i < len) {
+    if (!res.includes(arr[i])) {
+      res.push(arr[i])
+    }
+    i++
+  }
+  return res
+}
+console.log('removingDuplicate:', removingDuplicate(arr))
 ```
 
 ## 监听滚动条变化
