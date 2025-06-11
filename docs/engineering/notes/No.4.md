@@ -229,7 +229,7 @@ class Person {
 
 微服务通过解耦和自治提升系统灵活性与可维护性，但需应对分布式系统的复杂性。成功实施依赖强大的基础设施（如Kubernetes）、成熟的DevOps实践及团队协作模式。适用于中大型项目，小型项目需权衡复杂度与收益。
 
-## [垃圾回收](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Memory_management#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6)与内存泄漏
+## [垃圾回收 Garbage Collection](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Memory_management#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6)与内存泄漏
 
 ### 一、`JavaScript` 的垃圾回收（GC）
 
@@ -252,6 +252,10 @@ class Person {
   - 每个对象维护一个引用计数器，记录有多少个其他对象或变量引用着它。
   - 当引用计数变为 `0` 时，对象会被立即回收。
   - **致命缺点：** 无法处理循环引用（`A` 引用 `B`，`B` 引用 `A`，即使它们都已不被外界引用，计数也永远不会为 `0`，导致内存泄露）。现代引擎已不再将其作为主要算法。
+
+    ::: tip 备注
+    现代 JavaScript 引擎不再使用引用计数进行垃圾回收。
+    :::
 
 3. **分代收集（Generational Collection）**
   - **核心观察：** 绝大多数对象的生命周期都非常短（“朝生夕死”）；存活时间长的对象往往存活时间非常长。
