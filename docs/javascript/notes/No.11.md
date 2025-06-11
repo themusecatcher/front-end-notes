@@ -4,6 +4,10 @@
 
 ## [WeakSet()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) & [WeakMap()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)
 
+::: tip 备注
+对于 `WeakSet` 和 `WeakMap`，垃圾回收机制不考虑其弱引用，但垃圾回收的时机是不可预测的，所以如果打印或遍历，则可能会出现结果不一致的情况。这也是为什么它们均没有 `size` 和 `forEach` 属性（即不可枚举、无法遍历）的原因。
+:::
+
 `WeakSet` 结构与 `Set` 类似，也是不重复的值的集合，具备:
 
 - `WeakSet.prototype.add(value)` ：向 `WeakSet` 实例添加一个新成员。
