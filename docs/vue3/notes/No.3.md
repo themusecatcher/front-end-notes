@@ -268,7 +268,7 @@ eventBus.emit('greet', 'Bob')   // 无输出
 
 `Vue2` 和 `Vue3` 在响应式依赖收集的实现上有显著差异，主要源于底层响应式系统的重构。
 
-### **Vue2 的响应式依赖收集（基于 `Object.defineProperty`）**
+### **Vue2 的响应式依赖收集（基于 [`Object.defineProperty`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)）**
 
 #### **1. 数据劫持**
 
@@ -346,7 +346,7 @@ eventBus.emit('greet', 'Bob')   // 无输出
   - 另外，需重写数组方法（如 `push`、`pop`）来触发更新。
 - **性能开销**：递归初始化所有属性的 `getter/setter`，数据量大时影响性能。
 
-### **Vue3 的响应式依赖收集（基于 `Proxy`）**
+### **Vue3 的响应式依赖收集（基于 [`Proxy`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy)）**
 
 #### **1. 数据劫持**
 
