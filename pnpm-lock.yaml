@@ -15,8 +15,8 @@ importers:
         specifier: ^3.5.16
         version: 3.5.16
       vue-amazing-ui:
-        specifier: ^2.4.12
-        version: 2.4.12(vue@3.5.16)
+        specifier: ^2.4.14
+        version: 2.4.14(vue@3.5.16)
       vue3-lazyload:
         specifier: ^0.3.8
         version: 0.3.8(vue@3.5.16)
@@ -996,8 +996,8 @@ packages:
       postcss:
         optional: true
 
-  vue-amazing-ui@2.4.12:
-    resolution: {integrity: sha512-HY6pEdrqPaa+fPZ64Ou60dDE1cX1X8GuzLoYXOyN9frxuqjXDqVz887a4svAJ92sZ/4aNktjXLN2v4YsnADR1Q==}
+  vue-amazing-ui@2.4.14:
+    resolution: {integrity: sha512-Wx0pHJwVGB70s6gHR3Zl4QJFWVc+RjJaixd1B0Jk1qY4Fce6SE7xYmqTUHvrc/BdJjkaOBb/rYSswvdBD2e/Bw==}
 
   vue-demi@0.12.5:
     resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}
@@ -2036,7 +2036,7 @@ snapshots:
       - typescript
       - universal-cookie
 
-  vue-amazing-ui@2.4.12(vue@3.5.16):
+  vue-amazing-ui@2.4.14(vue@3.5.16):
     dependencies:
       '@ant-design/colors': 8.0.0
       '@ctrl/tinycolor': 4.1.0
