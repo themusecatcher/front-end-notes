@@ -360,6 +360,15 @@ export default defineConfig({
               link: '/css/notes/No.9'
             }
           ]
+        },
+        {
+          text: 'SASS Notes',
+          items: [
+            {
+              text: 'No.1',
+              link: '/css/sass/No.1'
+            }
+          ]
         }
       ],
       '/vue2/': [
