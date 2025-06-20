@@ -5,5 +5,5 @@
 ### 参考文档：
 
 - [CSS](https://developer.mozilla.org/zh-CN/docs/Web/CSS)
-- [SASS](https://www.sass.hk/)
+- [SASS](https://sass-lang.com/documentation/)
 - [LESS](https://lesscss.cn/)
