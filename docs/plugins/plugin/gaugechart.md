@@ -78,16 +78,14 @@ const props = withDefaults(defineProps<Props>(), {
 const chartWidth = computed(() => {
   if (typeof props.width === 'number') {
     return `${props.width}px`
-  } else {
-    return props.width
   }
+  return props.width
 })
 const chartHeight = computed(() => {
   if (typeof props.height === 'number') {
     return `${props.height}px`
-  } else {
-    return props.height
   }
+  return props.height
 })
 onMounted(() => {
   initChart() // 初始化图标示例
@@ -415,7 +413,6 @@ function initChart () {
 <script setup lang="ts">
 import pkg from '../../../package.json'
 import { ref, onMounted } from 'vue'
-
 const gauge = ref()
 const gaugeData = ref<any[]>([])
 onMounted(() => {
