@@ -412,9 +412,19 @@ defineExpose({
 
 <script setup lang="ts">
 import pkg from '../../../package.json'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watchEffect } from 'vue'
 const gauge = ref()
 const gaugeData = ref<any[]>([])
+const gaugeData2 = ref<any[]>([
+  {
+    value: 80,
+    name: 'Rating'
+  }
+])
+const currentValue = ref<number>(80)
+watchEffect(() => {
+  gaugeData2.value[0].value = currentValue.value
+})
 onMounted(() => {
   getGaugeData()
 })
@@ -468,6 +478,35 @@ function getGaugeData () {
 </script>
 <template>
   <GaugeChart :gaugeData="gaugeData" :height="500" />
+</template>
+```
+
+:::
+
+## 与动态数值双向绑定展示
+
+<GaugeChart :gaugeData="gaugeData2" :height="500" />
+<Slider v-model:value="currentValue" />
+
+::: details Show Code
+
+```vue
+<script setup lang="ts">
+import { ref, watchEffect } from 'vue'
+const gaugeData = ref<any[]>([
+  {
+    value: 0,
+    name: 'Rating'
+  }
+])
+const currentValue = ref<number>(80)
+watchEffect(() => {
+  gaugeData.value[0].value = currentValue.value
+})
+</script>
+<template>
+  <GaugeChart :gaugeData="gaugeData" :height="500" />
+  <Slider v-model:value="currentValue" />
 </template>
 ```
 
