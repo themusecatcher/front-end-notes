@@ -54,6 +54,7 @@ const props = withDefaults(defineProps<Props>(), {
   themeColor: '#1677FF',
   edgeShape: 'curve'
 })
+const emit = defineEmits(['clickNode'])
 const chartWidth = computed(() => {
   if (typeof props.width === 'number') {
     return `${props.width}px`
@@ -65,9 +66,6 @@ const chartHeight = computed(() => {
     return `${props.height}px`
   }
   return props.height
-})
-onMounted(() => {
-  initChart() // 初始化图标示例
 })
 watch(
   () => props.treeData,
@@ -93,41 +91,9 @@ watch(
     flush: 'post'
   }
 )
-// const loadingConfig = {
-  // text: 'loading',
-  // color: '#c23531',
-  // textColor: '#000',
-  // maskColor: 'rgba(255, 255, 255, 0.8)',
-  // zlevel: 0,
-  // 字体大小。从 `v4.8.0` 开始支持。
-  // fontSize: 12,
-  // 是否显示旋转动画（spinner）。从 `v4.8.0` 开始支持。
-  // showSpinner: true,
-  // 旋转动画（spinner）的半径。从 `v4.8.0` 开始支持。
-  // spinnerRadius: 20,
-  // 旋转动画（spinner）的线宽。从 `v4.8.0` 开始支持。
-  // lineWidth: 5,
-  // 字体粗细。从 `v5.0.1` 开始支持。
-  // fontWeight: 'normal',
-  // 字体风格。从 `v5.0.1` 开始支持。
-  // fontStyle: 'normal',
-  // 字体系列。从 `v5.0.1` 开始支持。
-  // fontFamily: 'sans-serif'
-// }
-function showLoading (config: any) {
-  treeChart.value.showLoading('default', { text: '', color: props.themeColor, ...config }) // 显示加载动画效果
-}
-function hideLoading () {
-  treeChart.value.hideLoading() // 隐藏动画加载效果
-}
-defineExpose({
-  showLoading,
-  hideLoading
+onMounted(() => {
+  initChart() // 初始化图标示例
 })
-const emit = defineEmits(['clickNode'])
-function onClick (e: any) {
-  emit('clickNode', e.data)
-}
 function initChart () {
   // 等价于使用 Canvas 渲染器（默认）：echarts.init(containerDom, null, { renderer: 'canvas' })
   treeChart.value = echarts.init(chart.value)
@@ -276,6 +242,40 @@ function initChart () {
   // 监听树图节点的点击事件
   treeChart.value.on('click', onClick)
 }
+function onClick (e: any) {
+  emit('clickNode', e.data)
+}
+// const loadingConfig = {
+  // text: 'loading',
+  // color: '#c23531',
+  // textColor: '#000',
+  // maskColor: 'rgba(255, 255, 255, 0.8)',
+  // zlevel: 0,
+  // 字体大小。从 `v4.8.0` 开始支持。
+  // fontSize: 12,
+  // 是否显示旋转动画（spinner）。从 `v4.8.0` 开始支持。
+  // showSpinner: true,
+  // 旋转动画（spinner）的半径。从 `v4.8.0` 开始支持。
+  // spinnerRadius: 20,
+  // 旋转动画（spinner）的线宽。从 `v4.8.0` 开始支持。
+  // lineWidth: 5,
+  // 字体粗细。从 `v5.0.1` 开始支持。
+  // fontWeight: 'normal',
+  // 字体风格。从 `v5.0.1` 开始支持。
+  // fontStyle: 'normal',
+  // 字体系列。从 `v5.0.1` 开始支持。
+  // fontFamily: 'sans-serif'
+// }
+function showLoading (config: any) {
+  treeChart.value.showLoading('default', { text: '', color: props.themeColor, ...config }) // 显示加载动画效果
+}
+function hideLoading () {
+  treeChart.value.hideLoading() // 隐藏动画加载效果
+}
+defineExpose({
+  showLoading,
+  hideLoading
+})
 </script>
 <template>
   <div ref="chart" :style="`width: ${chartWidth}; height: ${chartHeight};`"></div>
