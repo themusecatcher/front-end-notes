@@ -266,3 +266,151 @@ type G = ToArray<string | number> // (string | number)[]
 1. **联合类型分配律**：条件类型中 `T extends U` 的 `T` 是联合类型时会自动展开。
 2. **类型兼容性**：`A extends B` 表示 `A` 可赋值给 `B`，而非严格继承。
 3. **递归深度**：过度递归可能导致类型检查性能问题。
+
+## 条件类型（Conditional Types）
+
+`TypeScript` 的条件类型（**Conditional Types**）是一种强大的类型操作工具，它允许你根据类型关系动态选择类型结果（类似 `JavaScript` 的三元表达式）。
+
+### 核心语法
+
+```ts
+T extends U ? X : Y
+```
+
+### 核心概念
+
+1. **`extends` 关键字**  
+   检查类型 `T` 是否可赋值给类型 `U`（即 `T` 是 `U` 的子类型）。
+2. **结果选择**  
+   - 若 `T extends U` 成立，返回类型 `X`
+   - 否则返回类型 `Y`
+
+### 基础用法示例
+
+```ts
+// 判断 T 是否为 string 类型
+type IsString<T> = T extends string ? true : false
+
+type A = IsString<"hello"> // true
+type B = IsString<number>  // false
+```
+
+### 关键特性解析
+
+#### 1. 分布式条件类型（Distributive Conditional Types）
+
+<br/>
+
+当 `T` 是联合类型时，条件类型会**自动分发**到每个成员：
+
+```ts
+type ToArray<T> = T extends any ? T[] : never
+
+// 分发过程：(string | number) → string[] | number[]
+type Result = ToArray<string | number> // string[] | number[]
+```
+
+#### 2. 阻止分发
+
+<br/>
+
+用 `[]` 包裹类型可禁用分发：
+
+```ts
+type NoDistribute<T> = [T] extends [any] ? T[] : never
+
+// 不分发：(string | number)[]
+type Result = NoDistribute<string | number> // (string | number)[]
+```
+
+#### 3. `infer` 关键字（类型推断）
+
+<br/>
+
+在 `extends` 中动态**推断中间类型**：
+
+```ts
+// 获取函数返回值类型
+type ReturnType<T> = T extends (...args: any) => infer R ? R : never
+
+type Fn = () => number
+type T = ReturnType<Fn> // number
+```
+
+### 实用场景示例
+
+#### 1. 类型过滤
+
+```ts
+// 从 T 中过滤掉 U 类型的成员
+type Exclude<T, U> = T extends U ? never : T
+
+type T = Exclude<"a" | "b" | "c", "a"> // "b" | "c"
+```
+
+#### 2. 提取函数参数
+
+```ts
+type Parameters<T> = T extends (...args: infer P) => any ? P : never
+
+type Fn = (a: string, b: number) => void
+type Params = Parameters<Fn> // [a: string, b: number]
+```
+
+#### 3. 递归类型处理
+
+```ts
+// 递归展开 Promise 的最终类型
+type UnwrapPromise<T> = T extends Promise<infer U> 
+  ? UnwrapPromise<U> 
+  : T
+
+type T = UnwrapPromise<Promise<Promise<string>>> // string
+```
+
+### 进阶技巧
+
+#### 结合映射类型
+
+```ts
+// 将对象属性转为可选（跳过函数属性）
+type OptionalProps<T> = {
+  [K in keyof T]: T[K] extends Function ? T[K] : T[K] | undefined
+}
+
+type Obj = { id: number; log: () => void }
+type OptionalObj = OptionalProps<Obj>
+// { id: number | undefined; log: () => void }
+```
+
+#### 类型互斥约束
+
+```ts
+// 确保 T 和 U 不能同时存在
+type Without<T, U> = T extends U ? never : T
+type XOR<T, U> = Without<T | U, T & U>
+
+type A = { a: string }
+type B = { b: number }
+type C = XOR<A, B> // A | B，但不能同时有 a 和 b
+```
+
+### 常见内置条件类型
+
+<br/>
+
+`TypeScript` 内置了基于条件类型的工具类型：
+
+- `Exclude<T, U>`：从 `T` 中移除 `U` 的子类型
+- `Extract<T, U>`：从 `T` 中提取 `U` 的子类型
+- `NonNullable<T>`：排除 `null` 和 `undefined`
+- `ReturnType<T>`：获取函数返回值类型
+- `Parameters<T>`：获取函数参数类型
+
+### 注意事项
+
+1. **分发条件仅在裸类型参数（`T`）时触发**，包裹后（如 `[T]`）会禁用分发。
+2. 条件类型常用于**类型推导**和**复杂类型约束**，过度使用可能降低可读性。
+3. 结合 `infer` 可实现类型模式匹配，是高级类型编程的核心。
+
+通过灵活组合条件类型、`infer` 和映射类型，你可以构建出高度动态且类型安全的 `TypeScript` 类型系统。
