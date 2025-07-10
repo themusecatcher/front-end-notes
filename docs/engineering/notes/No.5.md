@@ -234,3 +234,99 @@ const props = defineProps({
    ```
 
 理解这三种状态的区别和协作方式，能够帮助开发者构建更高效、更动态的 `Vue` 应用，同时充分利用 `Sass` 的强大功能和 `CSS` 变量的灵活性。
+
+## `husky` & `lint-staged`
+
+`Husky` 和 `Lint-Staged` 是前端开发中用于自动化代码质量控制的工具组合，主要通过 `Git` 钩子（`Git Hooks`）机制实现提交前的代码检查和格式化。
+
+### ⚙️ **1. Husky：Git 钩子管理工具**
+
+- **本质**：`Husky` 是一个 `Node.js` 包，用于简化 `Git Hooks` 的管理和使用。
+- **作用**：  
+  `Husky` 允许开发者在 `Git` 操作的各个阶段（如提交<`commit`>、推送<`push`>）触发自定义脚本。常用钩子包括：
+  - `pre-commit`：在 `git commit` 命令执行前，但在用户输入提交信息后触发。常用于运行测试或代码检查。
+  - `commit-msg`：在用户输入提交信息后触发，用于校验提交信息的格式。（例如结合 `Commitlint` 规范提交信息）。
+  - `pre-push`: 在 `git push` 命令执行前触发，常用于运行更全面的测试。
+  - （还有其他很多钩子，如 `pre-rebase`, `post-merge`, `post-checkout` 等）
+- **工作原理**：  
+  安装后，`Husky` 会在项目的 `.git/hooks` 目录中注入钩子脚本。当开发者执行 `Git` 操作（如 `git commit`）时，自动触发预设任务（如执行 `ESLint` 或单元测试）。
+
+### 📁 **2. Lint-Staged：针对暂存区文件的校验工具**
+
+- **本质**：`Lint-Staged` 也是一个 `Node.js` 包。
+- **作用**：  
+  仅对 **Git 暂存区（Staged Files）** 中的文件运行指定命令（如 `ESLint`、`Prettier`）。避免全量检查整个项目，大幅提升效率。
+- **典型场景**：  
+  提交前自动修复代码风格（`Prettier`）、检测语法错误（`ESLint`），并将修复后的文件重新加入暂存区。
+
+### 🔗 **3. 协作流程：`Husky` + `Lint-Staged`**
+
+<br/>
+
+两者结合可实现 **提交前的自动化流水线**，构建了一个强大的、自动化的代码质量门禁系统：
+
+#### 流程详解
+
+1. 开发者修改代码，并使用 `git add` 将想要提交的文件放入暂存区 (`Staging Area`)。
+2. 开发者执行 `git commit`。
+3. `Git` 触发 `pre-commit` 钩子。
+4. `Husky` 检测到配置好的 `pre-commit` 钩子（通常是一个指向 `lint-staged` 命令的脚本）。
+5. `Husky` 执行 `lint-staged` 命令。
+6. `Lint-Staged` 开始工作：
+  - 获取当前 `Git` 暂存区中的所有文件。
+  - 根据配置文件（通常是 `package.json` 中的 `lint-staged` 字段或 `.lintstagedrc` 文件），针对匹配的文件执行配置好的命令序列（例如 `eslint --fix`, `prettier --write`）。
+  - 如果这些命令成功执行（例如，`ESLint` 成功修复了所有可自动修复的问题，或者没有发现问题）：
+    - 格式化/修复后的文件会被修改。
+    - 命令序列通常包含 `git add`，将这些修复后的改动重新添加回暂存区。
+    - `Lint-Staged` 以成功状态（`0`）退出。
+
+  - 如果命令执行失败（例如，`ESLint` 发现了无法自动修复的错误）：
+    - `Lint-Staged` 会输出错误信息，指出哪个文件哪行代码有问题。
+    - `Lint-Staged` 以失败状态（`非0`）退出。
+7. `Husky` 接收到 `Lint-Staged` 的退出状态：
+  - 如果为 `0` (成功)：`Husky` 允许 `git commit` 流程继续进行，最终创建提交。提交中包含了原始修改 以及 `Lint-Staged` 自动修复后的结果。
+  - 如果为 `非0` (失败)：`Husky` 终止 `git commit` 流程，提交被阻止。开发者需要根据错误提示修复代码，然后再次 `git add` 并重试 `git commit`。
+
+### ⚡ **4. 配置示例（package.json）**
+
+```json
+{
+  "scripts": {
+    "prepare": "husky",  // 初始化 Husky 钩子
+    "lint-staged": "lint-staged" // 触发 Lint-Staged
+  },
+  "lint-staged": {
+    "*.{js,ts,vue}": [
+      "eslint --fix",    // 自动修复 ESLint 错误
+      "prettier --write", // 格式化代码
+      "git add"          // 重新加入暂存区
+    ]
+  },
+  "devDependencies": {
+    "husky": "^9.0.0",
+    "lint-staged": "^13.0.0"
+  }
+}
+```
+
+**注**：需通过命令 `npx husky add .husky/pre-commit "npm run lint-staged"` 绑定钩子。
+
+### ✅ **5. 核心优势**
+
+- **提升代码质量**：强制在提交前修复错误和统一风格，避免低级错误进入仓库。
+- **减少等待时间**：仅检查改动文件，比全量扫描快 `10` 倍以上。
+- **团队协作标准化**：统一规范，降低 `Code Review` 成本。
+- **无缝整合生态**：支持 `ESLint`、`Prettier`、`Stylelint` 等主流工具。
+
+### 🛠️ **6. 扩展应用**
+
+- **提交信息规范**：结合 `commit-msg` 钩子 + `Commitlint`，强制提交信息符合约定式格式（如 `feat: add login`）。
+- **单元测试**：对改动文件运行 `Jest` 测试（配置 `lint-staged` 执行 `jest --findRelatedTests`）。
+
+### 💎 **总结**
+
+- `Husky`： 是 `Git Hooks` 的管家。它让你能轻松定义在 `Git` 操作（尤其是提交）的哪个阶段触发什么任务，并将这些配置纳入版本控制，实现团队共享。
+
+- `Lint-Staged`： 是暂存区文件的精准质检员。它只对你 `git add` 过、准备提交的文件运行代码检查和格式化命令，速度快且只关注相关改动。
+
+- 组合使用： `Husky` 在 `pre-commit` 钩子中调用 `Lint-Staged`，是构建现代前端（及其他语言）项目自动化、高效、强制性代码质量保障流程的基石。它们显著提升了代码一致性、减少了低级错误、加速了 `Code Review` 过程，并使开发者能更专注于逻辑编写而非格式问题。
