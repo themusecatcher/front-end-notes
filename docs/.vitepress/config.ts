@@ -367,6 +367,10 @@ export default defineConfig({
             {
               text: 'No.1',
               link: '/css/sass/No.1'
+            },
+            {
+              text: 'No.2',
+              link: '/css/sass/No.2'
             }
           ]
         }
