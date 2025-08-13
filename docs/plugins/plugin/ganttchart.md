@@ -207,10 +207,7 @@ function buildOption() {
         color: 'rgba(0, 0, 0, 0.88)',
         fontWeight: 500,
         fontSize: 14,
-        lineHeight: 22,
-        width: 80,
-        overflow: 'truncate',
-        ellipsis: '...'
+        lineHeight: 22
       }
     },
     series: props.statusMap.map((status) => ({
