@@ -22,7 +22,7 @@ import {
   makeSeriesEncodeForAxisCoordSys,
   normalizeToArray,
   shouldOmitUnusedDimensions
-} from "./chunk-BWNYY6KT.js";
+} from "./chunk-44ILSEBB.js";
 import {
   PathProxy_default,
   Path_default,
@@ -45,9 +45,9 @@ import {
   quadraticProjectPoint,
   retrieve,
   retrieve2
-} from "./chunk-PS4J4BCH.js";
+} from "./chunk-RPMWI4XR.js";
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/data/helper/createDimensions.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/data/helper/createDimensions.js
 function createDimensions(source, opt) {
   return prepareSeriesDataSchema(source, opt).dimensions;
 }
@@ -252,7 +252,7 @@ function genCoordDimName(name, map2, fromZero) {
   return name;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/model/referHelper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/model/referHelper.js
 var CoordSysInfo = (
   /** @class */
   /* @__PURE__ */ function() {
@@ -354,13 +354,28 @@ var fetchers = {
         }
       }
     });
+  },
+  matrix: function(seriesModel, result, axisMap, categoryAxisMap) {
+    var matrixModel = seriesModel.getReferringComponents("matrix", SINGLE_REFERRING).models[0];
+    if (true) {
+      if (!matrixModel) {
+        throw new Error("matrix coordinate system should be specified.");
+      }
+    }
+    result.coordSysDims = ["x", "y"];
+    var xModel = matrixModel.getDimensionModel("x");
+    var yModel = matrixModel.getDimensionModel("y");
+    axisMap.set("x", xModel);
+    axisMap.set("y", yModel);
+    categoryAxisMap.set("x", xModel);
+    categoryAxisMap.set("y", yModel);
   }
 };
 function isCategory(axisModel) {
   return axisModel.get("type") === "category";
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/helper/createSeriesData.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/createSeriesData.js
 function getCoordSysDimDefs(seriesModel, coordSysInfo) {
   var coordSysName = seriesModel.get("coordinateSystem");
   var registeredCoordSys = CoordinateSystem_default.get(coordSysName);
@@ -466,7 +481,7 @@ function firstDataNotNull(arr) {
 }
 var createSeriesData_default = createSeriesData;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/label/labelGuideHelper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/label/labelGuideHelper.js
 var PI2 = Math.PI * 2;
 var CMD = PathProxy_default.CMD;
 var DEFAULT_SEARCH_SPACE = ["top", "right", "bottom", "left"];
@@ -904,4 +919,4 @@ export {
   setLabelLineStyle,
   getLabelLineStatesModels
 };
-//# sourceMappingURL=chunk-CDM32NO6.js.map
+//# sourceMappingURL=chunk-XQEX2FZB.js.map

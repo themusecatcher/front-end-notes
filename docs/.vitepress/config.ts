@@ -580,6 +580,10 @@ export default defineConfig({
             {
               text: '树图 TreeChart',
               link: '/plugins/plugin/treechart'
+            },
+            {
+              text: '甘特图 GanttChart',
+              link: '/plugins/plugin/ganttchart'
             }
           ]
         }

@@ -2,11 +2,14 @@
 
 <BackTop />
 
+> [监听DOM尺寸 useResizeObserver](https://themusecatcher.github.io/vue-amazing-ui/utils/functions/resize-observer.html)
+
 ::: details Show Source Code
 
 ```vue
 <script setup lang="ts">
-import { ref, onMounted, watch, computed } from 'vue'
+import { ref, useTemplateRef, onMounted, onBeforeUnmount, watch, computed } from 'vue'
+import { useResizeObserver } from '../utils'
 /*
   按需引入
 */
@@ -32,8 +35,9 @@ echarts.use([GaugeChart, TooltipComponent, CanvasRenderer])
   你只需要使用 svg 渲染模式，打包的结果中就不会再包含无需使用的 CanvasRenderer 模块
 */
 
-const chart = ref()
-const gaugeChart = ref()
+const chartRef = useTemplateRef('chartRef')
+const myChart = ref<any>()
+let option: any
 const gradient = ref({ // 自定义渐变色
         type: 'linear',
         x: 0,
@@ -56,7 +60,6 @@ const gradient = ref({ // 自定义渐变色
         ],
         global: false // 缺省为 false
       })
-var option: any
 
 interface Gauge {
   name: string // 数据项名称
@@ -92,18 +95,16 @@ watch(
   (to) => {
     // 监听并更新图例数据
     option.series[0].data = to
-    gaugeChart.value.setOption(option)
+    myChart.value.setOption(option, true)
   },
   {
     deep: true
   }
 )
 watch(
-  () => [props.width, props.height, props.themeColor],
+  () => [props.themeColor],
   () => {
-    if (gaugeChart.value) {
-      gaugeChart.value.dispose() // 销毁实例
-    }
+    myChart.value && myChart.value.dispose() // 销毁实例
     initChart() // 重新初始化实例
   },
   {
@@ -111,12 +112,30 @@ watch(
     flush: 'post'
   }
 )
-onMounted(() => {
-  initChart() // 初始化图标示例
-})
+// const loadingConfig = {
+  // text: 'loading',
+  // color: '#c23531',
+  // textColor: '#000',
+  // maskColor: 'rgba(255, 255, 255, 0.8)',
+  // zlevel: 0,
+  // 字体大小。从 `v4.8.0` 开始支持。
+  // fontSize: 12,
+  // 是否显示旋转动画（spinner）。从 `v4.8.0` 开始支持。
+  // showSpinner: true,
+  // 旋转动画（spinner）的半径。从 `v4.8.0` 开始支持。
+  // spinnerRadius: 20,
+  // 旋转动画（spinner）的线宽。从 `v4.8.0` 开始支持。
+  // lineWidth: 5,
+  // 字体粗细。从 `v5.0.1` 开始支持。
+  // fontWeight: 'normal',
+  // 字体风格。从 `v5.0.1` 开始支持。
+  // fontStyle: 'normal',
+  // 字体系列。从 `v5.0.1` 开始支持。
+  // fontFamily: 'sans-serif'
+// }
 function initChart () {
   // 等价于使用 Canvas 渲染器（默认）：echarts.init(containerDom, null, { renderer: 'canvas' })
-  gaugeChart.value = echarts.init(chart.value)
+  myChart.value = echarts.init(chartRef.value as HTMLElement)
   option = {
     tooltip: { // 提示框浮层设置
       trigger: 'item',
@@ -369,51 +388,52 @@ function initChart () {
       }
     ]
   }
-  option && gaugeChart.value.setOption(option)
+  myChart.value.setOption(option)
 }
-// const loadingConfig = {
-  // text: 'loading',
-  // color: '#c23531',
-  // textColor: '#000',
-  // maskColor: 'rgba(255, 255, 255, 0.8)',
-  // zlevel: 0,
-  // 字体大小。从 `v4.8.0` 开始支持。
-  // fontSize: 12,
-  // 是否显示旋转动画（spinner）。从 `v4.8.0` 开始支持。
-  // showSpinner: true,
-  // 旋转动画（spinner）的半径。从 `v4.8.0` 开始支持。
-  // spinnerRadius: 20,
-  // 旋转动画（spinner）的线宽。从 `v4.8.0` 开始支持。
-  // lineWidth: 5,
-  // 字体粗细。从 `v5.0.1` 开始支持。
-  // fontWeight: 'normal',
-  // 字体风格。从 `v5.0.1` 开始支持。
-  // fontStyle: 'normal',
-  // 字体系列。从 `v5.0.1` 开始支持。
-  // fontFamily: 'sans-serif'
-// }
 function showLoading (config: any) {
-  gaugeChart.value.showLoading('default', { text: '', color: props.themeColor, ...config }) // 显示加载动画效果
+  myChart.value && myChart.value.showLoading('default', { text: '', color: props.themeColor, ...config }) // 显示加载动画效果
 }
 function hideLoading () {
-  gaugeChart.value.hideLoading() // 隐藏动画加载效果
+  myChart.value && myChart.value.hideLoading() // 隐藏动画加载效果
 }
+// 监听图表容器尺寸变化，重新初始化图表
+useResizeObserver(chartRef, () => {
+  requestAnimationFrame(() => {
+    myChart.value && myChart.value.resize()
+  })
+})
+onMounted(() => {
+  initChart()
+})
+onBeforeUnmount(() => {
+  myChart.value && myChart.value.dispose() // 销毁图表实例
+})
 defineExpose({
   showLoading,
   hideLoading
 })
 </script>
 <template>
-  <div ref="chart" :style="`width: ${chartWidth}; height: ${chartHeight};`"></div>
+  <div
+    class="chart-container"
+    ref="chartRef"
+    :style="`--chart-width: ${chartWidth}; --chart-height: ${chartHeight};`"
+  ></div>
 </template>
+<style lang="less" scoped>
+.chart-container {
+  width: var(--chart-width);
+  height: var(--chart-height);
+}
+</style>
 ```
 
 :::
 
 <script setup lang="ts">
 import pkg from '../../../package.json'
-import { ref, onMounted, watchEffect } from 'vue'
-const gauge = ref()
+import { useTemplateRef, ref, onMounted, watchEffect } from 'vue'
+const gaugeRef = useTemplateRef('gaugeRef')
 const gaugeData = ref<any[]>([])
 const gaugeData2 = ref<any[]>([
   {
@@ -429,14 +449,14 @@ onMounted(() => {
   getGaugeData()
 })
 function getGaugeData () {
-  gauge.value.showLoading()
+  gaugeRef.value.showLoading()
   setTimeout(() => {
     gaugeData.value.push({
       value: 80,
       name: 'Rating'
     })
-    gauge.value.hideLoading()
-  }, 3000)
+    gaugeRef.value.hideLoading()
+  }, 2000)
 }
 </script>
 
@@ -450,8 +470,8 @@ function getGaugeData () {
 ## 基本使用
 
 <GaugeChart
-  ref="gauge"
-  :gaugeData="gaugeData"
+  ref="gaugeRef"
+  :gauge-data="gaugeData"
   :height="500"
 />
 
@@ -459,25 +479,25 @@ function getGaugeData () {
 
 ```vue
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-const gauge = ref()
+import { ref, onMounted, useTemplateRef } from 'vue'
+const gaugeRef = useTemplateRef('gaugeRef')
 const gaugeData = ref<any[]>([])
 onMounted(() => {
   getGaugeData()
 })
 function getGaugeData () {
-  gauge.value.showLoading()
+  gaugeRef.value.showLoading()
   setTimeout(() => {
     gaugeData.value.push({
       value: 80,
       name: 'Rating'
     })
-    gauge.value.hideLoading()
-  }, 3000)
+    gaugeRef.value.hideLoading()
+  }, 2000)
 }
 </script>
 <template>
-  <GaugeChart :gaugeData="gaugeData" :height="500" />
+  <GaugeChart ref="gaugeRef" :gauge-data="gaugeData" :height="500" />
 </template>
 ```
 

@@ -4,7 +4,7 @@ import {
   getLabelLineStatesModels,
   setLabelLineStyle,
   updateLabelLinePoints
-} from "./chunk-CDM32NO6.js";
+} from "./chunk-XQEX2FZB.js";
 import {
   Arc_default,
   AxisModelCommonMixin,
@@ -79,6 +79,7 @@ import {
   makeInner,
   makePath,
   mergePath,
+  newLabelLayoutWithGeometry,
   nice,
   niceScaleExtent,
   normalizeCssArray,
@@ -86,13 +87,13 @@ import {
   parseDate,
   parseGeoJSON,
   parsePercent,
-  prepareLayoutList,
   quantile,
   quantity,
   quantityExponent,
   reformIntervals,
   registerAction,
   registerCoordinateSystem,
+  registerCustomSeries,
   registerLayout,
   registerLoading,
   registerLocale,
@@ -108,16 +109,17 @@ import {
   registerVisual,
   remRadian,
   resizePath,
+  restoreIgnore,
   round,
+  roundTime,
   setCanvasCreator,
-  shiftLayoutOnX,
-  shiftLayoutOnY,
+  shiftLayoutOnXY,
   throttle,
   toCamelCase,
   updateProps,
   use,
   version
-} from "./chunk-BWNYY6KT.js";
+} from "./chunk-44ILSEBB.js";
 import {
   BoundingRect_default,
   CompoundPath_default,
@@ -156,12 +158,12 @@ import {
   util_exports,
   vector_exports,
   zrender_exports
-} from "./chunk-PS4J4BCH.js";
+} from "./chunk-RPMWI4XR.js";
 import {
   __export
 } from "./chunk-DC5AMYBS.js";
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/export/api/helper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/export/api/helper.js
 var helper_exports = {};
 __export(helper_exports, {
   createDimensions: () => createDimensions,
@@ -201,7 +203,7 @@ function createTextStyle2(textStyleModel, opts) {
   return createTextStyle(textStyleModel, null, null, opts.state !== "normal");
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/export/api/number.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/export/api/number.js
 var number_exports = {};
 __export(number_exports, {
   MAX_SAFE_INTEGER: () => MAX_SAFE_INTEGER,
@@ -216,6 +218,7 @@ __export(number_exports, {
   nice: () => nice,
   numericToNumber: () => numericToNumber,
   parseDate: () => parseDate,
+  parsePercent: () => parsePercent,
   quantile: () => quantile,
   quantity: () => quantity,
   quantityExponent: () => quantityExponent,
@@ -224,14 +227,15 @@ __export(number_exports, {
   round: () => round
 });
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/export/api/time.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/export/api/time.js
 var time_exports = {};
 __export(time_exports, {
   format: () => format,
-  parse: () => parseDate
+  parse: () => parseDate,
+  roundTime: () => roundTime
 });
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/export/api/graphic.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/export/api/graphic.js
 var graphic_exports = {};
 __export(graphic_exports, {
   Arc: () => Arc_default,
@@ -268,7 +272,7 @@ __export(graphic_exports, {
   updateProps: () => updateProps
 });
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/export/api/format.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/export/api/format.js
 var format_exports = {};
 __export(format_exports, {
   addCommas: () => addCommas,
@@ -283,7 +287,7 @@ __export(format_exports, {
   truncateText: () => truncateText
 });
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/export/api/util.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/export/api/util.js
 var util_exports2 = {};
 __export(util_exports2, {
   bind: () => bind,
@@ -304,7 +308,7 @@ __export(util_exports2, {
   reduce: () => reduce
 });
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/export/api.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/export/api.js
 function extendComponentModel(proto) {
   var Model = Component_default.extend(proto);
   Component_default.registerClass(Model);
@@ -326,7 +330,7 @@ function extendChartView(proto) {
   return View;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/label/LabelManager.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/label/LabelManager.js
 function cloneArr(points) {
   if (points) {
     var newPoints = [];
@@ -377,7 +381,7 @@ var LabelManager = (
       this._labelList = [];
       this._chartViewList = [];
     };
-    LabelManager2.prototype._addLabel = function(dataIndex, dataType, seriesModel, label, layoutOption) {
+    LabelManager2.prototype._addLabel = function(dataIndex, dataType, seriesModel, label, layoutOptionOrCb) {
       var labelStyle = label.style;
       var hostEl = label.__hostTarget;
       var textConfig = hostEl.textConfig || {};
@@ -405,8 +409,8 @@ var LabelManager = (
         seriesModel,
         dataIndex,
         dataType,
-        layoutOption,
-        computedLayoutOption: null,
+        layoutOptionOrCb,
+        layoutOption: null,
         rect: labelRect,
         hostRect,
         // Label with lower priority will be hidden when overlapped
@@ -470,13 +474,13 @@ var LabelManager = (
         var hostEl = label.__hostTarget;
         var defaultLabelAttr = labelItem.defaultAttr;
         var layoutOption = void 0;
-        if (isFunction(labelItem.layoutOption)) {
-          layoutOption = labelItem.layoutOption(prepareLayoutCallbackParams(labelItem, hostEl));
+        if (isFunction(labelItem.layoutOptionOrCb)) {
+          layoutOption = labelItem.layoutOptionOrCb(prepareLayoutCallbackParams(labelItem, hostEl));
         } else {
-          layoutOption = labelItem.layoutOption;
+          layoutOption = labelItem.layoutOptionOrCb;
         }
         layoutOption = layoutOption || {};
-        labelItem.computedLayoutOption = layoutOption;
+        labelItem.layoutOption = layoutOption;
         var degreeToRadian = Math.PI / 180;
         if (hostEl) {
           hostEl.setTextConfig({
@@ -544,18 +548,24 @@ var LabelManager = (
     LabelManager2.prototype.layout = function(api) {
       var width = api.getWidth();
       var height = api.getHeight();
-      var labelList = prepareLayoutList(this._labelList);
+      var labelList = [];
+      each(this._labelList, function(inputItem) {
+        if (!inputItem.defaultAttr.ignore) {
+          labelList.push(newLabelLayoutWithGeometry({}, inputItem));
+        }
+      });
       var labelsNeedsAdjustOnX = filter(labelList, function(item) {
         return item.layoutOption.moveOverlap === "shiftX";
       });
       var labelsNeedsAdjustOnY = filter(labelList, function(item) {
         return item.layoutOption.moveOverlap === "shiftY";
       });
-      shiftLayoutOnX(labelsNeedsAdjustOnX, 0, width);
-      shiftLayoutOnY(labelsNeedsAdjustOnY, 0, height);
+      shiftLayoutOnXY(labelsNeedsAdjustOnX, 0, 0, width);
+      shiftLayoutOnXY(labelsNeedsAdjustOnY, 1, 0, height);
       var labelsNeedsHideOverlap = filter(labelList, function(item) {
         return item.layoutOption.hideOverlap;
       });
+      restoreIgnore(labelsNeedsHideOverlap);
       hideOverlap(labelsNeedsHideOverlap);
     };
     LabelManager2.prototype.processLabelsOverall = function() {
@@ -681,7 +691,7 @@ var LabelManager = (
 );
 var LabelManager_default = LabelManager;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/label/installLabelLayout.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/label/installLabelLayout.js
 var getLabelManager = makeInner();
 function installLabelLayout(registers) {
   registers.registerUpdateLifecycle("series:beforeupdate", function(ecModel, api, params) {
@@ -702,7 +712,7 @@ function installLabelLayout(registers) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/export/core.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/export/core.js
 use(installLabelLayout);
 export {
   Axis_default as Axis,
@@ -740,6 +750,7 @@ export {
   parseGeoJSON as parseGeoJson,
   registerAction,
   registerCoordinateSystem,
+  registerCustomSeries,
   registerLayout,
   registerLoading,
   registerLocale,

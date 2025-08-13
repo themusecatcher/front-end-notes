@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, watch, computed } from 'vue'
+import { ref, useTemplateRef, onMounted, onBeforeUnmount, watch, computed } from 'vue'
+import { useResizeObserver } from '../utils'
 /*
   按需引入
 */
@@ -24,9 +25,9 @@ echarts.use([TreeChart, TooltipComponent, CanvasRenderer])
   所以需要选择引入 CanvasRenderer 或者 SVGRenderer 作为渲染器。这样的好处是假如
   你只需要使用 svg 渲染模式，打包的结果中就不会再包含无需使用的 CanvasRenderer 模块
 */
-const chart = ref()
-const treeChart = ref()
-var option: any
+const chartRef = useTemplateRef('chartRef')
+const myChart = ref<any>()
+let option: any
 
 interface Tree {
   name: string // 数据项名称
@@ -50,37 +51,30 @@ const props = withDefaults(defineProps<Props>(), {
 const chartWidth = computed(() => {
   if (typeof props.width === 'number') {
     return `${props.width}px`
-  } else {
-    return props.width
   }
+  return props.width
 })
 const chartHeight = computed(() => {
   if (typeof props.height === 'number') {
     return `${props.height}px`
-  } else {
-    return props.height
   }
-})
-onMounted(() => {
-  initChart() // 初始化图标示例
+  return props.height
 })
 watch(
   () => props.treeData,
   (to) => {
     // 监听并更新图例数据
     option.series[0].data = to
-    treeChart.value.setOption(option)
+    myChart.value.setOption(option, true)
   },
   {
     deep: true
   }
 )
 watch(
-  () => [props.width, props.height, props.themeColor, props.edgeShape],
+  () => [props.themeColor, props.edgeShape],
   () => {
-    if (treeChart.value) {
-      treeChart.value.dispose() // 销毁实例
-    }
+    myChart.value && myChart.value.dispose() // 销毁实例
     initChart() // 重新初始化实例
   },
   {
@@ -109,23 +103,13 @@ watch(
   // 字体系列。从 `v5.0.1` 开始支持。
   // fontFamily: 'sans-serif'
 // }
-function showLoading (config: any) {
-  treeChart.value.showLoading('default', { text: '', color: props.themeColor, ...config }) // 显示加载动画效果
-}
-function hideLoading () {
-  treeChart.value.hideLoading() // 隐藏动画加载效果
-}
-defineExpose({
-  showLoading,
-  hideLoading
-})
 const emit = defineEmits(['clickNode'])
 function onClick (e: any) {
   emit('clickNode', e.data)
 }
 function initChart () {
   // 等价于使用 Canvas 渲染器（默认）：echarts.init(containerDom, null, { renderer: 'canvas' })
-  treeChart.value = echarts.init(chart.value)
+  myChart.value = echarts.init(chartRef.value)
   option = {
     tooltip: { // 提示框浮层设置
       trigger: 'item',
@@ -267,11 +251,43 @@ function initChart () {
       }
     ]
   }
-  option && treeChart.value.setOption(option)
+  myChart.value.setOption(option)
   // 监听树图节点的点击事件
-  treeChart.value.on('click', onClick)
+  myChart.value.on('click', onClick)
 }
+function showLoading (config: any) {
+  myChart.value && myChart.value.showLoading('default', { text: '', color: props.themeColor, ...config }) // 显示加载动画效果
+}
+function hideLoading () {
+  myChart.value && myChart.value.hideLoading() // 隐藏动画加载效果
+}
+// 监听图表容器尺寸变化，重新初始化图表
+useResizeObserver(chartRef, () => {
+  requestAnimationFrame(() => {
+    myChart.value && myChart.value.resize()
+  })
+})
+onMounted(() => {
+  initChart()
+})
+onBeforeUnmount(() => {
+  myChart.value && myChart.value.dispose() // 销毁图表实例
+})
+defineExpose({
+  showLoading,
+  hideLoading
+})
 </script>
 <template>
-  <div ref="chart" :style="`width: ${chartWidth}; height: ${chartHeight};`"></div>
+  <div
+    class="chart-container"
+    ref="chartRef"
+    :style="`--chart-width: ${chartWidth}; --chart-height: ${chartHeight};`"
+  ></div>
 </template>
+<style lang="less" scoped>
+.chart-container {
+  width: var(--chart-width);
+  height: var(--chart-height);
+}
+</style>

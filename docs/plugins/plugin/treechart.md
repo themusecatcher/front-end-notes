@@ -2,11 +2,14 @@
 
 <BackTop />
 
+> [监听DOM尺寸 useResizeObserver](https://themusecatcher.github.io/vue-amazing-ui/utils/functions/resize-observer.html)
+
 ::: details Show Source Code
 
 ```vue
 <script setup lang="ts">
-import { ref, onMounted, watch, computed } from 'vue'
+import { ref, useTemplateRef, onMounted, onBeforeUnmount, watch, computed } from 'vue'
+import { useResizeObserver } from '../utils'
 /*
   按需引入
 */
@@ -31,9 +34,9 @@ echarts.use([TreeChart, TooltipComponent, CanvasRenderer])
   所以需要选择引入 CanvasRenderer 或者 SVGRenderer 作为渲染器。这样的好处是假如
   你只需要使用 svg 渲染模式，打包的结果中就不会再包含无需使用的 CanvasRenderer 模块
 */
-const chart = ref()
-const treeChart = ref()
-var option: any
+const chartRef = useTemplateRef('chartRef')
+const myChart = ref<any>()
+let option: any
 
 interface Tree {
   name: string // 数据项名称
@@ -54,7 +57,6 @@ const props = withDefaults(defineProps<Props>(), {
   themeColor: '#1677FF',
   edgeShape: 'curve'
 })
-const emit = defineEmits(['clickNode'])
 const chartWidth = computed(() => {
   if (typeof props.width === 'number') {
     return `${props.width}px`
@@ -72,18 +74,16 @@ watch(
   (to) => {
     // 监听并更新图例数据
     option.series[0].data = to
-    treeChart.value.setOption(option)
+    myChart.value.setOption(option, true)
   },
   {
     deep: true
   }
 )
 watch(
-  () => [props.width, props.height, props.themeColor, props.edgeShape],
+  () => [props.themeColor, props.edgeShape],
   () => {
-    if (treeChart.value) {
-      treeChart.value.dispose() // 销毁实例
-    }
+    myChart.value && myChart.value.dispose() // 销毁实例
     initChart() // 重新初始化实例
   },
   {
@@ -91,12 +91,34 @@ watch(
     flush: 'post'
   }
 )
-onMounted(() => {
-  initChart() // 初始化图标示例
-})
+// const loadingConfig = {
+  // text: 'loading',
+  // color: '#c23531',
+  // textColor: '#000',
+  // maskColor: 'rgba(255, 255, 255, 0.8)',
+  // zlevel: 0,
+  // 字体大小。从 `v4.8.0` 开始支持。
+  // fontSize: 12,
+  // 是否显示旋转动画（spinner）。从 `v4.8.0` 开始支持。
+  // showSpinner: true,
+  // 旋转动画（spinner）的半径。从 `v4.8.0` 开始支持。
+  // spinnerRadius: 20,
+  // 旋转动画（spinner）的线宽。从 `v4.8.0` 开始支持。
+  // lineWidth: 5,
+  // 字体粗细。从 `v5.0.1` 开始支持。
+  // fontWeight: 'normal',
+  // 字体风格。从 `v5.0.1` 开始支持。
+  // fontStyle: 'normal',
+  // 字体系列。从 `v5.0.1` 开始支持。
+  // fontFamily: 'sans-serif'
+// }
+const emit = defineEmits(['clickNode'])
+function onClick (e: any) {
+  emit('clickNode', e.data)
+}
 function initChart () {
   // 等价于使用 Canvas 渲染器（默认）：echarts.init(containerDom, null, { renderer: 'canvas' })
-  treeChart.value = echarts.init(chart.value)
+  myChart.value = echarts.init(chartRef.value)
   option = {
     tooltip: { // 提示框浮层设置
       trigger: 'item',
@@ -238,62 +260,60 @@ function initChart () {
       }
     ]
   }
-  option && treeChart.value.setOption(option)
+  myChart.value.setOption(option)
   // 监听树图节点的点击事件
-  treeChart.value.on('click', onClick)
+  myChart.value.on('click', onClick)
 }
-function onClick (e: any) {
-  emit('clickNode', e.data)
-}
-// const loadingConfig = {
-  // text: 'loading',
-  // color: '#c23531',
-  // textColor: '#000',
-  // maskColor: 'rgba(255, 255, 255, 0.8)',
-  // zlevel: 0,
-  // 字体大小。从 `v4.8.0` 开始支持。
-  // fontSize: 12,
-  // 是否显示旋转动画（spinner）。从 `v4.8.0` 开始支持。
-  // showSpinner: true,
-  // 旋转动画（spinner）的半径。从 `v4.8.0` 开始支持。
-  // spinnerRadius: 20,
-  // 旋转动画（spinner）的线宽。从 `v4.8.0` 开始支持。
-  // lineWidth: 5,
-  // 字体粗细。从 `v5.0.1` 开始支持。
-  // fontWeight: 'normal',
-  // 字体风格。从 `v5.0.1` 开始支持。
-  // fontStyle: 'normal',
-  // 字体系列。从 `v5.0.1` 开始支持。
-  // fontFamily: 'sans-serif'
-// }
 function showLoading (config: any) {
-  treeChart.value.showLoading('default', { text: '', color: props.themeColor, ...config }) // 显示加载动画效果
+  myChart.value && myChart.value.showLoading('default', { text: '', color: props.themeColor, ...config }) // 显示加载动画效果
 }
 function hideLoading () {
-  treeChart.value.hideLoading() // 隐藏动画加载效果
+  myChart.value && myChart.value.hideLoading() // 隐藏动画加载效果
 }
+// 监听图表容器尺寸变化，重新初始化图表
+useResizeObserver(chartRef, () => {
+  requestAnimationFrame(() => {
+    myChart.value && myChart.value.resize()
+  })
+})
+onMounted(() => {
+  initChart()
+})
+onBeforeUnmount(() => {
+  myChart.value && myChart.value.dispose() // 销毁图表实例
+})
 defineExpose({
   showLoading,
   hideLoading
 })
 </script>
 <template>
-  <div ref="chart" :style="`width: ${chartWidth}; height: ${chartHeight};`"></div>
+  <div
+    class="chart-container"
+    ref="chartRef"
+    :style="`--chart-width: ${chartWidth}; --chart-height: ${chartHeight};`"
+  ></div>
 </template>
+<style lang="less" scoped>
+.chart-container {
+  width: var(--chart-width);
+  height: var(--chart-height);
+}
+</style>
 ```
 
 :::
 
 <script setup lang="ts">
 import pkg from '../../../package.json'
-import { ref, onMounted } from 'vue'
-const tree = ref()
+import { useTemplateRef, ref, onMounted } from 'vue'
+const treeRef = useTemplateRef('treeRef')
 const treeData = ref<any[]>([])
 onMounted(() => {
   getTreeData()
 })
 function getTreeData () { // 模拟接口调用
-  tree.value.showLoading()
+  treeRef.value.showLoading()
   setTimeout(() => {
     treeData.value.push({
       name: 'tree',
@@ -343,8 +363,8 @@ function getTreeData () { // 模拟接口调用
         }
       ]
     })
-    tree.value.hideLoading()
-  }, 3000)
+    treeRef.value.hideLoading()
+  }, 1500)
 }
 function onClickNode (data: any) {
   console.log('data:', data)
@@ -361,8 +381,8 @@ function onClickNode (data: any) {
 ## 基本使用
 
 <TreeChart
-  ref="tree"
-  :treeData="treeData"
+  ref="treeRef"
+  :tree-data="treeData"
   :height="500"
   @click-node="onClickNode"
 />
@@ -371,14 +391,14 @@ function onClickNode (data: any) {
 
 ```vue
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-const tree = ref()
+import { useTemplateRef, ref, onMounted } from 'vue'
+const treeRef = useTemplateRef('treeRef')
 const treeData = ref<any[]>([])
 onMounted(() => {
   getTreeData()
 })
 function getTreeData () { // 模拟接口调用
-  tree.value.showLoading()
+  treeRef.value.showLoading()
   setTimeout(() => {
     treeData.value.push({
       name: 'tree',
@@ -428,8 +448,8 @@ function getTreeData () { // 模拟接口调用
         }
       ]
     })
-    tree.value.hideLoading()
-  }, 3000)
+    treeRef.value.hideLoading()
+  }, 1500)
 }
 function onClickNode (data: any) {
   console.log('data:', data)
@@ -437,8 +457,8 @@ function onClickNode (data: any) {
 </script>
 <template>
   <TreeChart
-    ref="tree"
-    :treeData="treeData"
+    ref="treeRef"
+    :tree-data="treeData"
     :height="500"
     @click-node="onClickNode"
   />

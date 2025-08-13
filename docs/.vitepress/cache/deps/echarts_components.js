@@ -5,6 +5,7 @@ import {
   LineDraw_default,
   RoamController_default,
   SymbolDraw_default,
+  View_default,
   VisualMapping_default,
   applyKeyframeAnimation,
   applyLeaveTransition,
@@ -12,7 +13,9 @@ import {
   axisModelCreator,
   collect,
   convertFromEC4CompatibleStyle,
+  getAxisBreakHelper,
   getAxisInfo,
+  injectThumbnailBridge,
   install,
   install2,
   install3,
@@ -30,7 +33,7 @@ import {
   sliderMove,
   stopPreviousKeyframeAnimationAndRestore,
   updateLeaveTo
-} from "./chunk-ULAW33UP.js";
+} from "./chunk-XIUHXDG4.js";
 import {
   AxisModelCommonMixin,
   Axis_default,
@@ -43,8 +46,10 @@ import {
   LOCATION_PARAMS,
   Line_default,
   LinearGradient_default,
+  ListIterator,
   MULTIPLE_REFERRING,
   Model_default,
+  OrdinalMeta_default,
   Ordinal_default,
   Polygon_default,
   Polyline_default,
@@ -59,16 +64,21 @@ import {
   SourceManager,
   Time_default,
   TooltipMarkupStyleCreator,
-  applyTransform,
+  WH,
+  XY,
+  applyTransform as applyTransform2,
   asc,
   box,
   buildTooltipMarkup,
+  calcZ2Range,
   clear,
+  clearTmpModel,
   compressBatches,
   contain,
   convertOptionIdName,
   convertToColorString,
   copyLayoutParams,
+  createBoxLayoutReference,
   createFilterComparator,
   createIcon,
   createOrUpdate,
@@ -84,11 +94,14 @@ import {
   ensureScaleRawExtentInfo,
   enterBlur,
   enterEmphasis,
+  error,
+  expandOrShrinkRect,
   findEventDispatcher,
   format,
   formatTpl,
   formatTplSimple,
   getAxisRawValue,
+  getBoxLayoutParams,
   getDataDimensionsOnAxis,
   getDataItemValue,
   getDecalFromPalette,
@@ -112,6 +125,7 @@ import {
   graphic_exports,
   groupTransition,
   inheritDefaultOption,
+  injectCoordSysByOption,
   isDimensionStacked,
   isNameSpecified,
   leaveBlur,
@@ -122,6 +136,8 @@ import {
   makeInternalComponentId,
   makePrintable,
   mappingToExists,
+  mathMax,
+  mathMin,
   mergeLayoutParam,
   mergePath,
   niceScaleExtent,
@@ -134,6 +150,7 @@ import {
   parseDate,
   parseFinder,
   parsePercent as parsePercent2,
+  parsePositionSizeOption,
   positionElement,
   preParseFinder,
   queryDataIndex,
@@ -141,24 +158,28 @@ import {
   reformIntervals,
   registerAction,
   registerInternalOptionCreator,
+  retrieveZInfo,
   setAsHighDownDispatcher,
   setItemVisualFromData,
   setLabelStyle,
   setStatesStylesFromModel,
   setTooltipConfig,
+  simpleCoordSysInjectionProvider,
   sizeCalculable,
   subPixelOptimizeLine,
   symbolBuildProxies,
   throwError,
   toCamelCase,
   toggleHoverEmphasis,
+  tokens_default,
   transformDirection,
+  traverseUpdateZ,
   unionAxisExtentFromData,
   updateProps,
   use,
   warn,
   windowOpen
-} from "./chunk-BWNYY6KT.js";
+} from "./chunk-44ILSEBB.js";
 import {
   BoundingRect_default,
   Displayable_default,
@@ -169,6 +190,7 @@ import {
   Text_default,
   __extends,
   addEventListener,
+  applyTransform,
   assert,
   bind,
   clone,
@@ -179,11 +201,13 @@ import {
   each,
   encodeHTML,
   env_default,
+  eqNaN,
   extend,
   filter,
   getBoundingRect,
   hasOwn,
   indexOf,
+  invert,
   isArray,
   isArrayLike,
   isDom,
@@ -199,6 +223,7 @@ import {
   mergeAll,
   mixin,
   modifyAlpha,
+  mul,
   noop,
   normalizeEvent,
   parse,
@@ -206,15 +231,18 @@ import {
   retrieve,
   retrieve2,
   rotate,
+  set,
   stop,
   stringify,
+  subPixelOptimize,
   transformLocalCoord,
+  transformLocalCoordClear,
   translate,
   trim
-} from "./chunk-PS4J4BCH.js";
+} from "./chunk-RPMWI4XR.js";
 import "./chunk-DC5AMYBS.js";
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/axisPointer/BaseAxisPointer.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/axisPointer/BaseAxisPointer.js
 var inner = makeInner();
 var clone2 = clone;
 var bind2 = bind;
@@ -490,7 +518,7 @@ function updateMandatoryProps(group, axisPointerModel, silent) {
 }
 var BaseAxisPointer_default = BaseAxisPointer;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/axisPointer/viewHelper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/axisPointer/viewHelper.js
 function buildElStyle(axisPointerModel) {
   var axisPointerType = axisPointerModel.get("type");
   var styleModel = axisPointerModel.getModel(axisPointerType + "Style");
@@ -588,7 +616,7 @@ function getTransformedPosition(axis, value, layoutInfo) {
   var transform = create();
   rotate(transform, transform, layoutInfo.rotation);
   translate(transform, transform, layoutInfo.position);
-  return applyTransform([axis.dataToCoord(value), (layoutInfo.labelOffset || 0) + (layoutInfo.labelDirection || 1) * (layoutInfo.labelMargin || 0)], transform);
+  return applyTransform2([axis.dataToCoord(value), (layoutInfo.labelOffset || 0) + (layoutInfo.labelDirection || 1) * (layoutInfo.labelMargin || 0)], transform);
 }
 function buildCartesianSingleLabelElOption(value, elOption, layoutInfo, axisModel, axisPointerModel, api) {
   var textLayout = AxisBuilder_default.innerTextLayout(layoutInfo.rotation, 0, layoutInfo.labelDirection);
@@ -629,7 +657,7 @@ function makeSectorShape(cx, cy, r0, r, startAngle, endAngle) {
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/axisPointer/CartesianAxisPointer.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/axisPointer/CartesianAxisPointer.js
 var CartesianAxisPointer = (
   /** @class */
   function(_super) {
@@ -650,19 +678,11 @@ var CartesianAxisPointer = (
         elOption.graphicKey = pointerOption.type;
         elOption.pointer = pointerOption;
       }
-      var layoutInfo = layout(grid.model, axisModel);
-      buildCartesianSingleLabelElOption(
-        // @ts-ignore
-        value,
-        elOption,
-        layoutInfo,
-        axisModel,
-        axisPointerModel,
-        api
-      );
+      var layoutInfo = layout(grid.getRect(), axisModel);
+      buildCartesianSingleLabelElOption(value, elOption, layoutInfo, axisModel, axisPointerModel, api);
     };
     CartesianAxisPointer2.prototype.getHandleTransform = function(value, axisModel, axisPointerModel) {
-      var layoutInfo = layout(axisModel.axis.grid.model, axisModel, {
+      var layoutInfo = layout(axisModel.axis.grid.getRect(), axisModel, {
         labelInside: false
       });
       layoutInfo.labelMargin = axisPointerModel.get(["handle", "margin"]);
@@ -730,7 +750,7 @@ function getAxisDimIndex(axis) {
 }
 var CartesianAxisPointer_default = CartesianAxisPointer;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/axisPointer/AxisPointerModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/axisPointer/AxisPointerModel.js
 var AxisPointerModel = (
   /** @class */
   function(_super) {
@@ -760,21 +780,21 @@ var AxisPointerModel = (
       animation: null,
       animationDurationUpdate: 200,
       lineStyle: {
-        color: "#B9BEC9",
+        color: tokens_default.color.border,
         width: 1,
         type: "dashed"
       },
       shadowStyle: {
-        color: "rgba(210,219,238,0.2)"
+        color: tokens_default.color.shadowTint
       },
       label: {
         show: true,
         formatter: null,
         precision: "auto",
         margin: 3,
-        color: "#fff",
+        color: tokens_default.color.neutral00,
         padding: [5, 7, 5, 7],
-        backgroundColor: "auto",
+        backgroundColor: tokens_default.color.accent60,
         borderColor: null,
         borderWidth: 0,
         borderRadius: 3
@@ -788,11 +808,7 @@ var AxisPointerModel = (
         margin: 50,
         // color: '#1b8bbd'
         // color: '#2f4554'
-        color: "#333",
-        shadowBlur: 3,
-        shadowColor: "#aaa",
-        shadowOffsetX: 0,
-        shadowOffsetY: 2,
+        color: tokens_default.color.accent40,
         // For mobile performance
         throttle: 40
       }
@@ -802,7 +818,7 @@ var AxisPointerModel = (
 );
 var AxisPointerModel_default = AxisPointerModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/axisPointer/globalListener.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/axisPointer/globalListener.js
 var inner2 = makeInner();
 var each2 = each;
 function register(key, api, handler) {
@@ -883,7 +899,7 @@ function unregister(key, api) {
   }
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/axisPointer/AxisPointerView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/axisPointer/AxisPointerView.js
 var AxisPointerView = (
   /** @class */
   function(_super) {
@@ -919,7 +935,7 @@ var AxisPointerView = (
 );
 var AxisPointerView_default = AxisPointerView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/axisPointer/findPointFromSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/axisPointer/findPointFromSeries.js
 function findPointFromSeries(finder, ecModel) {
   var point = [];
   var seriesIndex = finder.seriesIndex;
@@ -968,7 +984,7 @@ function findPointFromSeries(finder, ecModel) {
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/axisPointer/axisTrigger.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/axisPointer/axisTrigger.js
 var inner3 = makeInner();
 function axisTrigger(payload, ecModel, api) {
   var currTrigger = payload.currTrigger;
@@ -1076,7 +1092,8 @@ function buildPayloadsBySeries(value, axisInfo) {
       dataIndices = result.dataIndices;
       seriesNestestValue = result.nestestValue;
     } else {
-      dataIndices = series.getData().indicesOfNearest(
+      dataIndices = series.indicesOfNearest(
+        dim,
         dataDim[0],
         value,
         // Add a threshold to avoid find the wrong dataIndex
@@ -1255,7 +1272,7 @@ function illegalPoint(point) {
   return !point || point[0] == null || isNaN(point[0]) || point[1] == null || isNaN(point[1]);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/axisPointer/install.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/axisPointer/install.js
 function install5(registers) {
   AxisView_default.registerAxisPointerClass("CartesianAxisPointer", CartesianAxisPointer_default);
   registers.registerComponentModel(AxisPointerModel_default);
@@ -1279,13 +1296,13 @@ function install5(registers) {
   }, axisTrigger);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/grid/install.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/grid/install.js
 function install6(registers) {
   use(install);
   use(install5);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/axisPointer/PolarAxisPointer.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/axisPointer/PolarAxisPointer.js
 var PolarAxisPointer = (
   /** @class */
   function(_super) {
@@ -1330,7 +1347,7 @@ function getLabelPosition(value, axisModel, axisPointerModel, polar, labelMargin
     var transform = create();
     rotate(transform, transform, axisAngle);
     translate(transform, transform, [polar.cx, polar.cy]);
-    position = applyTransform([coord, -labelMargin], transform);
+    position = applyTransform2([coord, -labelMargin], transform);
     var labelRotation = axisModel.getModel("axisLabel").get("rotate") || 0;
     var labelLayout = AxisBuilder_default.innerTextLayout(axisAngle, labelRotation * Math.PI / 180, -1);
     align = labelLayout.textAlign;
@@ -1385,7 +1402,7 @@ var pointerShapeBuilder2 = {
 };
 var PolarAxisPointer_default = PolarAxisPointer;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/polar/PolarModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/polar/PolarModel.js
 var PolarModel = (
   /** @class */
   function(_super) {
@@ -1418,7 +1435,7 @@ var PolarModel = (
 );
 var PolarModel_default = PolarModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/polar/AxisModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/polar/AxisModel.js
 var PolarAxisModel = (
   /** @class */
   function(_super) {
@@ -1461,7 +1478,7 @@ var RadiusAxisModel = (
   }(PolarAxisModel)
 );
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/polar/RadiusAxis.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/polar/RadiusAxis.js
 var RadiusAxis = (
   /** @class */
   function(_super) {
@@ -1479,7 +1496,7 @@ RadiusAxis.prototype.dataToRadius = Axis_default.prototype.dataToCoord;
 RadiusAxis.prototype.radiusToData = Axis_default.prototype.coordToData;
 var RadiusAxis_default = RadiusAxis;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/polar/AngleAxis.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/polar/AngleAxis.js
 var inner4 = makeInner();
 var AngleAxis = (
   /** @class */
@@ -1526,7 +1543,7 @@ AngleAxis.prototype.dataToAngle = Axis_default.prototype.dataToCoord;
 AngleAxis.prototype.angleToData = Axis_default.prototype.coordToData;
 var AngleAxis_default = AngleAxis;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/polar/Polar.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/polar/Polar.js
 var polarDimensions = ["radius", "angle"];
 var Polar = (
   /** @class */
@@ -1584,12 +1601,15 @@ var Polar = (
         otherAxes: [this.getOtherAxis(baseAxis)]
       };
     };
-    Polar2.prototype.dataToPoint = function(data, clamp) {
-      return this.coordToPoint([this._radiusAxis.dataToRadius(data[0], clamp), this._angleAxis.dataToAngle(data[1], clamp)]);
+    Polar2.prototype.dataToPoint = function(data, clamp, out) {
+      return this.coordToPoint([this._radiusAxis.dataToRadius(data[0], clamp), this._angleAxis.dataToAngle(data[1], clamp)], out);
     };
-    Polar2.prototype.pointToData = function(point, clamp) {
+    Polar2.prototype.pointToData = function(point, clamp, out) {
+      out = out || [];
       var coord = this.pointToCoord(point);
-      return [this._radiusAxis.radiusToData(coord[0], clamp), this._angleAxis.angleToData(coord[1], clamp)];
+      out[0] = this._radiusAxis.radiusToData(coord[0], clamp);
+      out[1] = this._angleAxis.angleToData(coord[1], clamp);
+      return out;
     };
     Polar2.prototype.pointToCoord = function(point) {
       var dx = point[0] - this.cx;
@@ -1609,12 +1629,13 @@ var Polar = (
       }
       return [radius, radian];
     };
-    Polar2.prototype.coordToPoint = function(coord) {
+    Polar2.prototype.coordToPoint = function(coord, out) {
+      out = out || [];
       var radius = coord[0];
       var radian = coord[1] / 180 * Math.PI;
-      var x = Math.cos(radian) * radius + this.cx;
-      var y = -Math.sin(radian) * radius + this.cy;
-      return [x, y];
+      out[0] = Math.cos(radian) * radius + this.cx;
+      out[1] = -Math.sin(radian) * radius + this.cy;
+      return out;
     };
     Polar2.prototype.getArea = function() {
       var angleAxis = this.getAngleAxis();
@@ -1639,7 +1660,12 @@ var Polar = (
           var r = this.r;
           var r0 = this.r0;
           return r !== r0 && d2 - EPSILON <= r * r && d2 + EPSILON >= r0 * r0;
-        }
+        },
+        // As the bounding box
+        x: this.cx - radiusExtent[1],
+        y: this.cy - radiusExtent[1],
+        width: radiusExtent[1] * 2,
+        height: radiusExtent[1] * 2
       };
     };
     Polar2.prototype.convertToPixel = function(ecModel, finder, value) {
@@ -1660,15 +1686,14 @@ function getCoordSys(finder) {
 }
 var Polar_default = Polar;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/polar/polarCreator.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/polar/polarCreator.js
 function resizePolar(polar, polarModel, api) {
   var center = polarModel.get("center");
-  var width = api.getWidth();
-  var height = api.getHeight();
-  polar.cx = parsePercent2(center[0], width);
-  polar.cy = parsePercent2(center[1], height);
+  var refContainer = createBoxLayoutReference(polarModel, api).refContainer;
+  polar.cx = parsePercent2(center[0], refContainer.width) + refContainer.x;
+  polar.cy = parsePercent2(center[1], refContainer.height) + refContainer.y;
   var radiusAxis = polar.getRadiusAxis();
-  var size = Math.min(width, height) / 2;
+  var size = Math.min(refContainer.width, refContainer.height) / 2;
   var radius = polarModel.get("radius");
   if (radius == null) {
     radius = [0, "100%"];
@@ -1756,7 +1781,7 @@ var polarCreator = {
 };
 var polarCreator_default = polarCreator;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/axis/AngleAxisView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/axis/AngleAxisView.js
 var elementList = ["axisLine", "axisLabel", "axisTick", "minorTick", "splitLine", "minorSplitLine", "splitArea"];
 function getAxisLineShape(polar, rExtent, angle) {
   rExtent[1] > rExtent[0] && (rExtent = rExtent.slice().reverse());
@@ -1798,7 +1823,9 @@ var AngleAxisView = (
       var angleAxis = angleAxisModel.axis;
       var polar = angleAxis.polar;
       var radiusExtent = polar.getRadiusAxis().getExtent();
-      var ticksAngles = angleAxis.getTicksCoords();
+      var ticksAngles = angleAxis.getTicksCoords({
+        breakTicks: "none"
+      });
       var minorTickAngles = angleAxis.getMinorTicksCoords();
       var labels = map(angleAxis.getViewLabels(), function(labelItem) {
         labelItem = clone(labelItem);
@@ -1928,6 +1955,18 @@ var angelAxisElementsBuilders = {
         })
       });
       group.add(textEl);
+      setTooltipConfig({
+        el: textEl,
+        componentModel: angleAxisModel,
+        itemName: labelItem.formattedLabel,
+        formatterParamsExtra: {
+          isTruncated: function() {
+            return textEl.isTruncated;
+          },
+          value: labelItem.rawLabel,
+          tickIndex: idx
+        }
+      });
       if (triggerEvent) {
         var eventData = AxisBuilder_default.makeAxisEventDataBase(angleAxisModel);
         eventData.targetType = "axisLabel";
@@ -2025,8 +2064,7 @@ var angelAxisElementsBuilders = {
 };
 var AngleAxisView_default = AngleAxisView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/axis/RadiusAxisView.js
-var axisBuilderAttrs = ["axisLine", "axisTickLabel", "axisName"];
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/axis/RadiusAxisView.js
 var selfBuilderAttrs = ["splitLine", "splitArea", "minorSplitLine"];
 var RadiusAxisView = (
   /** @class */
@@ -2038,7 +2076,7 @@ var RadiusAxisView = (
       _this.axisPointerClass = "PolarAxisPointer";
       return _this;
     }
-    RadiusAxisView2.prototype.render = function(radiusAxisModel, ecModel) {
+    RadiusAxisView2.prototype.render = function(radiusAxisModel, ecModel, api) {
       this.group.removeAll();
       if (!radiusAxisModel.get("show")) {
         return;
@@ -2053,10 +2091,10 @@ var RadiusAxisView = (
       var minorTicksCoords = radiusAxis.getMinorTicksCoords();
       var axisAngle = angleAxis.getExtent()[0];
       var radiusExtent = radiusAxis.getExtent();
-      var layout4 = layoutAxis(polar, radiusAxisModel, axisAngle);
-      var axisBuilder = new AxisBuilder_default(radiusAxisModel, layout4);
-      each(axisBuilderAttrs, axisBuilder.add, axisBuilder);
-      newAxisGroup.add(axisBuilder.getGroup());
+      var layout3 = layoutAxis(polar, radiusAxisModel, axisAngle);
+      var axisBuilder = new AxisBuilder_default(radiusAxisModel, api, layout3);
+      axisBuilder.build();
+      newAxisGroup.add(axisBuilder.group);
       groupTransition(oldAxisGroup, newAxisGroup, radiusAxisModel);
       each(selfBuilderAttrs, function(name) {
         if (radiusAxisModel.get([name, "show"]) && !radiusAxis.scale.isBlank()) {
@@ -2181,7 +2219,7 @@ function layoutAxis(polar, radiusAxisModel, axisAngle) {
 }
 var RadiusAxisView_default = RadiusAxisView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/layout/barPolar.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/layout/barPolar.js
 function getSeriesStackId(seriesModel) {
   return seriesModel.get("stack") || "__ec_stack_" + seriesModel.seriesIndex;
 }
@@ -2374,7 +2412,7 @@ function calRadialBar(barSeries) {
 }
 var barPolar_default = barLayoutPolar;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/polar/install.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/polar/install.js
 var angleAxisExtraOption = {
   startAngle: 90,
   clockwise: true,
@@ -2412,12 +2450,12 @@ function install7(registers) {
   registers.registerLayout(curry(barPolar_default, "bar"));
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/single/singleAxisHelper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/single/singleAxisHelper.js
 function layout2(axisModel, opt) {
   opt = opt || {};
   var single = axisModel.coordinateSystem;
   var axis = axisModel.axis;
-  var layout4 = {};
+  var layout3 = {};
   var axisPosition = axis.position;
   var orient = axis.orient;
   var rect = single.getRect();
@@ -2432,35 +2470,33 @@ function layout2(axisModel, opt) {
       right: rectBound[1]
     }
   };
-  layout4.position = [orient === "vertical" ? positionMap.vertical[axisPosition] : rectBound[0], orient === "horizontal" ? positionMap.horizontal[axisPosition] : rectBound[3]];
+  layout3.position = [orient === "vertical" ? positionMap.vertical[axisPosition] : rectBound[0], orient === "horizontal" ? positionMap.horizontal[axisPosition] : rectBound[3]];
   var r = {
     horizontal: 0,
     vertical: 1
   };
-  layout4.rotation = Math.PI / 2 * r[orient];
+  layout3.rotation = Math.PI / 2 * r[orient];
   var directionMap = {
     top: -1,
     bottom: 1,
     right: 1,
     left: -1
   };
-  layout4.labelDirection = layout4.tickDirection = layout4.nameDirection = directionMap[axisPosition];
+  layout3.labelDirection = layout3.tickDirection = layout3.nameDirection = directionMap[axisPosition];
   if (axisModel.get(["axisTick", "inside"])) {
-    layout4.tickDirection = -layout4.tickDirection;
+    layout3.tickDirection = -layout3.tickDirection;
   }
   if (retrieve(opt.labelInside, axisModel.get(["axisLabel", "inside"]))) {
-    layout4.labelDirection = -layout4.labelDirection;
+    layout3.labelDirection = -layout3.labelDirection;
   }
-  var labelRotation = opt.rotate;
-  labelRotation == null && (labelRotation = axisModel.get(["axisLabel", "rotate"]));
-  layout4.labelRotation = axisPosition === "top" ? -labelRotation : labelRotation;
-  layout4.z2 = 1;
-  return layout4;
+  var labelRotate = axisModel.get(["axisLabel", "rotate"]);
+  layout3.labelRotate = axisPosition === "top" ? -labelRotate : labelRotate;
+  layout3.z2 = 1;
+  return layout3;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/axis/SingleAxisView.js
-var axisBuilderAttrs2 = ["axisLine", "axisTickLabel", "axisName"];
-var selfBuilderAttrs2 = ["splitArea", "splitLine"];
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/axis/SingleAxisView.js
+var selfBuilderAttrs2 = ["splitArea", "splitLine", "breakArea"];
 var SingleAxisView = (
   /** @class */
   function(_super) {
@@ -2476,14 +2512,14 @@ var SingleAxisView = (
       group.removeAll();
       var oldAxisGroup = this._axisGroup;
       this._axisGroup = new Group_default();
-      var layout4 = layout2(axisModel);
-      var axisBuilder = new AxisBuilder_default(axisModel, layout4);
-      each(axisBuilderAttrs2, axisBuilder.add, axisBuilder);
+      var layout3 = layout2(axisModel);
+      var axisBuilder = new AxisBuilder_default(axisModel, api, layout3);
+      axisBuilder.build();
       group.add(this._axisGroup);
-      group.add(axisBuilder.getGroup());
+      group.add(axisBuilder.group);
       each(selfBuilderAttrs2, function(name) {
         if (axisModel.get([name, "show"])) {
-          axisElementBuilders2[name](this, this.group, this._axisGroup, axisModel);
+          axisElementBuilders2[name](this, this.group, this._axisGroup, axisModel, api);
         }
       }, this);
       groupTransition(oldAxisGroup, this._axisGroup, axisModel);
@@ -2497,7 +2533,7 @@ var SingleAxisView = (
   }(AxisView_default)
 );
 var axisElementBuilders2 = {
-  splitLine: function(axisView, group, axisGroup, axisModel) {
+  splitLine: function(axisView, group, axisGroup, axisModel, api) {
     var axis = axisModel.axis;
     if (axis.scale.isBlank()) {
       return;
@@ -2512,7 +2548,9 @@ var axisElementBuilders2 = {
     var splitLines = [];
     var lineCount = 0;
     var ticksCoords = axis.getTicksCoords({
-      tickModel: splitLineModel
+      tickModel: splitLineModel,
+      breakTicks: "none",
+      pruneByBreak: "preserve_extent_bound"
     });
     var p1 = [];
     var p2 = [];
@@ -2553,13 +2591,20 @@ var axisElementBuilders2 = {
       }));
     }
   },
-  splitArea: function(axisView, group, axisGroup, axisModel) {
+  splitArea: function(axisView, group, axisGroup, axisModel, api) {
     rectCoordAxisBuildSplitArea(axisView, axisGroup, axisModel, axisModel);
+  },
+  breakArea: function(axisView, group, axisGroup, axisModel, api) {
+    var axisBreakHelper = getAxisBreakHelper();
+    var scale = axisModel.axis.scale;
+    if (axisBreakHelper && scale.type !== "ordinal") {
+      axisBreakHelper.rectCoordBuildBreakAxis(group, axisView, axisModel, axisModel.coordinateSystem.getRect(), api);
+    }
   }
 };
 var SingleAxisView_default = SingleAxisView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/single/AxisModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/single/AxisModel.js
 var SingleAxisModel = (
   /** @class */
   function(_super) {
@@ -2612,7 +2657,10 @@ var SingleAxisModel = (
           type: "dashed",
           opacity: 0.2
         }
-      }
+      },
+      jitter: 0,
+      jitterOverlap: true,
+      jitterMargin: 2
     };
     return SingleAxisModel2;
   }(Component_default)
@@ -2620,7 +2668,7 @@ var SingleAxisModel = (
 mixin(SingleAxisModel, AxisModelCommonMixin.prototype);
 var AxisModel_default = SingleAxisModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/single/SingleAxis.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/single/SingleAxis.js
 var SingleAxis = (
   /** @class */
   function(_super) {
@@ -2643,7 +2691,7 @@ var SingleAxis = (
 );
 var SingleAxis_default = SingleAxis;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/single/Single.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/single/Single.js
 var singleDimensions = ["single"];
 var Single = (
   /** @class */
@@ -2680,17 +2728,8 @@ var Single = (
       }, this);
     };
     Single2.prototype.resize = function(axisModel, api) {
-      this._rect = getLayoutRect({
-        left: axisModel.get("left"),
-        top: axisModel.get("top"),
-        right: axisModel.get("right"),
-        bottom: axisModel.get("bottom"),
-        width: axisModel.get("width"),
-        height: axisModel.get("height")
-      }, {
-        width: api.getWidth(),
-        height: api.getHeight()
-      });
+      var refContainer = createBoxLayoutReference(axisModel, api).refContainer;
+      this._rect = getLayoutRect(axisModel.getBoxLayoutParams(), refContainer);
       this._adjustAxis();
     };
     Single2.prototype.getRect = function() {
@@ -2746,21 +2785,23 @@ var Single = (
         return axis.contain(axis.toLocalCoord(point[1])) && point[0] >= rect.y && point[0] <= rect.y + rect.height;
       }
     };
-    Single2.prototype.pointToData = function(point) {
+    Single2.prototype.pointToData = function(point, reserved, out) {
+      out = out || [];
       var axis = this.getAxis();
-      return [axis.coordToData(axis.toLocalCoord(point[axis.orient === "horizontal" ? 0 : 1]))];
+      out[0] = axis.coordToData(axis.toLocalCoord(point[axis.orient === "horizontal" ? 0 : 1]));
+      return out;
     };
-    Single2.prototype.dataToPoint = function(val) {
+    Single2.prototype.dataToPoint = function(val, reserved, out) {
       var axis = this.getAxis();
       var rect = this.getRect();
-      var pt = [];
+      out = out || [];
       var idx = axis.orient === "horizontal" ? 0 : 1;
       if (val instanceof Array) {
         val = val[0];
       }
-      pt[idx] = axis.toGlobalCoord(axis.dataToCoord(+val));
-      pt[1 - idx] = idx === 0 ? rect.y + rect.height / 2 : rect.x + rect.width / 2;
-      return pt;
+      out[idx] = axis.toGlobalCoord(axis.dataToCoord(+val));
+      out[1 - idx] = idx === 0 ? rect.y + rect.height / 2 : rect.x + rect.width / 2;
+      return out;
     };
     Single2.prototype.convertToPixel = function(ecModel, finder, value) {
       var coordSys = getCoordSys2(finder);
@@ -2780,7 +2821,7 @@ function getCoordSys2(finder) {
 }
 var Single_default = Single;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/single/singleCreator.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/single/singleCreator.js
 function create2(ecModel, api) {
   var singles = [];
   ecModel.eachComponent("singleAxis", function(axisModel, idx) {
@@ -2804,9 +2845,9 @@ var singleCreator = {
 };
 var singleCreator_default = singleCreator;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/axisPointer/SingleAxisPointer.js
-var XY = ["x", "y"];
-var WH = ["width", "height"];
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/axisPointer/SingleAxisPointer.js
+var XY2 = ["x", "y"];
+var WH2 = ["width", "height"];
 var SingleAxisPointer = (
   /** @class */
   function(_super) {
@@ -2828,15 +2869,7 @@ var SingleAxisPointer = (
         elOption.pointer = pointerOption;
       }
       var layoutInfo = layout2(axisModel);
-      buildCartesianSingleLabelElOption(
-        // @ts-ignore
-        value,
-        elOption,
-        layoutInfo,
-        axisModel,
-        axisPointerModel,
-        api
-      );
+      buildCartesianSingleLabelElOption(value, elOption, layoutInfo, axisModel, axisPointerModel, api);
     };
     SingleAxisPointer2.prototype.getHandleTransform = function(value, axisModel, axisPointerModel) {
       var layoutInfo = layout2(axisModel, {
@@ -2899,11 +2932,11 @@ function getPointDimIndex(axis) {
 }
 function getGlobalExtent(coordSys, dimIndex) {
   var rect = coordSys.getRect();
-  return [rect[XY[dimIndex]], rect[XY[dimIndex]] + rect[WH[dimIndex]]];
+  return [rect[XY2[dimIndex]], rect[XY2[dimIndex]] + rect[WH2[dimIndex]]];
 }
 var SingleAxisPointer_default = SingleAxisPointer;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/singleAxis/install.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/singleAxis/install.js
 var SingleView = (
   /** @class */
   function(_super) {
@@ -2927,7 +2960,7 @@ function install8(registers) {
   registers.registerCoordinateSystem("single", singleCreator_default);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/calendar/CalendarModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/calendar/CalendarModel.js
 var CalendarModel = (
   /** @class */
   function(_super) {
@@ -2950,8 +2983,14 @@ var CalendarModel = (
       return this.option.cellSize;
     };
     CalendarModel2.type = "calendar";
+    CalendarModel2.layoutMode = "box";
     CalendarModel2.defaultOption = {
       // zlevel: 0,
+      // TODO: theoretically, the z of the calendar should be lower
+      // than series, but we don't want the series to be displayed
+      // on top of the borders like month split line. To align with
+      // the effect of previous versions, we set the z to 2 for now
+      // until better solution is found.
       z: 2,
       left: 80,
       top: 60,
@@ -2962,16 +3001,16 @@ var CalendarModel = (
       splitLine: {
         show: true,
         lineStyle: {
-          color: "#000",
+          color: tokens_default.color.axisLine,
           width: 1,
           type: "solid"
         }
       },
       // rect style  temporarily unused emphasis
       itemStyle: {
-        color: "#fff",
+        color: tokens_default.color.neutral00,
         borderWidth: 1,
-        borderColor: "#ccc"
+        borderColor: tokens_default.color.neutral10
       },
       // week text style
       dayLabel: {
@@ -2979,28 +3018,28 @@ var CalendarModel = (
         firstDay: 0,
         // start end
         position: "start",
-        margin: "50%",
-        color: "#000"
+        margin: tokens_default.size.s,
+        color: tokens_default.color.secondary
       },
       // month text style
       monthLabel: {
         show: true,
         // start end
         position: "start",
-        margin: 5,
+        margin: tokens_default.size.s,
         // center or left
         align: "center",
         formatter: null,
-        color: "#000"
+        color: tokens_default.color.secondary
       },
       // year text style
       yearLabel: {
         show: true,
         // top bottom left right
         position: null,
-        margin: 30,
+        margin: tokens_default.size.xl,
         formatter: null,
-        color: "#ccc",
+        color: tokens_default.color.quaternary,
         fontFamily: "sans-serif",
         fontWeight: "bolder",
         fontSize: 20
@@ -3033,7 +3072,7 @@ function mergeAndNormalizeLayoutParams(target, raw) {
 }
 var CalendarModel_default = CalendarModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/calendar/CalendarView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/calendar/CalendarView.js
 var CalendarView = (
   /** @class */
   function(_super) {
@@ -3062,7 +3101,7 @@ var CalendarView = (
       var sw = coordSys.getCellWidth();
       var sh = coordSys.getCellHeight();
       for (var i = rangeData.start.time; i <= rangeData.end.time; i = coordSys.getNextNDay(i, 1).time) {
-        var point = coordSys.dataToRect([i], false).tl;
+        var point = coordSys.dataToCalendarLayout([i], false).tl;
         var rect = new Rect_default({
           shape: {
             x: point[0],
@@ -3099,7 +3138,7 @@ var CalendarView = (
       addPoints(coordSys.getNextNDay(rangeData.end.time, 1).formatedDate);
       function addPoints(date2) {
         self._firstDayOfMonth.push(coordSys.getDateInfo(date2));
-        self._firstDayPoints.push(coordSys.dataToRect([date2], false).tl);
+        self._firstDayPoints.push(coordSys.dataToCalendarLayout([date2], false).tl);
         var points = self._getLinePointsOfOneWeek(calendarModel, date2, orient);
         self._tlpoints.push(points[0]);
         self._blpoints.push(points[points.length - 1]);
@@ -3131,7 +3170,7 @@ var CalendarView = (
       var points = [];
       for (var i = 0; i < 7; i++) {
         var tmpD = coordSys.getNextNDay(parsedDate.time, i);
-        var point = coordSys.dataToRect([tmpD.time], false);
+        var point = coordSys.dataToCalendarLayout([tmpD.time], false);
         points[2 * tmpD.day] = point.tl;
         points[2 * tmpD.day + 1] = point[orient === "horizontal" ? "bl" : "tr"];
       }
@@ -3342,7 +3381,7 @@ var CalendarView = (
       var labelSilent = dayLabel.get("silent");
       for (var i = 0; i < 7; i++) {
         var tmpD = coordSys.getNextNDay(start, i);
-        var point = coordSys.dataToRect([tmpD.time], false).center;
+        var point = coordSys.dataToCalendarLayout([tmpD.time], false).center;
         var day = i;
         day = Math.abs((i + firstDayOfWeek) % 7);
         var weekText = new Text_default({
@@ -3361,7 +3400,7 @@ var CalendarView = (
 );
 var CalendarView_default = CalendarView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/calendar/Calendar.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/calendar/Calendar.js
 var PROXIMATE_ONE_DAY = 864e5;
 var Calendar = (
   /** @class */
@@ -3371,6 +3410,7 @@ var Calendar = (
       this.dimensions = Calendar2.dimensions;
       this.getDimensionsInfo = Calendar2.getDimensionsInfo;
       this._model = calendarModel;
+      this._update(ecModel, api);
     }
     Calendar2.getDimensionsInfo = function() {
       return [{
@@ -3427,7 +3467,7 @@ var Calendar = (
       date.setDate(date.getDate() + n);
       return this.getDateInfo(date);
     };
-    Calendar2.prototype.update = function(ecModel, api) {
+    Calendar2.prototype._update = function(ecModel, api) {
       this._firstDayOfWeek = +this._model.getModel("dayLabel").get("firstDay");
       this._orient = this._model.get("orient");
       this._lineWidth = this._model.getModel("itemStyle").getItemStyle().lineWidth || 0;
@@ -3458,35 +3498,48 @@ var Calendar = (
       this._sw = cellSize[0];
       this._sh = cellSize[1];
     };
-    Calendar2.prototype.dataToPoint = function(data, clamp) {
+    Calendar2.prototype.dataToPoint = function(data, clamp, out) {
+      out = out || [];
       isArray(data) && (data = data[0]);
       clamp == null && (clamp = true);
       var dayInfo = this.getDateInfo(data);
       var range = this._rangeInfo;
       var date = dayInfo.formatedDate;
       if (clamp && !(dayInfo.time >= range.start.time && dayInfo.time < range.end.time + PROXIMATE_ONE_DAY)) {
-        return [NaN, NaN];
+        out[0] = out[1] = NaN;
+        return out;
       }
       var week = dayInfo.day;
       var nthWeek = this._getRangeInfo([range.start.time, date]).nthWeek;
       if (this._orient === "vertical") {
-        return [this._rect.x + week * this._sw + this._sw / 2, this._rect.y + nthWeek * this._sh + this._sh / 2];
+        out[0] = this._rect.x + week * this._sw + this._sw / 2;
+        out[1] = this._rect.y + nthWeek * this._sh + this._sh / 2;
+      } else {
+        out[0] = this._rect.x + nthWeek * this._sw + this._sw / 2;
+        out[1] = this._rect.y + week * this._sh + this._sh / 2;
       }
-      return [this._rect.x + nthWeek * this._sw + this._sw / 2, this._rect.y + week * this._sh + this._sh / 2];
+      return out;
     };
     Calendar2.prototype.pointToData = function(point) {
       var date = this.pointToDate(point);
       return date && date.time;
     };
-    Calendar2.prototype.dataToRect = function(data, clamp) {
+    Calendar2.prototype.dataToLayout = function(data, clamp, out) {
+      out = out || {};
+      var rect = out.rect = out.rect || {};
+      var contentRect = out.contentRect = out.contentRect || {};
+      var point = this.dataToPoint(data, clamp);
+      rect.x = point[0] - this._sw / 2;
+      rect.y = point[1] - this._sh / 2;
+      rect.width = this._sw;
+      rect.height = this._sh;
+      BoundingRect_default.copy(contentRect, rect);
+      expandOrShrinkRect(contentRect, this._lineWidth / 2, true, true);
+      return out;
+    };
+    Calendar2.prototype.dataToCalendarLayout = function(data, clamp) {
       var point = this.dataToPoint(data, clamp);
       return {
-        contentShape: {
-          x: point[0] - (this._sw - this._lineWidth) / 2,
-          y: point[1] - (this._sh - this._lineWidth) / 2,
-          width: this._sw - this._lineWidth,
-          height: this._sh - this._lineWidth
-        },
         center: point,
         tl: [point[0] - this._sw / 2, point[1] - this._sh / 2],
         tr: [point[0] + this._sw / 2, point[1] - this._sh / 2],
@@ -3506,6 +3559,10 @@ var Calendar = (
     Calendar2.prototype.convertToPixel = function(ecModel, finder, value) {
       var coordSys = getCoordSys3(finder);
       return coordSys === this ? coordSys.dataToPoint(value) : null;
+    };
+    Calendar2.prototype.convertToLayout = function(ecModel, finder, value) {
+      var coordSys = getCoordSys3(finder);
+      return coordSys === this ? coordSys.dataToLayout(value) : null;
     };
     Calendar2.prototype.convertFromPixel = function(ecModel, finder, pixel) {
       var coordSys = getCoordSys3(finder);
@@ -3603,10 +3660,12 @@ var Calendar = (
         calendarList.push(calendar);
         calendarModel.coordinateSystem = calendar;
       });
-      ecModel.eachSeries(function(calendarSeries) {
-        if (calendarSeries.get("coordinateSystem") === "calendar") {
-          calendarSeries.coordinateSystem = calendarList[calendarSeries.get("calendarIndex") || 0];
-        }
+      ecModel.eachComponent(function(mainType, componentModel) {
+        injectCoordSysByOption({
+          targetModel: componentModel,
+          coordSysType: "calendar",
+          coordSysProvider: simpleCoordSysInjectionProvider
+        });
       });
       return calendarList;
     };
@@ -3622,14 +3681,1302 @@ function getCoordSys3(finder) {
 }
 var Calendar_default = Calendar;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/calendar/install.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/calendar/install.js
 function install9(registers) {
   registers.registerComponentModel(CalendarModel_default);
   registers.registerComponentView(CalendarView_default);
   registers.registerCoordinateSystem("calendar", Calendar_default);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/graphic/GraphicModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/matrix/matrixCoordHelper.js
+var MatrixCellLayoutInfoType = {
+  level: 1,
+  leaf: 2,
+  nonLeaf: 3
+};
+var MatrixClampOption = {
+  // No clamp, be falsy, equals to null/undefined. It means if the input part is
+  // null/undefined/NaN/outOfBoundary, the result part is NaN, rather than clamp to
+  // the boundary of the matrix.
+  none: 0,
+  // Clamp, where null/undefined/NaN/outOfBoundary can be used to cover the entire row/column.
+  all: 1,
+  body: 2,
+  corner: 3
+};
+function coordDataToAllCellLevelLayout(coordValue, dims, thisDimIdx) {
+  var result = dims[XY[thisDimIdx]].getCell(coordValue);
+  if (!result && isNumber(coordValue) && coordValue < 0) {
+    result = dims[XY[1 - thisDimIdx]].getUnitLayoutInfo(thisDimIdx, Math.round(coordValue));
+  }
+  return result;
+}
+function resetXYLocatorRange(out) {
+  var rg = out || [];
+  rg[0] = rg[0] || [];
+  rg[1] = rg[1] || [];
+  rg[0][0] = rg[0][1] = rg[1][0] = rg[1][1] = NaN;
+  return rg;
+}
+function parseCoordRangeOption(locOut, reasonOut, data, dims, clamp) {
+  parseCoordRangeOptionOnOneDim(locOut[0], reasonOut, clamp, data, dims, 0);
+  parseCoordRangeOptionOnOneDim(locOut[1], reasonOut, clamp, data, dims, 1);
+}
+function parseCoordRangeOptionOnOneDim(locDimOut, reasonOut, clamp, data, dims, dimIdx) {
+  locDimOut[0] = Infinity;
+  locDimOut[1] = -Infinity;
+  var dataOnDim = data[dimIdx];
+  var coordValArr = isArray(dataOnDim) ? dataOnDim : [dataOnDim];
+  var len = coordValArr.length;
+  var hasClamp = !!clamp;
+  if (len >= 1) {
+    parseCoordRangeOptionOnOneDimOnePart(locDimOut, reasonOut, coordValArr, hasClamp, dims, dimIdx, 0);
+    if (len > 1) {
+      parseCoordRangeOptionOnOneDimOnePart(locDimOut, reasonOut, coordValArr, hasClamp, dims, dimIdx, len - 1);
+    }
+  } else {
+    if (true) {
+      if (reasonOut) {
+        reasonOut.push('Should be like [["x1", "x2"], ["y1", "y2"]], or ["x1", "y1"], rather than empty.');
+      }
+    }
+    locDimOut[0] = locDimOut[1] = NaN;
+  }
+  if (hasClamp) {
+    var locLowerBound = -dims[XY[1 - dimIdx]].getLocatorCount(dimIdx);
+    var locUpperBound = dims[XY[dimIdx]].getLocatorCount(dimIdx) - 1;
+    if (clamp === MatrixClampOption.body) {
+      locLowerBound = mathMax(0, locLowerBound);
+    } else if (clamp === MatrixClampOption.corner) {
+      locUpperBound = mathMin(-1, locUpperBound);
+    }
+    if (locUpperBound < locLowerBound) {
+      locLowerBound = locUpperBound = NaN;
+    }
+    if (eqNaN(locDimOut[0])) {
+      locDimOut[0] = locLowerBound;
+    }
+    if (eqNaN(locDimOut[1])) {
+      locDimOut[1] = locUpperBound;
+    }
+    locDimOut[0] = mathMax(mathMin(locDimOut[0], locUpperBound), locLowerBound);
+    locDimOut[1] = mathMax(mathMin(locDimOut[1], locUpperBound), locLowerBound);
+  }
+}
+function parseCoordRangeOptionOnOneDimOnePart(locDimOut, reasonOut, coordValArr, hasClamp, dims, dimIdx, partIdx) {
+  var layout3 = coordDataToAllCellLevelLayout(coordValArr[partIdx], dims, dimIdx);
+  if (!layout3) {
+    if (true) {
+      if (!hasClamp && reasonOut) {
+        reasonOut.push("Can not find cell by coord[" + dimIdx + "][" + partIdx + "].");
+      }
+    }
+    locDimOut[0] = locDimOut[1] = NaN;
+    return;
+  }
+  var locatorA = layout3.id[XY[dimIdx]];
+  var locatorB = locatorA;
+  var dimCell = cellLayoutInfoToDimCell(layout3);
+  if (dimCell) {
+    locatorB += dimCell.span[XY[dimIdx]] - 1;
+  }
+  locDimOut[0] = mathMin(locDimOut[0], locatorA, locatorB);
+  locDimOut[1] = mathMax(locDimOut[1], locatorA, locatorB);
+}
+function isXYLocatorRangeInvalidOnDim(locatorRange, dimIdx) {
+  return eqNaN(locatorRange[dimIdx][0]) || eqNaN(locatorRange[dimIdx][1]);
+}
+function resolveXYLocatorRangeByCellMerge(inOutLocatorRange, outMergedMarkList, mergeDefList, mergeDefListTravelLen) {
+  outMergedMarkList = outMergedMarkList || _tmpOutMergedMarkList;
+  for (var idx = 0; idx < mergeDefListTravelLen; idx++) {
+    outMergedMarkList[idx] = false;
+  }
+  while (true) {
+    var expanded = false;
+    for (var idx = 0; idx < mergeDefListTravelLen; idx++) {
+      var mergeDef = mergeDefList[idx];
+      if (!outMergedMarkList[idx] && mergeDef.cellMergeOwner && expandXYLocatorRangeIfIntersect(inOutLocatorRange, mergeDef.locatorRange)) {
+        outMergedMarkList[idx] = true;
+        expanded = true;
+      }
+    }
+    if (!expanded) {
+      break;
+    }
+  }
+}
+var _tmpOutMergedMarkList = [];
+function expandXYLocatorRangeIfIntersect(thisLocRange, otherLocRange) {
+  if (!locatorRangeIntersectOneDim(thisLocRange[0], otherLocRange[0]) || !locatorRangeIntersectOneDim(thisLocRange[1], otherLocRange[1])) {
+    return false;
+  }
+  thisLocRange[0][0] = mathMin(thisLocRange[0][0], otherLocRange[0][0]);
+  thisLocRange[0][1] = mathMax(thisLocRange[0][1], otherLocRange[0][1]);
+  thisLocRange[1][0] = mathMin(thisLocRange[1][0], otherLocRange[1][0]);
+  thisLocRange[1][1] = mathMax(thisLocRange[1][1], otherLocRange[1][1]);
+  return true;
+}
+function locatorRangeIntersectOneDim(locRange1OneDim, locRange2OneDim) {
+  return locRange1OneDim[1] >= locRange2OneDim[0] && locRange1OneDim[0] <= locRange2OneDim[1];
+}
+function fillIdSpanFromLocatorRange(owner, locatorRange) {
+  owner.id.set(locatorRange[0][0], locatorRange[1][0]);
+  owner.span.set(locatorRange[0][1] - owner.id.x + 1, locatorRange[1][1] - owner.id.y + 1);
+}
+function cloneXYLocatorRange(target, source) {
+  target[0][0] = source[0][0];
+  target[0][1] = source[0][1];
+  target[1][0] = source[1][0];
+  target[1][1] = source[1][1];
+}
+function xyLocatorRangeToRectOneDim(oneDimOut, locRange, dims, dimIdx) {
+  var layoutMin = coordDataToAllCellLevelLayout(locRange[dimIdx][0], dims, dimIdx);
+  var layoutMax = coordDataToAllCellLevelLayout(locRange[dimIdx][1], dims, dimIdx);
+  oneDimOut[XY[dimIdx]] = oneDimOut[WH[dimIdx]] = NaN;
+  if (layoutMin && layoutMax) {
+    oneDimOut[XY[dimIdx]] = layoutMin.xy;
+    oneDimOut[WH[dimIdx]] = layoutMax.xy + layoutMax.wh - layoutMin.xy;
+  }
+}
+function setDimXYValue(out, dimIdx, valueOnThisDim, valueOnOtherDim) {
+  out[XY[dimIdx]] = valueOnThisDim;
+  out[XY[1 - dimIdx]] = valueOnOtherDim;
+  return out;
+}
+function cellLayoutInfoToDimCell(cellLayoutInfo) {
+  return cellLayoutInfo && (cellLayoutInfo.type === MatrixCellLayoutInfoType.leaf || cellLayoutInfo.type === MatrixCellLayoutInfoType.nonLeaf) ? cellLayoutInfo : null;
+}
+function createNaNRectLike() {
+  return {
+    x: NaN,
+    y: NaN,
+    width: NaN,
+    height: NaN
+  };
+}
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/matrix/MatrixDim.js
+var MatrixDim = (
+  /** @class */
+  function() {
+    function MatrixDim2(dim, dimModel) {
+      this._cells = [];
+      this._levels = [];
+      this.dim = dim;
+      this.dimIdx = dim === "x" ? 0 : 1;
+      this._model = dimModel;
+      this._uniqueValueGen = createUniqueValueGenerator(dim);
+      var dimModelData = dimModel.get("data", true);
+      if (dimModelData != null && !isArray(dimModelData)) {
+        if (true) {
+          error("Illegal echarts option - matrix." + this.dim + ".data must be an array if specified.");
+        }
+        dimModelData = [];
+      }
+      if (dimModelData) {
+        this._initByDimModelData(dimModelData);
+      } else {
+        this._initBySeriesData();
+      }
+    }
+    MatrixDim2.prototype._initByDimModelData = function(dimModelData) {
+      var self = this;
+      var _cells = self._cells;
+      var _levels = self._levels;
+      var sameLocatorCellsLists = [];
+      var _cellCount = 0;
+      self._leavesCount = traverseInitCells(dimModelData, 0, 0);
+      postInitCells();
+      return;
+      function traverseInitCells(dimModelData2, firstLeafLocator, level) {
+        var totalSpan = 0;
+        if (!dimModelData2) {
+          return totalSpan;
+        }
+        each(dimModelData2, function(option, optionIdx) {
+          var invalidOption = false;
+          var cellOption;
+          if (isString(option)) {
+            cellOption = {
+              value: option
+            };
+          } else if (isObject(option)) {
+            cellOption = option;
+            if (option.value != null && !isString(option.value)) {
+              invalidOption = true;
+              cellOption = {
+                value: null
+              };
+            }
+          } else {
+            cellOption = {
+              value: null
+            };
+            if (option != null) {
+              invalidOption = true;
+            }
+          }
+          if (invalidOption) {
+            if (true) {
+              error("Illegal echarts option - matrix." + self.dim + ".data[" + optionIdx + "] must be `string | {value: string}`.");
+            }
+          }
+          var cell = {
+            type: MatrixCellLayoutInfoType.nonLeaf,
+            ordinal: NaN,
+            level,
+            firstLeafLocator,
+            id: new Point_default(),
+            span: setDimXYValue(new Point_default(), self.dimIdx, 1, 1),
+            option: cellOption,
+            xy: NaN,
+            wh: NaN,
+            dim: self,
+            rect: createNaNRectLike()
+          };
+          _cellCount++;
+          (sameLocatorCellsLists[firstLeafLocator] || (sameLocatorCellsLists[firstLeafLocator] = [])).push(cell);
+          if (!_levels[level]) {
+            _levels[level] = {
+              type: MatrixCellLayoutInfoType.level,
+              xy: NaN,
+              wh: NaN,
+              option: null,
+              id: new Point_default(),
+              dim: self
+            };
+          }
+          var childrenSpan = traverseInitCells(cellOption.children, firstLeafLocator, level + 1);
+          var subSpan = Math.max(1, childrenSpan);
+          cell.span[XY[self.dimIdx]] = subSpan;
+          totalSpan += subSpan;
+          firstLeafLocator += subSpan;
+        });
+        return totalSpan;
+      }
+      function postInitCells() {
+        var categories = [];
+        while (_cells.length < _cellCount) {
+          for (var locator = 0; locator < sameLocatorCellsLists.length; locator++) {
+            var cell = sameLocatorCellsLists[locator].pop();
+            if (cell) {
+              cell.ordinal = categories.length;
+              var val = cell.option.value;
+              categories.push(val);
+              _cells.push(cell);
+              self._uniqueValueGen.calcDupBase(val);
+            }
+          }
+        }
+        self._uniqueValueGen.ensureValueUnique(categories, _cells);
+        var ordinalMeta = self._ordinalMeta = new OrdinalMeta_default({
+          categories,
+          needCollect: false,
+          deduplication: false
+        });
+        self._scale = new Ordinal_default({
+          ordinalMeta
+        });
+        for (var idx = 0; idx < self._leavesCount; idx++) {
+          var leaf = self._cells[idx];
+          leaf.type = MatrixCellLayoutInfoType.leaf;
+          leaf.span[XY[1 - self.dimIdx]] = self._levels.length - leaf.level;
+        }
+        self._initCellsId();
+        self._initLevelIdOptions();
+      }
+    };
+    MatrixDim2.prototype._initBySeriesData = function() {
+      var self = this;
+      self._leavesCount = 0;
+      self._levels = [{
+        type: MatrixCellLayoutInfoType.level,
+        xy: NaN,
+        wh: NaN,
+        option: null,
+        id: new Point_default(),
+        dim: self
+      }];
+      self._initLevelIdOptions();
+      var ordinalMeta = self._ordinalMeta = new OrdinalMeta_default({
+        needCollect: true,
+        deduplication: true,
+        onCollect: function(value, ordinalNumber) {
+          var cell = self._cells[ordinalNumber] = {
+            type: MatrixCellLayoutInfoType.leaf,
+            ordinal: ordinalNumber,
+            level: 0,
+            firstLeafLocator: ordinalNumber,
+            id: new Point_default(),
+            span: setDimXYValue(new Point_default(), self.dimIdx, 1, 1),
+            // Theoretically `value` is from `dataset` or `series.data`, so it may be any type.
+            // Do not restrict this case for user's convenience, and here simply convert it to
+            // string for display.
+            option: {
+              value: value + ""
+            },
+            xy: NaN,
+            wh: NaN,
+            dim: self,
+            rect: createNaNRectLike()
+          };
+          self._leavesCount++;
+          self._setCellId(cell);
+        }
+      });
+      self._scale = new Ordinal_default({
+        ordinalMeta
+      });
+    };
+    MatrixDim2.prototype._setCellId = function(cell) {
+      var levelsLen = this._levels.length;
+      var dimIdx = this.dimIdx;
+      setDimXYValue(cell.id, dimIdx, cell.firstLeafLocator, cell.level - levelsLen);
+    };
+    MatrixDim2.prototype._initCellsId = function() {
+      var levelsLen = this._levels.length;
+      var dimIdx = this.dimIdx;
+      each(this._cells, function(cell) {
+        setDimXYValue(cell.id, dimIdx, cell.firstLeafLocator, cell.level - levelsLen);
+      });
+    };
+    MatrixDim2.prototype._initLevelIdOptions = function() {
+      var levelsLen = this._levels.length;
+      var dimIdx = this.dimIdx;
+      var levelOptionList = this._model.get("levels", true);
+      levelOptionList = isArray(levelOptionList) ? levelOptionList : [];
+      each(this._levels, function(levelCfg, level) {
+        setDimXYValue(levelCfg.id, dimIdx, 0, level - levelsLen);
+        levelCfg.option = levelOptionList[level];
+      });
+    };
+    MatrixDim2.prototype.shouldShow = function() {
+      return !!this._model.getShallow("show", true);
+    };
+    MatrixDim2.prototype.resetLayoutIterator = function(it, dimIdx, startLocator, count2) {
+      it = it || new ListIterator();
+      if (dimIdx === this.dimIdx) {
+        var len = this._leavesCount;
+        var startIdx = startLocator != null ? Math.max(0, startLocator) : 0;
+        count2 = count2 != null ? Math.min(count2, len) : len;
+        it.reset(this._cells, startIdx, startIdx + count2);
+      } else {
+        var len = this._levels.length;
+        var startIdx = startLocator != null ? Math.max(0, startLocator + len) : 0;
+        count2 = count2 != null ? Math.min(count2, len) : len;
+        it.reset(this._levels, startIdx, startIdx + count2);
+      }
+      return it;
+    };
+    MatrixDim2.prototype.resetCellIterator = function(it) {
+      return (it || new ListIterator()).reset(this._cells, 0);
+    };
+    MatrixDim2.prototype.resetLevelIterator = function(it) {
+      return (it || new ListIterator()).reset(this._levels, 0);
+    };
+    MatrixDim2.prototype.getLayout = function(outRect, dimIdx, locator) {
+      var layout3 = this.getUnitLayoutInfo(dimIdx, locator);
+      outRect[XY[dimIdx]] = layout3 ? layout3.xy : NaN;
+      outRect[WH[dimIdx]] = layout3 ? layout3.wh : NaN;
+    };
+    MatrixDim2.prototype.getUnitLayoutInfo = function(dimIdx, locator) {
+      return dimIdx === this.dimIdx ? locator < this._leavesCount ? this._cells[locator] : void 0 : this._levels[locator + this._levels.length];
+    };
+    MatrixDim2.prototype.getCell = function(value) {
+      var ordinal = this._scale.parse(value);
+      return eqNaN(ordinal) ? void 0 : this._cells[ordinal];
+    };
+    MatrixDim2.prototype.getLocatorCount = function(dimIdx) {
+      return dimIdx === this.dimIdx ? this._leavesCount : this._levels.length;
+    };
+    MatrixDim2.prototype.getOrdinalMeta = function() {
+      return this._ordinalMeta;
+    };
+    return MatrixDim2;
+  }()
+);
+function createUniqueValueGenerator(dim) {
+  var dimUpper = dim.toUpperCase();
+  var defaultValReg = new RegExp("^" + dimUpper + "([0-9]+)$");
+  var dupBase = 0;
+  function calcDupBase(val) {
+    var matchResult;
+    if (val != null && (matchResult = val.match(defaultValReg))) {
+      dupBase = mathMax(dupBase, +matchResult[1] + 1);
+    }
+  }
+  function makeUniqueValue() {
+    return "" + dimUpper + dupBase++;
+  }
+  function ensureValueUnique(categories, cells) {
+    var cateMap = createHashMap();
+    for (var idx = 0; idx < categories.length; idx++) {
+      var value = categories[idx];
+      if (value == null || cateMap.get(value) != null) {
+        categories[idx] = value = makeUniqueValue();
+        cells[idx].option = defaults({
+          value
+        }, cells[idx].option);
+      }
+      cateMap.set(value, true);
+    }
+  }
+  return {
+    calcDupBase,
+    ensureValueUnique
+  };
+}
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/matrix/MatrixBodyCorner.js
+var MatrixBodyCorner = (
+  /** @class */
+  function() {
+    function MatrixBodyCorner2(kind, bodyOrCornerModel, dims) {
+      this._model = bodyOrCornerModel;
+      this._dims = dims;
+      this._kind = kind;
+      this._cellMergeOwnerList = [];
+    }
+    MatrixBodyCorner2.prototype._ensureCellMap = function() {
+      var self = this;
+      var _cellMap = self._cellMap;
+      if (!_cellMap) {
+        _cellMap = self._cellMap = createHashMap();
+        fillCellMap();
+      }
+      return _cellMap;
+      function fillCellMap() {
+        var parsedList = [];
+        var cellOptionList = self._model.getShallow("data");
+        if (cellOptionList && !isArray(cellOptionList)) {
+          if (true) {
+            error("matrix." + cellOptionList + ".data must be an array if specified.");
+          }
+          cellOptionList = null;
+        }
+        each(cellOptionList, function(option, idx2) {
+          if (!isObject(option) || !isArray(option.coord)) {
+            if (true) {
+              error("Illegal matrix." + self._kind + ".data[" + idx2 + "], must be a {coord: [...], ...}");
+            }
+            return;
+          }
+          var locatorRange2 = resetXYLocatorRange([]);
+          var reasonArr = null;
+          if (true) {
+            reasonArr = [];
+          }
+          parseCoordRangeOption(locatorRange2, reasonArr, option.coord, self._dims, option.coordClamp ? MatrixClampOption[self._kind] : MatrixClampOption.none);
+          if (isXYLocatorRangeInvalidOnDim(locatorRange2, 0) || isXYLocatorRangeInvalidOnDim(locatorRange2, 1)) {
+            if (true) {
+              error("Can not determine cells by option matrix." + self._kind + ".data[" + idx2 + "]: " + ("" + reasonArr.join(" ")));
+            }
+            return;
+          }
+          var cellMergeOwner = option && option.mergeCells;
+          var parsed2 = {
+            id: new Point_default(),
+            span: new Point_default(),
+            locatorRange: locatorRange2,
+            option,
+            cellMergeOwner
+          };
+          fillIdSpanFromLocatorRange(parsed2, locatorRange2);
+          parsedList.push(parsed2);
+        });
+        var mergedMarkList = [];
+        for (var parsedIdx = 0; parsedIdx < parsedList.length; parsedIdx++) {
+          var parsed = parsedList[parsedIdx];
+          if (!parsed.cellMergeOwner) {
+            continue;
+          }
+          var locatorRange = parsed.locatorRange;
+          resolveXYLocatorRangeByCellMerge(locatorRange, mergedMarkList, parsedList, parsedIdx);
+          for (var idx = 0; idx < parsedIdx; idx++) {
+            if (mergedMarkList[idx]) {
+              parsedList[idx].cellMergeOwner = false;
+            }
+          }
+          if (locatorRange[0][0] !== parsed.id.x || locatorRange[1][0] !== parsed.id.y) {
+            parsed.cellMergeOwner = false;
+            var newOption = extend({}, parsed.option);
+            newOption.coord = null;
+            var newParsed = {
+              id: new Point_default(),
+              span: new Point_default(),
+              locatorRange,
+              option: newOption,
+              cellMergeOwner: true
+            };
+            fillIdSpanFromLocatorRange(newParsed, locatorRange);
+            parsedList.push(newParsed);
+          }
+        }
+        each(parsedList, function(parsed2) {
+          var topLeftCell = ensureBodyOrCornerCell(parsed2.id.x, parsed2.id.y);
+          if (parsed2.cellMergeOwner) {
+            topLeftCell.cellMergeOwner = true;
+            topLeftCell.span = parsed2.span;
+            topLeftCell.locatorRange = parsed2.locatorRange;
+            topLeftCell.spanRect = createNaNRectLike();
+            self._cellMergeOwnerList.push(topLeftCell);
+          }
+          if (!parsed2.cellMergeOwner && !parsed2.option) {
+            return;
+          }
+          for (var yidx = 0; yidx < parsed2.span.y; yidx++) {
+            for (var xidx = 0; xidx < parsed2.span.x; xidx++) {
+              var cell = ensureBodyOrCornerCell(parsed2.id.x + xidx, parsed2.id.y + yidx);
+              cell.option = parsed2.option;
+              if (parsed2.cellMergeOwner) {
+                cell.inSpanOf = topLeftCell;
+              }
+            }
+          }
+        });
+      }
+      function ensureBodyOrCornerCell(x, y) {
+        var key = makeCellMapKey(x, y);
+        var cell = _cellMap.get(key);
+        if (!cell) {
+          cell = _cellMap.set(key, {
+            id: new Point_default(x, y),
+            option: null,
+            inSpanOf: null,
+            span: null,
+            spanRect: null,
+            locatorRange: null,
+            cellMergeOwner: false
+          });
+        }
+        return cell;
+      }
+    };
+    MatrixBodyCorner2.prototype.getCell = function(xy) {
+      return this._ensureCellMap().get(makeCellMapKey(xy[0], xy[1]));
+    };
+    MatrixBodyCorner2.prototype.travelExistingCells = function(cb) {
+      this._ensureCellMap().each(cb);
+    };
+    MatrixBodyCorner2.prototype.expandRangeByCellMerge = function(locatorRange) {
+      if (!isXYLocatorRangeInvalidOnDim(locatorRange, 0) && !isXYLocatorRangeInvalidOnDim(locatorRange, 1) && locatorRange[0][0] === locatorRange[0][1] && locatorRange[1][0] === locatorRange[1][1]) {
+        _tmpERBCMLocator[0] = locatorRange[0][0];
+        _tmpERBCMLocator[1] = locatorRange[1][0];
+        var cell = this.getCell(_tmpERBCMLocator);
+        var inSpanOf = cell && cell.inSpanOf;
+        if (inSpanOf) {
+          cloneXYLocatorRange(locatorRange, inSpanOf.locatorRange);
+          return;
+        }
+      }
+      var list = this._cellMergeOwnerList;
+      resolveXYLocatorRangeByCellMerge(locatorRange, null, list, list.length);
+    };
+    return MatrixBodyCorner2;
+  }()
+);
+var _tmpERBCMLocator = [];
+function makeCellMapKey(x, y) {
+  return x + "|" + y;
+}
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/matrix/MatrixModel.js
+var defaultLabelOption = {
+  show: true,
+  color: tokens_default.color.secondary,
+  // overflow: 'truncate',
+  overflow: "break",
+  lineOverflow: "truncate",
+  padding: [2, 3, 2, 3],
+  // Prefer to use `padding`, rather than distance.
+  distance: 0
+};
+function makeDefaultCellItemStyleOption(isCorner) {
+  return {
+    color: "none",
+    borderWidth: 1,
+    borderColor: isCorner ? "none" : tokens_default.color.borderTint
+  };
+}
+var defaultDimOption = {
+  show: true,
+  label: defaultLabelOption,
+  itemStyle: makeDefaultCellItemStyleOption(false),
+  silent: void 0,
+  dividerLineStyle: {
+    width: 1,
+    color: tokens_default.color.border
+  }
+};
+var defaultBodyOption = {
+  label: defaultLabelOption,
+  itemStyle: makeDefaultCellItemStyleOption(false),
+  silent: void 0
+};
+var defaultCornerOption = {
+  label: defaultLabelOption,
+  itemStyle: makeDefaultCellItemStyleOption(true),
+  silent: void 0
+};
+var defaultMatrixOption = {
+  // As a most basic coord sys, `z` should be lower than
+  // other series and coord sys, such as, grid.
+  z: -50,
+  left: "10%",
+  top: "10%",
+  right: "10%",
+  bottom: "10%",
+  x: defaultDimOption,
+  y: defaultDimOption,
+  body: defaultBodyOption,
+  corner: defaultCornerOption,
+  backgroundStyle: {
+    color: "none",
+    borderColor: tokens_default.color.axisLine,
+    borderWidth: 1
+  }
+};
+var MatrixModel = (
+  /** @class */
+  function(_super) {
+    __extends(MatrixModel2, _super);
+    function MatrixModel2() {
+      var _this = _super !== null && _super.apply(this, arguments) || this;
+      _this.type = MatrixModel2.type;
+      return _this;
+    }
+    MatrixModel2.prototype.optionUpdated = function() {
+      var dimModels = this._dimModels = {
+        // Do not use matrixModel as the parent model, for preventing from cascade-fetching options to it.
+        x: new MatrixDimensionModel(this.get("x", true) || {}),
+        y: new MatrixDimensionModel(this.get("y", true) || {})
+      };
+      dimModels.x.option.type = dimModels.y.option.type = "category";
+      var xDim = dimModels.x.dim = new MatrixDim("x", dimModels.x);
+      var yDim = dimModels.y.dim = new MatrixDim("y", dimModels.y);
+      var dims = {
+        x: xDim,
+        y: yDim
+      };
+      this._body = new MatrixBodyCorner("body", new Model_default(this.getShallow("body")), dims);
+      this._corner = new MatrixBodyCorner("corner", new Model_default(this.getShallow("corner")), dims);
+    };
+    MatrixModel2.prototype.getDimensionModel = function(dim) {
+      return this._dimModels[dim];
+    };
+    MatrixModel2.prototype.getBody = function() {
+      return this._body;
+    };
+    MatrixModel2.prototype.getCorner = function() {
+      return this._corner;
+    };
+    MatrixModel2.type = "matrix";
+    MatrixModel2.layoutMode = "box";
+    MatrixModel2.defaultOption = defaultMatrixOption;
+    return MatrixModel2;
+  }(Component_default)
+);
+var MatrixDimensionModel = (
+  /** @class */
+  function(_super) {
+    __extends(MatrixDimensionModel2, _super);
+    function MatrixDimensionModel2() {
+      return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MatrixDimensionModel2.prototype.getOrdinalMeta = function() {
+      return this.dim.getOrdinalMeta();
+    };
+    return MatrixDimensionModel2;
+  }(Model_default)
+);
+var MatrixModel_default = MatrixModel;
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/matrix/MatrixView.js
+var round = Math.round;
+var Z2_BACKGROUND = 0;
+var Z2_OUTER_BORDER = 99;
+var Z2_BODY_CORNER_CELL_DEFAULT = {
+  normal: 25,
+  special: 100
+};
+var Z2_DIMENSION_CELL_DEFAULT = {
+  normal: 50,
+  special: 125
+};
+var MatrixView = (
+  /** @class */
+  function(_super) {
+    __extends(MatrixView2, _super);
+    function MatrixView2() {
+      var _this = _super !== null && _super.apply(this, arguments) || this;
+      _this.type = MatrixView2.type;
+      return _this;
+    }
+    MatrixView2.prototype.render = function(matrixModel, ecModel) {
+      this.group.removeAll();
+      var group = this.group;
+      var coordSys = matrixModel.coordinateSystem;
+      var rect = coordSys.getRect();
+      var xDimModel = matrixModel.getDimensionModel("x");
+      var yDimModel = matrixModel.getDimensionModel("y");
+      var xDim = xDimModel.dim;
+      var yDim = yDimModel.dim;
+      renderDimensionCells(group, matrixModel, ecModel);
+      createBodyAndCorner(group, matrixModel, xDim, yDim, ecModel);
+      var borderZ2Option = matrixModel.getShallow("borderZ2", true);
+      var outerBorderZ2 = retrieve2(borderZ2Option, Z2_OUTER_BORDER);
+      var dividerLineZ2 = outerBorderZ2 - 1;
+      var bgStyle = matrixModel.getModel("backgroundStyle").getItemStyle(["borderWidth"]);
+      bgStyle.lineWidth = 0;
+      var borderStyle = matrixModel.getModel("backgroundStyle").getItemStyle(["color", "decal", "shadowColor", "shadowBlur", "shadowOffsetX", "shadowOffsetY"]);
+      borderStyle.fill = "none";
+      var bgRect = createMatrixRect(rect.clone(), bgStyle, Z2_BACKGROUND);
+      var borderRect = createMatrixRect(rect.clone(), borderStyle, outerBorderZ2);
+      bgRect.silent = true;
+      borderRect.silent = true;
+      group.add(bgRect);
+      group.add(borderRect);
+      var xDimCell0 = xDim.getUnitLayoutInfo(0, 0);
+      var yDimCell0 = yDim.getUnitLayoutInfo(1, 0);
+      if (xDimCell0 && yDimCell0) {
+        if (xDim.shouldShow()) {
+          group.add(createMatrixLine({
+            x1: rect.x,
+            y1: yDimCell0.xy,
+            x2: rect.x + rect.width,
+            y2: yDimCell0.xy
+          }, xDimModel.getModel("dividerLineStyle").getLineStyle(), dividerLineZ2));
+        }
+        if (yDim.shouldShow()) {
+          group.add(createMatrixLine({
+            x1: xDimCell0.xy,
+            y1: rect.y,
+            x2: xDimCell0.xy,
+            y2: rect.y + rect.height
+          }, yDimModel.getModel("dividerLineStyle").getLineStyle(), dividerLineZ2));
+        }
+      }
+    };
+    MatrixView2.type = "matrix";
+    return MatrixView2;
+  }(Component_default2)
+);
+function renderDimensionCells(group, matrixModel, ecModel) {
+  renderOnDimension(0);
+  renderOnDimension(1);
+  function renderOnDimension(dimIdx) {
+    var thisDimModel = matrixModel.getDimensionModel(XY[dimIdx]);
+    var thisDim = thisDimModel.dim;
+    if (!thisDim.shouldShow()) {
+      return;
+    }
+    var thisDimBgStyleModel = thisDimModel.getModel("itemStyle");
+    var thisDimLabelModel = thisDimModel.getModel("label");
+    var tooltipOption = matrixModel.getShallow("tooltip", true);
+    var xyLocator = [];
+    for (var it_1 = thisDim.resetCellIterator(); it_1.next(); ) {
+      var dimCell = it_1.item;
+      var shape = {};
+      BoundingRect_default.copy(shape, dimCell.rect);
+      set(xyLocator, dimCell.id.x, dimCell.id.y);
+      createMatrixCell(xyLocator, matrixModel, group, ecModel, dimCell.option, thisDimBgStyleModel, thisDimLabelModel, thisDimModel, shape, dimCell.option.value, Z2_DIMENSION_CELL_DEFAULT, tooltipOption);
+    }
+  }
+}
+function createBodyAndCorner(group, matrixModel, xDim, yDim, ecModel) {
+  createBodyOrCornerCells("body", matrixModel.getBody(), xDim, yDim);
+  if (xDim.shouldShow() && yDim.shouldShow()) {
+    createBodyOrCornerCells("corner", matrixModel.getCorner(), yDim, xDim);
+  }
+  function createBodyOrCornerCells(bodyCornerOptionRoot, bodyOrCorner, dimForCoordX, dimForCoordY) {
+    var parentCellModel = new Model_default(matrixModel.getShallow(bodyCornerOptionRoot, true));
+    var parentItemStyleModel = parentCellModel.getModel("itemStyle");
+    var parentLabelModel = parentCellModel.getModel("label");
+    var itx = new ListIterator();
+    var ity = new ListIterator();
+    var xyLocator = [];
+    var tooltipOption = matrixModel.getShallow("tooltip", true);
+    for (dimForCoordY.resetLayoutIterator(ity, 1); ity.next(); ) {
+      for (dimForCoordX.resetLayoutIterator(itx, 0); itx.next(); ) {
+        var xLayout = itx.item;
+        var yLayout = ity.item;
+        set(xyLocator, xLayout.id.x, yLayout.id.y);
+        var bodyCornerCell = bodyOrCorner.getCell(xyLocator);
+        if (bodyCornerCell && bodyCornerCell.inSpanOf && bodyCornerCell.inSpanOf !== bodyCornerCell) {
+          continue;
+        }
+        var shape = {};
+        if (bodyCornerCell && bodyCornerCell.span) {
+          BoundingRect_default.copy(shape, bodyCornerCell.spanRect);
+        } else {
+          xLayout.dim.getLayout(shape, 0, xyLocator[0]);
+          yLayout.dim.getLayout(shape, 1, xyLocator[1]);
+        }
+        var bodyCornerCellOption = bodyCornerCell ? bodyCornerCell.option : null;
+        createMatrixCell(xyLocator, matrixModel, group, ecModel, bodyCornerCellOption, parentItemStyleModel, parentLabelModel, parentCellModel, shape, bodyCornerCellOption ? bodyCornerCellOption.value : null, Z2_BODY_CORNER_CELL_DEFAULT, tooltipOption);
+      }
+    }
+  }
+}
+function createMatrixCell(xyLocator, matrixModel, group, ecModel, cellOption, parentItemStyleModel, parentLabelModel, parentCellModel, shape, textValue, zrCellDefault, tooltipOption) {
+  var _a;
+  _tmpCellItemStyleModel.option = cellOption ? cellOption.itemStyle : null;
+  _tmpCellItemStyleModel.parentModel = parentItemStyleModel;
+  _tmpCellModel.option = cellOption;
+  _tmpCellModel.parentModel = parentCellModel;
+  var z2 = retrieve2(_tmpCellModel.getShallow("z2"), cellOption && cellOption.itemStyle ? zrCellDefault.special : zrCellDefault.normal);
+  var tooltipOptionShow = tooltipOption && tooltipOption.show;
+  var cellRect = createMatrixRect(shape, _tmpCellItemStyleModel.getItemStyle(), z2);
+  group.add(cellRect);
+  var cursorOption = _tmpCellModel.get("cursor");
+  if (cursorOption != null) {
+    cellRect.attr("cursor", cursorOption);
+  }
+  var cellText;
+  if (textValue != null) {
+    var text = textValue + "";
+    _tmpCellLabelModel.option = cellOption ? cellOption.label : null;
+    _tmpCellLabelModel.parentModel = parentLabelModel;
+    _tmpCellLabelModel.ecModel = ecModel;
+    setLabelStyle(
+      cellRect,
+      // Currently do not support other states (`emphasis`, `select`, `blur`)
+      {
+        normal: _tmpCellLabelModel
+      },
+      {
+        defaultText: text,
+        autoOverflowArea: true,
+        // By default based on boundingRect. But boundingRect contains borderWidth,
+        // and borderWidth is half outside the cell. Thus specific `layoutRect` explicitly.
+        layoutRect: clone(cellRect.shape)
+      }
+    );
+    cellText = cellRect.getTextContent();
+    if (cellText) {
+      cellText.z2 = z2 + 1;
+      var style = cellText.style;
+      if (style && style.overflow && style.overflow !== "none" && style.lineOverflow) {
+        var clipShape = {};
+        BoundingRect_default.copy(clipShape, shape);
+        expandOrShrinkRect(clipShape, (((_a = cellRect.style) === null || _a === void 0 ? void 0 : _a.lineWidth) || 0) / 2, true, true);
+        cellRect.updateInnerText();
+        cellText.getLocalTransform(_tmpInnerTextTrans);
+        invert(_tmpInnerTextTrans, _tmpInnerTextTrans);
+        BoundingRect_default.applyTransform(clipShape, clipShape, _tmpInnerTextTrans);
+        cellText.setClipPath(new Rect_default({
+          shape: clipShape
+        }));
+      }
+    }
+    setTooltipConfig({
+      el: cellRect,
+      componentModel: matrixModel,
+      itemName: text,
+      itemTooltipOption: tooltipOption,
+      formatterParamsExtra: {
+        xyLocator: xyLocator.slice()
+      }
+    });
+  }
+  if (cellText) {
+    var labelSilent = _tmpCellLabelModel.get("silent");
+    if (labelSilent == null) {
+      labelSilent = !tooltipOptionShow;
+    }
+    cellText.silent = labelSilent;
+    cellText.ignoreHostSilent = true;
+  }
+  var rectSilent = _tmpCellModel.get("silent");
+  if (rectSilent == null) {
+    rectSilent = // If no background color in cell, set `rect.silent: false` will cause that only
+    // the border response to mouse hovering, which is probably weird.
+    !cellRect.style || cellRect.style.fill === "none" || !cellRect.style.fill;
+  }
+  cellRect.silent = rectSilent;
+  clearTmpModel(_tmpCellModel);
+  clearTmpModel(_tmpCellItemStyleModel);
+  clearTmpModel(_tmpCellLabelModel);
+}
+var _tmpCellModel = new Model_default();
+var _tmpCellItemStyleModel = new Model_default();
+var _tmpCellLabelModel = new Model_default();
+var _tmpInnerTextTrans = [];
+function createMatrixRect(shape, style, z2) {
+  var lineWidth = style.lineWidth;
+  if (lineWidth) {
+    var x2Original = shape.x + shape.width;
+    var y2Original = shape.y + shape.height;
+    shape.x = subPixelOptimize(shape.x, lineWidth, true);
+    shape.y = subPixelOptimize(shape.y, lineWidth, true);
+    shape.width = subPixelOptimize(x2Original, lineWidth, true) - shape.x;
+    shape.height = subPixelOptimize(y2Original, lineWidth, true) - shape.y;
+  }
+  return new Rect_default({
+    shape,
+    style,
+    z2
+  });
+}
+function createMatrixLine(shape, style, z2) {
+  var lineWidth = style.lineWidth;
+  if (lineWidth) {
+    if (round(shape.x1 * 2) === round(shape.x2 * 2)) {
+      shape.x1 = shape.x2 = subPixelOptimize(shape.x1, lineWidth, true);
+    }
+    if (round(shape.y1 * 2) === round(shape.y2 * 2)) {
+      shape.y1 = shape.y2 = subPixelOptimize(shape.y1, lineWidth, true);
+    }
+  }
+  return new Line_default({
+    shape,
+    style,
+    silent: true,
+    z2
+  });
+}
+var MatrixView_default = MatrixView;
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/matrix/Matrix.js
+var Matrix = (
+  /** @class */
+  function() {
+    function Matrix2(matrixModel, ecModel, api) {
+      this.dimensions = Matrix2.dimensions;
+      this.type = "matrix";
+      this._model = matrixModel;
+      var models = this._dimModels = {
+        x: matrixModel.getDimensionModel("x"),
+        y: matrixModel.getDimensionModel("y")
+      };
+      this._dims = {
+        x: models.x.dim,
+        y: models.y.dim
+      };
+      this._resize(matrixModel, api);
+    }
+    Matrix2.getDimensionsInfo = function() {
+      return [{
+        name: "x",
+        type: "ordinal"
+      }, {
+        name: "y",
+        type: "ordinal"
+      }, {
+        name: "value"
+      }];
+    };
+    Matrix2.create = function(ecModel, api) {
+      var matrixList = [];
+      ecModel.eachComponent("matrix", function(matrixModel) {
+        var matrix = new Matrix2(matrixModel, ecModel, api);
+        matrixList.push(matrix);
+        matrixModel.coordinateSystem = matrix;
+      });
+      ecModel.eachComponent(function(mainType, componentModel) {
+        injectCoordSysByOption({
+          targetModel: componentModel,
+          coordSysType: "matrix",
+          coordSysProvider: simpleCoordSysInjectionProvider
+        });
+      });
+      return matrixList;
+    };
+    Matrix2.prototype.getRect = function() {
+      return this._rect;
+    };
+    Matrix2.prototype._resize = function(matrixModel, api) {
+      var dims = this._dims;
+      var dimModels = this._dimModels;
+      var rect = this._rect = getLayoutRect(matrixModel.getBoxLayoutParams(), {
+        width: api.getWidth(),
+        height: api.getHeight()
+      });
+      layOutUnitsOnDimension(dimModels, dims, rect, 0);
+      layOutUnitsOnDimension(dimModels, dims, rect, 1);
+      layOutDimCellsRestInfoByUnit(0, dims);
+      layOutDimCellsRestInfoByUnit(1, dims);
+      layOutBodyCornerCellMerge(this._model.getBody(), dims);
+      layOutBodyCornerCellMerge(this._model.getCorner(), dims);
+    };
+    Matrix2.prototype.dataToPoint = function(data, opt, out) {
+      out = out || [];
+      this.dataToLayout(data, opt, _dtpOutDataToLayout);
+      out[0] = _dtpOutDataToLayout.rect.x + _dtpOutDataToLayout.rect.width / 2;
+      out[1] = _dtpOutDataToLayout.rect.y + _dtpOutDataToLayout.rect.height / 2;
+      return out;
+    };
+    Matrix2.prototype.dataToLayout = function(data, opt, out) {
+      var dims = this._dims;
+      out = out || {};
+      var outRect = out.rect = out.rect || {};
+      outRect.x = outRect.y = outRect.width = outRect.height = NaN;
+      var outLocRange = out.matrixXYLocatorRange = resetXYLocatorRange(out.matrixXYLocatorRange);
+      if (!isArray(data)) {
+        if (true) {
+          error("Input data must be an array in `convertToLayout`, `convertToPixel`");
+        }
+        return out;
+      }
+      parseCoordRangeOption(outLocRange, null, data, dims, retrieve2(opt && opt.clamp, MatrixClampOption.none));
+      if (!opt || !opt.ignoreMergeCells) {
+        if (!opt || opt.clamp !== MatrixClampOption.corner) {
+          this._model.getBody().expandRangeByCellMerge(outLocRange);
+        }
+        if (!opt || opt.clamp !== MatrixClampOption.body) {
+          this._model.getCorner().expandRangeByCellMerge(outLocRange);
+        }
+      }
+      xyLocatorRangeToRectOneDim(outRect, outLocRange, dims, 0);
+      xyLocatorRangeToRectOneDim(outRect, outLocRange, dims, 1);
+      return out;
+    };
+    Matrix2.prototype.pointToData = function(point, opt, out) {
+      var dims = this._dims;
+      pointToDataOneDimPrepareCtx(_tmpCtxPointToData, 0, dims, point, opt && opt.clamp);
+      pointToDataOneDimPrepareCtx(_tmpCtxPointToData, 1, dims, point, opt && opt.clamp);
+      out = out || [];
+      out[0] = out[1] = NaN;
+      if (_tmpCtxPointToData.y === CtxPointToDataAreaType.inCorner && _tmpCtxPointToData.x === CtxPointToDataAreaType.inBody) {
+        pointToDataOnlyHeaderFillOut(_tmpCtxPointToData, out, 0, dims);
+      } else if (_tmpCtxPointToData.x === CtxPointToDataAreaType.inCorner && _tmpCtxPointToData.y === CtxPointToDataAreaType.inBody) {
+        pointToDataOnlyHeaderFillOut(_tmpCtxPointToData, out, 1, dims);
+      } else {
+        pointToDataBodyCornerFillOut(_tmpCtxPointToData, out, 0, dims);
+        pointToDataBodyCornerFillOut(_tmpCtxPointToData, out, 1, dims);
+      }
+      return out;
+    };
+    Matrix2.prototype.convertToPixel = function(ecModel, finder, value, opt) {
+      var coordSys = getCoordSys4(finder);
+      return coordSys === this ? coordSys.dataToPoint(value, opt) : void 0;
+    };
+    Matrix2.prototype.convertToLayout = function(ecModel, finder, value, opt) {
+      var coordSys = getCoordSys4(finder);
+      return coordSys === this ? coordSys.dataToLayout(value, opt) : void 0;
+    };
+    Matrix2.prototype.convertFromPixel = function(ecModel, finder, pixel, opt) {
+      var coordSys = getCoordSys4(finder);
+      return coordSys === this ? coordSys.pointToData(pixel, opt) : void 0;
+    };
+    Matrix2.prototype.containPoint = function(point) {
+      return this._rect.contain(point[0], point[1]);
+    };
+    Matrix2.dimensions = ["x", "y", "value"];
+    return Matrix2;
+  }()
+);
+var _dtpOutDataToLayout = {
+  rect: createNaNRectLike()
+};
+var _ptdLevelIt = new ListIterator();
+var _ptdDimCellIt = new ListIterator();
+function layOutUnitsOnDimension(dimModels, dims, matrixRect, dimIdx) {
+  var otherDimIdx = 1 - dimIdx;
+  var thisDim = dims[XY[dimIdx]];
+  var otherDim = dims[XY[otherDimIdx]];
+  var otherDimShow = otherDim.shouldShow();
+  for (var it_1 = thisDim.resetCellIterator(); it_1.next(); ) {
+    it_1.item.wh = it_1.item.xy = NaN;
+  }
+  for (var it_2 = otherDim.resetLayoutIterator(null, dimIdx); it_2.next(); ) {
+    it_2.item.wh = it_2.item.xy = NaN;
+  }
+  var restSize = matrixRect[WH[dimIdx]];
+  var restCellsCount = thisDim.getLocatorCount(dimIdx) + otherDim.getLocatorCount(dimIdx);
+  var tmpLevelModel = new Model_default();
+  for (var it_3 = otherDim.resetLevelIterator(); it_3.next(); ) {
+    tmpLevelModel.option = it_3.item.option;
+    tmpLevelModel.parentModel = dimModels[XY[otherDimIdx]];
+    layOutSpecified(it_3.item, otherDimShow ? tmpLevelModel.get("levelSize") : 0);
+  }
+  var tmpCellModel = new Model_default();
+  for (var it_4 = thisDim.resetCellIterator(); it_4.next(); ) {
+    if (it_4.item.type === MatrixCellLayoutInfoType.leaf) {
+      tmpCellModel.option = it_4.item.option;
+      tmpCellModel.parentModel = void 0;
+      layOutSpecified(it_4.item, tmpCellModel.get("size"));
+    }
+  }
+  function layOutSpecified(item, sizeOption) {
+    var size = parseSizeOption(sizeOption, dimIdx, matrixRect);
+    if (!eqNaN(size)) {
+      item.wh = confineSize(size, restSize);
+      restSize = confineSize(restSize - item.wh);
+      restCellsCount--;
+    }
+  }
+  var computedCellWH = restCellsCount ? restSize / restCellsCount : 0;
+  var notAlignToBigmost = !restCellsCount && restSize >= 1;
+  var currXY = matrixRect[XY[dimIdx]];
+  var maxLocator = thisDim.getLocatorCount(dimIdx) - 1;
+  var it = new ListIterator();
+  for (otherDim.resetLayoutIterator(it, dimIdx); it.next(); ) {
+    layOutUnspecified(it.item);
+  }
+  for (thisDim.resetLayoutIterator(it, dimIdx); it.next(); ) {
+    layOutUnspecified(it.item);
+  }
+  function layOutUnspecified(item) {
+    if (eqNaN(item.wh)) {
+      item.wh = computedCellWH;
+    }
+    item.xy = currXY;
+    if (item.id[XY[dimIdx]] === maxLocator && !notAlignToBigmost) {
+      item.wh = matrixRect[XY[dimIdx]] + matrixRect[WH[dimIdx]] - item.xy;
+    }
+    currXY += item.wh;
+  }
+}
+function layOutDimCellsRestInfoByUnit(dimIdx, dims) {
+  for (var it_5 = dims[XY[dimIdx]].resetCellIterator(); it_5.next(); ) {
+    var dimCell = it_5.item;
+    layOutRectOneDimBasedOnUnit(dimCell.rect, dimIdx, dimCell.id, dimCell.span, dims);
+    layOutRectOneDimBasedOnUnit(dimCell.rect, 1 - dimIdx, dimCell.id, dimCell.span, dims);
+    if (dimCell.type === MatrixCellLayoutInfoType.nonLeaf) {
+      dimCell.xy = dimCell.rect[XY[dimIdx]];
+      dimCell.wh = dimCell.rect[WH[dimIdx]];
+    }
+  }
+}
+function layOutBodyCornerCellMerge(bodyOrCorner, dims) {
+  bodyOrCorner.travelExistingCells(function(cell) {
+    var computedSpan = cell.span;
+    if (computedSpan) {
+      var layoutRect = cell.spanRect;
+      var id = cell.id;
+      layOutRectOneDimBasedOnUnit(layoutRect, 0, id, computedSpan, dims);
+      layOutRectOneDimBasedOnUnit(layoutRect, 1, id, computedSpan, dims);
+    }
+  });
+}
+function layOutRectOneDimBasedOnUnit(outRect, dimIdx, id, span, dims) {
+  outRect[WH[dimIdx]] = 0;
+  var locator = id[XY[dimIdx]];
+  var dim = locator < 0 ? dims[XY[1 - dimIdx]] : dims[XY[dimIdx]];
+  var layoutUnit = dim.getUnitLayoutInfo(dimIdx, id[XY[dimIdx]]);
+  outRect[XY[dimIdx]] = layoutUnit.xy;
+  outRect[WH[dimIdx]] = layoutUnit.wh;
+  if (span[XY[dimIdx]] > 1) {
+    var layoutUnit2 = dim.getUnitLayoutInfo(dimIdx, id[XY[dimIdx]] + span[XY[dimIdx]] - 1);
+    outRect[WH[dimIdx]] = layoutUnit2.xy + layoutUnit2.wh - layoutUnit.xy;
+  }
+}
+function parseSizeOption(sizeOption, dimIdx, matrixRect) {
+  var sizeNum = parsePositionSizeOption(sizeOption, matrixRect[WH[dimIdx]]);
+  return confineSize(sizeNum, matrixRect[WH[dimIdx]]);
+}
+function confineSize(sizeNum, sizeLimit) {
+  return Math.max(Math.min(sizeNum, retrieve2(sizeLimit, Infinity)), 0);
+}
+function getCoordSys4(finder) {
+  var matrixModel = finder.matrixModel;
+  var seriesModel = finder.seriesModel;
+  var coordSys = matrixModel ? matrixModel.coordinateSystem : seriesModel ? seriesModel.coordinateSystem : null;
+  return coordSys;
+}
+var CtxPointToDataAreaType = {
+  inBody: 1,
+  inCorner: 2,
+  outside: 3
+};
+var _tmpCtxPointToData = {
+  x: null,
+  y: null,
+  point: []
+};
+function pointToDataOneDimPrepareCtx(ctx, dimIdx, dims, point, clamp) {
+  var thisDim = dims[XY[dimIdx]];
+  var otherDim = dims[XY[1 - dimIdx]];
+  var bodyMaxUnit = thisDim.getUnitLayoutInfo(dimIdx, thisDim.getLocatorCount(dimIdx) - 1);
+  var body0Unit = thisDim.getUnitLayoutInfo(dimIdx, 0);
+  var cornerMinUnit = otherDim.getUnitLayoutInfo(dimIdx, -otherDim.getLocatorCount(dimIdx));
+  var cornerMinus1Unit = otherDim.shouldShow() ? otherDim.getUnitLayoutInfo(dimIdx, -1) : null;
+  var coord = ctx.point[dimIdx] = point[dimIdx];
+  if (!body0Unit && !cornerMinus1Unit) {
+    ctx[XY[dimIdx]] = CtxPointToDataAreaType.outside;
+    return;
+  }
+  if (clamp === MatrixClampOption.body) {
+    if (body0Unit) {
+      ctx[XY[dimIdx]] = CtxPointToDataAreaType.inBody;
+      coord = mathMin(bodyMaxUnit.xy + bodyMaxUnit.wh, mathMax(body0Unit.xy, coord));
+      ctx.point[dimIdx] = coord;
+    } else {
+      ctx[XY[dimIdx]] = CtxPointToDataAreaType.outside;
+    }
+    return;
+  } else if (clamp === MatrixClampOption.corner) {
+    if (cornerMinus1Unit) {
+      ctx[XY[dimIdx]] = CtxPointToDataAreaType.inCorner;
+      coord = mathMin(cornerMinus1Unit.xy + cornerMinus1Unit.wh, mathMax(cornerMinUnit.xy, coord));
+      ctx.point[dimIdx] = coord;
+    } else {
+      ctx[XY[dimIdx]] = CtxPointToDataAreaType.outside;
+    }
+    return;
+  }
+  var pxLoc0 = body0Unit ? body0Unit.xy : cornerMinus1Unit ? cornerMinus1Unit.xy + cornerMinus1Unit.wh : NaN;
+  var pxMin = cornerMinUnit ? cornerMinUnit.xy : pxLoc0;
+  var pxMax = bodyMaxUnit ? bodyMaxUnit.xy + bodyMaxUnit.wh : pxLoc0;
+  if (coord < pxMin) {
+    if (!clamp) {
+      ctx[XY[dimIdx]] = CtxPointToDataAreaType.outside;
+      return;
+    }
+    coord = pxMin;
+  } else if (coord > pxMax) {
+    if (!clamp) {
+      ctx[XY[dimIdx]] = CtxPointToDataAreaType.outside;
+      return;
+    }
+    coord = pxMax;
+  }
+  ctx.point[dimIdx] = coord;
+  ctx[XY[dimIdx]] = pxLoc0 <= coord && coord <= pxMax ? CtxPointToDataAreaType.inBody : pxMin <= coord && coord <= pxLoc0 ? CtxPointToDataAreaType.inCorner : CtxPointToDataAreaType.outside;
+}
+function pointToDataOnlyHeaderFillOut(ctx, partialOut, dimIdx, dims) {
+  var otherDimIdx = 1 - dimIdx;
+  if (ctx[XY[dimIdx]] === CtxPointToDataAreaType.outside) {
+    return;
+  }
+  for (dims[XY[dimIdx]].resetCellIterator(_ptdDimCellIt); _ptdDimCellIt.next(); ) {
+    var cell = _ptdDimCellIt.item;
+    if (isCoordInRect(ctx.point[dimIdx], cell.rect, dimIdx) && isCoordInRect(ctx.point[otherDimIdx], cell.rect, otherDimIdx)) {
+      partialOut[dimIdx] = cell.ordinal;
+      partialOut[otherDimIdx] = cell.id[XY[otherDimIdx]];
+      return;
+    }
+  }
+}
+function pointToDataBodyCornerFillOut(ctx, partialOut, dimIdx, dims) {
+  if (ctx[XY[dimIdx]] === CtxPointToDataAreaType.outside) {
+    return;
+  }
+  var dim = ctx[XY[dimIdx]] === CtxPointToDataAreaType.inCorner ? dims[XY[1 - dimIdx]] : dims[XY[dimIdx]];
+  for (dim.resetLayoutIterator(_ptdLevelIt, dimIdx); _ptdLevelIt.next(); ) {
+    if (isCoordInLayoutInfo(ctx.point[dimIdx], _ptdLevelIt.item)) {
+      partialOut[dimIdx] = _ptdLevelIt.item.id[XY[dimIdx]];
+      return;
+    }
+  }
+}
+function isCoordInLayoutInfo(coord, cell) {
+  return cell.xy <= coord && coord <= cell.xy + cell.wh;
+}
+function isCoordInRect(coord, rect, dimIdx) {
+  return rect[XY[dimIdx]] <= coord && coord <= rect[XY[dimIdx]] + rect[WH[dimIdx]];
+}
+var Matrix_default = Matrix;
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/matrix/install.js
+function install10(registers) {
+  registers.registerComponentModel(MatrixModel_default);
+  registers.registerComponentView(MatrixView_default);
+  registers.registerCoordinateSystem("matrix", Matrix_default);
+}
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/graphic/GraphicModel.js
 function setKeyInfoToNewElOption(resultItem, newElOption) {
   var existElOption = resultItem.existing;
   newElOption.id = resultItem.keyInfo.id;
@@ -3790,7 +5137,7 @@ var GraphicComponentModel = (
   }(Component_default)
 );
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/graphic/GraphicView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/graphic/GraphicView.js
 var nonShapeGraphicElements = {
   // Reserved but not supported in graphic component.
   path: null,
@@ -4088,8 +5435,8 @@ function setEventData(el, graphicModel, elOption) {
   }
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/graphic/install.js
-function install10(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/graphic/install.js
+function install11(registers) {
   registers.registerComponentModel(GraphicComponentModel);
   registers.registerComponentView(GraphicComponentView);
   registers.registerPreprocessor(function(option) {
@@ -4110,7 +5457,7 @@ function install10(registers) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/helper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/helper.js
 var DATA_ZOOM_AXIS_DIMENSIONS = ["x", "y", "radius", "angle", "single"];
 var SERIES_COORDS = ["cartesian2d", "polar", "singleAxis"];
 function isCoordSupported(seriesModel) {
@@ -4198,7 +5545,7 @@ function collectReferCoordSysModelInfo(dataZoomModel) {
   return coordSysInfoWrap;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/DataZoomModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/DataZoomModel.js
 var DataZoomAxisInfo = (
   /** @class */
   function() {
@@ -4492,7 +5839,7 @@ function retrieveRawOption(option) {
 }
 var DataZoomModel_default = DataZoomModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/SelectZoomModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/SelectZoomModel.js
 var SelectDataZoomModel = (
   /** @class */
   function(_super) {
@@ -4508,7 +5855,7 @@ var SelectDataZoomModel = (
 );
 var SelectZoomModel_default = SelectDataZoomModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/DataZoomView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/DataZoomView.js
 var DataZoomView = (
   /** @class */
   function(_super) {
@@ -4529,7 +5876,7 @@ var DataZoomView = (
 );
 var DataZoomView_default = DataZoomView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/SelectZoomView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/SelectZoomView.js
 var SelectDataZoomView = (
   /** @class */
   function(_super) {
@@ -4545,7 +5892,7 @@ var SelectDataZoomView = (
 );
 var SelectZoomView_default = SelectDataZoomView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/AxisProxy.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/AxisProxy.js
 var each3 = each;
 var asc2 = asc;
 var AxisProxy = (
@@ -4747,7 +6094,7 @@ function calculateDataExtent(axisProxy, axisDim, seriesModels) {
 }
 var AxisProxy_default = AxisProxy;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/dataZoomProcessor.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/dataZoomProcessor.js
 var dataZoomProcessor = {
   // `dataZoomProcessor` will only be performed in needed series. Consider if
   // there is a line series and a pie series, it is better not to update the
@@ -4808,7 +6155,7 @@ var dataZoomProcessor = {
 };
 var dataZoomProcessor_default = dataZoomProcessor;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/dataZoomAction.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/dataZoomAction.js
 function installDataZoomAction(registers) {
   registers.registerAction("dataZoom", function(payload, ecModel) {
     var effectedModels = findEffectedDataZooms(ecModel, payload);
@@ -4823,7 +6170,7 @@ function installDataZoomAction(registers) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/installCommon.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/installCommon.js
 var installed = false;
 function installCommon(registers) {
   if (installed) {
@@ -4837,14 +6184,14 @@ function installCommon(registers) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/installDataZoomSelect.js
-function install11(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/installDataZoomSelect.js
+function install12(registers) {
   registers.registerComponentModel(SelectZoomModel_default);
   registers.registerComponentView(SelectZoomView_default);
   installCommon(registers);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/toolbox/featureManager.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/toolbox/featureManager.js
 var ToolboxFeature = (
   /** @class */
   /* @__PURE__ */ function() {
@@ -4861,7 +6208,7 @@ function getFeature(name) {
   return features[name];
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/toolbox/ToolboxModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/toolbox/ToolboxModel.js
 var ToolboxModel = (
   /** @class */
   function(_super) {
@@ -4899,20 +6246,20 @@ var ToolboxModel = (
       // right
       // bottom
       backgroundColor: "transparent",
-      borderColor: "#ccc",
+      borderColor: tokens_default.color.border,
       borderRadius: 0,
       borderWidth: 0,
-      padding: 5,
+      padding: tokens_default.size.m,
       itemSize: 15,
-      itemGap: 8,
+      itemGap: tokens_default.size.s,
       showTitle: true,
       iconStyle: {
-        borderColor: "#666",
+        borderColor: tokens_default.color.accent50,
         color: "none"
       },
       emphasis: {
         iconStyle: {
-          borderColor: "#3E98C5"
+          borderColor: tokens_default.color.accent50
         }
       },
       // textStyle: {},
@@ -4927,23 +6274,12 @@ var ToolboxModel = (
 );
 var ToolboxModel_default = ToolboxModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/helper/listComponent.js
-function layout3(group, componentModel, api) {
-  var boxLayoutParams = componentModel.getBoxLayoutParams();
-  var padding = componentModel.get("padding");
-  var viewportSize = {
-    width: api.getWidth(),
-    height: api.getHeight()
-  };
-  var rect = getLayoutRect(boxLayoutParams, viewportSize, padding);
-  box(componentModel.get("orient"), group, componentModel.get("itemGap"), rect.width, rect.height);
-  positionElement(group, boxLayoutParams, viewportSize, padding);
-}
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/helper/listComponent.js
 function makeBackground(rect, componentModel) {
   var padding = normalizeCssArray(componentModel.get("padding"));
   var style = componentModel.getItemStyle(["color", "opacity"]);
   style.fill = componentModel.get("backgroundColor");
-  rect = new Rect_default({
+  var bgRect = new Rect_default({
     shape: {
       x: rect.x - padding[3],
       y: rect.y - padding[0],
@@ -4955,10 +6291,10 @@ function makeBackground(rect, componentModel) {
     silent: true,
     z2: -1
   });
-  return rect;
+  return bgRect;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/toolbox/ToolboxView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/toolbox/ToolboxView.js
 var ToolboxView = (
   /** @class */
   function(_super) {
@@ -5100,7 +6436,7 @@ var ToolboxView = (
             var hoverStyle = iconStyleEmphasisModel.getItemStyle();
             var defaultTextPosition = isVertical ? toolboxModel.get("right") == null && toolboxModel.get("left") !== "right" ? "right" : "left" : toolboxModel.get("bottom") == null && toolboxModel.get("top") !== "bottom" ? "bottom" : "top";
             textContent.setStyle({
-              fill: iconStyleEmphasisModel.get("textFill") || hoverStyle.fill || hoverStyle.stroke || "#000",
+              fill: iconStyleEmphasisModel.get("textFill") || hoverStyle.fill || hoverStyle.stroke || tokens_default.color.neutral99,
               backgroundColor: iconStyleEmphasisModel.get("textBackgroundColor")
             });
             path.setTextConfig({
@@ -5120,7 +6456,12 @@ var ToolboxView = (
           iconPaths[iconName] = path;
         });
       }
-      layout3(group, toolboxModel, api);
+      var refContainer = createBoxLayoutReference(toolboxModel, api).refContainer;
+      var boxLayoutParams = toolboxModel.getBoxLayoutParams();
+      var padding = toolboxModel.get("padding");
+      var viewRect = getLayoutRect(boxLayoutParams, refContainer, padding);
+      box(toolboxModel.get("orient"), group, toolboxModel.get("itemGap"), viewRect.width, viewRect.height);
+      positionElement(group, boxLayoutParams, refContainer, padding);
       group.add(makeBackground(group.getBoundingRect(), toolboxModel));
       isVertical || group.eachChild(function(icon) {
         var titleText = icon.__title;
@@ -5174,7 +6515,7 @@ function isUserFeatureName(featureName) {
 }
 var ToolboxView_default = ToolboxView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/toolbox/feature/SaveAsImage.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/toolbox/feature/SaveAsImage.js
 var SaveAsImage = (
   /** @class */
   function(_super) {
@@ -5189,7 +6530,7 @@ var SaveAsImage = (
       var type = isSvg ? "svg" : model.get("type", true) || "png";
       var url = api.getConnectedDataURL({
         type,
-        backgroundColor: model.get("backgroundColor", true) || ecModel.get("backgroundColor") || "#fff",
+        backgroundColor: model.get("backgroundColor", true) || ecModel.get("backgroundColor") || tokens_default.color.neutral00,
         connectedBackgroundColor: model.get("connectedBackgroundColor"),
         excludeComponents: model.get("excludeComponents"),
         pixelRatio: model.get("pixelRatio")
@@ -5251,7 +6592,7 @@ var SaveAsImage = (
         type: "png",
         // Default use option.backgroundColor
         // backgroundColor: '#fff',
-        connectedBackgroundColor: "#fff",
+        connectedBackgroundColor: tokens_default.color.neutral00,
         name: "",
         excludeComponents: ["toolbox"],
         // use current pixel ratio of device by default
@@ -5265,7 +6606,7 @@ var SaveAsImage = (
 );
 var SaveAsImage_default = SaveAsImage;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/toolbox/feature/MagicType.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/toolbox/feature/MagicType.js
 var INNER_STACK_KEYWORD = "__ec_magicType_stack__";
 var radioTypes = [["line", "bar"], ["stack"]];
 var MagicType = (
@@ -5421,7 +6762,7 @@ registerAction({
 });
 var MagicType_default = MagicType;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/toolbox/feature/DataView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/toolbox/feature/DataView.js
 var BLOCK_SPLITER = new Array(60).join("-");
 var ITEM_SPLITER = "	";
 function groupSeries(ecModel) {
@@ -5626,7 +6967,7 @@ var DataView = (
       }
       var root = document.createElement("div");
       root.style.cssText = "position:absolute;top:0;bottom:0;left:0;right:0;padding:5px";
-      root.style.backgroundColor = model.get("backgroundColor") || "#fff";
+      root.style.backgroundColor = model.get("backgroundColor") || tokens_default.color.neutral00;
       var header = document.createElement("h4");
       var lang = model.get("lang") || [];
       header.innerHTML = lang[0] || model.get("title");
@@ -5724,12 +7065,12 @@ var DataView = (
         icon: "M17.5,17.3H33 M17.5,17.3H33 M45.4,29.5h-28 M11.5,2v56H51V14.8L38.4,2H11.5z M38.4,2.2v12.7H51 M45.4,41.7h-28",
         title: ecModel.getLocaleModel().get(["toolbox", "dataView", "title"]),
         lang: ecModel.getLocaleModel().get(["toolbox", "dataView", "lang"]),
-        backgroundColor: "#fff",
-        textColor: "#000",
-        textareaColor: "#fff",
-        textareaBorderColor: "#333",
-        buttonColor: "#c23531",
-        buttonTextColor: "#fff"
+        backgroundColor: tokens_default.color.background,
+        textColor: tokens_default.color.primary,
+        textareaColor: tokens_default.color.background,
+        textareaBorderColor: tokens_default.color.border,
+        buttonColor: tokens_default.color.accent50,
+        buttonTextColor: tokens_default.color.neutral00
       };
       return defaultOption2;
     };
@@ -5782,7 +7123,7 @@ registerAction({
 });
 var DataView_default = DataView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/history.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/history.js
 var each4 = each;
 var inner6 = makeInner();
 function push(ecModel, newSnapshot) {
@@ -5843,7 +7184,7 @@ function getStoreSnapshots(ecModel) {
   return store.snapshots;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/toolbox/feature/Restore.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/toolbox/feature/Restore.js
 var RestoreOption = (
   /** @class */
   function(_super) {
@@ -5879,7 +7220,7 @@ registerAction({
 });
 var Restore_default = RestoreOption;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/helper/BrushTargetManager.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/helper/BrushTargetManager.js
 var INCLUDE_FINDER_MAIN_TYPES = ["grid", "xAxis", "yAxis", "geo", "graph", "polar", "radiusAxis", "angleAxis", "bmap"];
 var BrushTargetManager = (
   /** @class */
@@ -6143,7 +7484,7 @@ function getSize(xyMinMax) {
 }
 var BrushTargetManager_default = BrushTargetManager;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/toolbox/feature/DataZoom.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/toolbox/feature/DataZoom.js
 var each5 = each;
 var DATA_ZOOM_ID_BASE = makeInternalComponentId("toolbox-dataZoom_");
 var DataZoomFeature = (
@@ -6249,7 +7590,7 @@ var DataZoomFeature = (
         title: ecModel.getLocaleModel().get(["toolbox", "dataZoom", "title"]),
         brushStyle: {
           borderWidth: 0,
-          color: "rgba(210,219,238,0.2)"
+          color: tokens_default.color.backgroundTint
         }
       };
       return defaultOption2;
@@ -6339,8 +7680,8 @@ registerInternalOptionCreator("dataZoom", function(ecModel) {
 });
 var DataZoom_default = DataZoomFeature;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/toolbox/install.js
-function install12(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/toolbox/install.js
+function install13(registers) {
   registers.registerComponentModel(ToolboxModel_default);
   registers.registerComponentView(ToolboxView_default);
   registerFeature("saveAsImage", SaveAsImage_default);
@@ -6348,10 +7689,10 @@ function install12(registers) {
   registerFeature("dataView", DataView_default);
   registerFeature("dataZoom", DataZoom_default);
   registerFeature("restore", Restore_default);
-  use(install11);
+  use(install12);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/tooltip/TooltipModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/tooltip/TooltipModel.js
 var TooltipModel = (
   /** @class */
   function(_super) {
@@ -6375,18 +7716,18 @@ var TooltipModel = (
       // 'click' | 'mousemove' | 'none'
       triggerOn: "mousemove|click",
       alwaysShowContent: false,
-      displayMode: "single",
       renderMode: "auto",
       // whether restraint content inside viewRect.
       // If renderMode: 'richText', default true.
-      // If renderMode: 'html', defaut false (for backward compat).
+      // If renderMode: 'html', defaults to `false` (for backward compat).
       confine: null,
       showDelay: 0,
       hideDelay: 100,
       // Animation transition time, unit is second
       transitionDuration: 0.4,
+      displayTransition: true,
       enterable: false,
-      backgroundColor: "#fff",
+      backgroundColor: tokens_default.color.neutral00,
       // box shadow
       shadowBlur: 10,
       shadowColor: "rgba(0, 0, 0, .2)",
@@ -6396,6 +7737,7 @@ var TooltipModel = (
       borderRadius: 4,
       // tooltip border width, unit is px, default is 0 (no border)
       borderWidth: 1,
+      defaultBorderColor: tokens_default.color.border,
       // Tooltip inside padding, default is 5 for all direction
       // Array is allowed to set up, right, bottom, left, same with css
       // The default value: See `tooltip/tooltipMarkup.ts#getPaddingFromTooltipModel`.
@@ -6416,7 +7758,7 @@ var TooltipModel = (
         animationDurationUpdate: 200,
         animationEasingUpdate: "exponentialOut",
         crossStyle: {
-          color: "#999",
+          color: tokens_default.color.borderShade,
           width: 1,
           type: "dashed",
           // TODO formatter
@@ -6426,7 +7768,7 @@ var TooltipModel = (
         // otherwise it will always override those styles on option.axisPointer.
       },
       textStyle: {
-        color: "#666",
+        color: tokens_default.color.tertiary,
         fontSize: 14
       }
     };
@@ -6435,7 +7777,7 @@ var TooltipModel = (
 );
 var TooltipModel_default = TooltipModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/tooltip/helper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/tooltip/helper.js
 function shouldTooltipConfine(tooltipModel) {
   var confineOption = tooltipModel.get("confine");
   return confineOption != null ? !!confineOption : tooltipModel.get("renderMode") === "richText";
@@ -6467,7 +7809,7 @@ function getComputedStyle(el, style) {
   return stl ? style ? stl[style] : stl : null;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/tooltip/TooltipHTMLContent.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/tooltip/TooltipHTMLContent.js
 var CSS_TRANSITION_VENDOR = toCSSVendorPrefix(TRANSITION_VENDOR, "transition");
 var CSS_TRANSFORM_VENDOR = toCSSVendorPrefix(TRANSFORM_VENDOR, "transform");
 var gCssText = "position:absolute;display:block;border-style:solid;white-space:nowrap;z-index:9999999;" + (env_default.transform3dSupported ? "will-change:transform;" : "");
@@ -6503,13 +7845,17 @@ function assembleArrow(tooltipModel, borderColor, arrowPosition) {
   var styleCss = ["position:absolute;width:" + arrowSize + "px;height:" + arrowSize + "px;z-index:-1;", positionStyle + ";" + transformStyle + ";", "border-bottom:" + borderStyle, "border-right:" + borderStyle, "background-color:" + backgroundColor + ";"];
   return '<div style="' + styleCss.join("") + '"></div>';
 }
-function assembleTransition(duration, onlyFade) {
+function assembleTransition(duration, onlyFadeTransition, enableDisplayTransition) {
   var transitionCurve = "cubic-bezier(0.23,1,0.32,1)";
-  var transitionOption = " " + duration / 2 + "s " + transitionCurve;
-  var transitionText = "opacity" + transitionOption + ",visibility" + transitionOption;
-  if (!onlyFade) {
+  var transitionOption = "";
+  var transitionText = "";
+  if (enableDisplayTransition) {
+    transitionOption = " " + duration / 2 + "s " + transitionCurve;
+    transitionText = "opacity" + transitionOption + ",visibility" + transitionOption;
+  }
+  if (!onlyFadeTransition) {
     transitionOption = " " + duration + "s " + transitionCurve;
-    transitionText += env_default.transformSupported ? "," + CSS_TRANSFORM_VENDOR + transitionOption : ",left" + transitionOption + ",top" + transitionOption;
+    transitionText += (transitionText.length ? "," : "") + (env_default.transformSupported ? "" + CSS_TRANSFORM_VENDOR + transitionOption : ",left" + transitionOption + ",top" + transitionOption);
   }
   return CSS_TRANSITION_VENDOR + ":" + transitionText;
 }
@@ -6542,7 +7888,7 @@ function assembleFont(textStyleModel) {
   });
   return cssText.join(";");
 }
-function assembleCssText(tooltipModel, enableTransition, onlyFade) {
+function assembleCssText(tooltipModel, enableTransition, onlyFadeTransition, enableDisplayTransition) {
   var cssText = [];
   var transitionDuration = tooltipModel.get("transitionDuration");
   var backgroundColor = tooltipModel.get("backgroundColor");
@@ -6554,7 +7900,7 @@ function assembleCssText(tooltipModel, enableTransition, onlyFade) {
   var padding = getPaddingFromTooltipModel(tooltipModel, "html");
   var boxShadow = shadowOffsetX + "px " + shadowOffsetY + "px " + shadowBlur + "px " + shadowColor;
   cssText.push("box-shadow:" + boxShadow);
-  enableTransition && transitionDuration && cssText.push(assembleTransition(transitionDuration, onlyFade));
+  enableTransition && transitionDuration > 0 && cssText.push(assembleTransition(transitionDuration, onlyFadeTransition, enableDisplayTransition));
   if (backgroundColor) {
     cssText.push("background-color:" + backgroundColor);
   }
@@ -6650,6 +7996,7 @@ var TooltipHTMLContent = (
       var alwaysShowContent = tooltipModel.get("alwaysShowContent");
       alwaysShowContent && this._moveIfResized();
       this._alwaysShowContent = alwaysShowContent;
+      this._enableDisplayTransition = tooltipModel.get("displayTransition") && tooltipModel.get("transitionDuration") > 0;
       this.el.className = tooltipModel.get("className") || "";
     };
     TooltipHTMLContent2.prototype.show = function(tooltipModel, nearPointColor) {
@@ -6661,7 +8008,7 @@ var TooltipHTMLContent = (
       if (!el.innerHTML) {
         style.display = "none";
       } else {
-        style.cssText = gCssText + assembleCssText(tooltipModel, !this._firstShow, this._longHide) + assembleTransform(styleCoord[0], styleCoord[1], true) + ("border-color:" + convertToColorString(nearPointColor) + ";") + (tooltipModel.get("extraCssText") || "") + (";pointer-events:" + (this._enterable ? "auto" : "none"));
+        style.cssText = gCssText + assembleCssText(tooltipModel, !this._firstShow, this._longHide, this._enableDisplayTransition) + assembleTransform(styleCoord[0], styleCoord[1], true) + ("border-color:" + convertToColorString(nearPointColor) + ";") + (tooltipModel.get("extraCssText") || "") + (";pointer-events:" + (this._enterable ? "auto" : "none"));
       }
       this._show = true;
       this._firstShow = false;
@@ -6725,8 +8072,12 @@ var TooltipHTMLContent = (
     TooltipHTMLContent2.prototype.hide = function() {
       var _this = this;
       var style = this.el.style;
-      style.visibility = "hidden";
-      style.opacity = "0";
+      if (this._enableDisplayTransition) {
+        style.visibility = "hidden";
+        style.opacity = "0";
+      } else {
+        style.display = "none";
+      }
       env_default.transform3dSupported && (style.willChange = "");
       this._show = false;
       this._longHideTimeout = setTimeout(function() {
@@ -6750,8 +8101,14 @@ var TooltipHTMLContent = (
     TooltipHTMLContent2.prototype.dispose = function() {
       clearTimeout(this._hideTimeout);
       clearTimeout(this._longHideTimeout);
-      var parentNode = this.el.parentNode;
-      parentNode && parentNode.removeChild(this.el);
+      var zr = this._zr;
+      transformLocalCoordClear(zr && zr.painter && zr.painter.getViewportRoot(), this._container);
+      var el = this.el;
+      if (el) {
+        el.onmouseenter = el.onmousemove = el.onmouseleave = null;
+        var parentNode = el.parentNode;
+        parentNode && parentNode.removeChild(el);
+      }
       this.el = this._container = null;
     };
     return TooltipHTMLContent2;
@@ -6759,7 +8116,7 @@ var TooltipHTMLContent = (
 );
 var TooltipHTMLContent_default = TooltipHTMLContent;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/tooltip/TooltipRichContent.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/tooltip/TooltipRichContent.js
 var TooltipRichContent = (
   /** @class */
   function() {
@@ -6908,7 +8265,7 @@ function makeStyleCoord2(out, zr, zrX, zrY) {
 }
 var TooltipRichContent_default = TooltipRichContent;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/tooltip/TooltipView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/tooltip/TooltipView.js
 var proxyRect = new Rect_default({
   shape: {
     x: -1,
@@ -7113,13 +8470,17 @@ var TooltipView = (
         var seriesDispatcher_1;
         var cmptDispatcher_1;
         findEventDispatcher(el, function(target) {
-          if (getECData(target).dataIndex != null) {
-            seriesDispatcher_1 = target;
+          if (target.tooltipDisabled) {
+            seriesDispatcher_1 = cmptDispatcher_1 = null;
             return true;
           }
-          if (getECData(target).tooltipConfig != null) {
+          if (seriesDispatcher_1 || cmptDispatcher_1) {
+            return;
+          }
+          if (getECData(target).dataIndex != null) {
+            seriesDispatcher_1 = target;
+          } else if (getECData(target).tooltipConfig != null) {
             cmptDispatcher_1 = target;
-            return true;
           }
         }, true);
         if (seriesDispatcher_1) {
@@ -7308,7 +8669,7 @@ var TooltipView = (
       var formatter = tooltipModel.get("formatter");
       positionExpr = positionExpr || tooltipModel.get("position");
       var html = defaultHtml;
-      var nearPoint = this._getNearestPoint([x, y], params, tooltipModel.get("trigger"), tooltipModel.get("borderColor"));
+      var nearPoint = this._getNearestPoint([x, y], params, tooltipModel.get("trigger"), tooltipModel.get("borderColor"), tooltipModel.get("defaultBorderColor", true));
       var nearPointColor = nearPoint.color;
       if (formatter) {
         if (isString(formatter)) {
@@ -7337,10 +8698,10 @@ var TooltipView = (
       tooltipContent.show(tooltipModel, nearPointColor);
       this._updatePosition(tooltipModel, positionExpr, x, y, tooltipContent, params, el);
     };
-    TooltipView2.prototype._getNearestPoint = function(point, tooltipDataParams, trigger, borderColor) {
+    TooltipView2.prototype._getNearestPoint = function(point, tooltipDataParams, trigger, borderColor, defaultBorderColor) {
       if (trigger === "axis" || isArray(tooltipDataParams)) {
         return {
-          color: borderColor || (this._renderMode === "html" ? "#fff" : "none")
+          color: borderColor || defaultBorderColor
         };
       }
       if (!isArray(tooltipDataParams)) {
@@ -7576,8 +8937,8 @@ function findComponentReference(payload, ecModel, api) {
 }
 var TooltipView_default = TooltipView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/tooltip/install.js
-function install13(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/tooltip/install.js
+function install14(registers) {
   use(install5);
   registers.registerComponentModel(TooltipModel_default);
   registers.registerComponentView(TooltipView_default);
@@ -7593,7 +8954,7 @@ function install13(registers) {
   }, noop);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/brush/preprocessor.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/brush/preprocessor.js
 var DEFAULT_TOOLBOX_BTNS = ["rect", "polygon", "keep", "clear"];
 function brushPreprocessor(option, isNew) {
   var brushComponents = normalizeToArray(option ? option.brush : []);
@@ -7637,7 +8998,7 @@ function removeDuplicate(arr) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/visual/visualSolution.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/visual/visualSolution.js
 var each6 = each;
 function hasKeys(obj) {
   if (obj) {
@@ -7764,7 +9125,7 @@ function incrementalApplyVisual(stateList, visualMappings, getValueState, dim) {
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/brush/selector.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/brush/selector.js
 function makeBrushCommonSelectorForSeries(area) {
   var brushType = area.brushType;
   var selectors = {
@@ -7833,7 +9194,7 @@ function inLineRange(p, range) {
   return range[0] <= p && p <= range[1];
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/brush/visualEncoding.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/brush/visualEncoding.js
 var STATE_LIST = ["inBrush", "outOfBrush"];
 var DISPATCH_METHOD = "__ecBrushSelect";
 var DISPATCH_FLAG = "__ecInBrushSelectEvent";
@@ -8007,7 +9368,7 @@ function getBoundingRectFromMinMax(minMax) {
   return new BoundingRect_default(minMax[0][0], minMax[1][0], minMax[0][1] - minMax[0][0], minMax[1][1] - minMax[1][0]);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/brush/BrushView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/brush/BrushView.js
 var BrushView = (
   /** @class */
   function(_super) {
@@ -8065,8 +9426,7 @@ var BrushView = (
 );
 var BrushView_default = BrushView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/brush/BrushModel.js
-var DEFAULT_OUT_OF_BRUSH_COLOR = "#ddd";
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/brush/BrushModel.js
 var BrushModel = (
   /** @class */
   function(_super) {
@@ -8083,7 +9443,7 @@ var BrushModel = (
       !isInit && replaceVisualOption(thisOption, newOption, ["inBrush", "outOfBrush"]);
       var inBrush = thisOption.inBrush = thisOption.inBrush || {};
       thisOption.outOfBrush = thisOption.outOfBrush || {
-        color: DEFAULT_OUT_OF_BRUSH_COLOR
+        color: this.option.defaultOutOfBrushColor
       };
       if (!inBrush.hasOwnProperty("liftZ")) {
         inBrush.liftZ = 5;
@@ -8116,13 +9476,14 @@ var BrushModel = (
       transformable: true,
       brushStyle: {
         borderWidth: 1,
-        color: "rgba(210,219,238,0.3)",
-        borderColor: "#D2DBEE"
+        color: tokens_default.color.backgroundTint,
+        borderColor: tokens_default.color.borderTint
       },
       throttleType: "fixRate",
       throttleDelay: 0,
       removeOnClick: true,
-      z: 1e4
+      z: 1e4,
+      defaultOutOfBrushColor: tokens_default.color.disabled
     };
     return BrushModel2;
   }(Component_default)
@@ -8139,7 +9500,7 @@ function generateBrushOption(option, brushOption) {
 }
 var BrushModel_default = BrushModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/toolbox/feature/Brush.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/toolbox/feature/Brush.js
 var ICON_TYPES = ["rect", "polygon", "lineX", "lineY", "keep", "clear"];
 var BrushFeature = (
   /** @class */
@@ -8231,8 +9592,8 @@ var BrushFeature = (
 );
 var Brush_default = BrushFeature;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/brush/install.js
-function install14(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/brush/install.js
+function install15(registers) {
   registers.registerComponentView(BrushView_default);
   registers.registerComponentModel(BrushModel_default);
   registers.registerPreprocessor(brushPreprocessor);
@@ -8262,7 +9623,7 @@ function install14(registers) {
   registerFeature("brush", Brush_default);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/title/install.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/title/install.js
 var TitleModel = (
   /** @class */
   function(_super) {
@@ -8285,21 +9646,21 @@ var TitleModel = (
       target: "blank",
       subtext: "",
       subtarget: "blank",
-      left: 0,
-      top: 0,
-      backgroundColor: "rgba(0,0,0,0)",
-      borderColor: "#ccc",
+      left: "center",
+      top: tokens_default.size.m,
+      backgroundColor: tokens_default.color.transparent,
+      borderColor: tokens_default.color.primary,
       borderWidth: 0,
       padding: 5,
       itemGap: 10,
       textStyle: {
         fontSize: 18,
         fontWeight: "bold",
-        color: "#464646"
+        color: tokens_default.color.primary
       },
       subtextStyle: {
         fontSize: 12,
-        color: "#6E7079"
+        color: tokens_default.color.quaternary
       }
     };
     return TitleModel2;
@@ -8371,10 +9732,8 @@ var TitleView = (
       var layoutOption = titleModel.getBoxLayoutParams();
       layoutOption.width = groupRect.width;
       layoutOption.height = groupRect.height;
-      var layoutRect = getLayoutRect(layoutOption, {
-        width: api.getWidth(),
-        height: api.getHeight()
-      }, titleModel.get("padding"));
+      var layoutRef = createBoxLayoutReference(titleModel, api);
+      var layoutRect = getLayoutRect(layoutOption, layoutRef.refContainer, titleModel.get("padding"));
       if (!textAlign) {
         textAlign = titleModel.get("left") || titleModel.get("right");
         if (textAlign === "middle") {
@@ -8429,12 +9788,12 @@ var TitleView = (
     return TitleView2;
   }(Component_default2)
 );
-function install15(registers) {
+function install16(registers) {
   registers.registerComponentModel(TitleModel);
   registers.registerComponentView(TitleView);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/timeline/TimelineModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/timeline/TimelineModel.js
 var TimelineModel = (
   /** @class */
   function(_super) {
@@ -8533,7 +9892,7 @@ var TimelineModel = (
       bottom: 0,
       width: null,
       height: 40,
-      padding: 5,
+      padding: tokens_default.size.m,
       controlPosition: "left",
       autoPlay: false,
       rewind: false,
@@ -8542,7 +9901,7 @@ var TimelineModel = (
       currentIndex: 0,
       itemStyle: {},
       label: {
-        color: "#000"
+        color: tokens_default.color.secondary
       },
       data: []
     };
@@ -8551,7 +9910,7 @@ var TimelineModel = (
 );
 var TimelineModel_default = TimelineModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/timeline/SliderTimelineModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/timeline/SliderTimelineModel.js
 var SliderTimelineModel = (
   /** @class */
   function(_super) {
@@ -8564,7 +9923,7 @@ var SliderTimelineModel = (
     SliderTimelineModel2.type = "timeline.slider";
     SliderTimelineModel2.defaultOption = inheritDefaultOption(TimelineModel_default.defaultOption, {
       backgroundColor: "rgba(0,0,0,0)",
-      borderColor: "#ccc",
+      borderColor: tokens_default.color.border,
       borderWidth: 0,
       orient: "horizontal",
       inverse: false,
@@ -8577,7 +9936,7 @@ var SliderTimelineModel = (
       lineStyle: {
         show: true,
         width: 2,
-        color: "#DAE1F5"
+        color: tokens_default.color.accent10
       },
       label: {
         position: "auto",
@@ -8589,22 +9948,22 @@ var SliderTimelineModel = (
         rotate: 0,
         // formatter: null,
         // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-        color: "#A4B1D7"
+        color: tokens_default.color.tertiary
       },
       itemStyle: {
-        color: "#A4B1D7",
-        borderWidth: 1
+        color: tokens_default.color.accent20,
+        borderWidth: 0
       },
       checkpointStyle: {
         symbol: "circle",
         symbolSize: 15,
-        color: "#316bf3",
-        borderColor: "#fff",
-        borderWidth: 2,
-        shadowBlur: 2,
-        shadowOffsetX: 1,
-        shadowOffsetY: 1,
-        shadowColor: "rgba(0, 0, 0, 0.3)",
+        color: tokens_default.color.accent50,
+        borderColor: tokens_default.color.accent50,
+        borderWidth: 0,
+        shadowBlur: 0,
+        shadowOffsetX: 0,
+        shadowOffsetY: 0,
+        shadowColor: "rgba(0, 0, 0, 0)",
         // borderColor: 'rgba(194,53,49, 0.5)',
         animation: true,
         animationDuration: 300,
@@ -8618,42 +9977,39 @@ var SliderTimelineModel = (
         itemSize: 24,
         itemGap: 12,
         position: "left",
-        playIcon: "path://M31.6,53C17.5,53,6,41.5,6,27.4S17.5,1.8,31.6,1.8C45.7,1.8,57.2,13.3,57.2,27.4S45.7,53,31.6,53z M31.6,3.3 C18.4,3.3,7.5,14.1,7.5,27.4c0,13.3,10.8,24.1,24.1,24.1C44.9,51.5,55.7,40.7,55.7,27.4C55.7,14.1,44.9,3.3,31.6,3.3z M24.9,21.3 c0-2.2,1.6-3.1,3.5-2l10.5,6.1c1.899,1.1,1.899,2.9,0,4l-10.5,6.1c-1.9,1.1-3.5,0.2-3.5-2V21.3z",
-        stopIcon: "path://M30.9,53.2C16.8,53.2,5.3,41.7,5.3,27.6S16.8,2,30.9,2C45,2,56.4,13.5,56.4,27.6S45,53.2,30.9,53.2z M30.9,3.5C17.6,3.5,6.8,14.4,6.8,27.6c0,13.3,10.8,24.1,24.101,24.1C44.2,51.7,55,40.9,55,27.6C54.9,14.4,44.1,3.5,30.9,3.5z M36.9,35.8c0,0.601-0.4,1-0.9,1h-1.3c-0.5,0-0.9-0.399-0.9-1V19.5c0-0.6,0.4-1,0.9-1H36c0.5,0,0.9,0.4,0.9,1V35.8z M27.8,35.8 c0,0.601-0.4,1-0.9,1h-1.3c-0.5,0-0.9-0.399-0.9-1V19.5c0-0.6,0.4-1,0.9-1H27c0.5,0,0.9,0.4,0.9,1L27.8,35.8L27.8,35.8z",
+        playIcon: "path://M15 0C23.2843 0 30 6.71573 30 15C30 23.2843 23.2843 30 15 30C6.71573 30 0 23.2843 0 15C0 6.71573 6.71573 0 15 0ZM15 3C8.37258 3 3 8.37258 3 15C3 21.6274 8.37258 27 15 27C21.6274 27 27 21.6274 27 15C27 8.37258 21.6274 3 15 3ZM11.5 10.6699C11.5 9.90014 12.3333 9.41887 13 9.80371L20.5 14.1338C21.1667 14.5187 21.1667 15.4813 20.5 15.8662L13 20.1963C12.3333 20.5811 11.5 20.0999 11.5 19.3301V10.6699Z",
+        stopIcon: "path://M15 0C23.2843 0 30 6.71573 30 15C30 23.2843 23.2843 30 15 30C6.71573 30 0 23.2843 0 15C0 6.71573 6.71573 0 15 0ZM15 3C8.37258 3 3 8.37258 3 15C3 21.6274 8.37258 27 15 27C21.6274 27 27 21.6274 27 15C27 8.37258 21.6274 3 15 3ZM11.5 10C12.3284 10 13 10.6716 13 11.5V18.5C13 19.3284 12.3284 20 11.5 20C10.6716 20 10 19.3284 10 18.5V11.5C10 10.6716 10.6716 10 11.5 10ZM18.5 10C19.3284 10 20 10.6716 20 11.5V18.5C20 19.3284 19.3284 20 18.5 20C17.6716 20 17 19.3284 17 18.5V11.5C17 10.6716 17.6716 10 18.5 10Z",
         // eslint-disable-next-line max-len
-        nextIcon: "M2,18.5A1.52,1.52,0,0,1,.92,18a1.49,1.49,0,0,1,0-2.12L7.81,9.36,1,3.11A1.5,1.5,0,1,1,3,.89l8,7.34a1.48,1.48,0,0,1,.49,1.09,1.51,1.51,0,0,1-.46,1.1L3,18.08A1.5,1.5,0,0,1,2,18.5Z",
+        nextIcon: "path://M0.838834 18.7383C0.253048 18.1525 0.253048 17.2028 0.838834 16.617L7.55635 9.89949L0.838834 3.18198C0.253048 2.59619 0.253048 1.64645 0.838834 1.06066C1.42462 0.474874 2.37437 0.474874 2.96015 1.06066L10.7383 8.83883L10.8412 8.95277C11.2897 9.50267 11.2897 10.2963 10.8412 10.8462L10.7383 10.9602L2.96015 18.7383C2.37437 19.3241 1.42462 19.3241 0.838834 18.7383Z",
         // eslint-disable-next-line max-len
-        prevIcon: "M10,.5A1.52,1.52,0,0,1,11.08,1a1.49,1.49,0,0,1,0,2.12L4.19,9.64,11,15.89a1.5,1.5,0,1,1-2,2.22L1,10.77A1.48,1.48,0,0,1,.5,9.68,1.51,1.51,0,0,1,1,8.58L9,.92A1.5,1.5,0,0,1,10,.5Z",
+        prevIcon: "path://M10.9602 1.06066C11.5459 1.64645 11.5459 2.59619 10.9602 3.18198L4.24264 9.89949L10.9602 16.617C11.5459 17.2028 11.5459 18.1525 10.9602 18.7383C10.3744 19.3241 9.42462 19.3241 8.83883 18.7383L1.06066 10.9602L0.957771 10.8462C0.509245 10.2963 0.509245 9.50267 0.957771 8.95277L1.06066 8.83883L8.83883 1.06066C9.42462 0.474874 10.3744 0.474874 10.9602 1.06066Z",
         prevBtnSize: 18,
         nextBtnSize: 18,
-        color: "#A4B1D7",
-        borderColor: "#A4B1D7",
-        borderWidth: 1
+        color: tokens_default.color.accent50,
+        borderColor: tokens_default.color.accent50,
+        borderWidth: 0
       },
       emphasis: {
         label: {
           show: true,
           // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-          color: "#6f778d"
+          color: tokens_default.color.accent60
         },
         itemStyle: {
-          color: "#316BF3"
+          color: tokens_default.color.accent60,
+          borderColor: tokens_default.color.accent60
         },
         controlStyle: {
-          color: "#316BF3",
-          borderColor: "#316BF3",
-          borderWidth: 2
+          color: tokens_default.color.accent70,
+          borderColor: tokens_default.color.accent70
         }
       },
       progress: {
         lineStyle: {
-          color: "#316BF3"
+          color: tokens_default.color.accent30
         },
         itemStyle: {
-          color: "#316BF3"
-        },
-        label: {
-          color: "#6f778d"
+          color: tokens_default.color.accent40
         }
       },
       data: []
@@ -8664,7 +10020,7 @@ var SliderTimelineModel = (
 mixin(SliderTimelineModel, DataFormatMixin.prototype);
 var SliderTimelineModel_default = SliderTimelineModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/timeline/TimelineView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/timeline/TimelineView.js
 var TimelineView = (
   /** @class */
   function(_super) {
@@ -8680,7 +10036,7 @@ var TimelineView = (
 );
 var TimelineView_default = TimelineView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/timeline/TimelineAxis.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/timeline/TimelineAxis.js
 var TimelineAxis = (
   /** @class */
   function(_super) {
@@ -8701,7 +10057,7 @@ var TimelineAxis = (
 );
 var TimelineAxis_default = TimelineAxis;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/timeline/SliderTimelineView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/timeline/SliderTimelineView.js
 var PI = Math.PI;
 var labelDataIndexStore = makeInner();
 var SliderTimelineView = (
@@ -9097,7 +10453,7 @@ var SliderTimelineView = (
     };
     SliderTimelineView2.prototype._toAxisCoord = function(vertex) {
       var trans = this._mainGroup.getLocalTransform();
-      return applyTransform(vertex, trans, true);
+      return applyTransform2(vertex, trans, true);
     };
     SliderTimelineView2.prototype._findNearestTick = function(axisCoord) {
       var data = this.model.getData();
@@ -9172,10 +10528,7 @@ function createScaleByModel2(model, axisType) {
   }
 }
 function getViewRect(model, api) {
-  return getLayoutRect(model.getBoxLayoutParams(), {
-    width: api.getWidth(),
-    height: api.getHeight()
-  }, model.get("padding"));
+  return getLayoutRect(model.getBoxLayoutParams(), createBoxLayoutReference(model, api).refContainer, model.get("padding"));
 }
 function makeControlIcon(timelineModel, objPath, rect, opts) {
   var style = opts.style;
@@ -9253,7 +10606,7 @@ function pointerMoveTo(pointer, progressLine, dataIndex, axis, timelineModel, no
 }
 var SliderTimelineView_default = SliderTimelineView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/timeline/timelineAction.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/timeline/timelineAction.js
 function installTimelineAction(registers) {
   registers.registerAction({
     type: "timelineChange",
@@ -9291,7 +10644,7 @@ function installTimelineAction(registers) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/timeline/preprocessor.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/timeline/preprocessor.js
 function timelinePreprocessor(option) {
   var timelineOpt = option && option.timeline;
   if (!isArray(timelineOpt)) {
@@ -9358,8 +10711,8 @@ function has(obj, attr) {
   return obj.hasOwnProperty(attr);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/timeline/install.js
-function install16(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/timeline/install.js
+function install17(registers) {
   registers.registerComponentModel(SliderTimelineModel_default);
   registers.registerComponentView(SliderTimelineView_default);
   registers.registerSubTypeDefaulter("timeline", function() {
@@ -9369,7 +10722,7 @@ function install16(registers) {
   registers.registerPreprocessor(timelinePreprocessor);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/marker/checkMarkerInSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/marker/checkMarkerInSeries.js
 function checkMarkerInSeries(seriesOpts, markerType) {
   if (!seriesOpts) {
     return false;
@@ -9383,7 +10736,7 @@ function checkMarkerInSeries(seriesOpts, markerType) {
   return false;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/marker/MarkerModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/marker/MarkerModel.js
 function fillLabel(opt) {
   defaultEmphasis(opt, "label", ["show"]);
 }
@@ -9396,6 +10749,7 @@ var MarkerModel = (
       var _this = _super !== null && _super.apply(this, arguments) || this;
       _this.type = MarkerModel2.type;
       _this.createdBySelf = false;
+      _this.preventAutoZ = true;
       return _this;
     }
     MarkerModel2.prototype.init = function(option, parentModel, ecModel) {
@@ -9496,7 +10850,7 @@ var MarkerModel = (
 mixin(MarkerModel, DataFormatMixin.prototype);
 var MarkerModel_default = MarkerModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/marker/MarkPointModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/marker/MarkPointModel.js
 var MarkPointModel = (
   /** @class */
   function(_super) {
@@ -9538,14 +10892,14 @@ var MarkPointModel = (
 );
 var MarkPointModel_default = MarkPointModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/marker/markerHelper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/marker/markerHelper.js
 function hasXOrY(item) {
   return !(isNaN(parseFloat(item.x)) && isNaN(parseFloat(item.y)));
 }
 function hasXAndY(item) {
   return !isNaN(parseFloat(item.x)) && !isNaN(parseFloat(item.y));
 }
-function markerTypeCalculatorWithExtent(markerType, data, otherDataDim, targetDataDim, otherCoordIndex, targetCoordIndex) {
+function markerTypeCalculatorWithExtent(markerType, data, axisDim, otherDataDim, targetDataDim, otherCoordIndex, targetCoordIndex) {
   var coordArr = [];
   var stacked = isDimensionStacked(
     data,
@@ -9554,7 +10908,8 @@ function markerTypeCalculatorWithExtent(markerType, data, otherDataDim, targetDa
   );
   var calcDataDim = stacked ? data.getCalculationInfo("stackResultDimension") : targetDataDim;
   var value = numCalculate(data, calcDataDim, markerType);
-  var dataIndex = data.indicesOfNearest(calcDataDim, value)[0];
+  var seriesModel = data.hostModel;
+  var dataIndex = seriesModel.indicesOfNearest(axisDim, calcDataDim, value)[0];
   coordArr[otherCoordIndex] = data.get(otherDataDim, dataIndex);
   coordArr[targetCoordIndex] = data.get(calcDataDim, dataIndex);
   var coordArrValue = data.get(targetDataDim, dataIndex);
@@ -9584,7 +10939,7 @@ function dataTransform(seriesModel, item) {
     if (item.type && markerTypeCalculator[item.type] && axisInfo.baseAxis && axisInfo.valueAxis) {
       var otherCoordIndex = indexOf(dims, axisInfo.baseAxis.dim);
       var targetCoordIndex = indexOf(dims, axisInfo.valueAxis.dim);
-      var coordInfo = markerTypeCalculator[item.type](data, axisInfo.baseDataDim, axisInfo.valueDataDim, otherCoordIndex, targetCoordIndex);
+      var coordInfo = markerTypeCalculator[item.type](data, axisInfo.valueAxis.dim, axisInfo.baseDataDim, axisInfo.valueDataDim, otherCoordIndex, targetCoordIndex);
       item.coord = coordInfo[0];
       item.value = coordInfo[1];
     } else {
@@ -9593,6 +10948,13 @@ function dataTransform(seriesModel, item) {
   }
   if (item.coord == null || !isArray(dims)) {
     item.coord = [];
+    var baseAxis = seriesModel.getBaseAxis();
+    if (baseAxis && item.type && markerTypeCalculator[item.type]) {
+      var otherAxis = coordSys.getOtherAxis(baseAxis);
+      if (otherAxis) {
+        item.value = numCalculate(data, data.mapDimension(otherAxis.dim), item.type);
+      }
+    }
   } else {
     var coord = item.coord;
     for (var i = 0; i < 2; i++) {
@@ -9654,7 +11016,7 @@ function numCalculate(data, valueDataDim, type) {
   }
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/marker/MarkerView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/marker/MarkerView.js
 var inner8 = makeInner();
 var MarkerView = (
   /** @class */
@@ -9681,6 +11043,7 @@ var MarkerView = (
       markerGroupMap.each(function(item) {
         !inner8(item).keep && _this.group.remove(item.group);
       });
+      updateZ(ecModel, markerGroupMap, this.type);
     };
     MarkerView2.prototype.markKeep = function(drawGroup) {
       inner8(drawGroup).keep = true;
@@ -9703,16 +11066,34 @@ var MarkerView = (
     return MarkerView2;
   }(Component_default2)
 );
+function updateZ(ecModel, markerGroupMap, type) {
+  ecModel.eachSeries(function(seriesModel) {
+    var markerModel = MarkerModel_default.getMarkerModelFromSeries(seriesModel, type);
+    var markerDraw = markerGroupMap.get(seriesModel.id);
+    if (markerModel && markerDraw && markerDraw.group) {
+      var _a = retrieveZInfo(markerModel), z = _a.z, zlevel = _a.zlevel;
+      traverseUpdateZ(markerDraw.group, z, zlevel);
+    }
+  });
+}
 var MarkerView_default = MarkerView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/marker/MarkPointView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/marker/MarkPointView.js
 function updateMarkerLayout(mpData, seriesModel, api) {
   var coordSys = seriesModel.coordinateSystem;
+  var apiWidth = api.getWidth();
+  var apiHeight = api.getHeight();
+  var coordRect = coordSys && coordSys.getArea && coordSys.getArea();
   mpData.each(function(idx) {
     var itemModel = mpData.getItemModel(idx);
+    var isRelativeToCoordinate = itemModel.get("relativeTo") === "coordinate";
+    var width = isRelativeToCoordinate ? coordRect ? coordRect.width : 0 : apiWidth;
+    var height = isRelativeToCoordinate ? coordRect ? coordRect.height : 0 : apiHeight;
+    var left = isRelativeToCoordinate && coordRect ? coordRect.x : 0;
+    var top = isRelativeToCoordinate && coordRect ? coordRect.y : 0;
     var point;
-    var xPx = parsePercent2(itemModel.get("x"), api.getWidth());
-    var yPx = parsePercent2(itemModel.get("y"), api.getHeight());
+    var xPx = parsePercent2(itemModel.get("x"), width) + left;
+    var yPx = parsePercent2(itemModel.get("y"), height) + top;
     if (!isNaN(xPx) && !isNaN(yPx)) {
       point = [xPx, yPx];
     } else if (seriesModel.getMarkerPosition) {
@@ -9782,11 +11163,13 @@ var MarkPointView = (
           }
         }
         var style = itemModel.getModel("itemStyle").getItemStyle();
+        var z2 = itemModel.get("z2");
         var color = getVisualFromData(seriesData, "color");
         if (!style.fill) {
           style.fill = color;
         }
         mpData.setItemVisual(idx, {
+          z2: retrieve2(z2, 0),
           symbol,
           symbolSize,
           symbolRotate,
@@ -9837,8 +11220,8 @@ function createData(coordSys, seriesModel, mpModel) {
 }
 var MarkPointView_default = MarkPointView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/marker/installMarkPoint.js
-function install17(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/marker/installMarkPoint.js
+function install18(registers) {
   registers.registerComponentModel(MarkPointModel_default);
   registers.registerComponentView(MarkPointView_default);
   registers.registerPreprocessor(function(opt) {
@@ -9848,7 +11231,7 @@ function install17(registers) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/marker/MarkLineModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/marker/MarkLineModel.js
 var MarkLineModel = (
   /** @class */
   function(_super) {
@@ -9896,7 +11279,7 @@ var MarkLineModel = (
 );
 var MarkLineModel_default = MarkLineModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/marker/MarkLineView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/marker/MarkLineView.js
 var inner9 = makeInner();
 var markLineTransform = function(seriesModel, coordSys, mlModel, item) {
   var data = seriesModel.getData();
@@ -10067,12 +11450,15 @@ var MarkLineView = (
         updateDataVisualAndLayout(toData, idx, false);
       });
       lineData.each(function(idx) {
-        var lineStyle = lineData.getItemModel(idx).getModel("lineStyle").getLineStyle();
+        var itemModel = lineData.getItemModel(idx);
+        var lineStyle = itemModel.getModel("lineStyle").getLineStyle();
         lineData.setItemLayout(idx, [fromData.getItemLayout(idx), toData.getItemLayout(idx)]);
+        var z2 = itemModel.get("z2");
         if (lineStyle.stroke == null) {
           lineStyle.stroke = fromData.getItemVisual(idx, "style").fill;
         }
         lineData.setItemVisual(idx, {
+          z2: retrieve2(z2, 0),
           fromSymbolKeepAspect: fromData.getItemVisual(idx, "symbolKeepAspect"),
           fromSymbolOffset: fromData.getItemVisual(idx, "symbolOffset"),
           fromSymbolRotate: fromData.getItemVisual(idx, "symbolRotate"),
@@ -10161,8 +11547,8 @@ function createList(coordSys, seriesModel, mlModel) {
 }
 var MarkLineView_default = MarkLineView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/marker/installMarkLine.js
-function install18(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/marker/installMarkLine.js
+function install19(registers) {
   registers.registerComponentModel(MarkLineModel_default);
   registers.registerComponentView(MarkLineView_default);
   registers.registerPreprocessor(function(opt) {
@@ -10172,7 +11558,7 @@ function install18(registers) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/marker/MarkAreaModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/marker/MarkAreaModel.js
 var MarkAreaModel = (
   /** @class */
   function(_super) {
@@ -10217,7 +11603,7 @@ var MarkAreaModel = (
 );
 var MarkAreaModel_default = MarkAreaModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/marker/MarkAreaView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/marker/MarkAreaView.js
 var inner10 = makeInner();
 var markAreaTransform = function(seriesModel, coordSys, maModel, item) {
   var item0 = item[0];
@@ -10378,7 +11764,9 @@ var MarkAreaView = (
           points,
           allClipped
         });
-        var style = areaData.getItemModel(idx).getModel("itemStyle").getItemStyle();
+        var itemModel = areaData.getItemModel(idx);
+        var style = itemModel.getModel("itemStyle").getItemStyle();
+        var z2 = itemModel.get("z2");
         var color = getVisualFromData(seriesData, "color");
         if (!style.fill) {
           style.fill = color;
@@ -10390,13 +11778,16 @@ var MarkAreaView = (
           style.stroke = color;
         }
         areaData.setItemVisual(idx, "style", style);
+        areaData.setItemVisual(idx, "z2", retrieve2(z2, 0));
       });
       areaData.diff(inner10(polygonGroup).data).add(function(idx) {
-        var layout4 = areaData.getItemLayout(idx);
-        if (!layout4.allClipped) {
+        var layout3 = areaData.getItemLayout(idx);
+        var z2 = areaData.getItemVisual(idx, "z2");
+        if (!layout3.allClipped) {
           var polygon = new Polygon_default({
+            z2: retrieve2(z2, 0),
             shape: {
-              points: layout4.points
+              points: layout3.points
             }
           });
           areaData.setItemGraphicEl(idx, polygon);
@@ -10404,18 +11795,20 @@ var MarkAreaView = (
         }
       }).update(function(newIdx, oldIdx) {
         var polygon = inner10(polygonGroup).data.getItemGraphicEl(oldIdx);
-        var layout4 = areaData.getItemLayout(newIdx);
-        if (!layout4.allClipped) {
+        var layout3 = areaData.getItemLayout(newIdx);
+        var z2 = areaData.getItemVisual(newIdx, "z2");
+        if (!layout3.allClipped) {
           if (polygon) {
             updateProps(polygon, {
+              z2: retrieve2(z2, 0),
               shape: {
-                points: layout4.points
+                points: layout3.points
               }
             }, maModel, newIdx);
           } else {
             polygon = new Polygon_default({
               shape: {
-                points: layout4.points
+                points: layout3.points
               }
             });
           }
@@ -10436,7 +11829,7 @@ var MarkAreaView = (
           labelFetcher: maModel,
           labelDataIndex: idx,
           defaultText: areaData.getName(idx) || "",
-          inheritColor: isString(style.fill) ? modifyAlpha(style.fill, 1) : "#000"
+          inheritColor: isString(style.fill) ? modifyAlpha(style.fill, 1) : tokens_default.color.neutral99
         });
         setStatesStylesFromModel(polygon, itemModel);
         toggleHoverEmphasis(polygon, null, null, itemModel.get(["emphasis", "disabled"]));
@@ -10493,8 +11886,8 @@ function createList2(coordSys, seriesModel, maModel) {
 }
 var MarkAreaView_default = MarkAreaView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/marker/installMarkArea.js
-function install19(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/marker/installMarkArea.js
+function install20(registers) {
   registers.registerComponentModel(MarkAreaModel_default);
   registers.registerComponentView(MarkAreaView_default);
   registers.registerPreprocessor(function(opt) {
@@ -10504,7 +11897,7 @@ function install19(registers) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/legend/LegendModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/legend/LegendModel.js
 var getDefaultSelectorOptions = function(ecModel, type) {
   if (type === "all") {
     return {
@@ -10688,21 +12081,21 @@ var LegendModel = (
       orient: "horizontal",
       left: "center",
       // right: 'center',
-      top: 0,
-      // bottom: null,
+      // top: 0,
+      bottom: tokens_default.size.m,
       align: "auto",
-      backgroundColor: "rgba(0,0,0,0)",
-      borderColor: "#ccc",
+      backgroundColor: tokens_default.color.transparent,
+      borderColor: tokens_default.color.border,
       borderRadius: 0,
       borderWidth: 0,
       padding: 5,
-      itemGap: 10,
+      itemGap: 8,
       itemWidth: 25,
       itemHeight: 14,
       symbolRotate: "inherit",
       symbolKeepAspect: true,
-      inactiveColor: "#ccc",
-      inactiveBorderColor: "#ccc",
+      inactiveColor: tokens_default.color.disabled,
+      inactiveBorderColor: tokens_default.color.disabled,
       inactiveBorderWidth: "auto",
       itemStyle: {
         color: "inherit",
@@ -10717,7 +12110,7 @@ var LegendModel = (
       lineStyle: {
         width: "auto",
         color: "inherit",
-        inactiveColor: "#ccc",
+        inactiveColor: tokens_default.color.disabled,
         inactiveWidth: 2,
         opacity: "inherit",
         type: "inherit",
@@ -10727,7 +12120,7 @@ var LegendModel = (
         miterLimit: "inherit"
       },
       textStyle: {
-        color: "#333"
+        color: tokens_default.color.secondary
       },
       selectedMode: true,
       selector: false,
@@ -10737,15 +12130,14 @@ var LegendModel = (
         padding: [3, 5, 3, 5],
         fontSize: 12,
         fontFamily: "sans-serif",
-        color: "#666",
+        color: tokens_default.color.tertiary,
         borderWidth: 1,
-        borderColor: "#666"
+        borderColor: tokens_default.color.border
       },
       emphasis: {
         selectorLabel: {
           show: true,
-          color: "#eee",
-          backgroundColor: "#666"
+          color: tokens_default.color.quaternary
         }
       },
       selectorPosition: "auto",
@@ -10753,14 +12145,15 @@ var LegendModel = (
       selectorButtonGap: 10,
       tooltip: {
         show: false
-      }
+      },
+      triggerEvent: false
     };
     return LegendModel2;
   }(Component_default)
 );
 var LegendModel_default = LegendModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/legend/LegendView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/legend/LegendView.js
 var curry2 = curry;
 var each7 = each;
 var Group = Group_default;
@@ -10803,22 +12196,23 @@ var LegendView = (
         selectorPosition = orient === "horizontal" ? "end" : "start";
       }
       this.renderInner(itemAlign, legendModel, ecModel, api, selector2, orient, selectorPosition);
+      var refContainer = createBoxLayoutReference(legendModel, api).refContainer;
       var positionInfo = legendModel.getBoxLayoutParams();
-      var viewportSize = {
-        width: api.getWidth(),
-        height: api.getHeight()
-      };
       var padding = legendModel.get("padding");
-      var maxSize = getLayoutRect(positionInfo, viewportSize, padding);
+      var maxSize = getLayoutRect(positionInfo, refContainer, padding);
       var mainRect = this.layoutInner(legendModel, itemAlign, maxSize, isFirstRender, selector2, selectorPosition);
       var layoutRect = getLayoutRect(defaults({
         width: mainRect.width,
         height: mainRect.height
-      }, positionInfo), viewportSize, padding);
+      }, positionInfo), refContainer, padding);
       this.group.x = layoutRect.x - mainRect.x;
       this.group.y = layoutRect.y - mainRect.y;
       this.group.markRedraw();
-      this.group.add(this._backgroundEl = makeBackground(mainRect, legendModel));
+      this.group.add(this._backgroundEl = makeBackground(
+        mainRect,
+        // FXIME: most itemStyle options does not work in background because inherit is not handled yet.
+        legendModel
+      ));
     };
     LegendView2.prototype.resetInner = function() {
       this.getContentGroup().removeAll();
@@ -10829,11 +12223,13 @@ var LegendView = (
       var contentGroup = this.getContentGroup();
       var legendDrawnMap = createHashMap();
       var selectMode = legendModel.get("selectedMode");
+      var triggerEvent = legendModel.get("triggerEvent");
       var excludeSeriesId = [];
       ecModel.eachRawSeries(function(seriesModel) {
         !seriesModel.get("legendHoverLink") && excludeSeriesId.push(seriesModel.id);
       });
       each7(legendModel.getData(), function(legendItemModel, dataIndex) {
+        var _this = this;
         var name = legendItemModel.get("name");
         if (!this.newlineDisabled && (name === "" || name === "\n")) {
           var g = new Group();
@@ -10860,9 +12256,15 @@ var LegendView = (
               ecData.ssrType = "legend";
             });
           }
+          if (triggerEvent) {
+            itemGroup.eachChild(function(child) {
+              _this.packEventData(child, legendModel, seriesModel, dataIndex, name);
+            });
+          }
           legendDrawnMap.set(name, true);
         } else {
           ecModel.eachRawSeries(function(seriesModel2) {
+            var _this2 = this;
             if (legendDrawnMap.get(name)) {
               return;
             }
@@ -10891,6 +12293,11 @@ var LegendView = (
                   ecData.ssrType = "legend";
                 });
               }
+              if (triggerEvent) {
+                itemGroup2.eachChild(function(child) {
+                  _this2.packEventData(child, legendModel, seriesModel2, dataIndex, name);
+                });
+              }
               legendDrawnMap.set(name, true);
             }
           }, this);
@@ -10905,6 +12312,17 @@ var LegendView = (
         this._createSelector(selector2, legendModel, api, orient, selectorPosition);
       }
     };
+    LegendView2.prototype.packEventData = function(el, legendModel, seriesModel, dataIndex, name) {
+      var eventData = {
+        componentType: "legend",
+        componentIndex: legendModel.componentIndex,
+        dataIndex,
+        value: name,
+        seriesIndex: seriesModel.seriesIndex
+      };
+      getECData(el).eventData = eventData;
+    };
+    ;
     LegendView2.prototype._createSelector = function(selector2, legendModel, api, orient, selectorPosition) {
       var selectorGroup = this.getSelectorGroup();
       each7(selector2, function createSelectorButton(selectorItem) {
@@ -11123,7 +12541,7 @@ function getDefaultLegendIcon(opt) {
   icon.setOrigin([opt.itemWidth / 2, opt.itemHeight / 2]);
   if (symboType.indexOf("empty") > -1) {
     icon.style.stroke = icon.style.fill;
-    icon.style.fill = "#fff";
+    icon.style.fill = tokens_default.color.neutral00;
     icon.style.lineWidth = 2;
   }
   return icon;
@@ -11168,7 +12586,7 @@ function dispatchDownplayAction(seriesName, dataName, api, excludeSeriesId) {
 }
 var LegendView_default = LegendView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/legend/legendFilter.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/legend/legendFilter.js
 function legendFilter(ecModel) {
   var legendModels = ecModel.findComponents({
     mainType: "legend"
@@ -11185,7 +12603,7 @@ function legendFilter(ecModel) {
   }
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/legend/legendAction.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/legend/legendAction.js
 function legendSelectActionHandler(methodName, payload, ecModel) {
   var isAllSelect = methodName === "allSelect" || methodName === "inverseSelect";
   var selectedMap = {};
@@ -11242,8 +12660,8 @@ function installLegendAction(registers) {
   registers.registerAction("legendUnSelect", "legendunselected", curry(legendSelectActionHandler, "unSelect"));
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/legend/installLegendPlain.js
-function install20(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/legend/installLegendPlain.js
+function install21(registers) {
   registers.registerComponentModel(LegendModel_default);
   registers.registerComponentView(LegendView_default);
   registers.registerProcessor(registers.PRIORITY.PROCESSOR.SERIES_FILTER, legendFilter);
@@ -11253,7 +12671,7 @@ function install20(registers) {
   installLegendAction(registers);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/legend/ScrollableLegendModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/legend/ScrollableLegendModel.js
 var ScrollableLegendModel = (
   /** @class */
   function(_super) {
@@ -11286,11 +12704,11 @@ var ScrollableLegendModel = (
         horizontal: ["M0,0L12,-10L12,10z", "M0,0L-12,-10L-12,10z"],
         vertical: ["M0,0L20,0L10,-20z", "M0,0L20,0L10,20z"]
       },
-      pageIconColor: "#2f4554",
-      pageIconInactiveColor: "#aaa",
+      pageIconColor: tokens_default.color.accent50,
+      pageIconInactiveColor: tokens_default.color.accent10,
       pageIconSize: 15,
       pageTextStyle: {
-        color: "#333"
+        color: tokens_default.color.tertiary
       },
       animationDurationUpdate: 800
     });
@@ -11308,10 +12726,10 @@ function mergeAndNormalizeLayoutParams2(legendModel, target, raw) {
 }
 var ScrollableLegendModel_default = ScrollableLegendModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/legend/ScrollableLegendView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/legend/ScrollableLegendView.js
 var Group2 = Group_default;
-var WH2 = ["width", "height"];
-var XY2 = ["x", "y"];
+var WH3 = ["width", "height"];
+var XY3 = ["x", "y"];
 var ScrollableLegendView = (
   /** @class */
   function(_super) {
@@ -11375,10 +12793,10 @@ var ScrollableLegendView = (
     ScrollableLegendView2.prototype.layoutInner = function(legendModel, itemAlign, maxSize, isFirstRender, selector2, selectorPosition) {
       var selectorGroup = this.getSelectorGroup();
       var orientIdx = legendModel.getOrient().index;
-      var wh = WH2[orientIdx];
-      var xy = XY2[orientIdx];
-      var hw = WH2[1 - orientIdx];
-      var yx = XY2[1 - orientIdx];
+      var wh = WH3[orientIdx];
+      var xy = XY3[orientIdx];
+      var hw = WH3[1 - orientIdx];
+      var yx = XY3[1 - orientIdx];
       selector2 && box(
         // Buttons in selectorGroup always layout horizontally
         "horizontal",
@@ -11517,8 +12935,8 @@ var ScrollableLegendView = (
       var contentGroup = this.getContentGroup();
       var containerRectSize = this._containerGroup.__rectSize;
       var orientIdx = legendModel.getOrient().index;
-      var wh = WH2[orientIdx];
-      var xy = XY2[orientIdx];
+      var wh = WH3[orientIdx];
+      var xy = XY3[orientIdx];
       var targetItemIndex = this._findTargetItemIndex(scrollDataIndex);
       var children = contentGroup.children();
       var targetItem = children[targetItemIndex];
@@ -11612,7 +13030,7 @@ var ScrollableLegendView = (
 );
 var ScrollableLegendView_default = ScrollableLegendView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/legend/scrollableLegendAction.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/legend/scrollableLegendAction.js
 function installScrollableLegendAction(registers) {
   registers.registerAction("legendScroll", "legendscroll", function(payload, ecModel) {
     var scrollDataIndex = payload.scrollDataIndex;
@@ -11626,21 +13044,21 @@ function installScrollableLegendAction(registers) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/legend/installLegendScroll.js
-function install21(registers) {
-  use(install20);
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/legend/installLegendScroll.js
+function install22(registers) {
+  use(install21);
   registers.registerComponentModel(ScrollableLegendModel_default);
   registers.registerComponentView(ScrollableLegendView_default);
   installScrollableLegendAction(registers);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/legend/install.js
-function install22(registers) {
-  use(install20);
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/legend/install.js
+function install23(registers) {
   use(install21);
+  use(install22);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/InsideZoomModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/InsideZoomModel.js
 var InsideZoomModel = (
   /** @class */
   function(_super) {
@@ -11664,7 +13082,7 @@ var InsideZoomModel = (
 );
 var InsideZoomModel_default = InsideZoomModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/roams.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/roams.js
 var inner11 = makeInner();
 function setViewInfoToCoordSysRecord(api, dataZoomModel, getRange) {
   inner11(api).coordSysRecordMap.each(function(coordSysRecord) {
@@ -11744,7 +13162,7 @@ function dispatchAction2(api, batch) {
 function containsPoint(coordSysModel, e, x, y) {
   return coordSysModel.coordinateSystem.containPoint([x, y]);
 }
-function mergeControllerParams(dataZoomInfoMap) {
+function mergeControllerParams(dataZoomInfoMap, coordSysRecord, api) {
   var controlType;
   var prefix = "type_";
   var typePriority = {
@@ -11771,7 +13189,15 @@ function mergeControllerParams(dataZoomInfoMap) {
       zoomOnMouseWheel: true,
       moveOnMouseMove: true,
       moveOnMouseWheel: true,
-      preventDefaultMouseMove: !!preventDefaultMouseMove
+      preventDefaultMouseMove: !!preventDefaultMouseMove,
+      api,
+      zInfo: {
+        component: coordSysRecord.model
+      },
+      triggerInfo: {
+        roamTrigger: null,
+        isInSelf: coordSysRecord.containsPoint
+      }
     }
   };
 }
@@ -11812,15 +13238,14 @@ function installDataZoomRoamProcessor(registers) {
         disposeCoordSysRecord(coordSysRecordMap, coordSysRecord);
         return;
       }
-      var controllerParams = mergeControllerParams(dataZoomInfoMap);
+      var controllerParams = mergeControllerParams(dataZoomInfoMap, coordSysRecord, api);
       controller.enable(controllerParams.controlType, controllerParams.opt);
-      controller.setPointerChecker(coordSysRecord.containsPoint);
       createOrUpdate(coordSysRecord, "dispatchAction", firstDzInfo.model.get("throttle", true), "fixRate");
     });
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/InsideZoomView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/InsideZoomView.js
 var InsideZoomView = (
   /** @class */
   function(_super) {
@@ -11961,15 +13386,15 @@ var getDirectionInfo = {
 };
 var InsideZoomView_default = InsideZoomView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/installDataZoomInside.js
-function install23(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/installDataZoomInside.js
+function install24(registers) {
   installCommon(registers);
   registers.registerComponentModel(InsideZoomModel_default);
   registers.registerComponentView(InsideZoomView_default);
   installDataZoomRoamProcessor(registers);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/SliderZoomModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/SliderZoomModel.js
 var SliderZoomModel = (
   /** @class */
   function(_super) {
@@ -11990,28 +13415,28 @@ var SliderZoomModel = (
       height: "ph",
       left: null,
       bottom: null,
-      borderColor: "#d2dbee",
-      borderRadius: 3,
-      backgroundColor: "rgba(47,69,84,0)",
+      borderColor: tokens_default.color.accent10,
+      borderRadius: 0,
+      backgroundColor: tokens_default.color.transparent,
       // dataBackgroundColor: '#ddd',
       dataBackground: {
         lineStyle: {
-          color: "#d2dbee",
+          color: tokens_default.color.accent30,
           width: 0.5
         },
         areaStyle: {
-          color: "#d2dbee",
+          color: tokens_default.color.accent20,
           opacity: 0.2
         }
       },
       selectedDataBackground: {
         lineStyle: {
-          color: "#8fb0f7",
+          color: tokens_default.color.accent40,
           width: 0.5
         },
         areaStyle: {
-          color: "#8fb0f7",
-          opacity: 0.2
+          color: tokens_default.color.accent20,
+          opacity: 0.3
         }
       },
       // Color of selected window.
@@ -12020,46 +13445,47 @@ var SliderZoomModel = (
       // Percent of the slider height
       handleSize: "100%",
       handleStyle: {
-        color: "#fff",
-        borderColor: "#ACB8D1"
+        color: tokens_default.color.neutral00,
+        borderColor: tokens_default.color.accent20
       },
       moveHandleSize: 7,
       moveHandleIcon: "path://M-320.9-50L-320.9-50c18.1,0,27.1,9,27.1,27.1V85.7c0,18.1-9,27.1-27.1,27.1l0,0c-18.1,0-27.1-9-27.1-27.1V-22.9C-348-41-339-50-320.9-50z M-212.3-50L-212.3-50c18.1,0,27.1,9,27.1,27.1V85.7c0,18.1-9,27.1-27.1,27.1l0,0c-18.1,0-27.1-9-27.1-27.1V-22.9C-239.4-41-230.4-50-212.3-50z M-103.7-50L-103.7-50c18.1,0,27.1,9,27.1,27.1V85.7c0,18.1-9,27.1-27.1,27.1l0,0c-18.1,0-27.1-9-27.1-27.1V-22.9C-130.9-41-121.8-50-103.7-50z",
       moveHandleStyle: {
-        color: "#D2DBEE",
-        opacity: 0.7
+        color: tokens_default.color.accent40,
+        opacity: 0.5
       },
       showDetail: true,
       showDataShadow: "auto",
       realtime: true,
       zoomLock: false,
       textStyle: {
-        color: "#6E7079"
+        color: tokens_default.color.tertiary
       },
       brushSelect: true,
       brushStyle: {
-        color: "rgba(135,175,274,0.15)"
+        color: tokens_default.color.accent30,
+        opacity: 0.3
       },
       emphasis: {
         handleLabel: {
           show: true
         },
         handleStyle: {
-          borderColor: "#8FB0F7"
+          borderColor: tokens_default.color.accent40
         },
         moveHandleStyle: {
-          color: "#8FB0F7"
+          opacity: 0.8
         }
-      }
+      },
+      defaultLocationEdgeGap: 15
     });
     return SliderZoomModel2;
   }(DataZoomModel_default)
 );
 var SliderZoomModel_default = SliderZoomModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/SliderZoomView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/SliderZoomView.js
 var Rect = Rect_default;
-var DEFAULT_LOCATION_EDGE_GAP = 7;
 var DEFAULT_FRAME_BORDER_WIDTH = 1;
 var DEFAULT_FILLER_SIZE = 30;
 var DEFAULT_MOVE_HANDLE_SIZE = 7;
@@ -12134,20 +13560,18 @@ var SliderZoomView = (
       var api = this.api;
       var showMoveHandle = dataZoomModel.get("brushSelect");
       var moveHandleSize = showMoveHandle ? DEFAULT_MOVE_HANDLE_SIZE : 0;
+      var refContainer = createBoxLayoutReference(dataZoomModel, api).refContainer;
       var coordRect = this._findCoordRect();
-      var ecSize = {
-        width: api.getWidth(),
-        height: api.getHeight()
-      };
+      var edgeGap = dataZoomModel.get("defaultLocationEdgeGap", true) || 0;
       var positionInfo = this._orient === HORIZONTAL ? {
         // Why using 'right', because right should be used in vertical,
         // and it is better to be consistent for dealing with position param merge.
-        right: ecSize.width - coordRect.x - coordRect.width,
-        top: ecSize.height - DEFAULT_FILLER_SIZE - DEFAULT_LOCATION_EDGE_GAP - moveHandleSize,
+        right: refContainer.width - coordRect.x - coordRect.width,
+        top: refContainer.height - DEFAULT_FILLER_SIZE - edgeGap - moveHandleSize,
         width: coordRect.width,
         height: DEFAULT_FILLER_SIZE
       } : {
-        right: DEFAULT_LOCATION_EDGE_GAP,
+        right: edgeGap,
         top: coordRect.y,
         width: DEFAULT_FILLER_SIZE,
         height: coordRect.height
@@ -12158,7 +13582,7 @@ var SliderZoomView = (
           layoutParams[name] = positionInfo[name];
         }
       });
-      var layoutRect = getLayoutRect(layoutParams, ecSize);
+      var layoutRect = getLayoutRect(layoutParams, refContainer);
       this._location = {
         x: layoutRect.x,
         y: layoutRect.y
@@ -12258,6 +13682,7 @@ var SliderZoomView = (
       var polygonPts = this._shadowPolygonPts;
       var polylinePts = this._shadowPolylinePts;
       if (data !== this._shadowData || otherDim !== this._shadowDim || size[0] !== oldSize[0] || size[1] !== oldSize[1]) {
+        var thisDataExtent_1 = data.getDataExtent(info.thisDim);
         var otherDataExtent_1 = data.getDataExtent(otherDim);
         var otherOffset = (otherDataExtent_1[1] - otherDataExtent_1[0]) * 0.3;
         otherDataExtent_1 = [otherDataExtent_1[0] - otherOffset, otherDataExtent_1[1] + otherOffset];
@@ -12265,17 +13690,22 @@ var SliderZoomView = (
         var thisShadowExtent = [0, size[0]];
         var areaPoints_1 = [[size[0], 0], [0, 0]];
         var linePoints_1 = [];
-        var step_1 = thisShadowExtent[1] / (data.count() - 1);
-        var thisCoord_1 = 0;
+        var step_1 = thisShadowExtent[1] / Math.max(1, data.count() - 1);
+        var normalizationConstant_1 = size[0] / (thisDataExtent_1[1] - thisDataExtent_1[0]);
+        var isTimeAxis_1 = info.thisAxis.type === "time";
+        var thisCoord_1 = -step_1;
         var stride_1 = Math.round(data.count() / size[0]);
         var lastIsEmpty_1;
-        data.each([otherDim], function(value, index) {
+        data.each([info.thisDim, otherDim], function(thisValue, otherValue, index) {
           if (stride_1 > 0 && index % stride_1) {
-            thisCoord_1 += step_1;
+            if (!isTimeAxis_1) {
+              thisCoord_1 += step_1;
+            }
             return;
           }
-          var isEmpty = value == null || isNaN(value) || value === "";
-          var otherCoord = isEmpty ? 0 : linearMap(value, otherDataExtent_1, otherShadowExtent_1, true);
+          thisCoord_1 = isTimeAxis_1 ? (+thisValue - thisDataExtent_1[0]) * normalizationConstant_1 : thisCoord_1 + step_1;
+          var isEmpty = otherValue == null || isNaN(otherValue) || otherValue === "";
+          var otherCoord = isEmpty ? 0 : linearMap(otherValue, otherDataExtent_1, otherShadowExtent_1, true);
           if (isEmpty && !lastIsEmpty_1 && index) {
             areaPoints_1.push([areaPoints_1[areaPoints_1.length - 1][0], 0]);
             linePoints_1.push([linePoints_1[linePoints_1.length - 1][0], 0]);
@@ -12283,9 +13713,10 @@ var SliderZoomView = (
             areaPoints_1.push([thisCoord_1, 0]);
             linePoints_1.push([thisCoord_1, 0]);
           }
-          areaPoints_1.push([thisCoord_1, otherCoord]);
-          linePoints_1.push([thisCoord_1, otherCoord]);
-          thisCoord_1 += step_1;
+          if (!isEmpty) {
+            areaPoints_1.push([thisCoord_1, otherCoord]);
+            linePoints_1.push([thisCoord_1, otherCoord]);
+          }
           lastIsEmpty_1 = isEmpty;
         });
         polygonPts = this._shadowPolygonPts = areaPoints_1;
@@ -12351,10 +13782,11 @@ var SliderZoomView = (
             otherAxisInverse = coordSys.getOtherAxis(thisAxis).inverse;
           }
           otherDim = seriesModel.getData().mapDimension(otherDim);
+          var thisDim = seriesModel.getData().mapDimension(axisDim);
           result = {
             thisAxis,
             series: seriesModel,
-            thisDim: axisDim,
+            thisDim,
             otherDim,
             otherAxisInverse
           };
@@ -12397,7 +13829,7 @@ var SliderZoomView = (
           // deprecated option
           stroke: dataZoomModel.get("dataBackgroundColor") || dataZoomModel.get("borderColor"),
           lineWidth: DEFAULT_FRAME_BORDER_WIDTH,
-          fill: "rgba(0,0,0,0)"
+          fill: tokens_default.color.transparent
         }
       }));
       each([0, 1], function(handleIndex) {
@@ -12463,7 +13895,7 @@ var SliderZoomView = (
           }
         });
         var iconSize = moveHandleHeight * 0.8;
-        var moveHandleIcon = displayables.moveHandleIcon = createSymbol(dataZoomModel.get("moveHandleIcon"), -iconSize / 2, -iconSize / 2, iconSize, iconSize, "#fff", true);
+        var moveHandleIcon = displayables.moveHandleIcon = createSymbol(dataZoomModel.get("moveHandleIcon"), -iconSize / 2, -iconSize / 2, iconSize, iconSize, tokens_default.color.neutral00, true);
         moveHandleIcon.silent = true;
         moveHandleIcon.y = size[1] + moveHandleHeight / 2 - 0.5;
         moveHandle_1.ensureState("emphasis").style = dataZoomModel.getModel(["emphasis", "moveHandleStyle"]).getItemStyle();
@@ -12486,7 +13918,7 @@ var SliderZoomView = (
       }
       actualMoveZone.attr({
         draggable: true,
-        cursor: getCursor(this._orient),
+        cursor: "default",
         drift: bind(this._onDragMove, this, "all"),
         ondragstart: bind(this._showDataInfo, this, true),
         ondragend: bind(this._onDragEnd, this),
@@ -12586,7 +14018,7 @@ var SliderZoomView = (
         var barTransform = getTransform(displaybles.handles[handleIndex].parent, this.group);
         var direction = transformDirection(handleIndex === 0 ? "right" : "left", barTransform);
         var offset = this._handleWidth / 2 + LABEL_GAP;
-        var textPoint = applyTransform([orderedHandleEnds[handleIndex] + (handleIndex === 0 ? -offset : offset), this._size[1] / 2], barTransform);
+        var textPoint = applyTransform2([orderedHandleEnds[handleIndex] + (handleIndex === 0 ? -offset : offset), this._size[1] / 2], barTransform);
         handleLabels[handleIndex].setStyle({
           x: textPoint[0],
           y: textPoint[1],
@@ -12624,7 +14056,7 @@ var SliderZoomView = (
       this._dragging = true;
       stop(event.event);
       var barTransform = this._displayables.sliderGroup.getLocalTransform();
-      var vertex = applyTransform([dx, dy], barTransform, true);
+      var vertex = applyTransform2([dx, dy], barTransform, true);
       var changed = this._updateInterval(handleIndex, vertex[0]);
       var realtime = this.dataZoomModel.get("realtime");
       this._updateView(!realtime);
@@ -12672,8 +14104,10 @@ var SliderZoomView = (
       }
       var viewExtend = this._getViewExtent();
       var percentExtent = [0, 100];
-      this._range = asc([linearMap(brushShape.x, viewExtend, percentExtent, true), linearMap(brushShape.x + brushShape.width, viewExtend, percentExtent, true)]);
-      this._handleEnds = [brushShape.x, brushShape.x + brushShape.width];
+      var handleEnds = this._handleEnds = [brushShape.x, brushShape.x + brushShape.width];
+      var minMaxSpan = this.dataZoomModel.findRepresentativeAxisProxy().getMinMaxSpan();
+      sliderMove(0, handleEnds, viewExtend, 0, minMaxSpan.minSpan != null ? linearMap(minMaxSpan.minSpan, percentExtent, viewExtend, true) : null, minMaxSpan.maxSpan != null ? linearMap(minMaxSpan.maxSpan, percentExtent, viewExtend, true) : null);
+      this._range = asc([linearMap(handleEnds[0], viewExtend, percentExtent, true), linearMap(handleEnds[1], viewExtend, percentExtent, true)]);
       this._updateView();
       this._dispatchZoomAction(false);
     };
@@ -12756,20 +14190,20 @@ function getCursor(orient) {
 }
 var SliderZoomView_default = SliderZoomView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/installDataZoomSlider.js
-function install24(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/installDataZoomSlider.js
+function install25(registers) {
   registers.registerComponentModel(SliderZoomModel_default);
   registers.registerComponentView(SliderZoomView_default);
   installCommon(registers);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataZoom/install.js
-function install25(registers) {
-  use(install23);
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataZoom/install.js
+function install26(registers) {
   use(install24);
+  use(install25);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/visual/visualDefault.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/visual/visualDefault.js
 var visualDefault = {
   /**
    * @public
@@ -12782,7 +14216,7 @@ var visualDefault = {
 var defaultOption = {
   color: {
     active: ["#006edd", "#e0ffff"],
-    inactive: ["rgba(0,0,0,0)"]
+    inactive: [tokens_default.color.transparent]
   },
   colorHue: {
     active: [0, 360],
@@ -12815,7 +14249,7 @@ var defaultOption = {
 };
 var visualDefault_default = visualDefault;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/visualMap/VisualMapModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/visualMap/VisualMapModel.js
 var mapVisual = VisualMapping_default.mapVisual;
 var eachVisual = VisualMapping_default.eachVisual;
 var isArray2 = isArray;
@@ -12860,16 +14294,22 @@ var VisualMapModel = (
       return null;
     };
     VisualMapModel2.prototype.getTargetSeriesIndices = function() {
+      var optionSeriesId = this.option.seriesId;
       var optionSeriesIndex = this.option.seriesIndex;
-      var seriesIndices = [];
-      if (optionSeriesIndex == null || optionSeriesIndex === "all") {
-        this.ecModel.eachSeries(function(seriesModel, index) {
-          seriesIndices.push(index);
-        });
-      } else {
-        seriesIndices = normalizeToArray(optionSeriesIndex);
+      if (optionSeriesIndex == null && optionSeriesId == null) {
+        optionSeriesIndex = "all";
       }
-      return seriesIndices;
+      var seriesModels = queryReferringComponents(this.ecModel, "series", {
+        index: optionSeriesIndex,
+        id: optionSeriesId
+      }, {
+        useDefault: false,
+        enableAll: true,
+        enableNone: false
+      }).models;
+      return map(seriesModels, function(seriesModel) {
+        return seriesModel.componentIndex;
+      });
     };
     VisualMapModel2.prototype.eachTargetSeries = function(callback, context) {
       each(this.getTargetSeriesIndices(), function(seriesIndex) {
@@ -13044,7 +14484,7 @@ var VisualMapModel = (
       show: true,
       // zlevel: 0,
       z: 4,
-      seriesIndex: "all",
+      // seriesIndex: 'all',
       min: 0,
       max: 200,
       left: 0,
@@ -13055,17 +14495,17 @@ var VisualMapModel = (
       itemHeight: null,
       inverse: false,
       orient: "vertical",
-      backgroundColor: "rgba(0,0,0,0)",
-      borderColor: "#ccc",
-      contentColor: "#5793f3",
-      inactiveColor: "#aaa",
+      backgroundColor: tokens_default.color.transparent,
+      borderColor: tokens_default.color.borderTint,
+      contentColor: tokens_default.color.theme[0],
+      inactiveColor: tokens_default.color.disabled,
       borderWidth: 0,
-      padding: 5,
+      padding: tokens_default.size.m,
       // 接受数组分别设定上右下左边距，同css
       textGap: 10,
       precision: 0,
       textStyle: {
-        color: "#333"
+        color: tokens_default.color.secondary
         // 值域文字颜色
       }
     };
@@ -13074,7 +14514,7 @@ var VisualMapModel = (
 );
 var VisualMapModel_default = VisualMapModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/visualMap/ContinuousModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/visualMap/ContinuousModel.js
 var DEFAULT_BAR_BOUND = [20, 140];
 var ContinuousModel = (
   /** @class */
@@ -13139,7 +14579,8 @@ var ContinuousModel = (
     ContinuousModel2.prototype.getValueState = function(value) {
       var range = this.option.range;
       var dataExtent = this.getExtent();
-      return (range[0] <= dataExtent[0] || range[0] <= value) && (range[1] >= dataExtent[1] || value <= range[1]) ? "inRange" : "outOfRange";
+      var unboundedRange = retrieve2(this.option.unboundedRange, true);
+      return (unboundedRange && range[0] <= dataExtent[0] || range[0] <= value) && (unboundedRange && range[1] >= dataExtent[1] || value <= range[1]) ? "inRange" : "outOfRange";
     };
     ContinuousModel2.prototype.findTargetDataIndices = function(range) {
       var result = [];
@@ -13203,25 +14644,25 @@ var ContinuousModel = (
       handleIcon: "path://M-11.39,9.77h0a3.5,3.5,0,0,1-3.5,3.5h-22a3.5,3.5,0,0,1-3.5-3.5h0a3.5,3.5,0,0,1,3.5-3.5h22A3.5,3.5,0,0,1-11.39,9.77Z",
       handleSize: "120%",
       handleStyle: {
-        borderColor: "#fff",
+        borderColor: tokens_default.color.neutral00,
         borderWidth: 1
       },
       indicatorIcon: "circle",
       indicatorSize: "50%",
       indicatorStyle: {
-        borderColor: "#fff",
+        borderColor: tokens_default.color.neutral00,
         borderWidth: 2,
         shadowBlur: 2,
         shadowOffsetX: 1,
         shadowOffsetY: 1,
-        shadowColor: "rgba(0,0,0,0.2)"
+        shadowColor: tokens_default.color.shadow
       }
       // emphasis: {
       //     handleStyle: {
       //         shadowBlur: 3,
       //         shadowOffsetX: 1,
       //         shadowOffsetY: 1,
-      //         shadowColor: 'rgba(0,0,0,0.2)'
+      //         shadowColor: tokens.color.shadow
       //     }
       // }
     });
@@ -13245,7 +14686,7 @@ function getColorStopValues(visualMapModel, valueState, dataExtent) {
 }
 var ContinuousModel_default = ContinuousModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/visualMap/VisualMapView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/visualMap/VisualMapView.js
 var VisualMapView = (
   /** @class */
   function(_super) {
@@ -13325,10 +14766,8 @@ var VisualMapView = (
     VisualMapView2.prototype.positionGroup = function(group) {
       var model = this.visualMapModel;
       var api = this.api;
-      positionElement(group, model.getBoxLayoutParams(), {
-        width: api.getWidth(),
-        height: api.getHeight()
-      });
+      var refContainer = createBoxLayoutReference(model, api).refContainer;
+      positionElement(group, model.getBoxLayoutParams(), refContainer);
     };
     VisualMapView2.prototype.doRender = function(visualMapModel, ecModel, api, payload) {
     };
@@ -13338,7 +14777,7 @@ var VisualMapView = (
 );
 var VisualMapView_default = VisualMapView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/visualMap/helper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/visualMap/helper.js
 var paramsSet = [["left", "right", "width"], ["top", "bottom", "height"]];
 function getItemAlign(visualMapModel, api, itemSize) {
   var modelOption = visualMapModel.option;
@@ -13373,11 +14812,11 @@ function makeHighDownBatch(batch, visualMapModel) {
   return batch;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/visualMap/ContinuousView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/visualMap/ContinuousView.js
 var linearMap3 = linearMap;
 var each9 = each;
-var mathMin = Math.min;
-var mathMax = Math.max;
+var mathMin2 = Math.min;
+var mathMax2 = Math.max;
 var HOVER_LINK_SIZE = 12;
 var HOVER_LINK_OUT = 6;
 var ContinuousView = (
@@ -13439,8 +14878,8 @@ var ContinuousView = (
         style: createTextStyle(textStyleModel, {
           x: position[0],
           y: position[1],
-          verticalAlign: orient === "horizontal" ? "middle" : align,
-          align: orient === "horizontal" ? align : "center",
+          verticalAlign: textStyleModel.get("verticalAlign") || (orient === "horizontal" ? "middle" : align),
+          align: textStyleModel.get("align") || (orient === "horizontal" ? align : "center"),
           text
         })
       }));
@@ -13467,7 +14906,7 @@ var ContinuousView = (
         }
       }));
       var textRect = visualMapModel.textStyleModel.getTextRect("国");
-      var textSize = mathMax(textRect.width, textRect.height);
+      var textSize = mathMax2(textRect.width, textRect.height);
       if (useHandle) {
         shapes.handleThumbs = [];
         shapes.handleLabels = [];
@@ -13716,7 +15155,7 @@ var ContinuousView = (
         var symbolSize = this.getControllerVisual(val, "symbolSize");
         handleThumb.scaleX = handleThumb.scaleY = symbolSize / itemSize[0];
         handleThumb.x = itemSize[0] - symbolSize / 2;
-        var textPoint = applyTransform(shapes.handleLabelPoints[handleIndex], getTransform(handleThumb, this.group));
+        var textPoint = applyTransform2(shapes.handleLabelPoints[handleIndex], getTransform(handleThumb, this.group));
         if (this._orient === "horizontal") {
           var minimumOffset = align === "left" || align === "top" ? (itemSize[0] - symbolSize) / 2 : (itemSize[0] - symbolSize) / -2;
           textPoint[1] += minimumOffset;
@@ -13754,7 +15193,7 @@ var ContinuousView = (
       };
       indicator.y = y;
       indicator.x = x;
-      var textPoint = applyTransform(shapes.indicatorLabelPoint, getTransform(indicator, this.group));
+      var textPoint = applyTransform2(shapes.indicatorLabelPoint, getTransform(indicator, this.group));
       var indicatorLabel = shapes.indicatorLabel;
       indicatorLabel.attr("invisible", false);
       var align = this._applyTransform("left", shapes.mainGroup);
@@ -13807,7 +15246,7 @@ var ContinuousView = (
         if (!self._dragging) {
           var itemSize = self.visualMapModel.itemSize;
           var pos = self._applyTransform([e.offsetX, e.offsetY], self._shapes.mainGroup, true, true);
-          pos[1] = mathMin(mathMax(0, pos[1]), itemSize[1]);
+          pos[1] = mathMin2(mathMax2(0, pos[1]), itemSize[1]);
           self._doHoverLinkToSeries(pos[1], 0 <= pos[0] && pos[0] <= itemSize[0]);
         }
       }).on("mouseout", function() {
@@ -13832,7 +15271,7 @@ var ContinuousView = (
       }
       var sizeExtent = [0, itemSize[1]];
       var dataExtent = visualMapModel.getExtent();
-      cursorPos = mathMin(mathMax(sizeExtent[0], cursorPos), sizeExtent[1]);
+      cursorPos = mathMin2(mathMax2(sizeExtent[0], cursorPos), sizeExtent[1]);
       var halfHoverLinkSize = getHalfHoverLinkSize(visualMapModel, dataExtent, sizeExtent);
       var hoverRange = [cursorPos - halfHoverLinkSize, cursorPos + halfHoverLinkSize];
       var cursorValue = linearMap3(cursorPos, sizeExtent, dataExtent, true);
@@ -13905,7 +15344,7 @@ var ContinuousView = (
     };
     ContinuousView2.prototype._applyTransform = function(vertex, element, inverse, global) {
       var transform = getTransform(element, global ? null : this.group);
-      return isArray(vertex) ? applyTransform(vertex, transform, inverse) : transformDirection(vertex, transform, inverse);
+      return isArray(vertex) ? applyTransform2(vertex, transform, inverse) : transformDirection(vertex, transform, inverse);
     };
     ContinuousView2.prototype._dispatchHighDown = function(type, batch) {
       batch && batch.length && this.api.dispatchAction({
@@ -13952,7 +15391,7 @@ function getCursor2(orient) {
 }
 var ContinuousView_default = ContinuousView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/visualMap/visualMapAction.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/visualMap/visualMapAction.js
 var visualMapActionInfo = {
   type: "selectDataRange",
   event: "dataRangeSelected",
@@ -13968,7 +15407,7 @@ var visualMapActionHander = function(payload, ecModel) {
   });
 };
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/visualMap/visualEncoding.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/visualMap/visualEncoding.js
 var visualMapEncodingHandlers = [
   {
     createOnAllSeries: true,
@@ -14028,7 +15467,7 @@ function getColorVisual(seriesModel, visualMapModel, value, valueState) {
   }
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/visualMap/preprocessor.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/visualMap/preprocessor.js
 var each10 = each;
 function visualMapPreprocessor(option) {
   var visualMap = option && option.visualMap;
@@ -14062,7 +15501,7 @@ function has2(obj, name) {
   return obj && obj.hasOwnProperty && obj.hasOwnProperty(name);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/visualMap/installCommon.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/visualMap/installCommon.js
 var installed2 = false;
 function installCommon2(registers) {
   if (installed2) {
@@ -14079,14 +15518,14 @@ function installCommon2(registers) {
   registers.registerPreprocessor(visualMapPreprocessor);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/visualMap/installVisualMapContinuous.js
-function install26(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/visualMap/installVisualMapContinuous.js
+function install27(registers) {
   registers.registerComponentModel(ContinuousModel_default);
   registers.registerComponentView(ContinuousView_default);
   installCommon2(registers);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/visualMap/PiecewiseModel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/visualMap/PiecewiseModel.js
 var PiecewiseModel = (
   /** @class */
   function(_super) {
@@ -14412,7 +15851,7 @@ function normalizeReverse(thisOption, pieceList) {
 }
 var PiecewiseModel_default = PiecewiseModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/visualMap/PiecewiseView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/visualMap/PiecewiseView.js
 var PiecewiseVisualMapView = (
   /** @class */
   function(_super) {
@@ -14428,8 +15867,6 @@ var PiecewiseVisualMapView = (
       var visualMapModel = this.visualMapModel;
       var textGap = visualMapModel.get("textGap");
       var textStyleModel = visualMapModel.textStyleModel;
-      var textFont = textStyleModel.getFont();
-      var textFill = textStyleModel.getTextColor();
       var itemAlign = this._getItemAlign();
       var itemSize = visualMapModel.itemSize;
       var viewData = this._getViewData();
@@ -14446,17 +15883,16 @@ var PiecewiseVisualMapView = (
         this._createItemSymbol(itemGroup, representValue, [0, 0, itemSize[0], itemSize[1]], silent);
         if (showLabel) {
           var visualState = this.visualMapModel.getValueState(representValue);
+          var align = textStyleModel.get("align") || itemAlign;
           itemGroup.add(new Text_default({
-            style: {
-              x: itemAlign === "right" ? -textGap : itemSize[0] + textGap,
+            style: createTextStyle(textStyleModel, {
+              x: align === "right" ? -textGap : itemSize[0] + textGap,
               y: itemSize[1] / 2,
               text: piece.text,
-              verticalAlign: "middle",
-              align: itemAlign,
-              font: textFont,
-              fill: textFill,
-              opacity: visualState === "outOfRange" ? 0.5 : 1
-            },
+              verticalAlign: textStyleModel.get("verticalAlign") || "middle",
+              align,
+              opacity: retrieve2(textStyleModel.get("opacity"), visualState === "outOfRange" ? 0.5 : 1)
+            }),
             silent
           }));
         }
@@ -14577,20 +16013,370 @@ var PiecewiseVisualMapView = (
 );
 var PiecewiseView_default = PiecewiseVisualMapView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/visualMap/installVisualMapPiecewise.js
-function install27(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/visualMap/installVisualMapPiecewise.js
+function install28(registers) {
   registers.registerComponentModel(PiecewiseModel_default);
   registers.registerComponentView(PiecewiseView_default);
   installCommon2(registers);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/visualMap/install.js
-function install28(registers) {
-  use(install26);
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/visualMap/install.js
+function install29(registers) {
   use(install27);
+  use(install28);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/visual/aria.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/thumbnail/ThumbnailBridgeImpl.js
+var ThumbnailBridgeImpl = (
+  /** @class */
+  function() {
+    function ThumbnailBridgeImpl2(thumbnailModel) {
+      this._thumbnailModel = thumbnailModel;
+    }
+    ThumbnailBridgeImpl2.prototype.reset = function(api) {
+      this._renderVersion = api.getMainProcessVersion();
+    };
+    ThumbnailBridgeImpl2.prototype.renderContent = function(opt) {
+      var thumbnailView = opt.api.getViewOfComponentModel(this._thumbnailModel);
+      if (!thumbnailView) {
+        return;
+      }
+      opt.group.silent = true;
+      thumbnailView.renderContent({
+        group: opt.group,
+        targetTrans: opt.targetTrans,
+        z2Range: calcZ2Range(opt.group),
+        roamType: opt.roamType,
+        viewportRect: opt.viewportRect,
+        renderVersion: this._renderVersion
+      });
+    };
+    ThumbnailBridgeImpl2.prototype.updateWindow = function(targetTrans, api) {
+      var thumbnailView = api.getViewOfComponentModel(this._thumbnailModel);
+      if (!thumbnailView) {
+        return;
+      }
+      thumbnailView.updateWindow({
+        targetTrans,
+        renderVersion: this._renderVersion
+      });
+    };
+    return ThumbnailBridgeImpl2;
+  }()
+);
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/thumbnail/ThumbnailModel.js
+var ThumbnailModel = (
+  /** @class */
+  function(_super) {
+    __extends(ThumbnailModel2, _super);
+    function ThumbnailModel2() {
+      var _this = _super !== null && _super.apply(this, arguments) || this;
+      _this.type = ThumbnailModel2.type;
+      _this.preventAutoZ = true;
+      return _this;
+    }
+    ThumbnailModel2.prototype.optionUpdated = function(newCptOption, isInit) {
+      this._updateBridge();
+    };
+    ThumbnailModel2.prototype._updateBridge = function() {
+      var bridge = this._birdge = this._birdge || new ThumbnailBridgeImpl(this);
+      this._target = null;
+      this.ecModel.eachSeries(function(series) {
+        injectThumbnailBridge(series, null);
+      });
+      if (this.shouldShow()) {
+        var target = this.getTarget();
+        injectThumbnailBridge(target.baseMapProvider, bridge);
+      }
+    };
+    ThumbnailModel2.prototype.shouldShow = function() {
+      return this.getShallow("show", true);
+    };
+    ThumbnailModel2.prototype.getBridge = function() {
+      return this._birdge;
+    };
+    ThumbnailModel2.prototype.getTarget = function() {
+      if (this._target) {
+        return this._target;
+      }
+      var series = this.getReferringComponents("series", {
+        useDefault: false,
+        enableAll: false,
+        enableNone: false
+      }).models[0];
+      if (series) {
+        if (series.subType !== "graph") {
+          series = null;
+          if (true) {
+            error("series." + series.subType + " is not supported in thumbnail.", true);
+          }
+        }
+      } else {
+        series = this.ecModel.queryComponents({
+          mainType: "series",
+          subType: "graph"
+        })[0];
+      }
+      this._target = {
+        baseMapProvider: series
+      };
+      return this._target;
+    };
+    ThumbnailModel2.type = "thumbnail";
+    ThumbnailModel2.layoutMode = "box";
+    ThumbnailModel2.dependencies = ["series", "geo"];
+    ThumbnailModel2.defaultOption = {
+      show: true,
+      right: 1,
+      bottom: 1,
+      height: "25%",
+      width: "25%",
+      itemStyle: {
+        // Use echarts option.backgorundColor by default.
+        borderColor: tokens_default.color.border,
+        borderWidth: 2
+      },
+      windowStyle: {
+        borderWidth: 1,
+        color: tokens_default.color.neutral30,
+        borderColor: tokens_default.color.neutral40,
+        opacity: 0.3
+      },
+      z: 10
+    };
+    return ThumbnailModel2;
+  }(Component_default)
+);
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/thumbnail/ThumbnailView.js
+var ThumbnailView = (
+  /** @class */
+  function(_super) {
+    __extends(ThumbnailView2, _super);
+    function ThumbnailView2() {
+      var _this = _super !== null && _super.apply(this, arguments) || this;
+      _this.type = ThumbnailView2.type;
+      return _this;
+    }
+    ThumbnailView2.prototype.render = function(thumbnailModel, ecModel, api) {
+      this._api = api;
+      this._model = thumbnailModel;
+      if (!this._coordSys) {
+        this._coordSys = new View_default();
+      }
+      if (!this._isEnabled()) {
+        this._clear();
+        return;
+      }
+      this._renderVersion = api.getMainProcessVersion();
+      var group = this.group;
+      group.removeAll();
+      var itemStyleModel = thumbnailModel.getModel("itemStyle");
+      var itemStyle = itemStyleModel.getItemStyle();
+      if (itemStyle.fill == null) {
+        itemStyle.fill = ecModel.get("backgroundColor") || tokens_default.color.neutral00;
+      }
+      var refContainer = createBoxLayoutReference(thumbnailModel, api).refContainer;
+      var boxRect = getLayoutRect(getBoxLayoutParams(thumbnailModel, true), refContainer);
+      var boxBorderWidth = itemStyle.lineWidth || 0;
+      var contentRect = this._contentRect = expandOrShrinkRect(boxRect.clone(), boxBorderWidth / 2, true, true);
+      var contentGroup = new Group_default();
+      group.add(contentGroup);
+      contentGroup.setClipPath(new Rect_default({
+        shape: contentRect.plain()
+      }));
+      var targetGroup = this._targetGroup = new Group_default();
+      contentGroup.add(targetGroup);
+      var borderShape = boxRect.plain();
+      borderShape.r = itemStyleModel.getShallow("borderRadius", true);
+      group.add(this._bgRect = new Rect_default({
+        style: itemStyle,
+        shape: borderShape,
+        silent: false,
+        cursor: "grab"
+      }));
+      var windowStyleModel = thumbnailModel.getModel("windowStyle");
+      var windowR = windowStyleModel.getShallow("borderRadius", true);
+      contentGroup.add(this._windowRect = new Rect_default({
+        shape: {
+          x: 0,
+          y: 0,
+          width: 0,
+          height: 0,
+          r: windowR
+        },
+        style: windowStyleModel.getItemStyle(),
+        silent: false,
+        cursor: "grab"
+      }));
+      this._dealRenderContent();
+      this._dealUpdateWindow();
+      updateZ2(thumbnailModel, this);
+    };
+    ThumbnailView2.prototype.renderContent = function(bridgeRendered) {
+      this._bridgeRendered = bridgeRendered;
+      if (this._isEnabled()) {
+        this._dealRenderContent();
+        this._dealUpdateWindow();
+        updateZ2(this._model, this);
+      }
+    };
+    ThumbnailView2.prototype._dealRenderContent = function() {
+      var bridgeRendered = this._bridgeRendered;
+      if (!bridgeRendered || bridgeRendered.renderVersion !== this._renderVersion) {
+        return;
+      }
+      var targetGroup = this._targetGroup;
+      var coordSys = this._coordSys;
+      var contentRect = this._contentRect;
+      targetGroup.removeAll();
+      if (!bridgeRendered) {
+        return;
+      }
+      var bridgeGroup = bridgeRendered.group;
+      var bridgeRect = bridgeGroup.getBoundingRect();
+      targetGroup.add(bridgeGroup);
+      this._bgRect.z2 = bridgeRendered.z2Range.min - 10;
+      coordSys.setBoundingRect(bridgeRect.x, bridgeRect.y, bridgeRect.width, bridgeRect.height);
+      var viewRect = getLayoutRect({
+        left: "center",
+        top: "center",
+        aspect: bridgeRect.width / bridgeRect.height
+      }, contentRect);
+      coordSys.setViewRect(viewRect.x, viewRect.y, viewRect.width, viewRect.height);
+      bridgeGroup.attr(coordSys.getTransformInfo().raw);
+      this._windowRect.z2 = bridgeRendered.z2Range.max + 10;
+      this._resetRoamController(bridgeRendered.roamType);
+    };
+    ThumbnailView2.prototype.updateWindow = function(param) {
+      var bridgeRendered = this._bridgeRendered;
+      if (bridgeRendered && bridgeRendered.renderVersion === param.renderVersion) {
+        bridgeRendered.targetTrans = param.targetTrans;
+      }
+      if (this._isEnabled()) {
+        this._dealUpdateWindow();
+      }
+    };
+    ThumbnailView2.prototype._dealUpdateWindow = function() {
+      var bridgeRendered = this._bridgeRendered;
+      if (!bridgeRendered || bridgeRendered.renderVersion !== this._renderVersion) {
+        return;
+      }
+      var invTargetTrans = invert([], bridgeRendered.targetTrans);
+      var transTargetToThis = mul([], this._coordSys.transform, invTargetTrans);
+      this._transThisToTarget = invert([], transTargetToThis);
+      var viewportRect = bridgeRendered.viewportRect;
+      if (!viewportRect) {
+        viewportRect = new BoundingRect_default(0, 0, this._api.getWidth(), this._api.getHeight());
+      } else {
+        viewportRect = viewportRect.clone();
+      }
+      viewportRect.applyTransform(transTargetToThis);
+      var windowRect = this._windowRect;
+      var r = windowRect.shape.r;
+      windowRect.setShape(defaults({
+        r
+      }, viewportRect));
+    };
+    ThumbnailView2.prototype._resetRoamController = function(roamType) {
+      var _this = this;
+      var api = this._api;
+      var roamController = this._roamController;
+      if (!roamController) {
+        roamController = this._roamController = new RoamController_default(api.getZr());
+      }
+      if (!roamType || !this._isEnabled()) {
+        roamController.disable();
+        return;
+      }
+      roamController.enable(roamType, {
+        api,
+        zInfo: {
+          component: this._model
+        },
+        triggerInfo: {
+          roamTrigger: null,
+          isInSelf: function(e, x, y) {
+            return _this._contentRect.contain(x, y);
+          }
+        }
+      });
+      roamController.off("pan").off("zoom").on("pan", bind(this._onPan, this)).on("zoom", bind(this._onZoom, this));
+    };
+    ThumbnailView2.prototype._onPan = function(event) {
+      var trans = this._transThisToTarget;
+      if (!this._isEnabled() || !trans) {
+        return;
+      }
+      var oldOffset = applyTransform([], [event.oldX, event.oldY], trans);
+      var newOffset = applyTransform([], [event.oldX - event.dx, event.oldY - event.dy], trans);
+      this._api.dispatchAction(makeRoamPayload(this._model.getTarget().baseMapProvider, {
+        dx: newOffset[0] - oldOffset[0],
+        dy: newOffset[1] - oldOffset[1]
+      }));
+    };
+    ThumbnailView2.prototype._onZoom = function(event) {
+      var trans = this._transThisToTarget;
+      if (!this._isEnabled() || !trans) {
+        return;
+      }
+      var offset = applyTransform([], [event.originX, event.originY], trans);
+      this._api.dispatchAction(makeRoamPayload(this._model.getTarget().baseMapProvider, {
+        zoom: 1 / event.scale,
+        originX: offset[0],
+        originY: offset[1]
+      }));
+    };
+    ThumbnailView2.prototype._isEnabled = function() {
+      var thumbnailModel = this._model;
+      if (!thumbnailModel || !thumbnailModel.shouldShow()) {
+        return false;
+      }
+      var baseMapProvider = thumbnailModel.getTarget().baseMapProvider;
+      if (!baseMapProvider) {
+        return false;
+      }
+      return true;
+    };
+    ThumbnailView2.prototype._clear = function() {
+      this.group.removeAll();
+      this._bridgeRendered = null;
+      if (this._roamController) {
+        this._roamController.disable();
+      }
+    };
+    ThumbnailView2.prototype.remove = function() {
+      this._clear();
+    };
+    ThumbnailView2.prototype.dispose = function() {
+      this._clear();
+    };
+    ThumbnailView2.type = "thumbnail";
+    return ThumbnailView2;
+  }(Component_default2)
+);
+function makeRoamPayload(baseMapProvider, params) {
+  var type = baseMapProvider.mainType === "series" ? baseMapProvider.subType + "Roam" : baseMapProvider.mainType + "Roam";
+  var payload = {
+    type
+  };
+  payload[baseMapProvider.mainType + "Id"] = baseMapProvider.id;
+  extend(payload, params);
+  return payload;
+}
+function updateZ2(thumbnailModel, thumbnailView) {
+  var zInfo = retrieveZInfo(thumbnailModel);
+  traverseUpdateZ(thumbnailView.group, zInfo.z, zInfo.zlevel);
+}
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/thumbnail/install.js
+function install30(registers) {
+  registers.registerComponentModel(ThumbnailModel);
+  registers.registerComponentView(ThumbnailView);
+}
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/visual/aria.js
 var DEFAULT_OPTION = {
   label: {
     enabled: true
@@ -14774,7 +16560,7 @@ function ariaVisual(ecModel, api) {
   }
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/aria/preprocessor.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/aria/preprocessor.js
 function ariaPreprocessor(option) {
   if (!option || !option.aria) {
     return;
@@ -14791,13 +16577,13 @@ function ariaPreprocessor(option) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/aria/install.js
-function install29(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/aria/install.js
+function install31(registers) {
   registers.registerPreprocessor(ariaPreprocessor);
   registers.registerVisual(registers.PRIORITY.VISUAL.ARIA, ariaVisual);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/util/conditionalExpression.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/util/conditionalExpression.js
 var RELATIONAL_EXPRESSION_OP_ALIAS_MAP = {
   value: "eq",
   // PENDING: not good for literal semantic?
@@ -15029,7 +16815,7 @@ function parseConditionalExpression(exprOption, getters) {
   return new ConditionalExpressionParsed(exprOption, getters);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/transform/filterTransform.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/transform/filterTransform.js
 var filterTransform = {
   type: "echarts:filter",
   // PENDING: enhance to filter by index rather than create new data
@@ -15077,7 +16863,7 @@ var filterTransform = {
   }
 };
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/transform/sortTransform.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/transform/sortTransform.js
 var sampleLog = "";
 if (true) {
   sampleLog = ["Valid config is like:", '{ dimension: "age", order: "asc" }', 'or [{ dimension: "age", order: "asc"], { dimension: "date", order: "desc" }]'].join(" ");
@@ -15180,13 +16966,13 @@ var sortTransform = {
   }
 };
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/transform/install.js
-function install30(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/transform/install.js
+function install32(registers) {
   registers.registerTransform(filterTransform);
   registers.registerTransform(sortTransform);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/component/dataset/install.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/dataset/install.js
 var DatasetModel = (
   /** @class */
   function(_super) {
@@ -15231,40 +17017,42 @@ var DatasetView = (
     return DatasetView2;
   }(Component_default2)
 );
-function install31(registers) {
+function install33(registers) {
   registers.registerComponentModel(DatasetModel);
   registers.registerComponentView(DatasetView);
 }
 export {
-  install29 as AriaComponent,
+  install31 as AriaComponent,
   install5 as AxisPointerComponent,
-  install14 as BrushComponent,
+  install15 as BrushComponent,
   install9 as CalendarComponent,
-  install25 as DataZoomComponent,
-  install23 as DataZoomInsideComponent,
-  install24 as DataZoomSliderComponent,
-  install31 as DatasetComponent,
+  install26 as DataZoomComponent,
+  install24 as DataZoomInsideComponent,
+  install25 as DataZoomSliderComponent,
+  install33 as DatasetComponent,
   install3 as GeoComponent,
-  install10 as GraphicComponent,
+  install11 as GraphicComponent,
   install6 as GridComponent,
   install as GridSimpleComponent,
-  install22 as LegendComponent,
-  install20 as LegendPlainComponent,
-  install21 as LegendScrollComponent,
-  install19 as MarkAreaComponent,
-  install18 as MarkLineComponent,
-  install17 as MarkPointComponent,
+  install23 as LegendComponent,
+  install21 as LegendPlainComponent,
+  install22 as LegendScrollComponent,
+  install20 as MarkAreaComponent,
+  install19 as MarkLineComponent,
+  install18 as MarkPointComponent,
+  install10 as MatrixComponent,
   install4 as ParallelComponent,
   install7 as PolarComponent,
   install2 as RadarComponent,
   install8 as SingleAxisComponent,
-  install16 as TimelineComponent,
-  install15 as TitleComponent,
-  install12 as ToolboxComponent,
-  install13 as TooltipComponent,
-  install30 as TransformComponent,
-  install28 as VisualMapComponent,
-  install26 as VisualMapContinuousComponent,
-  install27 as VisualMapPiecewiseComponent
+  install30 as ThumbnailComponent,
+  install17 as TimelineComponent,
+  install16 as TitleComponent,
+  install13 as ToolboxComponent,
+  install14 as TooltipComponent,
+  install32 as TransformComponent,
+  install29 as VisualMapComponent,
+  install27 as VisualMapContinuousComponent,
+  install28 as VisualMapPiecewiseComponent
 };
 //# sourceMappingURL=echarts_components.js.map

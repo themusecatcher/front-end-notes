@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, watch, computed } from 'vue'
+import { ref, useTemplateRef, onMounted, onBeforeUnmount, watch, computed } from 'vue'
+import { useResizeObserver } from '../utils'
 /*
   按需引入
 */
@@ -25,8 +26,9 @@ echarts.use([GaugeChart, TooltipComponent, CanvasRenderer])
   你只需要使用 svg 渲染模式，打包的结果中就不会再包含无需使用的 CanvasRenderer 模块
 */
 
-const chart = ref()
-const gaugeChart = ref()
+const chartRef = useTemplateRef('chartRef')
+const myChart = ref<any>()
+let option: any
 const gradient = ref({ // 自定义渐变色
         type: 'linear',
         x: 0,
@@ -49,7 +51,6 @@ const gradient = ref({ // 自定义渐变色
         ],
         global: false // 缺省为 false
       })
-var option: any
 
 interface Gauge {
   name: string // 数据项名称
@@ -71,37 +72,30 @@ const props = withDefaults(defineProps<Props>(), {
 const chartWidth = computed(() => {
   if (typeof props.width === 'number') {
     return `${props.width}px`
-  } else {
-    return props.width
   }
+  return props.width
 })
 const chartHeight = computed(() => {
   if (typeof props.height === 'number') {
     return `${props.height}px`
-  } else {
-    return props.height
   }
-})
-onMounted(() => {
-  initChart() // 初始化图标示例
+  return props.height
 })
 watch(
   () => props.gaugeData,
   (to) => {
     // 监听并更新图例数据
     option.series[0].data = to
-    gaugeChart.value.setOption(option)
+    myChart.value.setOption(option, true)
   },
   {
     deep: true
   }
 )
 watch(
-  () => [props.width, props.height, props.themeColor],
+  () => [props.themeColor],
   () => {
-    if (gaugeChart.value) {
-      gaugeChart.value.dispose() // 销毁实例
-    }
+    myChart.value && myChart.value.dispose() // 销毁实例
     initChart() // 重新初始化实例
   },
   {
@@ -130,19 +124,9 @@ watch(
   // 字体系列。从 `v5.0.1` 开始支持。
   // fontFamily: 'sans-serif'
 // }
-function showLoading (config: any) {
-  gaugeChart.value.showLoading('default', { text: '', color: props.themeColor, ...config }) // 显示加载动画效果
-}
-function hideLoading () {
-  gaugeChart.value.hideLoading() // 隐藏动画加载效果
-}
-defineExpose({
-  showLoading,
-  hideLoading
-})
 function initChart () {
   // 等价于使用 Canvas 渲染器（默认）：echarts.init(containerDom, null, { renderer: 'canvas' })
-  gaugeChart.value = echarts.init(chart.value)
+  myChart.value = echarts.init(chartRef.value as HTMLElement)
   option = {
     tooltip: { // 提示框浮层设置
       trigger: 'item',
@@ -395,9 +379,41 @@ function initChart () {
       }
     ]
   }
-  option && gaugeChart.value.setOption(option)
+  myChart.value.setOption(option)
 }
+function showLoading (config: any) {
+  myChart.value && myChart.value.showLoading('default', { text: '', color: props.themeColor, ...config }) // 显示加载动画效果
+}
+function hideLoading () {
+  myChart.value && myChart.value.hideLoading() // 隐藏动画加载效果
+}
+// 监听图表容器尺寸变化，重新初始化图表
+useResizeObserver(chartRef, () => {
+  requestAnimationFrame(() => {
+    myChart.value && myChart.value.resize()
+  })
+})
+onMounted(() => {
+  initChart()
+})
+onBeforeUnmount(() => {
+  myChart.value && myChart.value.dispose() // 销毁图表实例
+})
+defineExpose({
+  showLoading,
+  hideLoading
+})
 </script>
 <template>
-  <div ref="chart" :style="`width: ${chartWidth}; height: ${chartHeight};`"></div>
+  <div
+    class="chart-container"
+    ref="chartRef"
+    :style="`--chart-width: ${chartWidth}; --chart-height: ${chartHeight};`"
+  ></div>
 </template>
+<style lang="less" scoped>
+.chart-container {
+  width: var(--chart-width);
+  height: var(--chart-height);
+}
+</style>

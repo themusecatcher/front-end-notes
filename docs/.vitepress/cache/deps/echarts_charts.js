@@ -5,9 +5,10 @@ import {
   limitTurnAngle,
   prepareSeriesDataSchema,
   setLabelLineStyle
-} from "./chunk-CDM32NO6.js";
+} from "./chunk-XQEX2FZB.js";
 import {
   LineDraw_default,
+  LinePath_default,
   Line_default as Line_default2,
   MapDraw_default,
   RoamController_default,
@@ -23,23 +24,25 @@ import {
   geoSourceManager_default,
   getDefaultInterpolatedLabel,
   getDefaultLabel,
+  getThumbnailBridge,
   install,
   install2,
   install3,
   install4,
   isCoordinateSystemType,
   isEC4CompatibleStyle,
-  onIrrelevantElement,
   stopPreviousKeyframeAnimationAndRestore,
-  updateCenterAndZoom,
+  updateCenterAndZoomInAction,
+  updateController,
   updateViewOnPan,
   updateViewOnZoom,
   warnDeprecated
-} from "./chunk-ULAW33UP.js";
+} from "./chunk-XIUHXDG4.js";
 import {
   BezierCurve_default,
   Chart_default,
   Circle_default,
+  CoordinateSystemUsageKind,
   CoordinateSystem_default,
   DISPLAY_STATES,
   DataDiffer_default,
@@ -58,9 +61,12 @@ import {
   Series_default,
   Z2_EMPHASIS_LIFT,
   animateLabelValue,
+  applyPreserveAspect,
   asc,
+  computeLabelGeometry,
   convertOptionIdName,
   convertToColorString,
+  createBoxLayoutReference,
   createFloat32Array,
   createLegacyDataSelectAction,
   createOrUpdatePatternFromDecal,
@@ -70,13 +76,15 @@ import {
   createTextConfig,
   createTextStyle,
   createTooltipMarkup,
+  decideCoordSysUsageKind,
   defaultEmphasis,
   defaultSeriesFormatTooltip,
   deprecateReplaceLog,
   enableHoverFocus,
   enterEmphasis,
   error,
-  getAvailableSize,
+  getCircleLayout,
+  getCustomSeries,
   getDecalFromPalette,
   getDimensionTypeByAxis,
   getECData,
@@ -90,6 +98,7 @@ import {
   groupData,
   inheritDefaultOption,
   initProps,
+  injectCoordSysByOption,
   interpolateRawValues,
   isDimensionStacked,
   isHighDownDispatcher,
@@ -113,6 +122,7 @@ import {
   positionElement,
   quantile,
   queryDataIndex,
+  registerLayOutOnCoordSysUsage,
   removeElement,
   removeElementWithFadeOut,
   retrieveVisualColorForTooltipMarker,
@@ -125,19 +135,21 @@ import {
   setLabelValueAnimation,
   setStatesFlag,
   setStatesStylesFromModel,
-  shiftLayoutOnY,
+  shiftLayoutOnXY,
   subPixelOptimize,
   throttle,
   throwError,
   toggleHoverEmphasis,
+  tokens_default,
   traverseElements,
   updateProps,
   use,
   warn,
   windowOpen
-} from "./chunk-BWNYY6KT.js";
+} from "./chunk-44ILSEBB.js";
 import {
   BoundingRect_default,
+  CompoundPath_default,
   Displayable_default,
   Group_default,
   Image_default,
@@ -208,10 +220,10 @@ import {
   set,
   sub,
   translate
-} from "./chunk-PS4J4BCH.js";
+} from "./chunk-RPMWI4XR.js";
 import "./chunk-DC5AMYBS.js";
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/line/LineSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/line/LineSeries.js
 var LineSeriesModel = (
   /** @class */
   function(_super) {
@@ -250,7 +262,7 @@ var LineSeriesModel = (
       symbol.setOrigin([opt.itemWidth / 2, opt.itemHeight / 2]);
       if (symbolType.indexOf("empty") > -1) {
         symbol.style.stroke = symbol.style.fill;
-        symbol.style.fill = "#fff";
+        symbol.style.fill = tokens_default.color.neutral00;
         symbol.style.lineWidth = 2;
       }
       return group;
@@ -293,7 +305,7 @@ var LineSeriesModel = (
       smooth: false,
       smoothMonotone: null,
       symbol: "emptyCircle",
-      symbolSize: 4,
+      symbolSize: 6,
       symbolRotate: null,
       showSymbol: true,
       // `false`: follow the label interval strategy.
@@ -319,7 +331,7 @@ var LineSeriesModel = (
 );
 var LineSeries_default = LineSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/line/helper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/line/helper.js
 function prepareDataCoordInfo(coordSys, data, valueOrigin) {
   var baseAxis = coordSys.getBaseAxis();
   var valueAxis = coordSys.getOtherAxis(baseAxis);
@@ -395,7 +407,7 @@ function getStackedOnPoint(dataCoordInfo, coordSys, data, idx) {
   return coordSys.dataToPoint(stackedData);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/line/lineAnimationDiff.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/line/lineAnimationDiff.js
 function diffData(oldData, newData) {
   var diffResult = [];
   newData.diff(oldData).add(function(idx) {
@@ -504,7 +516,7 @@ function lineAnimationDiff(oldData, newData, oldStackedOnPoints, newStackedOnPoi
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/line/poly.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/line/poly.js
 var mathMin = Math.min;
 var mathMax = Math.max;
 function isPointNull(x, y) {
@@ -660,7 +672,7 @@ var ECPolyline = (
     }
     ECPolyline2.prototype.getDefaultStyle = function() {
       return {
-        stroke: "#000",
+        stroke: tokens_default.color.neutral99,
         fill: null
       };
     };
@@ -801,7 +813,7 @@ var ECPolygon = (
   }(Path_default)
 );
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/helper/createClipPathFromCoordSys.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/createClipPathFromCoordSys.js
 function createGridClipPath(cartesian, hasAnimation, seriesModel, done, during) {
   var rect = cartesian.getArea();
   var x = rect.x;
@@ -897,7 +909,7 @@ function createClipPath(coordSys, hasAnimation, seriesModel, done, during) {
   return null;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/line/LineView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/line/LineView.js
 function isPointsSame(points1, points2) {
   if (points1.length !== points2.length) {
     return;
@@ -1740,9 +1752,9 @@ var LineView = (
           });
         }
         if (valueAnimation) {
-          var inner4 = labelInner(endLabel);
-          if (typeof inner4.setLabelText === "function") {
-            inner4.setLabelText(value);
+          var inner5 = labelInner(endLabel);
+          if (typeof inner5.setLabelText === "function") {
+            inner5.setLabelText(value);
           }
         }
       }
@@ -1852,7 +1864,7 @@ var LineView = (
 );
 var LineView_default = LineView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/layout/points.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/layout/points.js
 function pointsLayout(seriesType, forceStoreInTypedArray) {
   return {
     seriesType,
@@ -1909,7 +1921,7 @@ function pointsLayout(seriesType, forceStoreInTypedArray) {
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/processor/dataSample.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/processor/dataSample.js
 var samplers = {
   average: function(frame) {
     var sum2 = 0;
@@ -1990,7 +2002,7 @@ function dataSample(seriesType) {
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/line/install.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/line/install.js
 function install5(registers) {
   registers.registerChartView(LineView_default);
   registers.registerSeriesModel(LineSeries_default);
@@ -2009,7 +2021,7 @@ function install5(registers) {
   registers.registerProcessor(registers.PRIORITY.PROCESSOR.STATISTIC, dataSample("line"));
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/bar/BaseBarSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/bar/BaseBarSeries.js
 var BaseBarSeriesModel = (
   /** @class */
   function(_super) {
@@ -2101,7 +2113,8 @@ var BaseBarSeriesModel = (
       large: false,
       largeThreshold: 400,
       progressive: 3e3,
-      progressiveChunkMode: "mod"
+      progressiveChunkMode: "mod",
+      defaultBarGap: "10%"
     };
     return BaseBarSeriesModel2;
   }(Series_default)
@@ -2109,7 +2122,7 @@ var BaseBarSeriesModel = (
 Series_default.registerClass(BaseBarSeriesModel);
 var BaseBarSeries_default = BaseBarSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/bar/BarSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/bar/BarSeries.js
 var BarSeriesModel = (
   /** @class */
   function(_super) {
@@ -2161,7 +2174,8 @@ var BarSeriesModel = (
       },
       select: {
         itemStyle: {
-          borderColor: "#212121"
+          borderColor: tokens_default.color.primary,
+          borderWidth: 2
         }
       },
       realtimeSort: false
@@ -2171,7 +2185,7 @@ var BarSeriesModel = (
 );
 var BarSeries_default = BarSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/util/shape/sausage.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/util/shape/sausage.js
 var SausageShape = (
   /** @class */
   /* @__PURE__ */ function() {
@@ -2235,7 +2249,7 @@ var SausagePath = (
 );
 var sausage_default = SausagePath;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/label/sectorLabel.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/label/sectorLabel.js
 function createSectorCalculateTextPosition(positionMapping, opts) {
   opts = opts || {};
   var isRoundCap = opts.isRoundCap;
@@ -2383,7 +2397,7 @@ function adjustAngleDistanceY(angle, distance, isEnd) {
   return distance * Math.cos(angle) * (isEnd ? 1 : -1);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/helper/sectorHelper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/sectorHelper.js
 function getSectorCornerRadius(model, shape, zeroIfNull) {
   var cornerRadius = model.get("borderRadius");
   if (cornerRadius == null) {
@@ -2402,7 +2416,7 @@ function getSectorCornerRadius(model, shape, zeroIfNull) {
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/bar/BarView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/bar/BarView.js
 var mathMax2 = Math.max;
 var mathMin2 = Math.min;
 function getClipArea(coord, data) {
@@ -2493,6 +2507,9 @@ var BarView = (
       var isChangeOrder = payload && payload.type === "changeAxisOrder";
       function createBackground(dataIndex) {
         var bgLayout = getLayout[coord.type](data, dataIndex);
+        if (!bgLayout) {
+          return null;
+        }
         var bgEl = createBackgroundEl(coord, isHorizontalOrRadial, bgLayout);
         bgEl.useStyle(backgroundModel.getItemStyle());
         if (coord.type === "cartesian2d") {
@@ -2507,6 +2524,9 @@ var BarView = (
       data.diff(oldData).add(function(dataIndex) {
         var itemModel = data.getItemModel(dataIndex);
         var layout2 = getLayout[coord.type](data, dataIndex, itemModel);
+        if (!layout2) {
+          return;
+        }
         if (drawBackground) {
           createBackground(dataIndex);
         }
@@ -2539,6 +2559,9 @@ var BarView = (
       }).update(function(newIndex, oldIndex) {
         var itemModel = data.getItemModel(newIndex);
         var layout2 = getLayout[coord.type](data, newIndex, itemModel);
+        if (!layout2) {
+          return;
+        }
         if (drawBackground) {
           var bgEl = void 0;
           if (oldBgEls.length === 0) {
@@ -2571,8 +2594,13 @@ var BarView = (
             group.remove(el);
           }
         }
+        var roundCapChanged = el && (el.type === "sector" && roundCap || el.type === "sausage" && !roundCap);
+        if (roundCapChanged) {
+          el && removeElementWithFadeOut(el, seriesModel, oldIndex);
+          el = null;
+        }
         if (!el) {
-          el = elementCreator[coord.type](seriesModel, data, newIndex, layout2, isHorizontalOrRadial, animationModel, baseAxis.model, !!el, roundCap);
+          el = elementCreator[coord.type](seriesModel, data, newIndex, layout2, isHorizontalOrRadial, animationModel, baseAxis.model, true, roundCap);
         } else {
           saveOldStyle(el);
         }
@@ -2936,6 +2964,9 @@ var getLayout = {
   // when calculating bar background layout.
   cartesian2d: function(data, dataIndex, itemModel) {
     var layout2 = data.getItemLayout(dataIndex);
+    if (!layout2) {
+      return null;
+    }
     var fixedLineWidth = itemModel ? getLineWidth(itemModel, layout2) : 0;
     var signX = layout2.width > 0 ? 1 : -1;
     var signY = layout2.height > 0 ? 1 : -1;
@@ -3178,7 +3209,7 @@ function createBackgroundEl(coord, isHorizontalOrRadial, layout2) {
 }
 var BarView_default = BarView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/bar/install.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/bar/install.js
 function install6(registers) {
   registers.registerChartView(BarView_default);
   registers.registerSeriesModel(BarSeries_default);
@@ -3202,54 +3233,14 @@ function install6(registers) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/pie/pieLayout.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/pie/pieLayout.js
 var PI2 = Math.PI * 2;
 var RADIAN = Math.PI / 180;
-function getViewRect(seriesModel, api) {
-  return getLayoutRect(seriesModel.getBoxLayoutParams(), {
-    width: api.getWidth(),
-    height: api.getHeight()
-  });
-}
-function getBasicPieLayout(seriesModel, api) {
-  var viewRect = getViewRect(seriesModel, api);
-  var center2 = seriesModel.get("center");
-  var radius = seriesModel.get("radius");
-  if (!isArray(radius)) {
-    radius = [0, radius];
-  }
-  var width = parsePercent2(viewRect.width, api.getWidth());
-  var height = parsePercent2(viewRect.height, api.getHeight());
-  var size = Math.min(width, height);
-  var r0 = parsePercent2(radius[0], size / 2);
-  var r = parsePercent2(radius[1], size / 2);
-  var cx;
-  var cy;
-  var coordSys = seriesModel.coordinateSystem;
-  if (coordSys) {
-    var point = coordSys.dataToPoint(center2);
-    cx = point[0] || 0;
-    cy = point[1] || 0;
-  } else {
-    if (!isArray(center2)) {
-      center2 = [center2, center2];
-    }
-    cx = parsePercent2(center2[0], width) + viewRect.x;
-    cy = parsePercent2(center2[1], height) + viewRect.y;
-  }
-  return {
-    cx,
-    cy,
-    r0,
-    r
-  };
-}
 function pieLayout(seriesType, ecModel, api) {
   ecModel.eachSeriesByType(seriesType, function(seriesModel) {
     var data = seriesModel.getData();
     var valueDim = data.mapDimension("value");
-    var viewRect = getViewRect(seriesModel, api);
-    var _a = getBasicPieLayout(seriesModel, api), cx = _a.cx, cy = _a.cy, r = _a.r, r0 = _a.r0;
+    var _a = getCircleLayout(seriesModel, api), cx = _a.cx, cy = _a.cy, r = _a.r, r0 = _a.r0, viewRect = _a.viewRect;
     var startAngle = -seriesModel.get("startAngle") * RADIAN;
     var endAngle = seriesModel.get("endAngle");
     var padAngle = seriesModel.get("padAngle") * RADIAN;
@@ -3276,6 +3267,10 @@ function pieLayout(seriesType, ecModel, api) {
     layoutData.startAngle = startAngle;
     layoutData.endAngle = endAngle;
     layoutData.clockwise = clockwise;
+    layoutData.cx = cx;
+    layoutData.cy = cy;
+    layoutData.r = r;
+    layoutData.r0 = r0;
     var angleRange = Math.abs(endAngle - startAngle);
     var restAngle = angleRange;
     var valueSumLargerThanMinAngle = 0;
@@ -3337,8 +3332,8 @@ function pieLayout(seriesType, ecModel, api) {
         var angle_1 = angleRange / validDataCount;
         data.each(valueDim, function(value, idx) {
           if (!isNaN(value)) {
-            var layout_1 = data.getItemLayout(idx);
-            layout_1.angle = angle_1;
+            var layout2 = data.getItemLayout(idx);
+            layout2.angle = angle_1;
             var actualStartAngle = 0;
             var actualEndAngle = 0;
             if (angle_1 < padAngle) {
@@ -3348,8 +3343,8 @@ function pieLayout(seriesType, ecModel, api) {
               actualStartAngle = startAngle + dir * idx * angle_1 + halfPadAngle;
               actualEndAngle = startAngle + dir * (idx + 1) * angle_1 - halfPadAngle;
             }
-            layout_1.startAngle = actualStartAngle;
-            layout_1.endAngle = actualEndAngle;
+            layout2.startAngle = actualStartAngle;
+            layout2.endAngle = actualEndAngle;
           }
         });
       } else {
@@ -3357,8 +3352,8 @@ function pieLayout(seriesType, ecModel, api) {
         currentAngle = startAngle;
         data.each(valueDim, function(value, idx) {
           if (!isNaN(value)) {
-            var layout_2 = data.getItemLayout(idx);
-            var angle = layout_2.angle === minAndPadAngle ? minAndPadAngle : value * unitRadian;
+            var layout2 = data.getItemLayout(idx);
+            var angle = layout2.angle === minAndPadAngle ? minAndPadAngle : value * unitRadian;
             var actualStartAngle = 0;
             var actualEndAngle = 0;
             if (angle < padAngle) {
@@ -3368,8 +3363,8 @@ function pieLayout(seriesType, ecModel, api) {
               actualStartAngle = currentAngle + halfPadAngle;
               actualEndAngle = currentAngle + dir * angle - halfPadAngle;
             }
-            layout_2.startAngle = actualStartAngle;
-            layout_2.endAngle = actualEndAngle;
+            layout2.startAngle = actualStartAngle;
+            layout2.endAngle = actualEndAngle;
             currentAngle += dir * angle;
           }
         });
@@ -3379,7 +3374,7 @@ function pieLayout(seriesType, ecModel, api) {
 }
 var getSeriesLayoutData = makeInner();
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/processor/dataFilter.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/processor/dataFilter.js
 function dataFilter(seriesType) {
   return {
     seriesType,
@@ -3404,7 +3399,7 @@ function dataFilter(seriesType) {
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/pie/labelLayout.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/pie/labelLayout.js
 var RADIAN2 = Math.PI / 180;
 function adjustSingleSide(list, cx, cy, r, dir, viewWidth, viewHeight, viewLeft, viewTop, farthestX) {
   if (list.length < 2) {
@@ -3463,7 +3458,7 @@ function adjustSingleSide(list, cx, cy, r, dir, viewWidth, viewHeight, viewLeft,
       list[i].label.x = farthestX;
     }
   }
-  if (shiftLayoutOnY(list, viewTop, viewTop + viewHeight)) {
+  if (shiftLayoutOnXY(list, 1, viewTop, viewTop + viewHeight)) {
     recalculateX(list);
   }
 }
@@ -3514,7 +3509,7 @@ function avoidOverlap(labelLayoutList, cx, cy, r, viewWidth, viewHeight, viewLef
         }
       }
       layout2.targetTextWidth = targetTextWidth;
-      constrainTextWidth(layout2, targetTextWidth);
+      constrainTextWidth(layout2, targetTextWidth, false);
     }
   }
   adjustSingleSide(rightList, cx, cy, r, 1, viewWidth, viewHeight, viewLeft, viewTop, rightmostX);
@@ -3549,9 +3544,6 @@ function avoidOverlap(labelLayoutList, cx, cy, r, viewWidth, viewHeight, viewLef
   }
 }
 function constrainTextWidth(layout2, availableWidth, forceRecalculate) {
-  if (forceRecalculate === void 0) {
-    forceRecalculate = false;
-  }
   if (layout2.labelStyleWidth != null) {
     return;
   }
@@ -3564,7 +3556,6 @@ function constrainTextWidth(layout2, availableWidth, forceRecalculate) {
   var overflow = style.overflow;
   var oldOuterWidth = textRect.width + (bgColor ? 0 : paddingH);
   if (availableWidth < oldOuterWidth || forceRecalculate) {
-    var oldHeight = textRect.height;
     if (overflow && overflow.match("break")) {
       label.setStyle("backgroundColor", null);
       label.setStyle("width", availableWidth - paddingH);
@@ -3580,13 +3571,18 @@ function constrainTextWidth(layout2, availableWidth, forceRecalculate) {
       );
       label.setStyle("width", newWidth);
     }
-    var newRect = label.getBoundingRect();
-    textRect.width = newRect.width;
-    var margin = (label.style.margin || 0) + 2.1;
-    textRect.height = newRect.height + margin;
-    textRect.y -= (textRect.height - oldHeight) / 2;
+    computeLabelGlobalRect(textRect, label);
   }
 }
+function computeLabelGlobalRect(out, label) {
+  _tmpLabelGeometry.rect = out;
+  computeLabelGeometry(_tmpLabelGeometry, label, _computeLabelGeometryOpt);
+}
+var _computeLabelGeometryOpt = {
+  minMarginForce: [null, 0, null, 0],
+  marginDefault: [1, 0, 1, 0]
+};
+var _tmpLabelGeometry = {};
 function isPositionCenter(sectorShape) {
   return sectorShape.position === "center";
 }
@@ -3629,6 +3625,9 @@ function pieLabelLayout(seriesModel) {
     var labelAlignTo = labelModel.get("alignTo");
     var edgeDistance = parsePercent2(labelModel.get("edgeDistance"), viewWidth);
     var bleedMargin = labelModel.get("bleedMargin");
+    if (bleedMargin == null) {
+      bleedMargin = Math.min(viewWidth, viewHeight) > 200 ? 10 : 2;
+    }
     var labelLineModel = itemModel.getModel("labelLine");
     var labelLineLen = labelLineModel.get("length");
     labelLineLen = parsePercent2(labelLineLen, viewWidth);
@@ -3709,11 +3708,8 @@ function pieLabelLayout(seriesModel) {
       verticalAlign: "middle"
     });
     if (!isLabelInside) {
-      var textRect = label2.getBoundingRect().clone();
-      textRect.applyTransform(label2.getComputedTransform());
-      var margin = (label2.style.margin || 0) + 2.1;
-      textRect.y -= margin / 2;
-      textRect.height += margin;
+      var textRect = new BoundingRect_default(0, 0, 0, 0);
+      computeLabelGlobalRect(textRect, label2);
       labelLayoutList.push({
         label: label2,
         labelLine: labelLine2,
@@ -3788,7 +3784,7 @@ function pieLabelLayout(seriesModel) {
   }
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/pie/PieView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/pie/PieView.js
 var PiePiece = (
   /** @class */
   function(_super) {
@@ -3914,7 +3910,7 @@ var PiePiece = (
       labelText.attr({
         z2: 10
       });
-      var labelPosition = seriesModel.get(["label", "position"]);
+      var labelPosition = itemModel.get(["label", "position"]);
       if (labelPosition !== "outside" && labelPosition !== "outer") {
         sector.removeTextGuideLine();
       } else {
@@ -3961,7 +3957,7 @@ var PieView = (
       if (data.count() === 0 && seriesModel.get("showEmptyCircle")) {
         var layoutData = getSeriesLayoutData(seriesModel);
         var sector = new Sector_default({
-          shape: extend(getBasicPieLayout(seriesModel, api), layoutData)
+          shape: clone(layoutData)
         });
         sector.useStyle(seriesModel.getModel("emptyCircleStyle").getItemStyle());
         this._emptyCircleSector = sector;
@@ -4004,7 +4000,7 @@ var PieView = (
 );
 var PieView_default = PieView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/helper/createSeriesDataSimply.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/createSeriesDataSimply.js
 function createSeriesDataSimply(seriesModel, opt, nameList) {
   opt = isArray(opt) && {
     coordDimensions: opt
@@ -4018,7 +4014,7 @@ function createSeriesDataSimply(seriesModel, opt, nameList) {
   return list;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/visual/LegendVisualProvider.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/visual/LegendVisualProvider.js
 var LegendVisualProvider = (
   /** @class */
   function() {
@@ -4047,7 +4043,7 @@ var LegendVisualProvider = (
 );
 var LegendVisualProvider_default = LegendVisualProvider;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/pie/PieSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/pie/PieSeries.js
 var innerData = makeInner();
 var PieSeriesModel = (
   /** @class */
@@ -4101,7 +4097,7 @@ var PieSeriesModel = (
       colorBy: "data",
       // 默认全局居中
       center: ["50%", "50%"],
-      radius: [0, "75%"],
+      radius: [0, "50%"],
       // 默认顺时针
       clockwise: true,
       startAngle: 90,
@@ -4122,6 +4118,7 @@ var PieSeriesModel = (
       // If still show when all data zero.
       stillShowZeroSum: true,
       // cursor: null,
+      coordinateSystemUsage: "box",
       left: 0,
       top: 0,
       right: 0,
@@ -4142,7 +4139,8 @@ var PieSeriesModel = (
         // Works only position is 'outer' and alignTo is 'edge'.
         edgeDistance: "25%",
         // Works only position is 'outer' and alignTo is not 'edge'.
-        bleedMargin: 10,
+        // The default `bleedMargin` is auto determined according to view rect size.
+        // bleedMargin: 10,
         // Distance between text and label line.
         distanceToLabelLine: 5
         // formatter: 标签文本格式器，同 tooltip.formatter，不支持异步回调
@@ -4155,7 +4153,7 @@ var PieSeriesModel = (
         // 引导线两段中的第一段长度
         length: 15,
         // 引导线两段中的第二段长度
-        length2: 15,
+        length2: 30,
         smooth: false,
         minTurnAngle: 90,
         maxSurfaceAngle: 90,
@@ -4196,9 +4194,15 @@ var PieSeriesModel = (
     return PieSeriesModel2;
   }(Series_default)
 );
+registerLayOutOnCoordSysUsage({
+  fullType: PieSeriesModel.type,
+  getCoord2: function(model) {
+    return model.getShallow("center");
+  }
+});
 var PieSeries_default = PieSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/processor/negativeDataFilter.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/processor/negativeDataFilter.js
 function negativeDataFilter(seriesType) {
   return {
     seriesType,
@@ -4216,7 +4220,7 @@ function negativeDataFilter(seriesType) {
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/pie/install.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/pie/install.js
 function install7(registers) {
   registers.registerChartView(PieView_default);
   registers.registerSeriesModel(PieSeries_default);
@@ -4226,7 +4230,7 @@ function install7(registers) {
   registers.registerProcessor(negativeDataFilter("pie"));
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/scatter/ScatterSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/scatter/ScatterSeries.js
 var ScatterSeriesModel = (
   /** @class */
   function(_super) {
@@ -4263,7 +4267,7 @@ var ScatterSeriesModel = (
       return this.getData().count() > this.getProgressiveThreshold() ? this.id : "";
     };
     ScatterSeriesModel2.type = "series.scatter";
-    ScatterSeriesModel2.dependencies = ["grid", "polar", "geo", "singleAxis", "calendar"];
+    ScatterSeriesModel2.dependencies = ["grid", "polar", "geo", "singleAxis", "calendar", "matrix"];
     ScatterSeriesModel2.defaultOption = {
       coordinateSystem: "cartesian2d",
       // zlevel: 0,
@@ -4287,7 +4291,7 @@ var ScatterSeriesModel = (
       clip: true,
       select: {
         itemStyle: {
-          borderColor: "#212121"
+          borderColor: tokens_default.color.primary
         }
       },
       universalTransition: {
@@ -4300,7 +4304,7 @@ var ScatterSeriesModel = (
 );
 var ScatterSeries_default = ScatterSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/helper/LargeSymbolDraw.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/LargeSymbolDraw.js
 var BOOST_SIZE_THRESHOLD = 4;
 var LargeSymbolPathShape = (
   /** @class */
@@ -4548,7 +4552,7 @@ var LargeSymbolDraw = (
 );
 var LargeSymbolDraw_default = LargeSymbolDraw;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/scatter/ScatterView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/scatter/ScatterView.js
 var ScatterView = (
   /** @class */
   function(_super) {
@@ -4636,7 +4640,10 @@ var ScatterView = (
 );
 var ScatterView_default = ScatterView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/scatter/install.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/util/jitter.js
+var inner = makeInner();
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/scatter/install.js
 function install8(registers) {
   use(install);
   registers.registerSeriesModel(ScatterSeries_default);
@@ -4644,7 +4651,7 @@ function install8(registers) {
   registers.registerLayout(pointsLayout("scatter"));
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/radar/radarLayout.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/radar/radarLayout.js
 function radarLayout(ecModel) {
   ecModel.eachSeriesByType("radar", function(seriesModel) {
     var data = seriesModel.getData();
@@ -4677,7 +4684,7 @@ function getValueMissingPoint(coordSys) {
   return [coordSys.cx, coordSys.cy];
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/radar/backwardCompat.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/radar/backwardCompat.js
 function radarBackwardCompat(option) {
   var polarOptArr = option.polar;
   if (polarOptArr) {
@@ -4708,7 +4715,7 @@ function radarBackwardCompat(option) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/radar/RadarView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/radar/RadarView.js
 var RadarView = (
   /** @class */
   function(_super) {
@@ -4832,14 +4839,21 @@ var RadarView = (
           var stateModel = itemModel.getModel([stateName, "areaStyle"]);
           var stateIgnore = stateModel.isEmpty() && stateModel.parentModel.isEmpty();
           polygon.ensureState(stateName).ignore = stateIgnore && polygonIgnore;
+          var lineStyle = itemModel.getModel([stateName, "lineStyle"]).getLineStyle();
+          polyline.ensureState(stateName).style = lineStyle;
+          var areaStyle = stateModel.getAreaStyle();
+          polygon.ensureState(stateName).style = areaStyle;
+          var itemStateStyle = itemModel.getModel([stateName, "itemStyle"]).getItemStyle();
+          symbolGroup.eachChild(function(symbolPath) {
+            symbolPath.ensureState(stateName).style = clone(itemStateStyle);
+          });
         });
-        polygon.useStyle(defaults(areaStyleModel.getAreaStyle(), {
+        polygon.useStyle(defaults(itemModel.getModel("areaStyle").getAreaStyle(), {
           fill: color,
           opacity: 0.7,
           decal: itemStyle.decal
         }));
         var emphasisModel = itemModel.getModel("emphasis");
-        var itemHoverStyle = emphasisModel.getModel("itemStyle").getItemStyle();
         symbolGroup.eachChild(function(symbolPath) {
           if (symbolPath instanceof Image_default) {
             var pathStyle = symbolPath.style;
@@ -4856,8 +4870,6 @@ var RadarView = (
             symbolPath.setColor(color);
             symbolPath.style.strokeNoScale = true;
           }
-          var pathEmphasisState = symbolPath.ensureState("emphasis");
-          pathEmphasisState.style = clone(itemHoverStyle);
           var defaultText = data.getStore().get(data.getDimensionIndex(symbolPath.__dimIdx), idx);
           (defaultText == null || isNaN(defaultText)) && (defaultText = "");
           setLabelStyle(symbolPath, getLabelStatesModels(itemModel), {
@@ -4883,7 +4895,7 @@ var RadarView = (
 );
 var RadarView_default = RadarView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/radar/RadarSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/radar/RadarSeries.js
 var RadarSeriesModel = (
   /** @class */
   function(_super) {
@@ -4969,7 +4981,7 @@ var RadarSeriesModel = (
 );
 var RadarSeries_default = RadarSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/radar/install.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/radar/install.js
 function install9(registers) {
   use(install2);
   registers.registerChartView(RadarView_default);
@@ -4979,7 +4991,7 @@ function install9(registers) {
   registers.registerPreprocessor(radarBackwardCompat);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/map/MapView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/map/MapView.js
 var MapView = (
   /** @class */
   function(_super) {
@@ -5092,7 +5104,7 @@ var MapView = (
 );
 var MapView_default = MapView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/map/MapSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/map/MapSeries.js
 var MapSeries = (
   /** @class */
   function(_super) {
@@ -5143,8 +5155,14 @@ var MapSeries = (
       return data;
     };
     MapSeries2.prototype.getHostGeoModel = function() {
-      var geoIndex = this.option.geoIndex;
-      return geoIndex != null ? this.ecModel.getComponent("geo", geoIndex) : null;
+      if (decideCoordSysUsageKind(this).kind === CoordinateSystemUsageKind.boxCoordSys) {
+        return;
+      }
+      return this.getReferringComponents("geo", {
+        useDefault: false,
+        enableAll: false,
+        enableNone: false
+      }).models[0];
     };
     MapSeries2.prototype.getMapType = function() {
       return (this.getHostGeoModel() || this).option.map;
@@ -5192,7 +5210,7 @@ var MapSeries = (
       icon.style.stroke = "none";
       if (iconType.indexOf("empty") > -1) {
         icon.style.stroke = icon.style.fill;
-        icon.style.fill = "#fff";
+        icon.style.fill = tokens_default.color.neutral00;
         icon.style.lineWidth = 2;
       }
       return icon;
@@ -5243,30 +5261,30 @@ var MapSeries = (
       selectedMode: true,
       label: {
         show: false,
-        color: "#000"
+        color: tokens_default.color.tertiary
       },
       // scaleLimit: null,
       itemStyle: {
         borderWidth: 0.5,
-        borderColor: "#444",
-        areaColor: "#eee"
+        borderColor: tokens_default.color.border,
+        areaColor: tokens_default.color.background
       },
       emphasis: {
         label: {
           show: true,
-          color: "rgb(100,0,0)"
+          color: tokens_default.color.primary
         },
         itemStyle: {
-          areaColor: "rgba(255,215,0,0.8)"
+          areaColor: tokens_default.color.highlight
         }
       },
       select: {
         label: {
           show: true,
-          color: "rgb(100,0,0)"
+          color: tokens_default.color.primary
         },
         itemStyle: {
-          color: "rgba(255,215,0,0.8)"
+          color: tokens_default.color.highlight
         }
       },
       nameProperty: "name"
@@ -5276,7 +5294,7 @@ var MapSeries = (
 );
 var MapSeries_default = MapSeries;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/map/mapDataStatistic.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/map/mapDataStatistic.js
 function dataStatistics(datas, statisticType) {
   var dataNameMap = {};
   each(datas, function(data) {
@@ -5335,7 +5353,7 @@ function mapDataStatistic(ecModel) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/map/mapSymbolLayout.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/map/mapSymbolLayout.js
 function mapSymbolLayout(ecModel) {
   var processedMapType = {};
   ecModel.eachSeriesByType("map", function(mapSeries) {
@@ -5375,7 +5393,7 @@ function mapSymbolLayout(ecModel) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/map/install.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/map/install.js
 function install10(registers) {
   use(install3);
   registers.registerChartView(MapView_default);
@@ -5385,7 +5403,7 @@ function install10(registers) {
   createLegacyDataSelectAction("map", registers.registerAction);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/tree/layoutHelper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/tree/layoutHelper.js
 function init(inRoot) {
   var root = inRoot;
   root.hierNode = {
@@ -5456,12 +5474,6 @@ function radialCoordinate(rad, r) {
     x: r * Math.cos(rad),
     y: r * Math.sin(rad)
   };
-}
-function getViewRect2(seriesModel, api) {
-  return getLayoutRect(seriesModel.getBoxLayoutParams(), {
-    width: api.getWidth(),
-    height: api.getHeight()
-  });
 }
 function executeShifts(node) {
   var children = node.children;
@@ -5536,7 +5548,7 @@ function defaultSeparation(node1, node2) {
   return node1.parentNode === node2.parentNode ? 1 : 2;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/tree/TreeView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/tree/TreeView.js
 var TreeEdgeShape = (
   /** @class */
   /* @__PURE__ */ function() {
@@ -5556,7 +5568,7 @@ var TreePath = (
     }
     TreePath2.prototype.getDefaultStyle = function() {
       return {
-        stroke: "#000",
+        stroke: tokens_default.color.neutral99,
         fill: null
       };
     };
@@ -5629,7 +5641,7 @@ var TreeView = (
         group.y = layoutInfo.y;
       }
       this._updateViewCoordSys(seriesModel, api);
-      this._updateController(seriesModel, ecModel, api);
+      this._updateController(seriesModel, null, ecModel, api);
       var oldData = this._data;
       data.diff(oldData).add(function(newIdx) {
         if (symbolNeedsDraw(data, newIdx)) {
@@ -5685,10 +5697,13 @@ var TreeView = (
         min[1] = oldMin ? oldMin[1] : min[1] - 1;
         max[1] = oldMax ? oldMax[1] : max[1] + 1;
       }
-      var viewCoordSys = seriesModel.coordinateSystem = new View_default();
+      var viewCoordSys = seriesModel.coordinateSystem = new View_default(null, {
+        api,
+        ecModel: seriesModel.ecModel
+      });
       viewCoordSys.zoomLimit = seriesModel.get("scaleLimit");
       viewCoordSys.setBoundingRect(min[0], min[1], max[0] - min[0], max[1] - min[1]);
-      viewCoordSys.setCenter(seriesModel.get("center"), api);
+      viewCoordSys.setCenter(seriesModel.get("center"));
       viewCoordSys.setZoom(seriesModel.get("zoom"));
       this.group.attr({
         x: viewCoordSys.x,
@@ -5699,38 +5714,11 @@ var TreeView = (
       this._min = min;
       this._max = max;
     };
-    TreeView2.prototype._updateController = function(seriesModel, ecModel, api) {
+    TreeView2.prototype._updateController = function(seriesModel, clipRect, ecModel, api) {
       var _this = this;
-      var controller = this._controller;
-      var controllerHost = this._controllerHost;
-      var group = this.group;
-      controller.setPointerChecker(function(e, x, y) {
-        var rect = group.getBoundingRect();
-        rect.applyTransform(group.transform);
-        return rect.contain(x, y) && !onIrrelevantElement(e, api, seriesModel);
-      });
-      controller.enable(seriesModel.get("roam"));
-      controllerHost.zoomLimit = seriesModel.get("scaleLimit");
-      controllerHost.zoom = seriesModel.coordinateSystem.getZoom();
-      controller.off("pan").off("zoom").on("pan", function(e) {
-        updateViewOnPan(controllerHost, e.dx, e.dy);
-        api.dispatchAction({
-          seriesId: seriesModel.id,
-          type: "treeRoam",
-          dx: e.dx,
-          dy: e.dy
-        });
-      }).on("zoom", function(e) {
-        updateViewOnZoom(controllerHost, e.scale, e.originX, e.originY);
-        api.dispatchAction({
-          seriesId: seriesModel.id,
-          type: "treeRoam",
-          zoom: e.scale,
-          originX: e.originX,
-          originY: e.originY
-        });
+      updateController(seriesModel, api, this.group, this._controller, this._controllerHost, clipRect);
+      this._controller.on("zoom", function(e) {
         _this._updateNodeAndLinkScale(seriesModel);
-        api.updateLabelLayout();
       });
     };
     TreeView2.prototype._updateNodeAndLinkScale = function(seriesModel) {
@@ -5772,7 +5760,7 @@ function updateNode(data, dataIndex, symbolEl, group, seriesModel) {
   var node = data.tree.getNodeByDataIndex(dataIndex);
   var itemModel = node.getModel();
   var visualColor = node.getVisual("style").fill;
-  var symbolInnerColor = node.isExpand === false && node.children.length !== 0 ? visualColor : "#fff";
+  var symbolInnerColor = node.isExpand === false && node.children.length !== 0 ? visualColor : tokens_default.color.neutral00;
   var virtualRoot = data.tree.root;
   var source = node.parentNode === virtualRoot ? node : node.parentNode || node;
   var sourceSymbolEl = data.getItemGraphicEl(source.dataIndex);
@@ -6081,8 +6069,8 @@ function getEdgeShape(layoutOpt, orient, curvature, sourceLayout, targetLayout) 
 }
 var TreeView_default = TreeView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/data/helper/linkSeriesData.js
-var inner = makeInner();
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/data/helper/linkSeriesData.js
+var inner2 = makeInner();
 function linkSeriesData(opt) {
   var mainData = opt.mainData;
   var datas = opt.datas;
@@ -6109,11 +6097,11 @@ function linkSeriesData(opt) {
 }
 function transferInjection(opt, res) {
   if (isMainData(this)) {
-    var datas = extend({}, inner(this).datas);
+    var datas = extend({}, inner2(this).datas);
     datas[this.dataType] = res;
     linkAll(res, datas, opt);
   } else {
-    linkSingle(res, this.dataType, inner(this).mainData, opt);
+    linkSingle(res, this.dataType, inner2(this).mainData, opt);
   }
   return res;
 }
@@ -6122,38 +6110,38 @@ function changeInjection(opt, res) {
   return res;
 }
 function cloneShallowInjection(opt, res) {
-  each(inner(res).datas, function(data, dataType) {
+  each(inner2(res).datas, function(data, dataType) {
     data !== res && linkSingle(data.cloneShallow(), dataType, res, opt);
   });
   return res;
 }
 function getLinkedData(dataType) {
-  var mainData = inner(this).mainData;
-  return dataType == null || mainData == null ? mainData : inner(mainData).datas[dataType];
+  var mainData = inner2(this).mainData;
+  return dataType == null || mainData == null ? mainData : inner2(mainData).datas[dataType];
 }
 function getLinkedDataAll() {
-  var mainData = inner(this).mainData;
+  var mainData = inner2(this).mainData;
   return mainData == null ? [{
     data: mainData
-  }] : map(keys(inner(mainData).datas), function(type) {
+  }] : map(keys(inner2(mainData).datas), function(type) {
     return {
       type,
-      data: inner(mainData).datas[type]
+      data: inner2(mainData).datas[type]
     };
   });
 }
 function isMainData(data) {
-  return inner(data).mainData === data;
+  return inner2(data).mainData === data;
 }
 function linkAll(mainData, datas, opt) {
-  inner(mainData).datas = {};
+  inner2(mainData).datas = {};
   each(datas, function(data, dataType) {
     linkSingle(data, dataType, mainData, opt);
   });
 }
 function linkSingle(data, dataType, mainData, opt) {
-  inner(mainData).datas[dataType] = data;
-  inner(data).mainData = mainData;
+  inner2(mainData).datas[dataType] = data;
+  inner2(data).mainData = mainData;
   data.dataType = dataType;
   if (opt.struct) {
     data[opt.structAttr] = opt.struct;
@@ -6164,7 +6152,7 @@ function linkSingle(data, dataType, mainData, opt) {
 }
 var linkSeriesData_default = linkSeriesData;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/data/Tree.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/data/Tree.js
 var TreeNode = (
   /** @class */
   function() {
@@ -6403,7 +6391,7 @@ function addChild(child, node) {
 }
 var Tree_default = Tree;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/helper/treeHelper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/treeHelper.js
 function retrieveTargetInfo(payload, validPayloadTypes, seriesModel) {
   if (payload && indexOf(validPayloadTypes, payload.type) >= 0) {
     var root = seriesModel.getData().tree.root;
@@ -6451,7 +6439,7 @@ function wrapTreePathInfo(node, seriesModel) {
   return treePathInfo;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/tree/TreeSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/tree/TreeSeries.js
 var TreeSeriesModel = (
   /** @class */
   function(_super) {
@@ -6536,7 +6524,9 @@ var TreeSeriesModel = (
     TreeSeriesModel2.defaultOption = {
       // zlevel: 0,
       z: 2,
-      coordinateSystem: "view",
+      // `coordinateSystem` can be declared as 'matrix', 'calendar',
+      //  which provides box layout container.
+      coordinateSystemUsage: "box",
       // the position of the whole view
       left: "12%",
       top: "12%",
@@ -6549,6 +6539,7 @@ var TreeSeriesModel = (
       edgeForkPosition: "50%",
       // true | false | 'move' | 'scale', see module:component/helper/RoamController.
       roam: false,
+      roamTrigger: "global",
       // Symbol size scale ratio in roam
       nodeScaleRatio: 0.4,
       // Default on center of graph
@@ -6560,7 +6551,7 @@ var TreeSeriesModel = (
       expandAndCollapse: true,
       initialTreeDepth: 2,
       lineStyle: {
-        color: "#ccc",
+        color: tokens_default.color.borderTint,
         width: 1.5,
         curveness: 0.5
       },
@@ -6581,7 +6572,7 @@ var TreeSeriesModel = (
 );
 var TreeSeries_default = TreeSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/tree/traversalHelper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/tree/traversalHelper.js
 function eachAfter(root, callback, separation2) {
   var nodes = [root];
   var next = [];
@@ -6617,14 +6608,15 @@ function eachBefore(root, callback) {
   }
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/tree/treeLayout.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/tree/treeLayout.js
 function treeLayout(ecModel, api) {
   ecModel.eachSeriesByType("tree", function(seriesModel) {
     commonLayout(seriesModel, api);
   });
 }
 function commonLayout(seriesModel, api) {
-  var layoutInfo = getViewRect2(seriesModel, api);
+  var refContainer = createBoxLayoutReference(seriesModel, api).refContainer;
+  var layoutInfo = getLayoutRect(seriesModel.getBoxLayoutParams(), refContainer);
   seriesModel.layoutInfo = layoutInfo;
   var layout2 = seriesModel.get("layout");
   var width = 0;
@@ -6712,7 +6704,7 @@ function commonLayout(seriesModel, api) {
   }
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/tree/treeVisual.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/tree/treeVisual.js
 function treeVisual(ecModel) {
   ecModel.eachSeriesByType("tree", function(seriesModel) {
     var data = seriesModel.getData();
@@ -6726,7 +6718,7 @@ function treeVisual(ecModel) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/tree/treeAction.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/tree/treeAction.js
 function installTreeAction(registers) {
   registers.registerAction({
     type: "treeExpandAndCollapse",
@@ -6759,14 +6751,14 @@ function installTreeAction(registers) {
       query: payload
     }, function(seriesModel) {
       var coordSys = seriesModel.coordinateSystem;
-      var res = updateCenterAndZoom(coordSys, payload, void 0, api);
-      seriesModel.setCenter && seriesModel.setCenter(res.center);
-      seriesModel.setZoom && seriesModel.setZoom(res.zoom);
+      var res = updateCenterAndZoomInAction(coordSys, payload, seriesModel.get("scaleLimit"));
+      seriesModel.setCenter(res.center);
+      seriesModel.setZoom(res.zoom);
     });
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/tree/install.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/tree/install.js
 function install11(registers) {
   registers.registerChartView(TreeView_default);
   registers.registerSeriesModel(TreeSeries_default);
@@ -6775,7 +6767,7 @@ function install11(registers) {
   installTreeAction(registers);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/treemap/treemapAction.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/treemap/treemapAction.js
 var actionTypes = ["treemapZoomToNode", "treemapRender", "treemapMove"];
 function installTreemapAction(registers) {
   for (var i = 0; i < actionTypes.length; i++) {
@@ -6807,7 +6799,7 @@ function installTreemapAction(registers) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/helper/enableAriaDecalForTree.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/enableAriaDecalForTree.js
 function enableAriaDecalForTree(seriesModel) {
   var data = seriesModel.getData();
   var tree = data.tree;
@@ -6822,7 +6814,7 @@ function enableAriaDecalForTree(seriesModel) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/treemap/TreemapSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/treemap/TreemapSeries.js
 var TreemapSeriesModel = (
   /** @class */
   function(_super) {
@@ -6913,10 +6905,13 @@ var TreemapSeriesModel = (
       // Disable progressive rendering
       progressive: 0,
       // size: ['80%', '80%'],            // deprecated, compatible with ec2.
-      left: "center",
-      top: "middle",
-      width: "80%",
-      height: "80%",
+      // `coordinateSystem` can be declared as 'matrix', 'calendar',
+      //  which provides box layout container.
+      coordinateSystemUsage: "box",
+      left: tokens_default.size.l,
+      top: tokens_default.size.xxxl,
+      right: tokens_default.size.l,
+      bottom: tokens_default.size.xxxl,
       sort: true,
       clipWindow: "origin",
       squareRatio: 0.5 * (1 + Math.sqrt(5)),
@@ -6924,8 +6919,12 @@ var TreemapSeriesModel = (
       drillDownIcon: "▶",
       // to align specialized icon. ▷▶❒❐▼✚
       zoomToNodeRatio: 0.32 * 0.32,
-      scaleLimit: null,
+      scaleLimit: {
+        max: 5,
+        min: 0.2
+      },
       roam: true,
+      roamTrigger: "global",
       nodeClick: "zoomToNode",
       animation: true,
       animationDurationUpdate: 900,
@@ -6934,20 +6933,19 @@ var TreemapSeriesModel = (
         show: true,
         height: 22,
         left: "center",
-        top: "bottom",
+        bottom: tokens_default.size.m,
         // right
         // bottom
         emptyItemWidth: 25,
         itemStyle: {
-          color: "rgba(0,0,0,0.7)",
+          color: tokens_default.color.backgroundShade,
           textStyle: {
-            color: "#fff"
+            color: tokens_default.color.secondary
           }
         },
         emphasis: {
           itemStyle: {
-            color: "rgba(0,0,0,0.9)"
-            // '#5793f3',
+            color: tokens_default.color.background
           }
         }
       },
@@ -6958,7 +6956,7 @@ var TreemapSeriesModel = (
         padding: 5,
         position: "inside",
         // formatter: null,
-        color: "#fff",
+        color: tokens_default.color.neutral00,
         overflow: "truncate"
         // align
         // verticalAlign
@@ -6979,7 +6977,7 @@ var TreemapSeriesModel = (
         colorSaturation: null,
         borderWidth: 0,
         gapWidth: 0,
-        borderColor: "#fff",
+        borderColor: tokens_default.color.neutral00,
         borderColorSaturation: null
         // If specified, borderColor will be ineffective, and the
         // border color is evaluated by color of current node and
@@ -7075,7 +7073,7 @@ function setDefault(levels, ecModel) {
 }
 var TreemapSeries_default = TreemapSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/treemap/Breadcrumb.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/treemap/Breadcrumb.js
 var TEXT_PADDING = 8;
 var ITEM_GAP = 8;
 var ARRAY_LENGTH = 5;
@@ -7097,24 +7095,22 @@ var Breadcrumb = (
       var emphasisModel = model.getModel("emphasis");
       var textStyleModel = normalStyleModel.getModel("textStyle");
       var emphasisTextStyleModel = emphasisModel.getModel(["itemStyle", "textStyle"]);
+      var refContainer = createBoxLayoutReference(seriesModel, api).refContainer;
+      var boxLayoutParams = {
+        left: model.get("left"),
+        right: model.get("right"),
+        top: model.get("top"),
+        bottom: model.get("bottom")
+      };
       var layoutParam = {
-        pos: {
-          left: model.get("left"),
-          right: model.get("right"),
-          top: model.get("top"),
-          bottom: model.get("bottom")
-        },
-        box: {
-          width: api.getWidth(),
-          height: api.getHeight()
-        },
         emptyItemWidth: model.get("emptyItemWidth"),
         totalWidth: 0,
         renderList: []
       };
+      var availableSize = getLayoutRect(boxLayoutParams, refContainer);
       this._prepare(targetNode, layoutParam, textStyleModel);
-      this._renderContent(seriesModel, layoutParam, normalStyleModel, emphasisModel, textStyleModel, emphasisTextStyleModel, onSelect);
-      positionElement(thisGroup, layoutParam.pos, layoutParam.box);
+      this._renderContent(seriesModel, layoutParam, availableSize, normalStyleModel, emphasisModel, textStyleModel, emphasisTextStyleModel, onSelect);
+      positionElement(thisGroup, boxLayoutParams, refContainer);
     };
     Breadcrumb2.prototype._prepare = function(targetNode, layoutParam, textStyleModel) {
       for (var node = targetNode; node; node = node.parentNode) {
@@ -7129,11 +7125,10 @@ var Breadcrumb = (
         });
       }
     };
-    Breadcrumb2.prototype._renderContent = function(seriesModel, layoutParam, normalStyleModel, emphasisModel, textStyleModel, emphasisTextStyleModel, onSelect) {
+    Breadcrumb2.prototype._renderContent = function(seriesModel, layoutParam, availableSize, normalStyleModel, emphasisModel, textStyleModel, emphasisTextStyleModel, onSelect) {
       var lastX = 0;
       var emptyItemWidth = layoutParam.emptyItemWidth;
       var height = seriesModel.get(["breadcrumb", "height"]);
-      var availableSize = getAvailableSize(layoutParam.pos, layoutParam.box);
       var totalWidth = layoutParam.totalWidth;
       var renderList = layoutParam.renderList;
       var emphasisItemStyle = emphasisModel.getModel("itemStyle").getItemStyle();
@@ -7206,7 +7201,7 @@ function packEventData(el, seriesModel, itemNode) {
 }
 var Breadcrumb_default = Breadcrumb;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/util/animation.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/util/animation.js
 var AnimationWrap = (
   /** @class */
   function() {
@@ -7263,7 +7258,7 @@ function createWrap() {
   return new AnimationWrap();
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/treemap/TreemapView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/treemap/TreemapView.js
 var Group = Group_default;
 var Rect = Rect_default;
 var DRAG_THRESHOLD = 3;
@@ -7290,7 +7285,7 @@ var getItemStyleNormal = function(model) {
   itemStyle.stroke = itemStyle.fill = itemStyle.lineWidth = null;
   return itemStyle;
 };
-var inner2 = makeInner();
+var inner3 = makeInner();
 var TreemapView = (
   /** @class */
   function(_super) {
@@ -7392,7 +7387,7 @@ var TreemapView = (
         storage && each(storage, function(store, storageName) {
           var delEls = willDeleteEls2[storageName];
           each(store, function(el) {
-            el && (delEls.push(el), inner2(el).willDelete = true);
+            el && (delEls.push(el), inner3(el).willDelete = true);
           });
         });
         return willDeleteEls2;
@@ -7422,7 +7417,7 @@ var TreemapView = (
           }
           var parent = el.parent;
           var target;
-          var innerStore = inner2(parent);
+          var innerStore = inner3(parent);
           if (reRoot && reRoot.direction === "drillDown") {
             target = parent === reRoot.rootNodeGroup ? {
               shape: {
@@ -7507,6 +7502,7 @@ var TreemapView = (
       }, this)).start();
     };
     TreemapView2.prototype._resetController = function(api) {
+      var _this = this;
       var controller = this._controller;
       var controllerHost = this._controllerHost;
       if (!controllerHost) {
@@ -7515,18 +7511,27 @@ var TreemapView = (
         };
         controllerHost = this._controllerHost;
       }
+      var seriesModel = this.seriesModel;
       if (!controller) {
         controller = this._controller = new RoamController_default(api.getZr());
-        controller.enable(this.seriesModel.get("roam"));
-        controllerHost.zoomLimit = this.seriesModel.get("scaleLimit");
-        controllerHost.zoom = this.seriesModel.get("zoom");
         controller.on("pan", bind(this._onPan, this));
         controller.on("zoom", bind(this._onZoom, this));
       }
-      var rect = new BoundingRect_default(0, 0, api.getWidth(), api.getHeight());
-      controller.setPointerChecker(function(e, x, y) {
-        return rect.contain(x, y);
+      controller.enable(seriesModel.get("roam"), {
+        api,
+        zInfo: {
+          component: seriesModel
+        },
+        triggerInfo: {
+          roamTrigger: seriesModel.get("roamTrigger"),
+          isInSelf: function(e, x, y) {
+            var containerGroup = _this._containerGroup;
+            return containerGroup ? containerGroup.getBoundingRect().contain(x - containerGroup.x, y - containerGroup.y) : false;
+          }
+        }
       });
+      controllerHost.zoomLimit = seriesModel.get("scaleLimit");
+      controllerHost.zoom = seriesModel.get("zoom");
     };
     TreemapView2.prototype._clearController = function() {
       var controller = this._controller;
@@ -7751,8 +7756,8 @@ function renderNode(seriesModel, thisStorage, oldStorage, reRoot, lastsForAnimat
   group.x = thisLayout.x || 0;
   group.y = thisLayout.y || 0;
   group.markRedraw();
-  inner2(group).nodeWidth = thisWidth;
-  inner2(group).nodeHeight = thisHeight;
+  inner3(group).nodeWidth = thisWidth;
+  inner3(group).nodeHeight = thisHeight;
   if (thisLayout.isAboveViewRoot) {
     return group;
   }
@@ -7976,9 +7981,9 @@ function calculateZ2(depth, z2InLevel) {
 }
 var TreemapView_default = TreemapView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/treemap/treemapVisual.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/treemap/treemapVisual.js
 var ITEM_STYLE_NORMAL = "itemStyle";
-var inner3 = makeInner();
+var inner4 = makeInner();
 var treemapVisual_default = {
   seriesType: "treemap",
   reset: function(seriesModel) {
@@ -8088,7 +8093,7 @@ function buildVisualMapping(node, nodeModel, nodeLayout, nodeItemStyleModel, vis
     opt.mappingMethod = "linear";
   }
   var mapping = new VisualMapping_default(opt);
-  inner3(mapping).drColorMappingBy = colorMappingBy;
+  inner4(mapping).drColorMappingBy = colorMappingBy;
   return mapping;
 }
 function getRangeVisual(nodeModel, name) {
@@ -8102,14 +8107,14 @@ function mapVisual(nodeModel, visuals, child, index, mapping, seriesModel) {
   var childVisuals = extend({}, visuals);
   if (mapping) {
     var mappingType = mapping.type;
-    var colorMappingBy = mappingType === "color" && inner3(mapping).drColorMappingBy;
+    var colorMappingBy = mappingType === "color" && inner4(mapping).drColorMappingBy;
     var value = colorMappingBy === "index" ? index : colorMappingBy === "id" ? seriesModel.mapIdToIndex(child.getId()) : child.getValue(nodeModel.get("visualDimension"));
     childVisuals[mappingType] = mapping.mapValueToVisual(value);
   }
   return childVisuals;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/treemap/treemapLayout.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/treemap/treemapLayout.js
 var mathMax3 = Math.max;
 var mathMin3 = Math.min;
 var retrieveValue = retrieve;
@@ -8121,16 +8126,12 @@ var PATH_UPPER_LABEL_HEIGHT = ["upperLabel", "height"];
 var treemapLayout_default = {
   seriesType: "treemap",
   reset: function(seriesModel, ecModel, api, payload) {
-    var ecWidth = api.getWidth();
-    var ecHeight = api.getHeight();
     var seriesOption = seriesModel.option;
-    var layoutInfo = getLayoutRect(seriesModel.getBoxLayoutParams(), {
-      width: api.getWidth(),
-      height: api.getHeight()
-    });
+    var refContainer = createBoxLayoutReference(seriesModel, api).refContainer;
+    var layoutInfo = getLayoutRect(seriesModel.getBoxLayoutParams(), refContainer);
     var size = seriesOption.size || [];
-    var containerWidth = parsePercent2(retrieveValue(layoutInfo.width, size[0]), ecWidth);
-    var containerHeight = parsePercent2(retrieveValue(layoutInfo.height, size[1]), ecHeight);
+    var containerWidth = parsePercent2(retrieveValue(layoutInfo.width, size[0]), refContainer.width);
+    var containerHeight = parsePercent2(retrieveValue(layoutInfo.height, size[1]), refContainer.height);
     var payloadType = payload && payload.type;
     var types = ["treemapZoomToNode", "treemapRootToNode"];
     var targetInfo = retrieveTargetInfo(payload, types, seriesModel);
@@ -8174,7 +8175,7 @@ var treemapLayout_default = {
     prunning(
       treeRoot,
       // Transform to base element coordinate system.
-      new BoundingRect_default(-layoutInfo.x, -layoutInfo.y, ecWidth, ecHeight),
+      new BoundingRect_default(-layoutInfo.x, -layoutInfo.y, api.getWidth(), api.getHeight()),
       viewAbovePath,
       viewRoot,
       0
@@ -8464,7 +8465,7 @@ function getUpperLabelHeight(model) {
   return model.get(PATH_UPPER_LABEL_SHOW) ? model.get(PATH_UPPER_LABEL_HEIGHT) : 0;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/treemap/install.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/treemap/install.js
 function install12(registers) {
   registers.registerSeriesModel(TreemapSeries_default);
   registers.registerChartView(TreemapView_default);
@@ -8473,7 +8474,7 @@ function install12(registers) {
   installTreemapAction(registers);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/graph/categoryFilter.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/graph/categoryFilter.js
 function categoryFilter(ecModel) {
   var legendModels = ecModel.findComponents({
     mainType: "legend"
@@ -8504,7 +8505,7 @@ function categoryFilter(ecModel) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/graph/categoryVisual.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/graph/categoryVisual.js
 function categoryVisual(ecModel) {
   var paletteScope = {};
   ecModel.eachSeriesByType("graph", function(seriesModel) {
@@ -8549,7 +8550,7 @@ function categoryVisual(ecModel) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/graph/edgeVisual.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/graph/edgeVisual.js
 function normalize2(a) {
   if (!(a instanceof Array)) {
     a = [a, a];
@@ -8595,7 +8596,7 @@ function graphEdgeVisual(ecModel) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/helper/multipleGraphEdgeHelper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/multipleGraphEdgeHelper.js
 var KEY_DELIMITER = "-->";
 var getAutoCurvenessParams = function(seriesModel) {
   return seriesModel.get("autoCurveness") || null;
@@ -8711,7 +8712,7 @@ function getCurvenessForEdge(edge, seriesModel, index, needReverse) {
   }
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/graph/simpleLayoutHelper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/graph/simpleLayoutHelper.js
 function simpleLayout(seriesModel) {
   var coordSys = seriesModel.coordinateSystem;
   if (coordSys && coordSys.type !== "view") {
@@ -8737,7 +8738,7 @@ function simpleLayoutEdge(graph, seriesModel) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/graph/simpleLayout.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/graph/simpleLayout.js
 function graphSimpleLayout(ecModel, api) {
   ecModel.eachSeriesByType("graph", function(seriesModel) {
     var layout2 = seriesModel.get("layout");
@@ -8771,7 +8772,7 @@ function graphSimpleLayout(ecModel, api) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/graph/graphHelper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/graph/graphHelper.js
 function getNodeGlobalScale(seriesModel) {
   var coordSys = seriesModel.coordinateSystem;
   if (coordSys.type !== "view") {
@@ -8791,7 +8792,7 @@ function getSymbolSize(node) {
   return +symbolSize;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/graph/circularLayoutHelper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/graph/circularLayoutHelper.js
 var PI = Math.PI;
 var _symbolRadiansHalf = [];
 function circularLayout(seriesModel, basedOn, draggingNode, pointer) {
@@ -8909,7 +8910,7 @@ function rotateNodeLabel(node, circularRotateLabel, cx, cy) {
   }
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/graph/circularLayout.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/graph/circularLayout.js
 function graphCircularLayout(ecModel) {
   ecModel.eachSeriesByType("graph", function(seriesModel) {
     if (seriesModel.get("layout") === "circular") {
@@ -8918,7 +8919,7 @@ function graphCircularLayout(ecModel) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/graph/forceHelper.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/graph/forceHelper.js
 var scaleAndAdd2 = scaleAndAdd;
 function forceLayout(inNodes, inEdges, opts) {
   var nodes = inNodes;
@@ -9028,7 +9029,7 @@ function forceLayout(inNodes, inEdges, opts) {
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/graph/forceLayout.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/graph/forceLayout.js
 function graphForceLayout(ecModel) {
   ecModel.eachSeriesByType("graph", function(graphSeries) {
     var coordSys = graphSeries.coordinateSystem;
@@ -9134,24 +9135,28 @@ function graphForceLayout(ecModel) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/graph/createView.js
-function getViewRect3(seriesModel, api, aspect) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/graph/createView.js
+function getViewRect(seriesModel, api, aspect) {
+  var layoutRef = createBoxLayoutReference(seriesModel, api);
   var option = extend(seriesModel.getBoxLayoutParams(), {
     aspect
   });
-  return getLayoutRect(option, {
-    width: api.getWidth(),
-    height: api.getHeight()
-  });
+  var viewRect = getLayoutRect(option, layoutRef.refContainer);
+  return applyPreserveAspect(seriesModel, viewRect, aspect);
 }
 function createViewCoordSys(ecModel, api) {
   var viewList = [];
   ecModel.eachSeriesByType("graph", function(seriesModel) {
-    var coordSysType = seriesModel.get("coordinateSystem");
-    if (!coordSysType || coordSysType === "view") {
-      var data_1 = seriesModel.getData();
-      var positions = data_1.mapArray(function(idx) {
-        var itemModel = data_1.getItemModel(idx);
+    injectCoordSysByOption({
+      targetModel: seriesModel,
+      coordSysType: "view",
+      coordSysProvider: createViewCoordSys2,
+      isDefaultDataCoordSys: true
+    });
+    function createViewCoordSys2() {
+      var data = seriesModel.getData();
+      var positions = data.mapArray(function(idx) {
+        var itemModel = data.getItemModel(idx);
         return [+itemModel.get("x"), +itemModel.get("y")];
       });
       var min = [];
@@ -9166,28 +9171,30 @@ function createViewCoordSys(ecModel, api) {
         min[1] -= 1;
       }
       var aspect = (max[0] - min[0]) / (max[1] - min[1]);
-      var viewRect = getViewRect3(seriesModel, api, aspect);
+      var viewRect = getViewRect(seriesModel, api, aspect);
       if (isNaN(aspect)) {
         min = [viewRect.x, viewRect.y];
         max = [viewRect.x + viewRect.width, viewRect.y + viewRect.height];
       }
       var bbWidth = max[0] - min[0];
       var bbHeight = max[1] - min[1];
-      var viewWidth = viewRect.width;
-      var viewHeight = viewRect.height;
-      var viewCoordSys = seriesModel.coordinateSystem = new View_default();
+      var viewCoordSys = new View_default(null, {
+        api,
+        ecModel
+      });
       viewCoordSys.zoomLimit = seriesModel.get("scaleLimit");
       viewCoordSys.setBoundingRect(min[0], min[1], bbWidth, bbHeight);
-      viewCoordSys.setViewRect(viewRect.x, viewRect.y, viewWidth, viewHeight);
-      viewCoordSys.setCenter(seriesModel.get("center"), api);
+      viewCoordSys.setViewRect(viewRect.x, viewRect.y, viewRect.width, viewRect.height);
+      viewCoordSys.setCenter(seriesModel.get("center"));
       viewCoordSys.setZoom(seriesModel.get("zoom"));
       viewList.push(viewCoordSys);
+      return viewCoordSys;
     }
   });
   return viewList;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/graph/adjustEdge.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/graph/adjustEdge.js
 var v1 = [];
 var v2 = [];
 var v3 = [];
@@ -9303,7 +9310,7 @@ function adjustEdge(graph, scale3) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/graph/GraphView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/graph/GraphView.js
 function isViewCoordSys(coordSys) {
   return coordSys.type === "view";
 }
@@ -9320,23 +9327,32 @@ var GraphView = (
       var symbolDraw = new SymbolDraw_default();
       var lineDraw = new LineDraw_default();
       var group = this.group;
+      var mainGroup = new Group_default();
       this._controller = new RoamController_default(api.getZr());
       this._controllerHost = {
-        target: group
+        target: mainGroup
       };
-      group.add(symbolDraw.group);
-      group.add(lineDraw.group);
+      mainGroup.add(symbolDraw.group);
+      mainGroup.add(lineDraw.group);
+      group.add(mainGroup);
       this._symbolDraw = symbolDraw;
       this._lineDraw = lineDraw;
+      this._mainGroup = mainGroup;
       this._firstRender = true;
     };
     GraphView2.prototype.render = function(seriesModel, ecModel, api) {
       var _this = this;
       var coordSys = seriesModel.coordinateSystem;
+      var isForceLayout = false;
       this._model = seriesModel;
+      this._api = api;
+      this._active = true;
+      var thumbnailInfo = this._getThumbnailInfo();
+      if (thumbnailInfo) {
+        thumbnailInfo.bridge.reset(api);
+      }
       var symbolDraw = this._symbolDraw;
       var lineDraw = this._lineDraw;
-      var group = this.group;
       if (isViewCoordSys(coordSys)) {
         var groupNewProp = {
           x: coordSys.x,
@@ -9345,9 +9361,9 @@ var GraphView = (
           scaleY: coordSys.scaleY
         };
         if (this._firstRender) {
-          group.attr(groupNewProp);
+          this._mainGroup.attr(groupNewProp);
         } else {
-          updateProps(group, groupNewProp, seriesModel);
+          updateProps(this._mainGroup, groupNewProp, seriesModel);
         }
       }
       adjustEdge(seriesModel.getGraph(), getNodeGlobalScale(seriesModel));
@@ -9356,12 +9372,13 @@ var GraphView = (
       var edgeData = seriesModel.getEdgeData();
       lineDraw.updateData(edgeData);
       this._updateNodeAndLinkScale();
-      this._updateController(seriesModel, ecModel, api);
+      this._updateController(null, seriesModel, api);
       clearTimeout(this._layoutTimeout);
       var forceLayout2 = seriesModel.forceLayout;
       var layoutAnimation = seriesModel.get(["force", "layoutAnimation"]);
       if (forceLayout2) {
-        this._startForceLayoutIteration(forceLayout2, layoutAnimation);
+        isForceLayout = true;
+        this._startForceLayoutIteration(forceLayout2, api, layoutAnimation);
       }
       var layout2 = seriesModel.get("layout");
       data.graph.eachNode(function(node) {
@@ -9378,7 +9395,7 @@ var GraphView = (
             switch (layout2) {
               case "force":
                 forceLayout2.warmUp();
-                !_this._layouting && _this._startForceLayoutIteration(forceLayout2, layoutAnimation);
+                !_this._layouting && _this._startForceLayoutIteration(forceLayout2, api, layoutAnimation);
                 forceLayout2.setFixed(idx);
                 data.setItemLayout(idx, [el.x, el.y]);
                 break;
@@ -9429,40 +9446,55 @@ var GraphView = (
         rotateNodeLabel(node, circularRotateLabel, cx, cy);
       });
       this._firstRender = false;
+      if (!isForceLayout) {
+        this._renderThumbnail(seriesModel, api, this._symbolDraw, this._lineDraw);
+      }
     };
     GraphView2.prototype.dispose = function() {
       this.remove();
       this._controller && this._controller.dispose();
       this._controllerHost = null;
     };
-    GraphView2.prototype._startForceLayoutIteration = function(forceLayout2, layoutAnimation) {
+    GraphView2.prototype._startForceLayoutIteration = function(forceLayout2, api, layoutAnimation) {
       var self = this;
+      var firstRendered = false;
       (function step() {
         forceLayout2.step(function(stopped) {
           self.updateLayout(self._model);
+          if (stopped || !firstRendered) {
+            firstRendered = true;
+            self._renderThumbnail(self._model, api, self._symbolDraw, self._lineDraw);
+          }
           (self._layouting = !stopped) && (layoutAnimation ? self._layoutTimeout = setTimeout(step, 16) : step());
         });
       })();
     };
-    GraphView2.prototype._updateController = function(seriesModel, ecModel, api) {
-      var _this = this;
+    GraphView2.prototype._updateController = function(clipRect, seriesModel, api) {
       var controller = this._controller;
       var controllerHost = this._controllerHost;
-      var group = this.group;
-      controller.setPointerChecker(function(e, x, y) {
-        var rect = group.getBoundingRect();
-        rect.applyTransform(group.transform);
-        return rect.contain(x, y) && !onIrrelevantElement(e, api, seriesModel);
-      });
-      if (!isViewCoordSys(seriesModel.coordinateSystem)) {
+      var coordSys = seriesModel.coordinateSystem;
+      if (!isViewCoordSys(coordSys)) {
         controller.disable();
         return;
       }
-      controller.enable(seriesModel.get("roam"));
+      controller.enable(seriesModel.get("roam"), {
+        api,
+        zInfo: {
+          component: seriesModel
+        },
+        triggerInfo: {
+          roamTrigger: seriesModel.get("roamTrigger"),
+          isInSelf: function(e, x, y) {
+            return coordSys.containPoint([x, y]);
+          },
+          isInClip: function(e, x, y) {
+            return !clipRect || clipRect.contain(x, y);
+          }
+        }
+      });
       controllerHost.zoomLimit = seriesModel.get("scaleLimit");
-      controllerHost.zoom = seriesModel.coordinateSystem.getZoom();
+      controllerHost.zoom = coordSys.getZoom();
       controller.off("pan").off("zoom").on("pan", function(e) {
-        updateViewOnPan(controllerHost, e.dx, e.dy);
         api.dispatchAction({
           seriesId: seriesModel.id,
           type: "graphRoam",
@@ -9470,7 +9502,6 @@ var GraphView = (
           dy: e.dy
         });
       }).on("zoom", function(e) {
-        updateViewOnZoom(controllerHost, e.scale, e.originX, e.originY);
         api.dispatchAction({
           seriesId: seriesModel.id,
           type: "graphRoam",
@@ -9478,11 +9509,25 @@ var GraphView = (
           originX: e.originX,
           originY: e.originY
         });
-        _this._updateNodeAndLinkScale();
-        adjustEdge(seriesModel.getGraph(), getNodeGlobalScale(seriesModel));
-        _this._lineDraw.updateLayout();
-        api.updateLabelLayout();
       });
+    };
+    GraphView2.prototype.updateViewOnPan = function(seriesModel, api, params) {
+      if (!this._active) {
+        return;
+      }
+      updateViewOnPan(this._controllerHost, params.dx, params.dy);
+      this._updateThumbnailWindow();
+    };
+    GraphView2.prototype.updateViewOnZoom = function(seriesModel, api, params) {
+      if (!this._active) {
+        return;
+      }
+      updateViewOnZoom(this._controllerHost, params.zoom, params.originX, params.originY);
+      this._updateNodeAndLinkScale();
+      adjustEdge(seriesModel.getGraph(), getNodeGlobalScale(seriesModel));
+      this._lineDraw.updateLayout();
+      api.updateLabelLayout();
+      this._updateThumbnailWindow();
     };
     GraphView2.prototype._updateNodeAndLinkScale = function() {
       var seriesModel = this._model;
@@ -9493,16 +9538,94 @@ var GraphView = (
       });
     };
     GraphView2.prototype.updateLayout = function(seriesModel) {
+      if (!this._active) {
+        return;
+      }
       adjustEdge(seriesModel.getGraph(), getNodeGlobalScale(seriesModel));
       this._symbolDraw.updateLayout();
       this._lineDraw.updateLayout();
     };
     GraphView2.prototype.remove = function() {
+      this._active = false;
       clearTimeout(this._layoutTimeout);
       this._layouting = false;
       this._layoutTimeout = null;
       this._symbolDraw && this._symbolDraw.remove();
       this._lineDraw && this._lineDraw.remove();
+      this._controller && this._controller.disable();
+    };
+    GraphView2.prototype._getThumbnailInfo = function() {
+      var model = this._model;
+      var coordSys = model.coordinateSystem;
+      if (coordSys.type !== "view") {
+        return;
+      }
+      var bridge = getThumbnailBridge(model);
+      if (!bridge) {
+        return;
+      }
+      return {
+        bridge,
+        coordSys
+      };
+    };
+    GraphView2.prototype._updateThumbnailWindow = function() {
+      var info = this._getThumbnailInfo();
+      if (info) {
+        info.bridge.updateWindow(info.coordSys.transform, this._api);
+      }
+    };
+    GraphView2.prototype._renderThumbnail = function(seriesModel, api, symbolDraw, lineDraw) {
+      var info = this._getThumbnailInfo();
+      if (!info) {
+        return;
+      }
+      var bridgeGroup = new Group_default();
+      var symbolNodes = symbolDraw.group.children();
+      var lineNodes = lineDraw.group.children();
+      var lineGroup = new Group_default();
+      var symbolGroup = new Group_default();
+      bridgeGroup.add(symbolGroup);
+      bridgeGroup.add(lineGroup);
+      for (var i = 0; i < symbolNodes.length; i++) {
+        var node = symbolNodes[i];
+        var sub2 = node.children()[0];
+        var x = node.x;
+        var y = node.y;
+        var subShape = clone(sub2.shape);
+        var shape = extend(subShape, {
+          width: sub2.scaleX,
+          height: sub2.scaleY,
+          x: x - sub2.scaleX / 2,
+          y: y - sub2.scaleY / 2
+        });
+        var style = clone(sub2.style);
+        var subThumbnail = new sub2.constructor({
+          shape,
+          style,
+          z2: 151
+        });
+        symbolGroup.add(subThumbnail);
+      }
+      for (var i = 0; i < lineNodes.length; i++) {
+        var node = lineNodes[i];
+        var line = node.children()[0];
+        var style = clone(line.style);
+        var shape = clone(line.shape);
+        var lineThumbnail = new LinePath_default({
+          style,
+          shape,
+          z2: 151
+        });
+        lineGroup.add(lineThumbnail);
+      }
+      info.bridge.renderContent({
+        api,
+        roamType: seriesModel.get("roam"),
+        viewportRect: null,
+        group: bridgeGroup,
+        targetTrans: info.coordSys.transform
+      });
     };
     GraphView2.type = "graph";
     return GraphView2;
@@ -9510,7 +9633,7 @@ var GraphView = (
 );
 var GraphView_default = GraphView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/data/Graph.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/data/Graph.js
 function generateNodeKey(id) {
   return "_EC_" + id;
 }
@@ -9746,7 +9869,7 @@ var GraphNode = (
     GraphNode2.prototype.getTrajectoryDataIndices = function() {
       var connectedEdgesMap = createHashMap();
       var connectedNodesMap = createHashMap();
-      for (var i = 0; i < this.edges.length; i++) {
+      for (var i = 0, len2 = this.edges.length; i < len2; i++) {
         var adjacentEdge = this.edges[i];
         if (adjacentEdge.dataIndex < 0) {
           continue;
@@ -9759,9 +9882,14 @@ var GraphNode = (
           var sourceNode = sourceNodesQueue[nodeIteratorIndex];
           nodeIteratorIndex++;
           connectedNodesMap.set(sourceNode.dataIndex, true);
-          for (var j = 0; j < sourceNode.inEdges.length; j++) {
-            connectedEdgesMap.set(sourceNode.inEdges[j].dataIndex, true);
-            sourceNodesQueue.push(sourceNode.inEdges[j].node1);
+          var sourceNodeInEdges = sourceNode.inEdges;
+          for (var j = 0, len_1 = sourceNodeInEdges.length, inEdge = void 0, inEdgeDataIndex = void 0; j < len_1; j++) {
+            inEdge = sourceNodeInEdges[j];
+            inEdgeDataIndex = inEdge.dataIndex;
+            if (inEdgeDataIndex >= 0 && !connectedEdgesMap.hasKey(inEdgeDataIndex)) {
+              connectedEdgesMap.set(inEdgeDataIndex, true);
+              sourceNodesQueue.push(inEdge.node1);
+            }
           }
         }
         nodeIteratorIndex = 0;
@@ -9769,9 +9897,14 @@ var GraphNode = (
           var targetNode = targetNodesQueue[nodeIteratorIndex];
           nodeIteratorIndex++;
           connectedNodesMap.set(targetNode.dataIndex, true);
-          for (var j = 0; j < targetNode.outEdges.length; j++) {
-            connectedEdgesMap.set(targetNode.outEdges[j].dataIndex, true);
-            targetNodesQueue.push(targetNode.outEdges[j].node2);
+          var targetNodeOutEdges = targetNode.outEdges;
+          for (var j = 0, len_2 = targetNodeOutEdges.length, outEdge = void 0, outEdgeDataIndex = void 0; j < len_2; j++) {
+            outEdge = targetNodeOutEdges[j];
+            outEdgeDataIndex = outEdge.dataIndex;
+            if (outEdgeDataIndex >= 0 && !connectedEdgesMap.hasKey(outEdgeDataIndex)) {
+              connectedEdgesMap.set(outEdgeDataIndex, true);
+              targetNodesQueue.push(outEdge.node2);
+            }
           }
         }
       }
@@ -9817,9 +9950,14 @@ var GraphEdge = (
         var sourceNode = sourceNodes[nodeIteratorIndex];
         nodeIteratorIndex++;
         connectedNodesMap.set(sourceNode.dataIndex, true);
-        for (var j = 0; j < sourceNode.inEdges.length; j++) {
-          connectedEdgesMap.set(sourceNode.inEdges[j].dataIndex, true);
-          sourceNodes.push(sourceNode.inEdges[j].node1);
+        var sourceNodeInEdges = sourceNode.inEdges;
+        for (var j = 0, len2 = sourceNodeInEdges.length, inEdge = void 0, inEdgeDataIndex = void 0; j < len2; j++) {
+          inEdge = sourceNode.inEdges[j];
+          inEdgeDataIndex = inEdge.dataIndex;
+          if (inEdgeDataIndex >= 0 && !connectedEdgesMap.hasKey(inEdgeDataIndex)) {
+            connectedEdgesMap.set(inEdgeDataIndex, true);
+            sourceNodes.push(inEdge.node1);
+          }
         }
       }
       nodeIteratorIndex = 0;
@@ -9827,9 +9965,14 @@ var GraphEdge = (
         var targetNode = targetNodes[nodeIteratorIndex];
         nodeIteratorIndex++;
         connectedNodesMap.set(targetNode.dataIndex, true);
-        for (var j = 0; j < targetNode.outEdges.length; j++) {
-          connectedEdgesMap.set(targetNode.outEdges[j].dataIndex, true);
-          targetNodes.push(targetNode.outEdges[j].node2);
+        var targetNodeOutEdges = targetNode.outEdges;
+        for (var j = 0, len2 = targetNodeOutEdges.length, outEdge = void 0, outEdgeDataIndex = void 0; j < len2; j++) {
+          outEdge = targetNode.outEdges[j];
+          outEdgeDataIndex = outEdge.dataIndex;
+          if (outEdgeDataIndex >= 0 && !connectedEdgesMap.hasKey(outEdgeDataIndex)) {
+            connectedEdgesMap.set(outEdgeDataIndex, true);
+            targetNodes.push(outEdge.node2);
+          }
         }
       }
       return {
@@ -9874,7 +10017,7 @@ mixin(GraphNode, createGraphDataProxyMixin("hostGraph", "data"));
 mixin(GraphEdge, createGraphDataProxyMixin("hostGraph", "edgeData"));
 var Graph_default = Graph;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/helper/createGraphFromNodeEdge.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/createGraphFromNodeEdge.js
 function createGraphFromNodeEdge(nodes, edges, seriesModel, directed, beforeLink) {
   var graph = new Graph_default(directed);
   for (var i = 0; i < nodes.length; i++) {
@@ -9900,7 +10043,7 @@ function createGraphFromNodeEdge(nodes, edges, seriesModel, directed, beforeLink
   }
   var coordSys = seriesModel.get("coordinateSystem");
   var nodeData;
-  if (coordSys === "cartesian2d" || coordSys === "polar") {
+  if (coordSys === "cartesian2d" || coordSys === "polar" || coordSys === "matrix") {
     nodeData = createSeriesData_default(nodes, seriesModel);
   } else {
     var coordSysCtor = CoordinateSystem_default.get(coordSys);
@@ -9935,7 +10078,7 @@ function createGraphFromNodeEdge(nodes, edges, seriesModel, directed, beforeLink
   return graph;
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/graph/GraphSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/graph/GraphSeries.js
 var GraphSeriesModel = (
   /** @class */
   function(_super) {
@@ -10132,7 +10275,8 @@ var GraphSeriesModel = (
       },
       itemStyle: {},
       lineStyle: {
-        color: "#aaa",
+        // Don't use tokens.color.border because of the opacity
+        color: tokens_default.color.neutral50,
         width: 1,
         opacity: 0.5
       },
@@ -10144,7 +10288,7 @@ var GraphSeriesModel = (
       },
       select: {
         itemStyle: {
-          borderColor: "#212121"
+          borderColor: tokens_default.color.primary
         }
       }
     };
@@ -10153,12 +10297,7 @@ var GraphSeriesModel = (
 );
 var GraphSeries_default = GraphSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/graph/install.js
-var actionInfo = {
-  type: "graphRoam",
-  event: "graphRoam",
-  update: "none"
-};
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/graph/install.js
 function install13(registers) {
   registers.registerChartView(GraphView_default);
   registers.registerSeriesModel(GraphSeries_default);
@@ -10182,20 +10321,638 @@ function install13(registers) {
     event: "unfocusNodeAdjacency",
     update: "series:unfocusNodeAdjacency"
   }, noop);
-  registers.registerAction(actionInfo, function(payload, ecModel, api) {
+  registers.registerAction({
+    type: "graphRoam",
+    event: "graphRoam",
+    update: "none"
+  }, function(payload, ecModel, api) {
     ecModel.eachComponent({
       mainType: "series",
       query: payload
     }, function(seriesModel) {
+      var graphView = api.getViewOfSeriesModel(seriesModel);
+      if (graphView) {
+        if (payload.dx != null && payload.dy != null) {
+          graphView.updateViewOnPan(seriesModel, api, payload);
+        }
+        if (payload.zoom != null && payload.originX != null && payload.originY != null) {
+          graphView.updateViewOnZoom(seriesModel, api, payload);
+        }
+      }
       var coordSys = seriesModel.coordinateSystem;
-      var res = updateCenterAndZoom(coordSys, payload, void 0, api);
+      var res = updateCenterAndZoomInAction(coordSys, payload, seriesModel.get("scaleLimit"));
       seriesModel.setCenter && seriesModel.setCenter(res.center);
       seriesModel.setZoom && seriesModel.setZoom(res.zoom);
     });
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/gauge/PointerPath.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/chord/ChordPiece.js
+var ChordPiece = (
+  /** @class */
+  function(_super) {
+    __extends(ChordPiece2, _super);
+    function ChordPiece2(data, idx, startAngle) {
+      var _this = _super.call(this) || this;
+      getECData(_this).dataType = "node";
+      _this.z2 = 2;
+      var text = new Text_default();
+      _this.setTextContent(text);
+      _this.updateData(data, idx, startAngle, true);
+      return _this;
+    }
+    ChordPiece2.prototype.updateData = function(data, idx, startAngle, firstCreate) {
+      var sector = this;
+      var node = data.graph.getNodeByIndex(idx);
+      var seriesModel = data.hostModel;
+      var itemModel = node.getModel();
+      var emphasisModel = itemModel.getModel("emphasis");
+      var layout2 = data.getItemLayout(idx);
+      var shape = extend(getSectorCornerRadius(itemModel.getModel("itemStyle"), layout2, true), layout2);
+      var el = this;
+      if (isNaN(shape.startAngle)) {
+        el.setShape(shape);
+        return;
+      }
+      if (firstCreate) {
+        el.setShape(shape);
+      } else {
+        updateProps(el, {
+          shape
+        }, seriesModel, idx);
+      }
+      var sectorShape = extend(getSectorCornerRadius(itemModel.getModel("itemStyle"), layout2, true), layout2);
+      sector.setShape(sectorShape);
+      sector.useStyle(data.getItemVisual(idx, "style"));
+      setStatesStylesFromModel(sector, itemModel);
+      this._updateLabel(seriesModel, itemModel, node);
+      data.setItemGraphicEl(idx, el);
+      setStatesStylesFromModel(el, itemModel, "itemStyle");
+      var focus = emphasisModel.get("focus");
+      toggleHoverEmphasis(this, focus === "adjacency" ? node.getAdjacentDataIndices() : focus, emphasisModel.get("blurScope"), emphasisModel.get("disabled"));
+    };
+    ChordPiece2.prototype._updateLabel = function(seriesModel, itemModel, node) {
+      var label = this.getTextContent();
+      var layout2 = node.getLayout();
+      var midAngle = (layout2.startAngle + layout2.endAngle) / 2;
+      var dx = Math.cos(midAngle);
+      var dy = Math.sin(midAngle);
+      var normalLabelModel = itemModel.getModel("label");
+      label.ignore = !normalLabelModel.get("show");
+      var labelStateModels = getLabelStatesModels(itemModel);
+      var style = node.getVisual("style");
+      setLabelStyle(label, labelStateModels, {
+        labelFetcher: {
+          getFormattedLabel: function(dataIndex, stateName, dataType, labelDimIndex, formatter, extendParams) {
+            return seriesModel.getFormattedLabel(
+              dataIndex,
+              stateName,
+              "node",
+              labelDimIndex,
+              // ensure edgeLabel formatter is provided
+              // to prevent the inheritance from `label.formatter` of the series
+              retrieve3(formatter, labelStateModels.normal && labelStateModels.normal.get("formatter"), itemModel.get("name")),
+              extendParams
+            );
+          }
+        },
+        labelDataIndex: node.dataIndex,
+        defaultText: node.dataIndex + "",
+        inheritColor: style.fill,
+        defaultOpacity: style.opacity,
+        defaultOutsidePosition: "startArc"
+      });
+      var labelPosition = normalLabelModel.get("position") || "outside";
+      var labelPadding = normalLabelModel.get("distance") || 0;
+      var r;
+      if (labelPosition === "outside") {
+        r = layout2.r + labelPadding;
+      } else {
+        r = (layout2.r + layout2.r0) / 2;
+      }
+      this.textConfig = {
+        inside: labelPosition !== "outside"
+      };
+      var align = labelPosition !== "outside" ? normalLabelModel.get("align") || "center" : dx > 0 ? "left" : "right";
+      var verticalAlign = labelPosition !== "outside" ? normalLabelModel.get("verticalAlign") || "middle" : dy > 0 ? "top" : "bottom";
+      label.attr({
+        x: dx * r + layout2.cx,
+        y: dy * r + layout2.cy,
+        rotation: 0,
+        style: {
+          align,
+          verticalAlign
+        }
+      });
+    };
+    return ChordPiece2;
+  }(Sector_default)
+);
+var ChordPiece_default = ChordPiece;
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/chord/ChordEdge.js
+var ChordEdge = (
+  /** @class */
+  function(_super) {
+    __extends(ChordEdge2, _super);
+    function ChordEdge2(nodeData, edgeData, edgeIdx, startAngle) {
+      var _this = _super.call(this) || this;
+      getECData(_this).dataType = "edge";
+      _this.updateData(nodeData, edgeData, edgeIdx, startAngle, true);
+      return _this;
+    }
+    ChordEdge2.prototype.buildPath = function(ctx, shape) {
+      ctx.moveTo(shape.s1[0], shape.s1[1]);
+      var ratio = 0.7;
+      var clockwise = shape.clockwise;
+      ctx.arc(shape.cx, shape.cy, shape.r, shape.sStartAngle, shape.sEndAngle, !clockwise);
+      ctx.bezierCurveTo((shape.cx - shape.s2[0]) * ratio + shape.s2[0], (shape.cy - shape.s2[1]) * ratio + shape.s2[1], (shape.cx - shape.t1[0]) * ratio + shape.t1[0], (shape.cy - shape.t1[1]) * ratio + shape.t1[1], shape.t1[0], shape.t1[1]);
+      ctx.arc(shape.cx, shape.cy, shape.r, shape.tStartAngle, shape.tEndAngle, !clockwise);
+      ctx.bezierCurveTo((shape.cx - shape.t2[0]) * ratio + shape.t2[0], (shape.cy - shape.t2[1]) * ratio + shape.t2[1], (shape.cx - shape.s1[0]) * ratio + shape.s1[0], (shape.cy - shape.s1[1]) * ratio + shape.s1[1], shape.s1[0], shape.s1[1]);
+      ctx.closePath();
+    };
+    ChordEdge2.prototype.updateData = function(nodeData, edgeData, edgeIdx, startAngle, firstCreate) {
+      var seriesModel = nodeData.hostModel;
+      var edge = edgeData.graph.getEdgeByIndex(edgeIdx);
+      var layout2 = edge.getLayout();
+      var itemModel = edge.node1.getModel();
+      var edgeModel = edgeData.getItemModel(edge.dataIndex);
+      var lineStyle = edgeModel.getModel("lineStyle");
+      var emphasisModel = edgeModel.getModel("emphasis");
+      var focus = emphasisModel.get("focus");
+      var shape = extend(getSectorCornerRadius(itemModel.getModel("itemStyle"), layout2, true), layout2);
+      var el = this;
+      if (isNaN(shape.sStartAngle) || isNaN(shape.tStartAngle)) {
+        el.setShape(shape);
+        return;
+      }
+      if (firstCreate) {
+        el.setShape(shape);
+        applyEdgeFill(el, edge, nodeData, lineStyle);
+      } else {
+        saveOldStyle(el);
+        applyEdgeFill(el, edge, nodeData, lineStyle);
+        updateProps(el, {
+          shape
+        }, seriesModel, edgeIdx);
+      }
+      toggleHoverEmphasis(this, focus === "adjacency" ? edge.getAdjacentDataIndices() : focus, emphasisModel.get("blurScope"), emphasisModel.get("disabled"));
+      setStatesStylesFromModel(el, edgeModel, "lineStyle");
+      edgeData.setItemGraphicEl(edge.dataIndex, el);
+    };
+    return ChordEdge2;
+  }(Path_default)
+);
+function applyEdgeFill(edgeShape, edge, nodeData, lineStyleModel) {
+  var node1 = edge.node1;
+  var node2 = edge.node2;
+  var edgeStyle = edgeShape.style;
+  edgeShape.setStyle(lineStyleModel.getLineStyle());
+  var color = lineStyleModel.get("color");
+  switch (color) {
+    case "source":
+      edgeStyle.fill = nodeData.getItemVisual(node1.dataIndex, "style").fill;
+      edgeStyle.decal = node1.getVisual("style").decal;
+      break;
+    case "target":
+      edgeStyle.fill = nodeData.getItemVisual(node2.dataIndex, "style").fill;
+      edgeStyle.decal = node2.getVisual("style").decal;
+      break;
+    case "gradient":
+      var sourceColor = nodeData.getItemVisual(node1.dataIndex, "style").fill;
+      var targetColor = nodeData.getItemVisual(node2.dataIndex, "style").fill;
+      if (isString(sourceColor) && isString(targetColor)) {
+        var shape = edgeShape.shape;
+        var sMidX = (shape.s1[0] + shape.s2[0]) / 2;
+        var sMidY = (shape.s1[1] + shape.s2[1]) / 2;
+        var tMidX = (shape.t1[0] + shape.t2[0]) / 2;
+        var tMidY = (shape.t1[1] + shape.t2[1]) / 2;
+        edgeStyle.fill = new LinearGradient_default(sMidX, sMidY, tMidX, tMidY, [{
+          offset: 0,
+          color: sourceColor
+        }, {
+          offset: 1,
+          color: targetColor
+        }], true);
+      }
+      break;
+  }
+}
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/chord/ChordView.js
+var RADIAN3 = Math.PI / 180;
+var ChordView = (
+  /** @class */
+  function(_super) {
+    __extends(ChordView2, _super);
+    function ChordView2() {
+      var _this = _super !== null && _super.apply(this, arguments) || this;
+      _this.type = ChordView2.type;
+      return _this;
+    }
+    ChordView2.prototype.init = function(ecModel, api) {
+    };
+    ChordView2.prototype.render = function(seriesModel, ecModel, api) {
+      var data = seriesModel.getData();
+      var oldData = this._data;
+      var group = this.group;
+      var startAngle = -seriesModel.get("startAngle") * RADIAN3;
+      data.diff(oldData).add(function(newIdx) {
+        var layout2 = data.getItemLayout(newIdx);
+        if (layout2) {
+          var el = new ChordPiece_default(data, newIdx, startAngle);
+          getECData(el).dataIndex = newIdx;
+          group.add(el);
+        }
+      }).update(function(newIdx, oldIdx) {
+        var el = oldData.getItemGraphicEl(oldIdx);
+        var layout2 = data.getItemLayout(newIdx);
+        if (!layout2) {
+          el && removeElementWithFadeOut(el, seriesModel, oldIdx);
+          return;
+        }
+        if (!el) {
+          el = new ChordPiece_default(data, newIdx, startAngle);
+        } else {
+          el.updateData(data, newIdx, startAngle);
+        }
+        group.add(el);
+      }).remove(function(oldIdx) {
+        var el = oldData.getItemGraphicEl(oldIdx);
+        el && removeElementWithFadeOut(el, seriesModel, oldIdx);
+      }).execute();
+      if (!oldData) {
+        var center2 = seriesModel.get("center");
+        this.group.scaleX = 0.01;
+        this.group.scaleY = 0.01;
+        this.group.originX = parsePercent2(center2[0], api.getWidth());
+        this.group.originY = parsePercent2(center2[1], api.getHeight());
+        initProps(this.group, {
+          scaleX: 1,
+          scaleY: 1
+        }, seriesModel);
+      }
+      this._data = data;
+      this.renderEdges(seriesModel, startAngle);
+    };
+    ChordView2.prototype.renderEdges = function(seriesModel, startAngle) {
+      var nodeData = seriesModel.getData();
+      var edgeData = seriesModel.getEdgeData();
+      var oldData = this._edgeData;
+      var group = this.group;
+      edgeData.diff(oldData).add(function(newIdx) {
+        var el = new ChordEdge(nodeData, edgeData, newIdx, startAngle);
+        getECData(el).dataIndex = newIdx;
+        group.add(el);
+      }).update(function(newIdx, oldIdx) {
+        var el = oldData.getItemGraphicEl(oldIdx);
+        el.updateData(nodeData, edgeData, newIdx, startAngle);
+        group.add(el);
+      }).remove(function(oldIdx) {
+        var el = oldData.getItemGraphicEl(oldIdx);
+        el && removeElementWithFadeOut(el, seriesModel, oldIdx);
+      }).execute();
+      this._edgeData = edgeData;
+    };
+    ChordView2.prototype.dispose = function() {
+    };
+    ChordView2.type = "chord";
+    return ChordView2;
+  }(Chart_default)
+);
+var ChordView_default = ChordView;
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/chord/ChordSeries.js
+var ChordSeriesModel = (
+  /** @class */
+  function(_super) {
+    __extends(ChordSeriesModel2, _super);
+    function ChordSeriesModel2() {
+      var _this = _super !== null && _super.apply(this, arguments) || this;
+      _this.type = ChordSeriesModel2.type;
+      return _this;
+    }
+    ChordSeriesModel2.prototype.init = function(option) {
+      _super.prototype.init.apply(this, arguments);
+      this.fillDataTextStyle(option.edges || option.links);
+      this.legendVisualProvider = new LegendVisualProvider_default(bind(this.getData, this), bind(this.getRawData, this));
+    };
+    ChordSeriesModel2.prototype.mergeOption = function(option) {
+      _super.prototype.mergeOption.apply(this, arguments);
+      this.fillDataTextStyle(option.edges || option.links);
+    };
+    ChordSeriesModel2.prototype.getInitialData = function(option, ecModel) {
+      var edges = option.edges || option.links || [];
+      var nodes = option.data || option.nodes || [];
+      if (nodes && edges) {
+        var graph = createGraphFromNodeEdge(nodes, edges, this, true, beforeLink);
+        return graph.data;
+      }
+      function beforeLink(nodeData, edgeData) {
+        var oldGetModel = Model_default.prototype.getModel;
+        function newGetModel(path, parentModel) {
+          var model = oldGetModel.call(this, path, parentModel);
+          model.resolveParentPath = resolveParentPath;
+          return model;
+        }
+        edgeData.wrapMethod("getItemModel", function(model) {
+          model.resolveParentPath = resolveParentPath;
+          model.getModel = newGetModel;
+          return model;
+        });
+        function resolveParentPath(pathArr) {
+          if (pathArr && (pathArr[0] === "label" || pathArr[1] === "label")) {
+            var newPathArr = pathArr.slice();
+            if (pathArr[0] === "label") {
+              newPathArr[0] = "edgeLabel";
+            } else if (pathArr[1] === "label") {
+              newPathArr[1] = "edgeLabel";
+            }
+            return newPathArr;
+          }
+          return pathArr;
+        }
+      }
+    };
+    ChordSeriesModel2.prototype.getGraph = function() {
+      return this.getData().graph;
+    };
+    ChordSeriesModel2.prototype.getEdgeData = function() {
+      return this.getGraph().edgeData;
+    };
+    ChordSeriesModel2.prototype.formatTooltip = function(dataIndex, multipleSeries, dataType) {
+      var params = this.getDataParams(dataIndex, dataType);
+      if (dataType === "edge") {
+        var nodeData = this.getData();
+        var edge = nodeData.graph.getEdgeByIndex(dataIndex);
+        var sourceName = nodeData.getName(edge.node1.dataIndex);
+        var targetName = nodeData.getName(edge.node2.dataIndex);
+        var nameArr = [];
+        sourceName != null && nameArr.push(sourceName);
+        targetName != null && nameArr.push(targetName);
+        return createTooltipMarkup("nameValue", {
+          name: nameArr.join(" > "),
+          value: params.value,
+          noValue: params.value == null
+        });
+      }
+      return createTooltipMarkup("nameValue", {
+        name: params.name,
+        value: params.value,
+        noValue: params.value == null
+      });
+    };
+    ChordSeriesModel2.prototype.getDataParams = function(dataIndex, dataType) {
+      var params = _super.prototype.getDataParams.call(this, dataIndex, dataType);
+      if (dataType === "node") {
+        var nodeData = this.getData();
+        var node = this.getGraph().getNodeByIndex(dataIndex);
+        if (params.name == null) {
+          params.name = nodeData.getName(dataIndex);
+        }
+        if (params.value == null) {
+          var nodeValue = node.getLayout().value;
+          params.value = nodeValue;
+        }
+      }
+      return params;
+    };
+    ChordSeriesModel2.type = "series.chord";
+    ChordSeriesModel2.defaultOption = {
+      // zlevel: 0,
+      z: 2,
+      coordinateSystem: "none",
+      legendHoverLink: true,
+      colorBy: "data",
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0,
+      width: null,
+      height: null,
+      center: ["50%", "50%"],
+      radius: ["70%", "80%"],
+      clockwise: true,
+      startAngle: 90,
+      endAngle: "auto",
+      minAngle: 0,
+      padAngle: 3,
+      itemStyle: {
+        borderRadius: [0, 0, 5, 5]
+      },
+      lineStyle: {
+        width: 0,
+        color: "source",
+        opacity: 0.2
+      },
+      label: {
+        show: true,
+        position: "outside",
+        distance: 5
+      },
+      emphasis: {
+        focus: "adjacency",
+        lineStyle: {
+          opacity: 0.5
+        }
+      }
+    };
+    return ChordSeriesModel2;
+  }(Series_default)
+);
+var ChordSeries_default = ChordSeriesModel;
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/chord/chordLayout.js
+var RADIAN4 = Math.PI / 180;
+function chordCircularLayout(ecModel, api) {
+  ecModel.eachSeriesByType("chord", function(seriesModel) {
+    chordLayout(seriesModel, api);
+  });
+}
+function chordLayout(seriesModel, api) {
+  var nodeData = seriesModel.getData();
+  var nodeGraph = nodeData.graph;
+  var edgeData = seriesModel.getEdgeData();
+  var edgeCount = edgeData.count();
+  if (!edgeCount) {
+    return;
+  }
+  var _a = getCircleLayout(seriesModel, api), cx = _a.cx, cy = _a.cy, r = _a.r, r0 = _a.r0;
+  var padAngle = Math.max((seriesModel.get("padAngle") || 0) * RADIAN4, 0);
+  var minAngle = Math.max((seriesModel.get("minAngle") || 0) * RADIAN4, 0);
+  var startAngle = -seriesModel.get("startAngle") * RADIAN4;
+  var endAngle = startAngle + Math.PI * 2;
+  var clockwise = seriesModel.get("clockwise");
+  var dir = clockwise ? 1 : -1;
+  var angles = [startAngle, endAngle];
+  normalizeArcAngles(angles, !clockwise);
+  var normalizedStartAngle = angles[0], normalizedEndAngle = angles[1];
+  var totalAngle = normalizedEndAngle - normalizedStartAngle;
+  var allZero = nodeData.getSum("value") === 0 && edgeData.getSum("value") === 0;
+  var nodeValues = [];
+  var renderedNodeCount = 0;
+  nodeGraph.eachEdge(function(edge) {
+    var value = allZero ? 1 : edge.getValue("value");
+    if (allZero && (value > 0 || minAngle)) {
+      renderedNodeCount += 2;
+    }
+    var node1Index = edge.node1.dataIndex;
+    var node2Index = edge.node2.dataIndex;
+    nodeValues[node1Index] = (nodeValues[node1Index] || 0) + value;
+    nodeValues[node2Index] = (nodeValues[node2Index] || 0) + value;
+  });
+  var nodeValueSum = 0;
+  nodeGraph.eachNode(function(node) {
+    var dataValue = node.getValue("value");
+    if (!isNaN(dataValue)) {
+      nodeValues[node.dataIndex] = Math.max(dataValue, nodeValues[node.dataIndex] || 0);
+    }
+    if (!allZero && (nodeValues[node.dataIndex] > 0 || minAngle)) {
+      renderedNodeCount++;
+    }
+    nodeValueSum += nodeValues[node.dataIndex] || 0;
+  });
+  if (renderedNodeCount === 0 || nodeValueSum === 0) {
+    return;
+  }
+  if (padAngle * renderedNodeCount >= Math.abs(totalAngle)) {
+    padAngle = Math.max(0, (Math.abs(totalAngle) - minAngle * renderedNodeCount) / renderedNodeCount);
+  }
+  if ((padAngle + minAngle) * renderedNodeCount >= Math.abs(totalAngle)) {
+    minAngle = (Math.abs(totalAngle) - padAngle * renderedNodeCount) / renderedNodeCount;
+  }
+  var unitAngle = (totalAngle - padAngle * renderedNodeCount * dir) / nodeValueSum;
+  var totalDeficit = 0;
+  var totalSurplus = 0;
+  var totalSurplusSpan = 0;
+  var minSurplus = Infinity;
+  nodeGraph.eachNode(function(node) {
+    var value = nodeValues[node.dataIndex] || 0;
+    var spanAngle = unitAngle * (nodeValueSum ? value : 1) * dir;
+    if (Math.abs(spanAngle) < minAngle) {
+      totalDeficit += minAngle - Math.abs(spanAngle);
+    } else {
+      minSurplus = Math.min(minSurplus, Math.abs(spanAngle) - minAngle);
+      totalSurplus += Math.abs(spanAngle) - minAngle;
+      totalSurplusSpan += Math.abs(spanAngle);
+    }
+    node.setLayout({
+      angle: spanAngle,
+      value
+    });
+  });
+  var surplusAsMuchAsPossible = false;
+  if (totalDeficit > totalSurplus) {
+    var scale_1 = totalDeficit / totalSurplus;
+    nodeGraph.eachNode(function(node) {
+      var spanAngle = node.getLayout().angle;
+      if (Math.abs(spanAngle) >= minAngle) {
+        node.setLayout({
+          angle: spanAngle * scale_1,
+          ratio: scale_1
+        }, true);
+      } else {
+        node.setLayout({
+          angle: minAngle,
+          ratio: minAngle === 0 ? 1 : spanAngle / minAngle
+        }, true);
+      }
+    });
+  } else {
+    nodeGraph.eachNode(function(node) {
+      if (surplusAsMuchAsPossible) {
+        return;
+      }
+      var spanAngle = node.getLayout().angle;
+      var borrowRatio = Math.min(spanAngle / totalSurplusSpan, 1);
+      var borrowAngle = borrowRatio * totalDeficit;
+      if (spanAngle - borrowAngle < minAngle) {
+        surplusAsMuchAsPossible = true;
+      }
+    });
+  }
+  var restDeficit = totalDeficit;
+  nodeGraph.eachNode(function(node) {
+    if (restDeficit <= 0) {
+      return;
+    }
+    var spanAngle = node.getLayout().angle;
+    if (spanAngle > minAngle && minAngle > 0) {
+      var borrowRatio = surplusAsMuchAsPossible ? 1 : Math.min(spanAngle / totalSurplusSpan, 1);
+      var maxBorrowAngle = spanAngle - minAngle;
+      var borrowAngle = Math.min(maxBorrowAngle, Math.min(restDeficit, totalDeficit * borrowRatio));
+      restDeficit -= borrowAngle;
+      node.setLayout({
+        angle: spanAngle - borrowAngle,
+        ratio: (spanAngle - borrowAngle) / spanAngle
+      }, true);
+    } else if (minAngle > 0) {
+      node.setLayout({
+        angle: minAngle,
+        ratio: spanAngle === 0 ? 1 : minAngle / spanAngle
+      }, true);
+    }
+  });
+  var angle = normalizedStartAngle;
+  var edgeAccAngle = [];
+  nodeGraph.eachNode(function(node) {
+    var spanAngle = Math.max(node.getLayout().angle, minAngle);
+    node.setLayout({
+      cx,
+      cy,
+      r0,
+      r,
+      startAngle: angle,
+      endAngle: angle + spanAngle * dir,
+      clockwise
+    }, true);
+    edgeAccAngle[node.dataIndex] = angle;
+    angle += (spanAngle + padAngle) * dir;
+  });
+  nodeGraph.eachEdge(function(edge) {
+    var value = allZero ? 1 : edge.getValue("value");
+    var spanAngle = unitAngle * (nodeValueSum ? value : 1) * dir;
+    var node1Index = edge.node1.dataIndex;
+    var sStartAngle = edgeAccAngle[node1Index] || 0;
+    var sSpan = Math.abs((edge.node1.getLayout().ratio || 1) * spanAngle);
+    var sEndAngle = sStartAngle + sSpan * dir;
+    var s1 = [cx + r0 * Math.cos(sStartAngle), cy + r0 * Math.sin(sStartAngle)];
+    var s2 = [cx + r0 * Math.cos(sEndAngle), cy + r0 * Math.sin(sEndAngle)];
+    var node2Index = edge.node2.dataIndex;
+    var tStartAngle = edgeAccAngle[node2Index] || 0;
+    var tSpan = Math.abs((edge.node2.getLayout().ratio || 1) * spanAngle);
+    var tEndAngle = tStartAngle + tSpan * dir;
+    var t1 = [cx + r0 * Math.cos(tStartAngle), cy + r0 * Math.sin(tStartAngle)];
+    var t2 = [cx + r0 * Math.cos(tEndAngle), cy + r0 * Math.sin(tEndAngle)];
+    edge.setLayout({
+      s1,
+      s2,
+      sStartAngle,
+      sEndAngle,
+      t1,
+      t2,
+      tStartAngle,
+      tEndAngle,
+      cx,
+      cy,
+      r: r0,
+      value,
+      clockwise
+    });
+    edgeAccAngle[node1Index] = sEndAngle;
+    edgeAccAngle[node2Index] = tEndAngle;
+  });
+}
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/chord/install.js
+function install14(registers) {
+  registers.registerChartView(ChordView_default);
+  registers.registerSeriesModel(ChordSeries_default);
+  registers.registerLayout(registers.PRIORITY.VISUAL.POST_CHART_LAYOUT, chordCircularLayout);
+  registers.registerProcessor(dataFilter("chord"));
+}
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/gauge/PointerPath.js
 var PointerShape = (
   /** @class */
   /* @__PURE__ */ function() {
@@ -10241,7 +10998,7 @@ var PointerPath = (
 );
 var PointerPath_default = PointerPath;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/gauge/GaugeView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/gauge/GaugeView.js
 function parsePosition(seriesModel, api) {
   var center2 = seriesModel.get("center");
   var width = api.getWidth();
@@ -10740,7 +11497,7 @@ var GaugeView = (
 );
 var GaugeView_default = GaugeView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/gauge/GaugeSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/gauge/GaugeSeries.js
 var GaugeSeriesModel = (
   /** @class */
   function(_super) {
@@ -10778,7 +11535,7 @@ var GaugeSeriesModel = (
         show: true,
         roundCap: false,
         lineStyle: {
-          color: [[1, "#E6EBF8"]],
+          color: [[1, tokens_default.color.neutral10]],
           width: 10
         }
       },
@@ -10800,7 +11557,7 @@ var GaugeSeriesModel = (
         distance: 10,
         // 属性lineStyle（详见lineStyle）控制线条样式
         lineStyle: {
-          color: "#63677A",
+          color: tokens_default.color.axisTick,
           width: 3,
           type: "solid"
         }
@@ -10816,7 +11573,7 @@ var GaugeSeriesModel = (
         distance: 10,
         // 属性lineStyle控制线条样式
         lineStyle: {
-          color: "#63677A",
+          color: tokens_default.color.axisTickMinor,
           width: 1,
           type: "solid"
         }
@@ -10825,7 +11582,7 @@ var GaugeSeriesModel = (
         show: true,
         distance: 15,
         // formatter: null,
-        color: "#464646",
+        color: tokens_default.color.axisLabel,
         fontSize: 12,
         rotate: 0
       },
@@ -10846,9 +11603,9 @@ var GaugeSeriesModel = (
         offsetCenter: [0, 0],
         keepAspect: false,
         itemStyle: {
-          color: "#fff",
+          color: tokens_default.color.neutral00,
           borderWidth: 0,
-          borderColor: "#5470c6"
+          borderColor: tokens_default.color.theme[0]
         }
       },
       title: {
@@ -10856,15 +11613,15 @@ var GaugeSeriesModel = (
         // x, y，单位px
         offsetCenter: [0, "20%"],
         // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-        color: "#464646",
+        color: tokens_default.color.secondary,
         fontSize: 16,
         valueAnimation: false
       },
       detail: {
         show: true,
-        backgroundColor: "rgba(0,0,0,0)",
+        backgroundColor: tokens_default.color.transparent,
         borderWidth: 0,
-        borderColor: "#ccc",
+        borderColor: tokens_default.color.neutral40,
         width: 100,
         height: null,
         padding: [5, 10],
@@ -10872,7 +11629,7 @@ var GaugeSeriesModel = (
         offsetCenter: [0, "40%"],
         // formatter: null,
         // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-        color: "#464646",
+        color: tokens_default.color.primary,
         fontSize: 30,
         fontWeight: "bold",
         lineHeight: 30,
@@ -10884,13 +11641,13 @@ var GaugeSeriesModel = (
 );
 var GaugeSeries_default = GaugeSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/gauge/install.js
-function install14(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/gauge/install.js
+function install15(registers) {
   registers.registerChartView(GaugeView_default);
   registers.registerSeriesModel(GaugeSeries_default);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/funnel/FunnelView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/funnel/FunnelView.js
 var opacityAccessPath = ["itemStyle", "opacity"];
 var FunnelPiece = (
   /** @class */
@@ -10970,12 +11727,14 @@ var FunnelPiece = (
           }
         }
       );
+      var labelModel = itemModel.getModel("label");
+      var labelColor = labelModel.get("color");
+      var overrideColor = labelColor === "inherit" ? visualColor : null;
       polygon.setTextConfig({
         local: true,
         inside: !!labelLayout2.inside,
-        insideStroke: visualColor,
-        // insideFill: 'auto',
-        outsideFill: visualColor
+        insideStroke: overrideColor,
+        outsideFill: overrideColor
       });
       var linePoints = labelLayout2.linePoints;
       labelLine.setShape({
@@ -11045,7 +11804,7 @@ var FunnelView = (
 );
 var FunnelView_default = FunnelView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/funnel/FunnelSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/funnel/FunnelSeries.js
 var FunnelSeriesModel = (
   /** @class */
   function(_super) {
@@ -11084,6 +11843,7 @@ var FunnelSeriesModel = (
     };
     FunnelSeriesModel2.type = "series.funnel";
     FunnelSeriesModel2.defaultOption = {
+      coordinateSystemUsage: "box",
       // zlevel: 0,                  // 一级层叠
       z: 2,
       legendHoverLink: true,
@@ -11091,7 +11851,7 @@ var FunnelSeriesModel = (
       left: 80,
       top: 60,
       right: 80,
-      bottom: 60,
+      bottom: 65,
       // width: {totalWidth} - left - right,
       // height: {totalHeight} - top - bottom,
       // 默认取数据最小最大值
@@ -11118,7 +11878,7 @@ var FunnelSeriesModel = (
       },
       itemStyle: {
         // color: 各异,
-        borderColor: "#fff",
+        borderColor: tokens_default.color.neutral00,
         borderWidth: 1
       },
       emphasis: {
@@ -11128,7 +11888,7 @@ var FunnelSeriesModel = (
       },
       select: {
         itemStyle: {
-          borderColor: "#212121"
+          borderColor: tokens_default.color.primary
         }
       }
     };
@@ -11137,13 +11897,7 @@ var FunnelSeriesModel = (
 );
 var FunnelSeries_default = FunnelSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/funnel/funnelLayout.js
-function getViewRect4(seriesModel, api) {
-  return getLayoutRect(seriesModel.getBoxLayoutParams(), {
-    width: api.getWidth(),
-    height: api.getHeight()
-  });
-}
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/funnel/funnelLayout.js
 function getSortedIndices(data, sort3) {
   var valueDim = data.mapDimension("value");
   var valueArr = data.mapArray(valueDim, function(val) {
@@ -11318,7 +12072,8 @@ function funnelLayout(ecModel, api) {
     var data = seriesModel.getData();
     var valueDim = data.mapDimension("value");
     var sort3 = seriesModel.get("sort");
-    var viewRect = getViewRect4(seriesModel, api);
+    var layoutRef = createBoxLayoutReference(seriesModel, api);
+    var viewRect = getLayoutRect(seriesModel.getBoxLayoutParams(), layoutRef.refContainer);
     var orient = seriesModel.get("orient");
     var viewWidth = viewRect.width;
     var viewHeight = viewRect.height;
@@ -11425,15 +12180,15 @@ function funnelLayout(ecModel, api) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/funnel/install.js
-function install15(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/funnel/install.js
+function install16(registers) {
   registers.registerChartView(FunnelView_default);
   registers.registerSeriesModel(FunnelSeries_default);
   registers.registerLayout(funnelLayout);
   registers.registerProcessor(dataFilter("funnel"));
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/parallel/ParallelView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/parallel/ParallelView.js
 var DEFAULT_SMOOTH = 0.3;
 var ParallelView = (
   /** @class */
@@ -11583,7 +12338,7 @@ function isEmptyValue(val, axisType) {
 }
 var ParallelView_default = ParallelView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/parallel/ParallelSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/parallel/ParallelSeries.js
 var ParallelSeriesModel = (
   /** @class */
   function(_super) {
@@ -11657,7 +12412,7 @@ function convertDimNameToNumber(dimName) {
 }
 var ParallelSeries_default = ParallelSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/parallel/parallelVisual.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/parallel/parallelVisual.js
 var opacityAccessPath2 = ["lineStyle", "opacity"];
 var parallelVisual = {
   seriesType: "parallel",
@@ -11685,15 +12440,15 @@ var parallelVisual = {
 };
 var parallelVisual_default = parallelVisual;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/parallel/install.js
-function install16(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/parallel/install.js
+function install17(registers) {
   use(install4);
   registers.registerChartView(ParallelView_default);
   registers.registerSeriesModel(ParallelSeries_default);
   registers.registerVisual(registers.PRIORITY.VISUAL.BRUSH, parallelVisual_default);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/sankey/SankeyView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/sankey/SankeyView.js
 var SankeyPathShape = (
   /** @class */
   /* @__PURE__ */ function() {
@@ -11750,13 +12505,21 @@ var SankeyView = (
     function SankeyView2() {
       var _this = _super !== null && _super.apply(this, arguments) || this;
       _this.type = SankeyView2.type;
+      _this._mainGroup = new Group_default();
       _this._focusAdjacencyDisabled = false;
       return _this;
     }
+    SankeyView2.prototype.init = function(ecModel, api) {
+      this._controller = new RoamController_default(api.getZr());
+      this._controllerHost = {
+        target: this.group
+      };
+      this.group.add(this._mainGroup);
+    };
     SankeyView2.prototype.render = function(seriesModel, ecModel, api) {
       var sankeyView = this;
       var graph = seriesModel.getGraph();
-      var group = this.group;
+      var mainGroup = this._mainGroup;
       var layoutInfo = seriesModel.layoutInfo;
       var width = layoutInfo.width;
       var height = layoutInfo.height;
@@ -11764,9 +12527,11 @@ var SankeyView = (
       var edgeData = seriesModel.getData("edge");
       var orient = seriesModel.get("orient");
       this._model = seriesModel;
-      group.removeAll();
-      group.x = layoutInfo.x;
-      group.y = layoutInfo.y;
+      mainGroup.removeAll();
+      mainGroup.x = layoutInfo.x;
+      mainGroup.y = layoutInfo.y;
+      this._updateViewCoordSys(seriesModel, api);
+      updateController(seriesModel, api, mainGroup, this._controller, this._controllerHost, null);
       graph.eachEdge(function(edge) {
         var curve = new SankeyPath();
         var ecData = getECData(curve);
@@ -11855,7 +12620,7 @@ var SankeyView = (
           applyCurveStyle(style, orient, edge);
           return style;
         });
-        group.add(curve);
+        mainGroup.add(curve);
         edgeData.setItemGraphicEl(edge.dataIndex, curve);
         var focus = emphasisModel.get("focus");
         toggleHoverEmphasis(curve, focus === "adjacency" ? edge.getAdjacentDataIndices() : focus === "trajectory" ? edge.getTrajectoryDataIndices() : focus, emphasisModel.get("blurScope"), emphasisModel.get("disabled"));
@@ -11891,7 +12656,7 @@ var SankeyView = (
         rect.setStyle("fill", node.getVisual("color"));
         rect.setStyle("decal", node.getVisual("style").decal);
         setStatesStylesFromModel(rect, itemModel);
-        group.add(rect);
+        mainGroup.add(rect);
         nodeData.setItemGraphicEl(node.dataIndex, rect);
         getECData(rect).dataType = "node";
         var focus = emphasisModel.get("focus");
@@ -11921,13 +12686,34 @@ var SankeyView = (
         }
       });
       if (!this._data && seriesModel.isAnimationEnabled()) {
-        group.setClipPath(createGridClipShape2(group.getBoundingRect(), seriesModel, function() {
-          group.removeClipPath();
+        mainGroup.setClipPath(createGridClipShape2(mainGroup.getBoundingRect(), seriesModel, function() {
+          mainGroup.removeClipPath();
         }));
       }
       this._data = seriesModel.getData();
     };
     SankeyView2.prototype.dispose = function() {
+      this._controller && this._controller.dispose();
+      this._controllerHost = null;
+    };
+    SankeyView2.prototype._updateViewCoordSys = function(seriesModel, api) {
+      var layoutInfo = seriesModel.layoutInfo;
+      var width = layoutInfo.width;
+      var height = layoutInfo.height;
+      var viewCoordSys = seriesModel.coordinateSystem = new View_default(null, {
+        api,
+        ecModel: seriesModel.ecModel
+      });
+      viewCoordSys.zoomLimit = seriesModel.get("scaleLimit");
+      viewCoordSys.setBoundingRect(0, 0, width, height);
+      viewCoordSys.setCenter(seriesModel.get("center"));
+      viewCoordSys.setZoom(seriesModel.get("zoom"));
+      this._controllerHost.target.attr({
+        x: viewCoordSys.x,
+        y: viewCoordSys.y,
+        scaleX: viewCoordSys.scaleX,
+        scaleY: viewCoordSys.scaleY
+      });
     };
     SankeyView2.type = "sankey";
     return SankeyView2;
@@ -11975,7 +12761,7 @@ function createGridClipShape2(rect, seriesModel, cb) {
 }
 var SankeyView_default = SankeyView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/sankey/SankeySeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/sankey/SankeySeries.js
 var SankeySeriesModel = (
   /** @class */
   function(_super) {
@@ -12036,6 +12822,12 @@ var SankeySeriesModel = (
       dataItem.localX = localPosition[0];
       dataItem.localY = localPosition[1];
     };
+    SankeySeriesModel2.prototype.setCenter = function(center2) {
+      this.option.center = center2;
+    };
+    SankeySeriesModel2.prototype.setZoom = function(zoom) {
+      this.option.zoom = zoom;
+    };
     SankeySeriesModel2.prototype.getGraph = function() {
       return this.getData().graph;
     };
@@ -12079,10 +12871,13 @@ var SankeySeriesModel = (
       return params;
     };
     SankeySeriesModel2.type = "series.sankey";
+    SankeySeriesModel2.layoutMode = "box";
     SankeySeriesModel2.defaultOption = {
       // zlevel: 0,
       z: 2,
-      coordinateSystem: "view",
+      // `coordinateSystem` can be declared as 'matrix', 'calendar',
+      //  which provides box layout container.
+      coordinateSystemUsage: "box",
       left: "5%",
       top: "5%",
       right: "20%",
@@ -12092,6 +12887,11 @@ var SankeySeriesModel = (
       nodeGap: 8,
       draggable: true,
       layoutIterations: 32,
+      // true | false | 'move' | 'scale', see module:component/helper/RoamController.
+      roam: false,
+      roamTrigger: "global",
+      center: null,
+      zoom: 1,
       label: {
         show: true,
         position: "right",
@@ -12104,7 +12904,7 @@ var SankeySeriesModel = (
       levels: [],
       nodeAlign: "justify",
       lineStyle: {
-        color: "#314656",
+        color: tokens_default.color.neutral50,
         opacity: 0.2,
         curveness: 0.5
       },
@@ -12118,7 +12918,7 @@ var SankeySeriesModel = (
       },
       select: {
         itemStyle: {
-          borderColor: "#212121"
+          borderColor: tokens_default.color.primary
         }
       },
       animationEasing: "linear",
@@ -12129,12 +12929,13 @@ var SankeySeriesModel = (
 );
 var SankeySeries_default = SankeySeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/sankey/sankeyLayout.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/sankey/sankeyLayout.js
 function sankeyLayout(ecModel, api) {
   ecModel.eachSeriesByType("sankey", function(seriesModel) {
     var nodeWidth = seriesModel.get("nodeWidth");
     var nodeGap = seriesModel.get("nodeGap");
-    var layoutInfo = getViewRect5(seriesModel, api);
+    var refContainer = createBoxLayoutReference(seriesModel, api).refContainer;
+    var layoutInfo = getLayoutRect(seriesModel.getBoxLayoutParams(), refContainer);
     seriesModel.layoutInfo = layoutInfo;
     var width = layoutInfo.width;
     var height = layoutInfo.height;
@@ -12149,12 +12950,6 @@ function sankeyLayout(ecModel, api) {
     var orient = seriesModel.get("orient");
     var nodeAlign = seriesModel.get("nodeAlign");
     layoutSankey(nodes, edges, nodeWidth, nodeGap, width, height, iterations, orient, nodeAlign);
-  });
-}
-function getViewRect5(seriesModel, api) {
-  return getLayoutRect(seriesModel.getBoxLayoutParams(), {
-    width: api.getWidth(),
-    height: api.getHeight()
   });
 }
 function layoutSankey(nodes, edges, nodeWidth, nodeGap, width, height, iterations, orient, nodeAlign) {
@@ -12511,7 +13306,7 @@ function computeEdgeDepths(nodes, orient) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/sankey/sankeyVisual.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/sankey/sankeyVisual.js
 function sankeyVisual(ecModel) {
   ecModel.eachSeriesByType("sankey", function(seriesModel) {
     var graph = seriesModel.getGraph();
@@ -12560,8 +13355,8 @@ function sankeyVisual(ecModel) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/sankey/install.js
-function install17(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/sankey/install.js
+function install18(registers) {
   registers.registerChartView(SankeyView_default);
   registers.registerSeriesModel(SankeySeries_default);
   registers.registerLayout(sankeyLayout);
@@ -12580,9 +13375,25 @@ function install17(registers) {
       seriesModel.setNodePosition(payload.dataIndex, [payload.localX, payload.localY]);
     });
   });
+  registers.registerAction({
+    type: "sankeyRoam",
+    event: "sankeyRoam",
+    update: "none"
+  }, function(payload, ecModel, api) {
+    ecModel.eachComponent({
+      mainType: "series",
+      subType: "sankey",
+      query: payload
+    }, function(seriesModel) {
+      var coordSys = seriesModel.coordinateSystem;
+      var res = updateCenterAndZoomInAction(coordSys, payload, seriesModel.get("scaleLimit"));
+      seriesModel.setCenter(res.center);
+      seriesModel.setZoom(res.zoom);
+    });
+  });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/helper/whiskerBoxCommon.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/whiskerBoxCommon.js
 var WhiskerBoxCommonMixin = (
   /** @class */
   function() {
@@ -12665,7 +13476,7 @@ var WhiskerBoxCommonMixin = (
   }()
 );
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/boxplot/BoxplotSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/boxplot/BoxplotSeries.js
 var BoxplotSeriesModel = (
   /** @class */
   function(_super) {
@@ -12702,7 +13513,7 @@ var BoxplotSeriesModel = (
       layout: null,
       boxWidth: [7, 50],
       itemStyle: {
-        color: "#fff",
+        color: tokens_default.color.neutral00,
         borderWidth: 1
       },
       emphasis: {
@@ -12712,7 +13523,7 @@ var BoxplotSeriesModel = (
           shadowBlur: 5,
           shadowOffsetX: 1,
           shadowOffsetY: 1,
-          shadowColor: "rgba(0,0,0,0.2)"
+          shadowColor: tokens_default.color.shadow
         }
       },
       animationDuration: 800
@@ -12723,7 +13534,7 @@ var BoxplotSeriesModel = (
 mixin(BoxplotSeriesModel, WhiskerBoxCommonMixin, true);
 var BoxplotSeries_default = BoxplotSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/boxplot/BoxplotView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/boxplot/BoxplotView.js
 var BoxplotView = (
   /** @class */
   function(_super) {
@@ -12854,7 +13665,7 @@ function transInit(points, dim, itemLayout) {
 }
 var BoxplotView_default = BoxplotView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/boxplot/boxplotLayout.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/boxplot/boxplotLayout.js
 var each3 = each;
 function boxplotLayout(ecModel) {
   var groupResult = groupSeriesByAxis(ecModel);
@@ -12983,7 +13794,7 @@ function layoutSingleSeries(seriesModel, offset, boxWidth) {
   }
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/boxplot/prepareBoxplotData.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/boxplot/prepareBoxplotData.js
 function prepareBoxplotData(rawData, opt) {
   opt = opt || {};
   var boxData = [];
@@ -13019,7 +13830,7 @@ function prepareBoxplotData(rawData, opt) {
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/boxplot/boxplotTransform.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/boxplot/boxplotTransform.js
 var boxplotTransform = {
   type: "echarts:boxplot",
   transform: function transform(params) {
@@ -13041,15 +13852,15 @@ var boxplotTransform = {
   }
 };
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/boxplot/install.js
-function install18(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/boxplot/install.js
+function install19(registers) {
   registers.registerSeriesModel(BoxplotSeries_default);
   registers.registerChartView(BoxplotView_default);
   registers.registerLayout(boxplotLayout);
   registers.registerTransform(boxplotTransform);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/candlestick/candlestickVisual.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/candlestick/candlestickVisual.js
 var positiveBorderColorQuery = ["itemStyle", "borderColor"];
 var negativeBorderColorQuery = ["itemStyle", "borderColor0"];
 var dojiBorderColorQuery = ["itemStyle", "borderColorDoji"];
@@ -13089,7 +13900,7 @@ var candlestickVisual = {
 };
 var candlestickVisual_default = candlestickVisual;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/candlestick/CandlestickView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/candlestick/CandlestickView.js
 var SKIP_PROPS = ["color", "borderColor"];
 var CandlestickView = (
   /** @class */
@@ -13384,7 +14195,7 @@ function setLargeStyle(sign, el, seriesModel, data) {
 }
 var CandlestickView_default = CandlestickView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/candlestick/CandlestickSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/candlestick/CandlestickSeries.js
 var CandlestickSeriesModel = (
   /** @class */
   function(_super) {
@@ -13457,7 +14268,7 @@ var CandlestickSeriesModel = (
 mixin(CandlestickSeriesModel, WhiskerBoxCommonMixin, true);
 var CandlestickSeries_default = CandlestickSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/candlestick/preprocessor.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/candlestick/preprocessor.js
 function candlestickPreprocessor(option) {
   if (!option || !isArray(option.series)) {
     return;
@@ -13469,7 +14280,7 @@ function candlestickPreprocessor(option) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/candlestick/candlestickLayout.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/candlestick/candlestickLayout.js
 var candlestickLayout = {
   seriesType: "candlestick",
   plan: createRenderPlanner(),
@@ -13611,8 +14422,8 @@ function calculateCandleWidth(seriesModel, data) {
 }
 var candlestickLayout_default = candlestickLayout;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/candlestick/install.js
-function install19(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/candlestick/install.js
+function install20(registers) {
   registers.registerChartView(CandlestickView_default);
   registers.registerSeriesModel(CandlestickSeries_default);
   registers.registerPreprocessor(candlestickPreprocessor);
@@ -13620,7 +14431,7 @@ function install19(registers) {
   registers.registerLayout(candlestickLayout_default);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/helper/EffectSymbol.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/EffectSymbol.js
 function updateRipplePath(rippleGroup, effectCfg) {
   var color = effectCfg.rippleEffectColor || effectCfg.color;
   rippleGroup.eachChild(function(ripplePath) {
@@ -13767,7 +14578,7 @@ var EffectSymbol = (
 );
 var EffectSymbol_default = EffectSymbol;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/effectScatter/EffectScatterView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/effectScatter/EffectScatterView.js
 var EffectScatterView = (
   /** @class */
   function(_super) {
@@ -13822,7 +14633,7 @@ var EffectScatterView = (
 );
 var EffectScatterView_default = EffectScatterView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/effectScatter/EffectScatterSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/effectScatter/EffectScatterSeries.js
 var EffectScatterSeriesModel = (
   /** @class */
   function(_super) {
@@ -13886,14 +14697,14 @@ var EffectScatterSeriesModel = (
 );
 var EffectScatterSeries_default = EffectScatterSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/effectScatter/install.js
-function install20(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/effectScatter/install.js
+function install21(registers) {
   registers.registerChartView(EffectScatterView_default);
   registers.registerSeriesModel(EffectScatterSeries_default);
   registers.registerLayout(pointsLayout("effectScatter"));
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/helper/EffectLine.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/EffectLine.js
 var EffectLine = (
   /** @class */
   function(_super) {
@@ -14043,7 +14854,7 @@ var EffectLine = (
 );
 var EffectLine_default = EffectLine;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/helper/Polyline.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/Polyline.js
 var Polyline = (
   /** @class */
   function(_super) {
@@ -14108,7 +14919,7 @@ var Polyline = (
 );
 var Polyline_default2 = Polyline;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/helper/EffectPolyline.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/EffectPolyline.js
 var EffectPolyline = (
   /** @class */
   function(_super) {
@@ -14192,7 +15003,7 @@ var EffectPolyline = (
 );
 var EffectPolyline_default = EffectPolyline;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/helper/LargeLineDraw.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/LargeLineDraw.js
 var LargeLinesPathShape = (
   /** @class */
   /* @__PURE__ */ function() {
@@ -14220,7 +15031,7 @@ var LargeLinesPath = (
     };
     LargeLinesPath2.prototype.getDefaultStyle = function() {
       return {
-        stroke: "#000",
+        stroke: tokens_default.color.neutral99,
         fill: null
       };
     };
@@ -14435,7 +15246,7 @@ var LargeLineDraw = (
 );
 var LargeLineDraw_default = LargeLineDraw;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/lines/linesLayout.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/lines/linesLayout.js
 var linesLayout = {
   seriesType: "lines",
   plan: createRenderPlanner(),
@@ -14504,7 +15315,7 @@ var linesLayout = {
 };
 var linesLayout_default = linesLayout;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/lines/LinesView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/lines/LinesView.js
 var LinesView = (
   /** @class */
   function(_super) {
@@ -14630,7 +15441,7 @@ var LinesView = (
 );
 var LinesView_default = LinesView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/lines/LinesSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/lines/LinesSeries.js
 var Uint32Arr = typeof Uint32Array === "undefined" ? Array : Uint32Array;
 var Float64Arr = typeof Float64Array === "undefined" ? Array : Float64Array;
 function compatEc2(seriesOpt) {
@@ -14883,7 +15694,7 @@ var LinesSeriesModel = (
 );
 var LinesSeries_default = LinesSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/lines/linesVisual.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/lines/linesVisual.js
 function normalize3(a) {
   if (!(a instanceof Array)) {
     a = [a, a];
@@ -14916,15 +15727,15 @@ var linesVisual = {
 };
 var linesVisual_default = linesVisual;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/lines/install.js
-function install21(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/lines/install.js
+function install22(registers) {
   registers.registerChartView(LinesView_default);
   registers.registerSeriesModel(LinesSeries_default);
   registers.registerLayout(linesLayout_default);
   registers.registerVisual(linesVisual_default);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/heatmap/HeatmapLayer.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/heatmap/HeatmapLayer.js
 var GRADIENT_LEVELS = 256;
 var HeatmapLayer = (
   /** @class */
@@ -14997,7 +15808,7 @@ var HeatmapLayer = (
       ctx.clearRect(0, 0, d, d);
       ctx.shadowOffsetX = d;
       ctx.shadowBlur = this.blurSize;
-      ctx.shadowColor = "#000";
+      ctx.shadowColor = tokens_default.color.neutral99;
       ctx.beginPath();
       ctx.arc(-r, r, this.pointSize, 0, Math.PI * 2, true);
       ctx.closePath();
@@ -15023,7 +15834,7 @@ var HeatmapLayer = (
 );
 var HeatmapLayer_default = HeatmapLayer;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/heatmap/HeatmapView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/heatmap/HeatmapView.js
 function getIsInPiecewiseRange(dataExtent, pieceList, selected) {
   var dataSpan = dataExtent[1] - dataExtent[0];
   pieceList = map(pieceList, function(piece) {
@@ -15091,8 +15902,8 @@ var HeatmapView = (
       this._progressiveEls = null;
       this.group.removeAll();
       var coordSys = seriesModel.coordinateSystem;
-      if (coordSys.type === "cartesian2d" || coordSys.type === "calendar") {
-        this._renderOnCartesianAndCalendar(seriesModel, api, 0, seriesModel.getData().count());
+      if (coordSys.type === "cartesian2d" || coordSys.type === "calendar" || coordSys.type === "matrix") {
+        this._renderOnGridLike(seriesModel, api, 0, seriesModel.getData().count());
       } else if (isGeoCoordSys(coordSys)) {
         this._renderOnGeo(coordSys, seriesModel, visualMapOfThisSeries, api);
       }
@@ -15107,16 +15918,17 @@ var HeatmapView = (
           this.render(seriesModel, ecModel, api);
         } else {
           this._progressiveEls = [];
-          this._renderOnCartesianAndCalendar(seriesModel, api, params.start, params.end, true);
+          this._renderOnGridLike(seriesModel, api, params.start, params.end, true);
         }
       }
     };
     HeatmapView2.prototype.eachRendered = function(cb) {
       traverseElements(this._progressiveEls || this.group, cb);
     };
-    HeatmapView2.prototype._renderOnCartesianAndCalendar = function(seriesModel, api, start, end, incremental) {
+    HeatmapView2.prototype._renderOnGridLike = function(seriesModel, api, start, end, incremental) {
       var coordSys = seriesModel.coordinateSystem;
       var isCartesian2d = isCoordinateSystemType(coordSys, "cartesian2d");
+      var isMatrix = isCoordinateSystemType(coordSys, "matrix");
       var width;
       var height;
       var xAxisExtent;
@@ -15148,7 +15960,7 @@ var HeatmapView = (
       var focus = emphasisModel.get("focus");
       var blurScope = emphasisModel.get("blurScope");
       var emphasisDisabled = emphasisModel.get("disabled");
-      var dataDims = isCartesian2d ? [data.mapDimension("x"), data.mapDimension("y"), data.mapDimension("value")] : [data.mapDimension("time"), data.mapDimension("value")];
+      var dataDims = isCartesian2d || isMatrix ? [data.mapDimension("x"), data.mapDimension("y"), data.mapDimension("value")] : [data.mapDimension("time"), data.mapDimension("value")];
       for (var idx = start; idx < end; idx++) {
         var rect = void 0;
         var style = data.getItemVisual(idx, "style");
@@ -15168,13 +15980,28 @@ var HeatmapView = (
             },
             style
           });
-        } else {
-          if (isNaN(data.get(dataDims[1], idx))) {
+        } else if (isMatrix) {
+          var shape = coordSys.dataToLayout([data.get(dataDims[0], idx), data.get(dataDims[1], idx)]).rect;
+          if (eqNaN(shape.x)) {
             continue;
           }
           rect = new Rect_default({
             z2: 1,
-            shape: coordSys.dataToRect([data.get(dataDims[0], idx)]).contentShape,
+            shape,
+            style
+          });
+        } else {
+          if (isNaN(data.get(dataDims[1], idx))) {
+            continue;
+          }
+          var layout2 = coordSys.dataToLayout([data.get(dataDims[0], idx)]);
+          var shape = layout2.contentRect || layout2.rect;
+          if (eqNaN(shape.x) || eqNaN(shape.y)) {
+            continue;
+          }
+          rect = new Rect_default({
+            z2: 1,
+            shape,
             style
           });
         }
@@ -15267,7 +16094,7 @@ var HeatmapView = (
 );
 var HeatmapView_default = HeatmapView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/heatmap/HeatmapSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/heatmap/HeatmapSeries.js
 var HeatmapSeriesModel = (
   /** @class */
   function(_super) {
@@ -15289,7 +16116,7 @@ var HeatmapSeriesModel = (
       }
     };
     HeatmapSeriesModel2.type = "series.heatmap";
-    HeatmapSeriesModel2.dependencies = ["grid", "geo", "calendar"];
+    HeatmapSeriesModel2.dependencies = ["grid", "geo", "calendar", "matrix"];
     HeatmapSeriesModel2.defaultOption = {
       coordinateSystem: "cartesian2d",
       // zlevel: 0,
@@ -15305,7 +16132,7 @@ var HeatmapSeriesModel = (
       minOpacity: 0,
       select: {
         itemStyle: {
-          borderColor: "#212121"
+          borderColor: tokens_default.color.primary
         }
       }
     };
@@ -15314,13 +16141,13 @@ var HeatmapSeriesModel = (
 );
 var HeatmapSeries_default = HeatmapSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/heatmap/install.js
-function install22(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/heatmap/install.js
+function install23(registers) {
   registers.registerChartView(HeatmapView_default);
   registers.registerSeriesModel(HeatmapSeries_default);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/bar/PictorialBarView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/bar/PictorialBarView.js
 var BAR_BORDER_WIDTH_QUERY = ["itemStyle", "borderWidth"];
 var LAYOUT_ATTRS = [{
   xy: "x",
@@ -15861,7 +16688,7 @@ function toIntTimes(times) {
 }
 var PictorialBarView_default = PictorialBarView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/bar/PictorialBarSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/bar/PictorialBarSeries.js
 var PictorialBarSeriesModel = (
   /** @class */
   function(_super) {
@@ -15905,7 +16732,7 @@ var PictorialBarSeriesModel = (
       },
       select: {
         itemStyle: {
-          borderColor: "#212121"
+          borderColor: tokens_default.color.primary
         }
       }
     });
@@ -15914,15 +16741,15 @@ var PictorialBarSeriesModel = (
 );
 var PictorialBarSeries_default = PictorialBarSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/bar/installPictorialBar.js
-function install23(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/bar/installPictorialBar.js
+function install24(registers) {
   registers.registerChartView(PictorialBarView_default);
   registers.registerSeriesModel(PictorialBarSeries_default);
   registers.registerLayout(registers.PRIORITY.VISUAL.LAYOUT, curry(layout, "pictorialBar"));
   registers.registerLayout(registers.PRIORITY.VISUAL.PROGRESSIVE_LAYOUT, createProgressiveLayout("pictorialBar"));
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/themeRiver/ThemeRiverView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/themeRiver/ThemeRiverView.js
 var ThemeRiverView = (
   /** @class */
   function(_super) {
@@ -16057,7 +16884,7 @@ function createGridClipShape3(rect, seriesModel, cb) {
 }
 var ThemeRiverView_default = ThemeRiverView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/themeRiver/ThemeRiverSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/themeRiver/ThemeRiverSeries.js
 var DATA_NAME_INDEX = 2;
 var ThemeRiverSeriesModel = (
   /** @class */
@@ -16234,7 +17061,7 @@ var ThemeRiverSeriesModel = (
 );
 var ThemeRiverSeries_default = ThemeRiverSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/themeRiver/themeRiverLayout.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/themeRiver/themeRiverLayout.js
 function themeRiverLayout(ecModel, api) {
   ecModel.eachSeriesByType("themeRiver", function(seriesModel) {
     var data = seriesModel.getData();
@@ -16331,15 +17158,15 @@ function computeBaseline(data) {
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/themeRiver/install.js
-function install24(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/themeRiver/install.js
+function install25(registers) {
   registers.registerChartView(ThemeRiverView_default);
   registers.registerSeriesModel(ThemeRiverSeries_default);
   registers.registerLayout(themeRiverLayout);
   registers.registerProcessor(dataFilter("themeRiver"));
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/sunburst/SunburstPiece.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/sunburst/SunburstPiece.js
 var DEFAULT_SECTOR_Z = 2;
 var DEFAULT_TEXT_Z = 4;
 var SunburstPiece = (
@@ -16507,7 +17334,7 @@ var SunburstPiece = (
 );
 var SunburstPiece_default = SunburstPiece;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/sunburst/sunburstAction.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/sunburst/sunburstAction.js
 var ROOT_TO_NODE_ACTION = "sunburstRootToNode";
 var HIGHLIGHT_ACTION = "sunburstHighlight";
 var UNHIGHLIGHT_ACTION = "sunburstUnhighlight";
@@ -16569,7 +17396,7 @@ function installSunburstAction(registers) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/sunburst/SunburstView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/sunburst/SunburstView.js
 var SunburstView = (
   /** @class */
   function(_super) {
@@ -16708,7 +17535,7 @@ var SunburstView = (
 );
 var SunburstView_default = SunburstView;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/sunburst/SunburstSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/sunburst/SunburstSeries.js
 var SunburstSeriesModel = (
   /** @class */
   function(_super) {
@@ -16857,8 +17684,8 @@ function completeTreeValue2(dataNode) {
 }
 var SunburstSeries_default = SunburstSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/sunburst/sunburstLayout.js
-var RADIAN3 = Math.PI / 180;
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/sunburst/sunburstLayout.js
+var RADIAN5 = Math.PI / 180;
 function sunburstLayout(seriesType, ecModel, api) {
   ecModel.eachSeriesByType(seriesType, function(seriesModel) {
     var center2 = seriesModel.get("center");
@@ -16876,8 +17703,8 @@ function sunburstLayout(seriesType, ecModel, api) {
     var cy = parsePercent2(center2[1], height);
     var r0 = parsePercent2(radius[0], size / 2);
     var r = parsePercent2(radius[1], size / 2);
-    var startAngle = -seriesModel.get("startAngle") * RADIAN3;
-    var minAngle = seriesModel.get("minAngle") * RADIAN3;
+    var startAngle = -seriesModel.get("startAngle") * RADIAN5;
+    var minAngle = seriesModel.get("minAngle") * RADIAN5;
     var virtualRoot = seriesModel.getData().tree.root;
     var treeRoot = seriesModel.getViewRoot();
     var rootDepth = treeRoot.depth;
@@ -17001,10 +17828,13 @@ function sort2(children, sortOrder) {
   }
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/sunburst/sunburstVisual.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/sunburst/sunburstVisual.js
 function sunburstVisual(ecModel) {
   var paletteScope = {};
   function pickColor(node, seriesModel, treeHeight) {
+    if (node.depth === 0) {
+      return tokens_default.color.neutral50;
+    }
     var current = node;
     while (current && current.depth > 1) {
       current = current.parentNode;
@@ -17030,8 +17860,8 @@ function sunburstVisual(ecModel) {
   });
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/sunburst/install.js
-function install25(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/sunburst/install.js
+function install26(registers) {
   registers.registerChartView(SunburstView_default);
   registers.registerSeriesModel(SunburstSeries_default);
   registers.registerLayout(curry(sunburstLayout, "sunburst"));
@@ -17040,7 +17870,7 @@ function install25(registers) {
   installSunburstAction(registers);
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/custom/CustomSeries.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/custom/CustomSeries.js
 var STYLE_VISUAL_TYPE = {
   color: "fill",
   borderColor: "stroke"
@@ -17077,7 +17907,7 @@ var CustomSeriesModel = (
       return params;
     };
     CustomSeriesModel2.type = "series.custom";
-    CustomSeriesModel2.dependencies = ["grid", "polar", "geo", "singleAxis", "calendar"];
+    CustomSeriesModel2.dependencies = ["grid", "polar", "geo", "singleAxis", "calendar", "matrix"];
     CustomSeriesModel2.defaultOption = {
       coordinateSystem: "cartesian2d",
       // zlevel: 0,
@@ -17100,7 +17930,7 @@ var CustomSeriesModel = (
 );
 var CustomSeries_default = CustomSeriesModel;
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/cartesian/prepareCustom.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/cartesian/prepareCustom.js
 function dataToCoordSize(dataSize, dataItem) {
   dataItem = dataItem || [0, 0];
   return map(["x", "y"], function(dim, dimIdx) {
@@ -17130,7 +17960,7 @@ function cartesianPrepareCustom(coordSys) {
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/geo/prepareCustom.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/geo/prepareCustom.js
 function dataToCoordSize2(dataSize, dataItem) {
   dataItem = dataItem || [0, 0];
   return map([0, 1], function(dimIdx) {
@@ -17164,7 +17994,7 @@ function geoPrepareCustom(coordSys) {
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/single/prepareCustom.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/single/prepareCustom.js
 function dataToCoordSize3(dataSize, dataItem) {
   var axis = this.getAxis();
   var val = dataItem instanceof Array ? dataItem[0] : dataItem;
@@ -17190,7 +18020,7 @@ function singlePrepareCustom(coordSys) {
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/polar/prepareCustom.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/polar/prepareCustom.js
 function dataToCoordSize4(dataSize, dataItem) {
   dataItem = dataItem || [0, 0];
   return map(["Radius", "Angle"], function(dim, dimIdx) {
@@ -17231,7 +18061,7 @@ function polarPrepareCustom(coordSys) {
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/coord/calendar/prepareCustom.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/calendar/prepareCustom.js
 function calendarPrepareCustom(coordSys) {
   var rect = coordSys.getRect();
   var rangeInfo = coordSys.getRangeInfo();
@@ -17254,12 +18084,37 @@ function calendarPrepareCustom(coordSys) {
     api: {
       coord: function(data, clamp) {
         return coordSys.dataToPoint(data, clamp);
+      },
+      layout: function(data, clamp) {
+        return coordSys.dataToLayout(data, clamp);
       }
     }
   };
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/custom/CustomView.js
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/matrix/prepareCustom.js
+function matrixPrepareCustom(coordSys) {
+  var rect = coordSys.getRect();
+  return {
+    coordSys: {
+      type: "matrix",
+      x: rect.x,
+      y: rect.y,
+      width: rect.width,
+      height: rect.height
+    },
+    api: {
+      coord: function(data, opt) {
+        return coordSys.dataToPoint(data, opt);
+      },
+      layout: function(data, opt) {
+        return coordSys.dataToLayout(data, opt);
+      }
+    }
+  };
+}
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/custom/CustomView.js
 var EMPHASIS = "emphasis";
 var NORMAL = "normal";
 var BLUR = "blur";
@@ -17290,7 +18145,8 @@ var prepareCustoms = {
   geo: geoPrepareCustom,
   single: singlePrepareCustom,
   polar: polarPrepareCustom,
-  calendar: calendarPrepareCustom
+  calendar: calendarPrepareCustom,
+  matrix: matrixPrepareCustom
 };
 function isPath(el) {
   return el instanceof Path_default;
@@ -17411,7 +18267,33 @@ function createEl(elOption) {
   } else if (graphicType === "group") {
     el = new Group_default();
   } else if (graphicType === "compoundPath") {
-    throw new Error('"compoundPath" is not supported yet.');
+    var shape = elOption.shape;
+    if (!shape || !shape.paths) {
+      var errMsg = "";
+      if (true) {
+        errMsg = "shape.paths must be specified in compoundPath";
+      }
+      throwError(errMsg);
+    }
+    var paths = map(shape.paths, function(path) {
+      if (path.type === "path") {
+        return makePath(path.shape.pathData, path, null);
+      }
+      var Clz2 = getShapeClass(path.type);
+      if (!Clz2) {
+        var errMsg2 = "";
+        if (true) {
+          errMsg2 = 'graphic type "' + graphicType + '" can not be found.';
+        }
+        throwError(errMsg2);
+      }
+      return new Clz2();
+    });
+    el = new CompoundPath_default({
+      shape: {
+        paths
+      }
+    });
   } else {
     var Clz = getShapeClass(graphicType);
     if (!Clz) {
@@ -17514,6 +18396,14 @@ function updateZForEachState(elDisplayable, elOption, state) {
 }
 function makeRenderItem(customSeries, data, ecModel, api) {
   var renderItem = customSeries.get("renderItem");
+  if (typeof renderItem === "string") {
+    var registeredRenderItem = getCustomSeries(renderItem);
+    if (registeredRenderItem) {
+      renderItem = registeredRenderItem;
+    } else if (true) {
+      console.warn("Custom series renderItem '" + renderItem + "' not found.\n                Call 'echarts.registerCustomSeries' to register it.");
+    }
+  }
   var coordSys = customSeries.coordinateSystem;
   var prepareResult = {};
   if (coordSys) {
@@ -17547,7 +18437,8 @@ function makeRenderItem(customSeries, data, ecModel, api) {
     seriesIndex: customSeries.seriesIndex,
     coordSys: prepareResult.coordSys,
     dataInsideLength: data.count(),
-    encode: wrapEncodeDef(customSeries.getData())
+    encode: wrapEncodeDef(customSeries.getData()),
+    itemPayload: customSeries.get("itemPayload") || {}
   };
   var currDataIndexInside;
   var currItemModel;
@@ -17609,7 +18500,7 @@ function makeRenderItem(customSeries, data, ecModel, api) {
     visualColor != null && (itemStyle.fill = visualColor);
     opacity != null && (itemStyle.opacity = opacity);
     var opt = {
-      inheritColor: isString(visualColor) ? visualColor : "#000"
+      inheritColor: isString(visualColor) ? visualColor : tokens_default.color.neutral99
     };
     var labelModel = getLabelModel(dataIndexInside, NORMAL);
     var textStyle = createTextStyle(labelModel, null, opt, false, true);
@@ -17722,6 +18613,9 @@ function doCreateOrUpdateEl(api, existsEl, dataIndex, elOption, seriesModel, gro
   } else if (el.disableMorphing) {
     el.disableMorphing = false;
   }
+  if (elOption.tooltipDisabled) {
+    el.tooltipDisabled = true;
+  }
   attachedTxInfoTmp.normal.cfg = attachedTxInfoTmp.normal.conOpt = attachedTxInfoTmp.emphasis.cfg = attachedTxInfoTmp.emphasis.conOpt = attachedTxInfoTmp.blur.cfg = attachedTxInfoTmp.blur.conOpt = attachedTxInfoTmp.select.cfg = attachedTxInfoTmp.select.conOpt = null;
   attachedTxInfoTmp.isLegacy = false;
   doCreateOrUpdateAttachedTx(el, dataIndex, elOption, seriesModel, isInit, attachedTxInfoTmp);
@@ -17780,7 +18674,7 @@ function doCreateOrUpdateClipPath(el, dataIndex, elOption, seriesModel, isInit) 
   }
 }
 function doCreateOrUpdateAttachedTx(el, dataIndex, elOption, seriesModel, isInit, attachedTxInfo) {
-  if (el.isGroup) {
+  if (el.isGroup || el.type === "compoundPath") {
     return;
   }
   processTxInfo(elOption, null, attachedTxInfo);
@@ -17926,32 +18820,33 @@ function hasOwnPathData(shape) {
   return shape && (hasOwn(shape, "pathData") || hasOwn(shape, "d"));
 }
 
-// node_modules/.pnpm/echarts@5.6.0/node_modules/echarts/lib/chart/custom/install.js
-function install26(registers) {
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/custom/install.js
+function install27(registers) {
   registers.registerChartView(CustomView_default);
   registers.registerSeriesModel(CustomSeries_default);
 }
 export {
   install6 as BarChart,
-  install18 as BoxplotChart,
-  install19 as CandlestickChart,
-  install26 as CustomChart,
-  install20 as EffectScatterChart,
-  install15 as FunnelChart,
-  install14 as GaugeChart,
+  install19 as BoxplotChart,
+  install20 as CandlestickChart,
+  install14 as ChordChart,
+  install27 as CustomChart,
+  install21 as EffectScatterChart,
+  install16 as FunnelChart,
+  install15 as GaugeChart,
   install13 as GraphChart,
-  install22 as HeatmapChart,
+  install23 as HeatmapChart,
   install5 as LineChart,
-  install21 as LinesChart,
+  install22 as LinesChart,
   install10 as MapChart,
-  install16 as ParallelChart,
-  install23 as PictorialBarChart,
+  install17 as ParallelChart,
+  install24 as PictorialBarChart,
   install7 as PieChart,
   install9 as RadarChart,
-  install17 as SankeyChart,
+  install18 as SankeyChart,
   install8 as ScatterChart,
-  install25 as SunburstChart,
-  install24 as ThemeRiverChart,
+  install26 as SunburstChart,
+  install25 as ThemeRiverChart,
   install11 as TreeChart,
   install12 as TreemapChart
 };

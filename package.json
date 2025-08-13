@@ -11,15 +11,15 @@
     "push": "sh scripts/push.sh"
   },
   "dependencies": {
-    "echarts": "^5.6.0",
-    "vue": "^3.5.16",
+    "echarts": "^6.0.0",
+    "vue": "^3.5.18",
     "vue-amazing-ui": "^2.4.14",
     "vue3-lazyload": "^0.3.8",
     "vuedraggable": "4.1.0"
   },
   "devDependencies": {
-    "less": "^4.3.0",
-    "vitepress": "^1.6.3"
+    "less": "^4.4.0",
+    "vitepress": "^1.6.4"
   },
   "description": "Front-end development study notes",
   "directories": {

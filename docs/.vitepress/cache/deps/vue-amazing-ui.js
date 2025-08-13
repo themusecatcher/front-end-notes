@@ -59,7 +59,7 @@ import {
   withDirectives,
   withKeys,
   withModifiers
-} from "./chunk-IMKUJ42E.js";
+} from "./chunk-7X4VNE2G.js";
 import {
   __commonJS,
   __export,
@@ -2145,7 +2145,7 @@ var require_browser = __commonJS({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/components.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/components.js
 var components_exports = {};
 __export(components_exports, {
   Alert: () => i,
@@ -4070,7 +4070,7 @@ magentaDark.primary = magentaDark[5];
 var greyDark = ["#151515", "#1f1f1f", "#2d2d2d", "#393939", "#494949", "#5a5a5a", "#6a6a6a", "#7b7b7b", "#888888", "#969696"];
 greyDark.primary = greyDark[5];
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/utils/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/utils/index.js
 function X(e25 = Date.now(), n4 = "YYYY-MM-DD HH:mm:ss") {
   try {
     let t;
@@ -4393,7 +4393,7 @@ function de(e25) {
   return { isSupported: n4 };
 }
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/alert/Alert.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/alert/Alert.vue2.js
 var K = {
   key: 0,
   class: "m-alert-icon"
@@ -4641,7 +4641,7 @@ var le2 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/_virtual/_plugin-vue_export-helper.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/_virtual/_plugin-vue_export-helper.js
 var s = (t, e25) => {
   const o2 = t.__vccOpts || t;
   for (const [r16, c4] of e25)
@@ -4649,10 +4649,10 @@ var s = (t, e25) => {
   return o2;
 };
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/alert/Alert.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/alert/Alert.vue.js
 var p = s(le2, [["__scopeId", "data-v-63f6fc40"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/utils/type.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/utils/type.js
 var l = (n4) => {
   const t = n4;
   return t.install = function(e25) {
@@ -4660,10 +4660,10 @@ var l = (n4) => {
   }, n4;
 };
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/alert/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/alert/index.js
 var i = l(p);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/avatar/Avatar.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/avatar/Avatar.vue2.js
 var b = ["src", "alt"];
 var E = defineComponent({
   __name: "Avatar",
@@ -4760,13 +4760,13 @@ var E = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/avatar/Avatar.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/avatar/Avatar.vue.js
 var m = s(E, [["__scopeId", "data-v-ace37eba"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/avatar/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/avatar/index.js
 var m2 = l(m);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/tooltip/Tooltip.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/tooltip/Tooltip.vue2.js
 var Kt = defineComponent({
   __name: "Tooltip",
   props: {
@@ -5059,13 +5059,13 @@ var Kt = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/tooltip/Tooltip.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/tooltip/Tooltip.vue.js
 var m3 = s(Kt, [["__scopeId", "data-v-b5f0b4d5"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/tooltip/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/tooltip/index.js
 var p2 = l(m3);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/backtop/BackTop.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/backtop/BackTop.vue2.js
 var ae2 = {
   key: 1,
   width: "1em",
@@ -5268,13 +5268,13 @@ var pe = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/backtop/BackTop.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/backtop/BackTop.vue.js
 var m4 = s(pe, [["__scopeId", "data-v-1a62a7e2"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/backtop/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/backtop/index.js
 var i2 = l(m4);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/badge/Badge.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/badge/Badge.vue2.js
 var V = { class: "status-text" };
 var T = ["title"];
 var D2 = {
@@ -5397,13 +5397,13 @@ var q2 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/badge/Badge.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/badge/Badge.vue.js
 var d = s(q2, [["__scopeId", "data-v-dc82b2cd"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/badge/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/badge/index.js
 var e = l(d);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/breadcrumb/Breadcrumb.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/breadcrumb/Breadcrumb.vue2.js
 var w = { key: 0 };
 var N3 = {
   key: 1,
@@ -5491,13 +5491,13 @@ var z2 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/breadcrumb/Breadcrumb.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/breadcrumb/Breadcrumb.vue.js
 var c = s(z2, [["__scopeId", "data-v-219cbb85"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/breadcrumb/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/breadcrumb/index.js
 var a = l(c);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/button/Button.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/button/Button.vue2.js
 var V2 = {
   key: 0,
   class: "btn-loading"
@@ -5645,10 +5645,10 @@ var J2 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/button/Button.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/button/Button.vue.js
 var m5 = s(J2, [["__scopeId", "data-v-3626b9fa"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/button/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/button/index.js
 var n = l(m5);
 
 // node_modules/.pnpm/date-fns@4.1.0/node_modules/date-fns/constants.js
@@ -9355,7 +9355,7 @@ function subYears(date, amount, options) {
   return addYears(date, -amount, options);
 }
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/empty/Empty.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/empty/Empty.vue2.js
 var w2 = ["src"];
 var M = {
   key: 1,
@@ -9420,13 +9420,13 @@ var E2 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/empty/Empty.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/empty/Empty.vue.js
 var a2 = s(E2, [["__scopeId", "data-v-442a96d6"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/empty/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/empty/index.js
 var r = l(a2);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/scrollbar/Scrollbar.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/scrollbar/Scrollbar.vue2.js
 var je = defineComponent({
   __name: "Scrollbar",
   props: {
@@ -9635,13 +9635,13 @@ var je = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/scrollbar/Scrollbar.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/scrollbar/Scrollbar.vue.js
 var m6 = s(je, [["__scopeId", "data-v-63246af5"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/scrollbar/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/scrollbar/index.js
 var a3 = l(m6);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/select/Select.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/select/Select.vue2.js
 var fe2 = { class: "select-search" };
 var pe2 = ["readonly", "disabled"];
 var he = ["title"];
@@ -9876,13 +9876,13 @@ var Ce = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/select/Select.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/select/Select.vue.js
 var m7 = s(Ce, [["__scopeId", "data-v-ff7f0558"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/select/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/select/index.js
 var r2 = l(m7);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/radio/Radio.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/radio/Radio.vue2.js
 var q3 = ["onClick"];
 var G3 = { class: "radio-label" };
 var H = ["onClick"];
@@ -10033,13 +10033,13 @@ var U2 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/radio/Radio.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/radio/Radio.vue.js
 var p3 = s(U2, [["__scopeId", "data-v-888e7b32"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/radio/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/radio/index.js
 var r3 = l(p3);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/calendar/Calendar.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/calendar/Calendar.vue2.js
 var Pe = { class: "calendar-header-wrap" };
 var Te = {
   key: 0,
@@ -10392,13 +10392,13 @@ var at = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/calendar/Calendar.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/calendar/Calendar.vue.js
 var p4 = s(at, [["__scopeId", "data-v-46d45a04"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/calendar/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/calendar/index.js
 var e2 = l(p4);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/skeleton/Skeleton.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/skeleton/Skeleton.vue2.js
 var w3 = {
   key: 2,
   class: "skeleton-image"
@@ -10507,13 +10507,13 @@ var $2 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/skeleton/Skeleton.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/skeleton/Skeleton.vue.js
 var p5 = s($2, [["__scopeId", "data-v-be2b7607"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/skeleton/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/skeleton/index.js
 var r4 = l(p5);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/card/Card.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/card/Card.vue2.js
 var C2 = { class: "head-wrapper" };
 var E3 = {
   key: 0,
@@ -10585,13 +10585,13 @@ var T2 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/card/Card.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/card/Card.vue.js
 var m8 = s(T2, [["__scopeId", "data-v-ef9ffa1b"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/card/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/card/index.js
 var i3 = l(m8);
 
-// node_modules/.pnpm/@vueuse+shared@13.3.0_vue@3.5.16/node_modules/@vueuse/shared/index.mjs
+// node_modules/.pnpm/@vueuse+shared@13.6.0_vue@3.5.18/node_modules/@vueuse/shared/index.mjs
 function tryOnScopeDispose(fn2) {
   if (getCurrentScope()) {
     onScopeDispose(fn2);
@@ -10631,7 +10631,8 @@ var camelize = cacheStringFunction((str) => {
   return str.replace(camelizeRE, (_13, c4) => c4 ? c4.toUpperCase() : "");
 });
 
-// node_modules/.pnpm/@vueuse+core@13.3.0_vue@3.5.16/node_modules/@vueuse/core/index.mjs
+// node_modules/.pnpm/@vueuse+core@13.6.0_vue@3.5.18/node_modules/@vueuse/core/index.mjs
+var defaultWindow = isClient ? window : void 0;
 var defaultDocument = isClient ? window.document : void 0;
 var defaultNavigator = isClient ? window.navigator : void 0;
 var defaultLocation = isClient ? window.location : void 0;
@@ -10720,6 +10721,9 @@ function toVec(t) {
 }
 function executeTransition(source, from, to2, options = {}) {
   var _a2, _b;
+  const {
+    window: window2 = defaultWindow
+  } = options;
   const fromVal = toValue(from);
   const toVal = toValue(to2);
   const v1 = toVec(fromVal);
@@ -10748,7 +10752,7 @@ function executeTransition(source, from, to2, options = {}) {
       else if (typeof source.value === "number")
         source.value = arr[0];
       if (now2 < endAt) {
-        requestAnimationFrame(tick);
+        window2 == null ? void 0 : window2.requestAnimationFrame(tick);
       } else {
         source.value = toVal;
         resolve();
@@ -10796,7 +10800,7 @@ function useTransition(source, options = {}) {
   return computed(() => toValue(options.disabled) ? sourceVal() : outputRef.value);
 }
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/spin/Spin.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/spin/Spin.vue2.js
 var R2 = { class: "spin-wrap" };
 var z3 = { class: "spin-box" };
 var E4 = {
@@ -10967,13 +10971,13 @@ var G4 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/spin/Spin.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/spin/Spin.vue.js
 var a4 = s(G4, [["__scopeId", "data-v-4391ffea"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/spin/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/spin/index.js
 var r5 = l(a4);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/carousel/Carousel.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/carousel/Carousel.vue2.js
 var Fe = ["onClick"];
 var Le2 = ["href", "target"];
 var Ee2 = ["onLoad", "src", "alt"];
@@ -11268,13 +11272,13 @@ var qe2 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/carousel/Carousel.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/carousel/Carousel.vue.js
 var m9 = s(qe2, [["__scopeId", "data-v-196ffc28"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/carousel/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/carousel/index.js
 var e3 = l(m9);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/cascader/Cascader.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/cascader/Cascader.vue2.js
 var L = defineComponent({
   __name: "Cascader",
   props: {
@@ -11400,13 +11404,13 @@ var L = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/cascader/Cascader.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/cascader/Cascader.vue.js
 var m10 = s(L, [["__scopeId", "data-v-9ee72a36"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/cascader/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/cascader/index.js
 var e4 = l(m10);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/checkbox/Checkbox.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/checkbox/Checkbox.vue2.js
 var G5 = ["onClick"];
 var H2 = ["onAnimationend"];
 var J4 = { class: "checkbox-label" };
@@ -11518,13 +11522,13 @@ var R3 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/checkbox/Checkbox.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/checkbox/Checkbox.vue.js
 var m11 = s(R3, [["__scopeId", "data-v-6cb180a2"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/checkbox/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/checkbox/index.js
 var m12 = l(m11);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/collapse/Collapse.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/collapse/Collapse.vue2.js
 var W5 = ["onClick", "onKeydown"];
 var X3 = { class: "collapse-header" };
 var Y2 = { class: "collapse-extra" };
@@ -11733,10 +11737,10 @@ var oe2 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/collapse/Collapse.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/collapse/Collapse.vue.js
 var m13 = s(oe2, [["__scopeId", "data-v-d55b7787"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/collapse/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/collapse/index.js
 var a5 = l(m13);
 
 // node_modules/.pnpm/seemly@0.3.10/node_modules/seemly/es/color/colors.js
@@ -12140,7 +12144,7 @@ function toHexString(base) {
   return `#${base.slice(0, 3).map((unit) => roundChannel(unit).toString(16).toUpperCase().padStart(2, "0")).join("")}`;
 }
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/input/Input.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/input/Input.vue2.js
 var ae3 = {
   key: 0,
   class: "input-prefix"
@@ -12365,13 +12369,13 @@ var fe3 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/input/Input.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/input/Input.vue.js
 var m14 = s(fe3, [["__scopeId", "data-v-25bfb974"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/input/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/input/index.js
 var m15 = l(m14);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/colorpicker/ColorPicker.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/colorpicker/ColorPicker.vue2.js
 var xl = { class: "color-picker-preview" };
 var Vl = { class: "color-picker-preview-sliders" };
 var Il = {
@@ -13053,13 +13057,13 @@ var Jl = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/colorpicker/ColorPicker.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/colorpicker/ColorPicker.vue.js
 var _3 = s(Jl, [["__scopeId", "data-v-7b18547d"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/colorpicker/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/colorpicker/index.js
 var e5 = l(_3);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/configprovider/ConfigProvider.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/configprovider/ConfigProvider.vue.js
 var j3 = defineComponent({
   __name: "ConfigProvider",
   props: {
@@ -13253,10 +13257,10 @@ var j3 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/configprovider/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/configprovider/index.js
 var r6 = l(j3);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/countdown/Countdown.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/countdown/Countdown.vue2.js
 var j4 = { class: "m-countdown" };
 var G6 = { class: "countdown-time" };
 var J5 = {
@@ -13409,13 +13413,13 @@ var Q3 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/countdown/Countdown.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/countdown/Countdown.vue.js
 var _4 = s(Q3, [["__scopeId", "data-v-076b98ed"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/countdown/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/countdown/index.js
 var i4 = l(_4);
 
-// node_modules/.pnpm/@vuepic+vue-datepicker@11.0.2_vue@3.5.16/node_modules/@vuepic/vue-datepicker/dist/vue-datepicker.js
+// node_modules/.pnpm/@vuepic+vue-datepicker@11.0.2_vue@3.5.18/node_modules/@vuepic/vue-datepicker/dist/vue-datepicker.js
 function Gt() {
   const e25 = useAttrs();
   return openBlock(), createElementBlock(
@@ -18759,7 +18763,7 @@ Object.entries(To).forEach(([e25, t]) => {
   e25 !== "default" && (Qn[e25] = t);
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/datepicker/DatePicker.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/datepicker/DatePicker.vue2.js
 var j5 = defineComponent({
   __name: "DatePicker",
   props: {
@@ -18824,13 +18828,13 @@ var j5 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/datepicker/DatePicker.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/datepicker/DatePicker.vue.js
 var m16 = s(j5, [["__scopeId", "data-v-348a6e7e"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/datepicker/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/datepicker/index.js
 var i5 = l(m16);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/dialog/Dialog.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/dialog/Dialog.vue2.js
 var oe4 = { class: "m-dialog-root" };
 var ae4 = {
   focusable: "false",
@@ -19194,13 +19198,13 @@ var ve = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/dialog/Dialog.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/dialog/Dialog.vue.js
 var p6 = s(ve, [["__scopeId", "data-v-74a80c39"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/dialog/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/dialog/index.js
 var a6 = l(p6);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/divider/Divider.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/divider/Divider.vue2.js
 var p7 = {
   key: 0,
   class: "divider-text"
@@ -19239,13 +19243,13 @@ var $4 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/divider/Divider.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/divider/Divider.vue.js
 var m17 = s($4, [["__scopeId", "data-v-5d37218d"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/divider/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/divider/index.js
 var e6 = l(m17);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/drawer/Drawer.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/drawer/Drawer.vue2.js
 var j6 = { class: "drawer-content" };
 var q6 = {
   key: 0,
@@ -19468,13 +19472,13 @@ var oe5 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/drawer/Drawer.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/drawer/Drawer.vue.js
 var f2 = s(oe5, [["__scopeId", "data-v-d3c3afe3"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/drawer/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/drawer/index.js
 var e7 = l(f2);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/ellipsis/Ellipsis.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/ellipsis/Ellipsis.vue2.js
 var D5 = defineComponent({
   __name: "Ellipsis",
   props: {
@@ -19554,13 +19558,13 @@ var D5 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/ellipsis/Ellipsis.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/ellipsis/Ellipsis.vue.js
 var a7 = s(D5, [["__scopeId", "data-v-e5a50385"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/ellipsis/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/ellipsis/index.js
 var o = l(a7);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/flex/Flex.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/flex/Flex.vue2.js
 var m18 = defineComponent({
   __name: "Flex",
   props: {
@@ -19602,13 +19606,13 @@ var m18 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/flex/Flex.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/flex/Flex.vue.js
 var p8 = s(m18, [["__scopeId", "data-v-a2d72bd4"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/flex/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/flex/index.js
 var i6 = l(p8);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/floatbutton/FloatButton.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/floatbutton/FloatButton.vue2.js
 var X5 = { class: "float-btn-body" };
 var Y3 = { class: "float-btn-content" };
 var Z4 = {
@@ -19741,13 +19745,13 @@ var rt = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/floatbutton/FloatButton.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/floatbutton/FloatButton.vue.js
 var p9 = s(rt, [["__scopeId", "data-v-9ab2d86c"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/floatbutton/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/floatbutton/index.js
 var i7 = l(p9);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/gradienttext/GradientText.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/gradienttext/GradientText.vue2.js
 var a8 = ((t) => (t.primary = "rgba(22, 199, 255, 0.6)", t.info = "rgba(22, 199, 255, 0.6)", t.success = "rgba(82, 196, 26, 0.6)", t.warning = "rgba(250, 173, 20, 0.6)", t.error = "rgba(255, 77, 79, 0.6)", t))(a8 || {});
 var i8 = ((t) => (t.primary = "#1677ff", t.info = "#1677ff", t.success = "#52c41a", t.warning = "#faad14", t.error = "#ff4d4f", t))(i8 || {});
 var $5 = defineComponent({
@@ -19782,13 +19786,13 @@ var $5 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/gradienttext/GradientText.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/gradienttext/GradientText.vue.js
 var e8 = s($5, [["__scopeId", "data-v-2df01a8f"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/gradienttext/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/gradienttext/index.js
 var i9 = l(e8);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/highlight/Highlight.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/highlight/Highlight.vue.js
 var v = { class: "m-highlight" };
 var S = defineComponent({
   __name: "Highlight",
@@ -19846,10 +19850,10 @@ var S = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/highlight/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/highlight/index.js
 var r7 = l(S);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/space/Space.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/space/Space.vue2.js
 var m19 = defineComponent({
   __name: "Space",
   props: {
@@ -19881,13 +19885,13 @@ var m19 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/space/Space.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/space/Space.vue.js
 var m20 = s(m19, [["__scopeId", "data-v-981a4b5a"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/space/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/space/index.js
 var r8 = l(m20);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/image/Image.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/image/Image.vue2.js
 var De = ["onLoad", "src", "alt"];
 var Pe3 = ["onClick"];
 var Ee3 = { class: "image-mask-info" };
@@ -20369,13 +20373,13 @@ var xe2 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/image/Image.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/image/Image.vue.js
 var e9 = s(xe2, [["__scopeId", "data-v-9554ef3a"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/image/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/image/index.js
 var r9 = l(e9);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/inputnumber/InputNumber.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/inputnumber/InputNumber.vue2.js
 var _6 = { class: "input-number-wrap" };
 var ee2 = {
   key: 0,
@@ -20559,13 +20563,13 @@ var ie4 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/inputnumber/InputNumber.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/inputnumber/InputNumber.vue.js
 var d2 = s(ie4, [["__scopeId", "data-v-6e1dd9df"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/inputnumber/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/inputnumber/index.js
 var e10 = l(d2);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/inputsearch/InputSearch.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/inputsearch/InputSearch.vue2.js
 var Y4 = {
   key: 0,
   class: "input-search-prefix"
@@ -20766,13 +20770,13 @@ var le4 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/inputsearch/InputSearch.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/inputsearch/InputSearch.vue.js
 var e11 = s(le4, [["__scopeId", "data-v-2385e33f"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/inputsearch/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/inputsearch/index.js
 var e12 = l(e11);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/loadingbar/LoadingBar.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/loadingbar/LoadingBar.vue2.js
 var j7 = defineComponent({
   __name: "LoadingBar",
   props: {
@@ -20857,13 +20861,13 @@ var j7 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/loadingbar/LoadingBar.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/loadingbar/LoadingBar.vue.js
 var m21 = s(j7, [["__scopeId", "data-v-bfa3ef79"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/loadingbar/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/loadingbar/index.js
 var i10 = l(m21);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/message/Message.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/message/Message.vue2.js
 var ee4 = ["onMouseenter", "onMouseleave", "onClick"];
 var oe6 = {
   key: 1,
@@ -21073,13 +21077,13 @@ var ue4 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/message/Message.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/message/Message.vue.js
 var a9 = s(ue4, [["__scopeId", "data-v-1b6ff485"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/message/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/message/index.js
 var a10 = l(a9);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/modal/Modal.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/modal/Modal.vue2.js
 var $e = { class: "modal-body" };
 var Pe4 = {
   key: 1,
@@ -21548,13 +21552,13 @@ var Xe3 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/modal/Modal.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/modal/Modal.vue.js
 var m22 = s(Xe3, [["__scopeId", "data-v-2aaaf84b"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/modal/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/modal/index.js
 var i11 = l(m22);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/notification/Notification.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/notification/Notification.vue2.js
 var se5 = ["onMouseenter", "onMouseleave"];
 var ae6 = {
   key: 1,
@@ -21771,13 +21775,13 @@ var pe3 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/notification/Notification.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/notification/Notification.vue.js
 var r10 = s(pe3, [["__scopeId", "data-v-800cc8a8"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/notification/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/notification/index.js
 var a11 = l(r10);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/numberanimation/NumberAnimation.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/numberanimation/NumberAnimation.vue.js
 var g = defineComponent({
   __name: "NumberAnimation",
   props: {
@@ -21830,10 +21834,10 @@ var g = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/numberanimation/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/numberanimation/index.js
 var r11 = l(g);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/pagination/Pagination.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/pagination/Pagination.vue2.js
 var te5 = {
   key: 0,
   class: "pagination-total-text"
@@ -22093,13 +22097,13 @@ var ve3 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/pagination/Pagination.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/pagination/Pagination.vue.js
 var m23 = s(ve3, [["__scopeId", "data-v-b5d3d123"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/pagination/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/pagination/index.js
 var n2 = l(m23);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/popconfirm/Popconfirm.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/popconfirm/Popconfirm.vue2.js
 var D6 = { class: "popconfirm-wrap" };
 var R4 = {
   key: 0,
@@ -22267,13 +22271,13 @@ var J7 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/popconfirm/Popconfirm.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/popconfirm/Popconfirm.vue.js
 var p10 = s(J7, [["__scopeId", "data-v-b60d915f"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/popconfirm/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/popconfirm/index.js
 var m24 = l(p10);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/popover/Popover.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/popover/Popover.vue2.js
 var E5 = defineComponent({
   __name: "Popover",
   props: {
@@ -22326,13 +22330,13 @@ var E5 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/popover/Popover.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/popover/Popover.vue.js
 var m25 = s(E5, [["__scopeId", "data-v-566087ba"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/popover/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/popover/index.js
 var i12 = l(m25);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/progress/Progress.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/progress/Progress.vue2.js
 var N5 = { class: "progress-inner" };
 var T4 = {
   key: 0,
@@ -22557,13 +22561,13 @@ var X6 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/progress/Progress.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/progress/Progress.vue.js
 var e13 = s(X6, [["__scopeId", "data-v-98a79d2e"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/progress/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/progress/index.js
 var e14 = l(e13);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/qrcode/QRCode.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/qrcode/QRCode.vue2.js
 var import_qrcode = __toESM(require_browser(), 1);
 var h2 = ["src"];
 var b2 = ["src"];
@@ -22653,13 +22657,13 @@ var z4 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/qrcode/QRCode.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/qrcode/QRCode.vue.js
 var m26 = s(z4, [["__scopeId", "data-v-bcc5d63f"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/qrcode/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/qrcode/index.js
 var i13 = l(m26);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/rate/Rate.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/rate/Rate.vue2.js
 var U4 = ["onClick", "onKeydown"];
 var j10 = ["onClick", "onMouseenter"];
 var q8 = {
@@ -22896,13 +22900,13 @@ var a1 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/rate/Rate.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/rate/Rate.vue.js
 var m27 = s(a1, [["__scopeId", "data-v-7ee7eda6"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/rate/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/rate/index.js
 var e15 = l(m27);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/result/Result.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/result/Result.vue2.js
 var B2 = { class: "m-result" };
 var w4 = { class: "result-image" };
 var D8 = {
@@ -23042,13 +23046,13 @@ var S2 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/result/Result.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/result/Result.vue.js
 var s2 = s(S2, [["__scopeId", "data-v-7bd02403"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/result/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/result/index.js
 var i14 = l(s2);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/segmented/Segmented.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/segmented/Segmented.vue2.js
 var T5 = ["onClick"];
 var D9 = ["checked", "disabled"];
 var G9 = ["title"];
@@ -23167,13 +23171,13 @@ var M4 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/segmented/Segmented.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/segmented/Segmented.vue.js
 var a12 = s(M4, [["__scopeId", "data-v-dc690ca2"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/segmented/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/segmented/index.js
 var r12 = l(a12);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/slider/Slider.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/slider/Slider.vue2.js
 var Te4 = { class: "slider-dots" };
 var je4 = { class: "slider-marks" };
 var Fe5 = ["onClick"];
@@ -23563,13 +23567,13 @@ var Ie = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/slider/Slider.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/slider/Slider.vue.js
 var _9 = s(Ie, [["__scopeId", "data-v-209c2750"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/slider/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/slider/index.js
 var e16 = l(_9);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/statistic/Statistic.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/statistic/Statistic.vue2.js
 var _10 = { class: "m-statistic" };
 var k2 = {
   key: 0,
@@ -23628,13 +23632,13 @@ var C4 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/statistic/Statistic.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/statistic/Statistic.vue.js
 var m29 = s(C4, [["__scopeId", "data-v-7435b33b"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/statistic/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/statistic/index.js
 var a13 = l(m29);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/steps/Steps.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/steps/Steps.vue2.js
 var z6 = ["onClick"];
 var B3 = { class: "steps-icon" };
 var P2 = {
@@ -23725,13 +23729,13 @@ var I4 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/steps/Steps.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/steps/Steps.vue.js
 var m30 = s(I4, [["__scopeId", "data-v-49d36be1"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/steps/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/steps/index.js
 var i15 = l(m30);
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/shared/ssr-window.esm.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/shared/ssr-window.esm.mjs
 function isObject2(obj) {
   return obj !== null && typeof obj === "object" && "constructor" in obj && obj.constructor === Object;
 }
@@ -23881,7 +23885,7 @@ function getWindow() {
   return win;
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/shared/utils.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/shared/utils.mjs
 function classesToTokens(classes2) {
   if (classes2 === void 0) {
     classes2 = "";
@@ -24193,7 +24197,7 @@ function setInnerHTML(el, html) {
   }
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/shared/swiper-core.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/shared/swiper-core.mjs
 var support;
 function calcSupport() {
   const window2 = getWindow();
@@ -25869,23 +25873,16 @@ function slideToClickedSlide() {
     slidesEl
   } = swiper;
   const slidesPerView = params.slidesPerView === "auto" ? swiper.slidesPerViewDynamic() : params.slidesPerView;
-  let slideToIndex = swiper.clickedIndex;
+  let slideToIndex = swiper.getSlideIndexWhenGrid(swiper.clickedIndex);
   let realIndex;
   const slideSelector = swiper.isElement ? `swiper-slide` : `.${params.slideClass}`;
+  const isGrid = swiper.grid && swiper.params.grid && swiper.params.grid.rows > 1;
   if (params.loop) {
     if (swiper.animating) return;
     realIndex = parseInt(swiper.clickedSlide.getAttribute("data-swiper-slide-index"), 10);
     if (params.centeredSlides) {
-      if (slideToIndex < swiper.loopedSlides - slidesPerView / 2 || slideToIndex > swiper.slides.length - swiper.loopedSlides + slidesPerView / 2) {
-        swiper.loopFix();
-        slideToIndex = swiper.getSlideIndex(elementChildren(slidesEl, `${slideSelector}[data-swiper-slide-index="${realIndex}"]`)[0]);
-        nextTick2(() => {
-          swiper.slideTo(slideToIndex);
-        });
-      } else {
-        swiper.slideTo(slideToIndex);
-      }
-    } else if (slideToIndex > swiper.slides.length - slidesPerView) {
+      swiper.slideToLoop(realIndex);
+    } else if (slideToIndex > (isGrid ? (swiper.slides.length - slidesPerView) / 2 - (swiper.params.grid.rows - 1) : swiper.slides.length - slidesPerView)) {
       swiper.loopFix();
       slideToIndex = swiper.getSlideIndex(elementChildren(slidesEl, `${slideSelector}[data-swiper-slide-index="${realIndex}"]`)[0]);
       nextTick2(() => {
@@ -25920,7 +25917,20 @@ function loopCreate(slideRealIndex, initial) {
       el.setAttribute("data-swiper-slide-index", index);
     });
   };
+  const clearBlankSlides = () => {
+    const slides = elementChildren(slidesEl, `.${params.slideBlankClass}`);
+    slides.forEach((el) => {
+      el.remove();
+    });
+    if (slides.length > 0) {
+      swiper.recalcSlides();
+      swiper.updateSlides();
+    }
+  };
   const gridEnabled = swiper.grid && params.grid && params.grid.rows > 1;
+  if (params.loopAddBlankSlides && (params.slidesPerGroup > 1 || gridEnabled)) {
+    clearBlankSlides();
+  }
   const slidesPerGroup = params.slidesPerGroup * (gridEnabled ? params.grid.rows : 1);
   const shouldFillGroup = swiper.slides.length % slidesPerGroup !== 0;
   const shouldFillGrid = gridEnabled && swiper.slides.length % params.grid.rows !== 0;
@@ -26011,7 +26021,7 @@ function loopFix(_temp) {
     }
   }
   const slidesPerGroup = params.slidesPerGroupAuto ? slidesPerView : params.slidesPerGroup;
-  let loopedSlides = slidesPerGroup;
+  let loopedSlides = centeredSlides ? Math.max(slidesPerGroup, Math.ceil(slidesPerView / 2)) : slidesPerGroup;
   if (loopedSlides % slidesPerGroup !== 0) {
     loopedSlides += slidesPerGroup - loopedSlides % slidesPerGroup;
   }
@@ -27508,6 +27518,16 @@ var Swiper = class _Swiper {
   getSlideIndexByData(index) {
     return this.getSlideIndex(this.slides.find((slideEl) => slideEl.getAttribute("data-swiper-slide-index") * 1 === index));
   }
+  getSlideIndexWhenGrid(index) {
+    if (this.grid && this.params.grid && this.params.grid.rows > 1) {
+      if (this.params.grid.fill === "column") {
+        index = Math.floor(index / this.params.grid.rows);
+      } else if (this.params.grid.fill === "row") {
+        index = index % Math.ceil(this.slides.length / this.params.grid.rows);
+      }
+    }
+    return index;
+  }
   recalcSlides() {
     const swiper = this;
     const {
@@ -27892,7 +27912,7 @@ Object.keys(prototypes).forEach((prototypeGroup) => {
 });
 Swiper.use([Resize, Observer]);
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/shared/update-swiper.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/shared/update-swiper.mjs
 var paramsList = [
   "eventsPrefix",
   "injectStyles",
@@ -28237,7 +28257,7 @@ function updateSwiper(_ref) {
   swiper.update();
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/shared/update-on-virtual-data.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/shared/update-on-virtual-data.mjs
 function getParams(obj, splitEvents) {
   if (obj === void 0) {
     obj = {};
@@ -28362,7 +28382,7 @@ var updateOnVirtualData = (swiper) => {
   }
 };
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/swiper-vue.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/swiper-vue.mjs
 function getChildren(originalSlots, slidesRef, oldSlidesRef) {
   if (originalSlots === void 0) {
     originalSlots = {};
@@ -28910,7 +28930,7 @@ var Swiper2 = {
       default: void 0
     }
   },
-  emits: ["_beforeBreakpoint", "_containerClasses", "_slideClass", "_slideClasses", "_swiper", "_freeModeNoMomentumRelease", "activeIndexChange", "afterInit", "autoplay", "autoplayStart", "autoplayStop", "autoplayPause", "autoplayResume", "autoplayTimeLeft", "beforeDestroy", "beforeInit", "beforeLoopFix", "beforeResize", "beforeSlideChangeStart", "beforeTransitionStart", "breakpoint", "changeDirection", "click", "disable", "doubleTap", "doubleClick", "destroy", "enable", "fromEdge", "hashChange", "hashSet", "init", "keyPress", "lock", "loopFix", "momentumBounce", "navigationHide", "navigationShow", "navigationPrev", "navigationNext", "observerUpdate", "orientationchange", "paginationHide", "paginationRender", "paginationShow", "paginationUpdate", "progress", "reachBeginning", "reachEnd", "realIndexChange", "resize", "scroll", "scrollbarDragEnd", "scrollbarDragMove", "scrollbarDragStart", "setTransition", "setTranslate", "slidesUpdated", "slideChange", "slideChangeTransitionEnd", "slideChangeTransitionStart", "slideNextTransitionEnd", "slideNextTransitionStart", "slidePrevTransitionEnd", "slidePrevTransitionStart", "slideResetTransitionStart", "slideResetTransitionEnd", "sliderMove", "sliderFirstMove", "slidesLengthChange", "slidesGridLengthChange", "snapGridLengthChange", "snapIndexChange", "swiper", "tap", "toEdge", "touchEnd", "touchMove", "touchMoveOpposite", "touchStart", "transitionEnd", "transitionStart", "unlock", "update", "virtualUpdate", "zoomChange"],
+  emits: ["_beforeBreakpoint", "_containerClasses", "_slideClass", "_slideClasses", "_swiper", "_freeModeNoMomentumRelease", "_virtualUpdated", "activeIndexChange", "afterInit", "autoplay", "autoplayStart", "autoplayStop", "autoplayPause", "autoplayResume", "autoplayTimeLeft", "beforeDestroy", "beforeInit", "beforeLoopFix", "beforeResize", "beforeSlideChangeStart", "beforeTransitionStart", "breakpoint", "changeDirection", "click", "disable", "doubleTap", "doubleClick", "destroy", "enable", "fromEdge", "hashChange", "hashSet", "init", "keyPress", "lock", "loopFix", "momentumBounce", "navigationHide", "navigationShow", "navigationPrev", "navigationNext", "observerUpdate", "orientationchange", "paginationHide", "paginationRender", "paginationShow", "paginationUpdate", "progress", "reachBeginning", "reachEnd", "realIndexChange", "resize", "scroll", "scrollbarDragEnd", "scrollbarDragMove", "scrollbarDragStart", "setTransition", "setTranslate", "slidesUpdated", "slideChange", "slideChangeTransitionEnd", "slideChangeTransitionStart", "slideNextTransitionEnd", "slideNextTransitionStart", "slidePrevTransitionEnd", "slidePrevTransitionStart", "slideResetTransitionStart", "slideResetTransitionEnd", "sliderMove", "sliderFirstMove", "slidesLengthChange", "slidesGridLengthChange", "snapGridLengthChange", "snapIndexChange", "swiper", "tap", "toEdge", "touchEnd", "touchMove", "touchMoveOpposite", "touchStart", "transitionEnd", "transitionStart", "unlock", "update", "virtualUpdate", "zoomChange"],
   setup(props, _ref) {
     let {
       slots: originalSlots,
@@ -29162,7 +29182,7 @@ var SwiperSlide = {
   }
 };
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/modules/mousewheel.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/modules/mousewheel.mjs
 function Mousewheel(_ref) {
   let {
     swiper,
@@ -29463,7 +29483,7 @@ function Mousewheel(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/shared/create-element-if-not-defined.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/shared/create-element-if-not-defined.mjs
 function createElementIfNotDefined(swiper, originalParams, params, checkProps) {
   if (swiper.params.createElements) {
     Object.keys(checkProps).forEach((key) => {
@@ -29482,7 +29502,7 @@ function createElementIfNotDefined(swiper, originalParams, params, checkProps) {
   return params;
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/modules/navigation.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/modules/navigation.mjs
 function Navigation(_ref) {
   let {
     swiper,
@@ -29676,15 +29696,15 @@ function Navigation(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/shared/classes-to-selector.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/shared/classes-to-selector.mjs
 function classesToSelector(classes2) {
   if (classes2 === void 0) {
     classes2 = "";
   }
-  return `.${classes2.trim().replace(/([\.:!+\/])/g, "\\$1").replace(/ /g, ".")}`;
+  return `.${classes2.trim().replace(/([\.:!+\/()[\]])/g, "\\$1").replace(/ /g, ".")}`;
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/modules/pagination.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/modules/pagination.mjs
 function Pagination(_ref) {
   let {
     swiper,
@@ -30133,7 +30153,7 @@ function Pagination(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/modules/autoplay.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/modules/autoplay.mjs
 function Autoplay(_ref) {
   let {
     swiper,
@@ -30431,7 +30451,7 @@ function Autoplay(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/shared/effect-init.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/shared/effect-init.mjs
 function effectInit(params) {
   const {
     effect,
@@ -30487,7 +30507,7 @@ function effectInit(params) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/shared/effect-target.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/shared/effect-target.mjs
 function effectTarget(effectParams, slideEl) {
   const transformEl = getSlideTransformEl(slideEl);
   if (transformEl !== slideEl) {
@@ -30497,7 +30517,7 @@ function effectTarget(effectParams, slideEl) {
   return transformEl;
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/shared/effect-virtual-transition-end.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/shared/effect-virtual-transition-end.mjs
 function effectVirtualTransitionEnd(_ref) {
   let {
     swiper,
@@ -30542,7 +30562,7 @@ function effectVirtualTransitionEnd(_ref) {
   }
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/modules/effect-fade.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/modules/effect-fade.mjs
 function EffectFade(_ref) {
   let {
     swiper,
@@ -30603,7 +30623,7 @@ function EffectFade(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/modules/effect-cube.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/modules/effect-cube.mjs
 function EffectCube(_ref) {
   let {
     swiper,
@@ -30773,7 +30793,7 @@ function EffectCube(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/shared/create-shadow.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/shared/create-shadow.mjs
 function createShadow(suffix2, slideEl, side) {
   const shadowClass = `swiper-slide-shadow${side ? `-${side}` : ""}${suffix2 ? ` swiper-slide-shadow-${suffix2}` : ""}`;
   const shadowContainer = getSlideTransformEl(slideEl);
@@ -30785,7 +30805,7 @@ function createShadow(suffix2, slideEl, side) {
   return shadowEl;
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/modules/effect-flip.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/modules/effect-flip.mjs
 function EffectFlip(_ref) {
   let {
     swiper,
@@ -30889,7 +30909,7 @@ function EffectFlip(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/modules/effect-coverflow.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/modules/effect-coverflow.mjs
 function EffectCoverflow(_ref) {
   let {
     swiper,
@@ -30982,7 +31002,7 @@ function EffectCoverflow(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/modules/effect-creative.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/modules/effect-creative.mjs
 function EffectCreative(_ref) {
   let {
     swiper,
@@ -31118,7 +31138,7 @@ function EffectCreative(_ref) {
   });
 }
 
-// node_modules/.pnpm/swiper@11.2.8/node_modules/swiper/modules/effect-cards.mjs
+// node_modules/.pnpm/swiper@11.2.10/node_modules/swiper/modules/effect-cards.mjs
 function EffectCards(_ref) {
   let {
     swiper,
@@ -31233,7 +31253,7 @@ function EffectCards(_ref) {
   });
 }
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/swiper/Swiper.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/swiper/Swiper.vue2.js
 var R6 = ["src", "alt"];
 var T6 = ["src", "alt"];
 var U5 = ["src", "alt"];
@@ -31433,13 +31453,13 @@ var ne8 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/swiper/Swiper.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/swiper/Swiper.vue.js
 var m31 = s(ne8, [["__scopeId", "data-v-6093994a"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/swiper/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/swiper/index.js
 var e17 = l(m31);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/switch/Switch.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/switch/Switch.vue2.js
 var B4 = { class: "switch-inner" };
 var $6 = { class: "inner-checked" };
 var C5 = { class: "inner-unchecked" };
@@ -31524,13 +31544,13 @@ var j13 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/switch/Switch.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/switch/Switch.vue.js
 var m32 = s(j13, [["__scopeId", "data-v-414c3c7f"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/switch/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/switch/index.js
 var m33 = l(m32);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/table/Table.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/table/Table.vue2.js
 var Xl3 = {
   key: 0,
   class: "table-header"
@@ -32787,13 +32807,13 @@ var Tt = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/table/Table.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/table/Table.vue.js
 var m34 = s(Tt, [["__scopeId", "data-v-de352b9b"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/table/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/table/index.js
 var e18 = l(m34);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/tabs/Tabs.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/tabs/Tabs.vue2.js
 var me2 = {
   key: 0,
   class: "tabs-prefix"
@@ -33013,13 +33033,13 @@ var $e2 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/tabs/Tabs.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/tabs/Tabs.vue.js
 var m35 = s($e2, [["__scopeId", "data-v-b9ef9563"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/tabs/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/tabs/index.js
 var i16 = l(m35);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/tag/Tag.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/tag/Tag.vue2.js
 var X8 = {
   key: 0,
   class: "tag-icon"
@@ -33243,13 +33263,13 @@ var oe8 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/tag/Tag.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/tag/Tag.vue.js
 var m36 = s(oe8, [["__scopeId", "data-v-ae5f3939"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/tag/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/tag/index.js
 var i17 = l(m36);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/textarea/Textarea.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/textarea/Textarea.vue2.js
 var O5 = ["data-count"];
 var A5 = ["value", "placeholder", "maxlength", "disabled"];
 var W7 = defineComponent({
@@ -33366,13 +33386,13 @@ var W7 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/textarea/Textarea.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/textarea/Textarea.vue.js
 var m37 = s(W7, [["__scopeId", "data-v-d6225a57"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/textarea/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/textarea/index.js
 var e19 = l(m37);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/textscroll/TextScroll.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/textscroll/TextScroll.vue2.js
 var fe5 = defineComponent({
   __name: "TextScroll",
   props: {
@@ -33571,13 +33591,13 @@ var fe5 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/textscroll/TextScroll.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/textscroll/TextScroll.vue.js
 var _11 = s(fe5, [["__scopeId", "data-v-db3d7380"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/textscroll/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/textscroll/index.js
 var e20 = l(_11);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/timeline/Timeline.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/timeline/Timeline.vue2.js
 var E9 = defineComponent({
   __name: "Timeline",
   props: {
@@ -33684,13 +33704,13 @@ var E9 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/timeline/Timeline.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/timeline/Timeline.vue.js
 var e21 = s(E9, [["__scopeId", "data-v-c9112a5f"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/timeline/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/timeline/index.js
 var m38 = l(e21);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/upload/Upload.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/upload/Upload.vue2.js
 var ue6 = ["onDrop", "onClick"];
 var ce4 = ["accept", "multiple", "onChange"];
 var de3 = { class: "upload-tip" };
@@ -33995,13 +34015,13 @@ var Re3 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/upload/Upload.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/upload/Upload.vue.js
 var f3 = s(Re3, [["__scopeId", "data-v-103f795e"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/upload/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/upload/index.js
 var i18 = l(f3);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/video/Video.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/video/Video.vue2.js
 var H5 = ["src", "poster", "autoplay", "controls", "loop", "muted", "preload"];
 var V7 = defineComponent({
   __name: "Video",
@@ -34104,13 +34124,13 @@ var V7 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/video/Video.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/video/Video.vue.js
 var p11 = s(V7, [["__scopeId", "data-v-2bf18f3d"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/video/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/video/index.js
 var e22 = l(p11);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/waterfall/Waterfall.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/waterfall/Waterfall.vue2.js
 var J10 = ["href", "target"];
 var K7 = ["src", "alt", "onLoad"];
 var X9 = defineComponent({
@@ -34260,13 +34280,13 @@ var X9 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/waterfall/Waterfall.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/waterfall/Waterfall.vue.js
 var m39 = s(X9, [["__scopeId", "data-v-1fa11414"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/waterfall/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/waterfall/index.js
 var l2 = l(m39);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/watermark/Watermark.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/watermark/Watermark.vue.js
 var P3 = 3;
 var le6 = defineComponent({
   __name: "Watermark",
@@ -34433,10 +34453,10 @@ var le6 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/watermark/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/watermark/index.js
 var r13 = l(le6);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/descriptions/descriptions/Descriptions.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/descriptions/descriptions/Descriptions.vue2.js
 var U6 = {
   key: 0,
   class: "descriptions-header"
@@ -34636,13 +34656,13 @@ var ie7 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/descriptions/descriptions/Descriptions.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/descriptions/descriptions/Descriptions.vue.js
 var e23 = s(ie7, [["__scopeId", "data-v-5798e491"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/descriptions/descriptions/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/descriptions/descriptions/index.js
 var s3 = l(e23);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/descriptions/descriptionsitem/DescriptionsItem.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/descriptions/descriptionsitem/DescriptionsItem.vue2.js
 var p12 = ["data-span"];
 var c2 = ["data-span"];
 var b3 = defineComponent({
@@ -34697,13 +34717,13 @@ var b3 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/descriptions/descriptionsitem/DescriptionsItem.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/descriptions/descriptionsitem/DescriptionsItem.vue.js
 var s4 = s(b3, [["__scopeId", "data-v-a13c3072"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/descriptions/descriptionsitem/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/descriptions/descriptionsitem/index.js
 var e24 = l(s4);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/grid/row/Row.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/grid/row/Row.vue2.js
 var b4 = defineComponent({
   __name: "Row",
   props: {
@@ -34736,13 +34756,13 @@ var b4 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/grid/row/Row.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/grid/row/Row.vue.js
 var p13 = s(b4, [["__scopeId", "data-v-9e93e97c"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/grid/row/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/grid/row/index.js
 var m40 = l(p13);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/grid/col/Col.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/grid/col/Col.vue2.js
 var $7 = defineComponent({
   __name: "Col",
   props: {
@@ -34811,13 +34831,13 @@ var $7 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/grid/col/Col.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/grid/col/Col.vue.js
 var _12 = s($7, [["__scopeId", "data-v-48769be2"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/grid/col/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/grid/col/index.js
 var l3 = l(_12);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/list/list/List.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/list/list/List.vue2.js
 var E10 = {
   key: 0,
   class: "list-header"
@@ -34890,13 +34910,13 @@ var T7 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/list/list/List.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/list/list/List.vue.js
 var s5 = s(T7, [["__scopeId", "data-v-143e61db"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/list/list/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/list/list/index.js
 var m41 = l(s5);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/list/listitem/ListItem.vue2.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/list/listitem/ListItem.vue2.js
 var P4 = { class: "list-item-wrap" };
 var C7 = { class: "list-item-main" };
 var V8 = {
@@ -34988,13 +35008,13 @@ var F5 = defineComponent({
   }
 });
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/list/listitem/ListItem.vue.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/list/listitem/ListItem.vue.js
 var m42 = s(F5, [["__scopeId", "data-v-eff39eaa"]]);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/list/listitem/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/list/listitem/index.js
 var r14 = l(m42);
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/utils/resolver.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/utils/resolver.js
 var s6 = {
   Alert: "alert",
   Avatar: "avatar",
@@ -35143,7 +35163,7 @@ function p14(e25) {
   };
 }
 
-// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.16/node_modules/vue-amazing-ui/es/index.js
+// node_modules/.pnpm/vue-amazing-ui@2.4.14_vue@3.5.18/node_modules/vue-amazing-ui/es/index.js
 var r15 = function(e25) {
   return Object.values(components_exports).forEach((t) => {
     t.install && e25.use(t);
