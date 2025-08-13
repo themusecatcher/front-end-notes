@@ -21,7 +21,7 @@ const chartRef = useTemplateRef('chartRef')
 const myChart = ref<any>()
 let option: any
 
-interface Task {
+interface Gantt {
   name: string
   start: string // 开始时间
   end: string // 结束时间
@@ -33,7 +33,7 @@ interface Status {
   color: string // 状态颜色
 }
 interface Props {
-  ganttData?: Task[] // 数据
+  ganttData?: Gantt[] // 数据
   width?: string | number
   height?: string | number
   themeColor?: string // 主题色
