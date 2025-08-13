@@ -13,9 +13,9 @@ const myChart = ref<any>()
 let option: any
 
 interface Gantt {
-  name: string
-  start: string // 开始时间
-  end: string // 结束时间
+  name: string // 名称
+  start: string | number | Date // 开始时间
+  end: string | number | Date // 结束时间
   status: number | string // 状态值，用于着色
 }
 interface Status {
@@ -25,8 +25,8 @@ interface Status {
 }
 interface Props {
   ganttData?: Gantt[] // 数据
-  width?: string | number
-  height?: string | number
+  width?: string | number // 容器宽度
+  height?: string | number // 容器高度
   themeColor?: string // 主题色
   statusMap?: Status[] // 状态映射表
 }
@@ -35,14 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
   width: '100%',
   height: '100%',
   themeColor: '#1677FF',
-  statusMap: () => [
-    { value: '1', label: '启动', color: '#5470c6' },
-    { value: '2', label: '运行', color: '#91cc75' },
-    { value: '3', label: '等待', color: '#fac858' },
-    { value: '4', label: '成功', color: '#ee6666' },
-    { value: '5', label: '失败', color: '#73c0de' },
-    { value: '6', label: '停止', color: '#3ba272' }
-  ]
+  statusMap: () => []
 })
 const chartWidth = computed(() => {
   if (typeof props.width === 'number') {
@@ -205,10 +198,7 @@ function buildOption() {
         color: 'rgba(0, 0, 0, 0.88)',
         fontWeight: 500,
         fontSize: 14,
-        lineHeight: 22,
-        width: 80,
-        overflow: 'truncate',
-        ellipsis: '...'
+        lineHeight: 22
       }
     },
     series: props.statusMap.map((status) => ({
