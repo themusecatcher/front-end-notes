@@ -126,7 +126,7 @@ function renderGanttBar(params: any, api: any) {
   // 获取对应的颜色
   const color = getStatusColor(statusValue)
 
-  return {
+  return { // 返回自定义矩形元素
     type: 'rect',
     shape,
     style: {
@@ -213,12 +213,12 @@ function buildOption() {
     series: props.statusMap.map((status) => ({
       name: status.label,
       type: 'custom',
-      renderItem: renderGanttBar,
-      encode: { x: [1, 2], y: 0 },
-      data: data.filter((item) => String(item.value[3]) === String(status.value)),
-      itemStyle: {
+      renderItem: renderGanttBar, // 以 Function 形式提供图形渲染的逻辑
+      encode: { x: [1, 2], y: 0 }, // 定义 data 的哪个维度被编码成什么
+      itemStyle: { // 图形样式
         color: getStatusColor(status.value)
-      }
+      },
+      data: data.filter((item) => String(item.value[3]) === String(status.value))
     }))
   }
   return option
