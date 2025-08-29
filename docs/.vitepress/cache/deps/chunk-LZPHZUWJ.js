@@ -7526,1359 +7526,6 @@ function install4(registers) {
   installParallelActions(registers);
 }
 
-// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/labelHelper.js
-function getDefaultLabel(data, dataIndex) {
-  var labelDims = data.mapDimensionsAll("defaultedLabel");
-  var len = labelDims.length;
-  if (len === 1) {
-    var rawVal = retrieveRawValue(data, dataIndex, labelDims[0]);
-    return rawVal != null ? rawVal + "" : null;
-  } else if (len) {
-    var vals = [];
-    for (var i = 0; i < labelDims.length; i++) {
-      vals.push(retrieveRawValue(data, dataIndex, labelDims[i]));
-    }
-    return vals.join(" ");
-  }
-}
-function getDefaultInterpolatedLabel(data, interpolatedValue) {
-  var labelDims = data.mapDimensionsAll("defaultedLabel");
-  if (!isArray(interpolatedValue)) {
-    return interpolatedValue + "";
-  }
-  var vals = [];
-  for (var i = 0; i < labelDims.length; i++) {
-    var dimIndex = data.getDimensionIndex(labelDims[i]);
-    if (dimIndex >= 0) {
-      vals.push(interpolatedValue[dimIndex]);
-    }
-  }
-  return vals.join(" ");
-}
-
-// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/Symbol.js
-var Symbol = (
-  /** @class */
-  function(_super) {
-    __extends(Symbol2, _super);
-    function Symbol2(data, idx, seriesScope, opts) {
-      var _this = _super.call(this) || this;
-      _this.updateData(data, idx, seriesScope, opts);
-      return _this;
-    }
-    Symbol2.prototype._createSymbol = function(symbolType, data, idx, symbolSize, z2, keepAspect) {
-      this.removeAll();
-      var symbolPath = createSymbol(symbolType, -1, -1, 2, 2, null, keepAspect);
-      symbolPath.attr({
-        z2: retrieve2(z2, 100),
-        culling: true,
-        scaleX: symbolSize[0] / 2,
-        scaleY: symbolSize[1] / 2
-      });
-      symbolPath.drift = driftSymbol;
-      this._symbolType = symbolType;
-      this.add(symbolPath);
-    };
-    Symbol2.prototype.stopSymbolAnimation = function(toLastFrame) {
-      this.childAt(0).stopAnimation(null, toLastFrame);
-    };
-    Symbol2.prototype.getSymbolType = function() {
-      return this._symbolType;
-    };
-    Symbol2.prototype.getSymbolPath = function() {
-      return this.childAt(0);
-    };
-    Symbol2.prototype.highlight = function() {
-      enterEmphasis(this.childAt(0));
-    };
-    Symbol2.prototype.downplay = function() {
-      leaveEmphasis(this.childAt(0));
-    };
-    Symbol2.prototype.setZ = function(zlevel, z) {
-      var symbolPath = this.childAt(0);
-      symbolPath.zlevel = zlevel;
-      symbolPath.z = z;
-    };
-    Symbol2.prototype.setDraggable = function(draggable, hasCursorOption) {
-      var symbolPath = this.childAt(0);
-      symbolPath.draggable = draggable;
-      symbolPath.cursor = !hasCursorOption && draggable ? "move" : symbolPath.cursor;
-    };
-    Symbol2.prototype.updateData = function(data, idx, seriesScope, opts) {
-      this.silent = false;
-      var symbolType = data.getItemVisual(idx, "symbol") || "circle";
-      var seriesModel = data.hostModel;
-      var symbolSize = Symbol2.getSymbolSize(data, idx);
-      var z2 = Symbol2.getSymbolZ2(data, idx);
-      var isInit = symbolType !== this._symbolType;
-      var disableAnimation = opts && opts.disableAnimation;
-      if (isInit) {
-        var keepAspect = data.getItemVisual(idx, "symbolKeepAspect");
-        this._createSymbol(symbolType, data, idx, symbolSize, z2, keepAspect);
-      } else {
-        var symbolPath = this.childAt(0);
-        symbolPath.silent = false;
-        var target = {
-          scaleX: symbolSize[0] / 2,
-          scaleY: symbolSize[1] / 2
-        };
-        disableAnimation ? symbolPath.attr(target) : updateProps(symbolPath, target, seriesModel, idx);
-        saveOldStyle(symbolPath);
-      }
-      this._updateCommon(data, idx, symbolSize, seriesScope, opts);
-      if (isInit) {
-        var symbolPath = this.childAt(0);
-        if (!disableAnimation) {
-          var target = {
-            scaleX: this._sizeX,
-            scaleY: this._sizeY,
-            style: {
-              // Always fadeIn. Because it has fadeOut animation when symbol is removed..
-              opacity: symbolPath.style.opacity
-            }
-          };
-          symbolPath.scaleX = symbolPath.scaleY = 0;
-          symbolPath.style.opacity = 0;
-          initProps(symbolPath, target, seriesModel, idx);
-        }
-      }
-      if (disableAnimation) {
-        this.childAt(0).stopAnimation("leave");
-      }
-    };
-    Symbol2.prototype._updateCommon = function(data, idx, symbolSize, seriesScope, opts) {
-      var symbolPath = this.childAt(0);
-      var seriesModel = data.hostModel;
-      var emphasisItemStyle;
-      var blurItemStyle;
-      var selectItemStyle;
-      var focus;
-      var blurScope;
-      var emphasisDisabled;
-      var labelStatesModels;
-      var hoverScale;
-      var cursorStyle;
-      if (seriesScope) {
-        emphasisItemStyle = seriesScope.emphasisItemStyle;
-        blurItemStyle = seriesScope.blurItemStyle;
-        selectItemStyle = seriesScope.selectItemStyle;
-        focus = seriesScope.focus;
-        blurScope = seriesScope.blurScope;
-        labelStatesModels = seriesScope.labelStatesModels;
-        hoverScale = seriesScope.hoverScale;
-        cursorStyle = seriesScope.cursorStyle;
-        emphasisDisabled = seriesScope.emphasisDisabled;
-      }
-      if (!seriesScope || data.hasItemOption) {
-        var itemModel = seriesScope && seriesScope.itemModel ? seriesScope.itemModel : data.getItemModel(idx);
-        var emphasisModel = itemModel.getModel("emphasis");
-        emphasisItemStyle = emphasisModel.getModel("itemStyle").getItemStyle();
-        selectItemStyle = itemModel.getModel(["select", "itemStyle"]).getItemStyle();
-        blurItemStyle = itemModel.getModel(["blur", "itemStyle"]).getItemStyle();
-        focus = emphasisModel.get("focus");
-        blurScope = emphasisModel.get("blurScope");
-        emphasisDisabled = emphasisModel.get("disabled");
-        labelStatesModels = getLabelStatesModels(itemModel);
-        hoverScale = emphasisModel.getShallow("scale");
-        cursorStyle = itemModel.getShallow("cursor");
-      }
-      var symbolRotate = data.getItemVisual(idx, "symbolRotate");
-      symbolPath.attr("rotation", (symbolRotate || 0) * Math.PI / 180 || 0);
-      var symbolOffset = normalizeSymbolOffset(data.getItemVisual(idx, "symbolOffset"), symbolSize);
-      if (symbolOffset) {
-        symbolPath.x = symbolOffset[0];
-        symbolPath.y = symbolOffset[1];
-      }
-      cursorStyle && symbolPath.attr("cursor", cursorStyle);
-      var symbolStyle = data.getItemVisual(idx, "style");
-      var visualColor = symbolStyle.fill;
-      if (symbolPath instanceof Image_default) {
-        var pathStyle = symbolPath.style;
-        symbolPath.useStyle(extend({
-          // TODO other properties like x, y ?
-          image: pathStyle.image,
-          x: pathStyle.x,
-          y: pathStyle.y,
-          width: pathStyle.width,
-          height: pathStyle.height
-        }, symbolStyle));
-      } else {
-        if (symbolPath.__isEmptyBrush) {
-          symbolPath.useStyle(extend({}, symbolStyle));
-        } else {
-          symbolPath.useStyle(symbolStyle);
-        }
-        symbolPath.style.decal = null;
-        symbolPath.setColor(visualColor, opts && opts.symbolInnerColor);
-        symbolPath.style.strokeNoScale = true;
-      }
-      var liftZ = data.getItemVisual(idx, "liftZ");
-      var z2Origin = this._z2;
-      if (liftZ != null) {
-        if (z2Origin == null) {
-          this._z2 = symbolPath.z2;
-          symbolPath.z2 += liftZ;
-        }
-      } else if (z2Origin != null) {
-        symbolPath.z2 = z2Origin;
-        this._z2 = null;
-      }
-      var useNameLabel = opts && opts.useNameLabel;
-      setLabelStyle(symbolPath, labelStatesModels, {
-        labelFetcher: seriesModel,
-        labelDataIndex: idx,
-        defaultText: getLabelDefaultText,
-        inheritColor: visualColor,
-        defaultOpacity: symbolStyle.opacity
-      });
-      function getLabelDefaultText(idx2) {
-        return useNameLabel ? data.getName(idx2) : getDefaultLabel(data, idx2);
-      }
-      this._sizeX = symbolSize[0] / 2;
-      this._sizeY = symbolSize[1] / 2;
-      var emphasisState = symbolPath.ensureState("emphasis");
-      emphasisState.style = emphasisItemStyle;
-      symbolPath.ensureState("select").style = selectItemStyle;
-      symbolPath.ensureState("blur").style = blurItemStyle;
-      var scaleRatio = hoverScale == null || hoverScale === true ? Math.max(1.1, 3 / this._sizeY) : isFinite(hoverScale) && hoverScale > 0 ? +hoverScale : 1;
-      emphasisState.scaleX = this._sizeX * scaleRatio;
-      emphasisState.scaleY = this._sizeY * scaleRatio;
-      this.setSymbolScale(1);
-      toggleHoverEmphasis(this, focus, blurScope, emphasisDisabled);
-    };
-    Symbol2.prototype.setSymbolScale = function(scale2) {
-      this.scaleX = this.scaleY = scale2;
-    };
-    Symbol2.prototype.fadeOut = function(cb, seriesModel, opt) {
-      var symbolPath = this.childAt(0);
-      var dataIndex = getECData(this).dataIndex;
-      var animationOpt = opt && opt.animation;
-      this.silent = symbolPath.silent = true;
-      if (opt && opt.fadeLabel) {
-        var textContent = symbolPath.getTextContent();
-        if (textContent) {
-          removeElement(textContent, {
-            style: {
-              opacity: 0
-            }
-          }, seriesModel, {
-            dataIndex,
-            removeOpt: animationOpt,
-            cb: function() {
-              symbolPath.removeTextContent();
-            }
-          });
-        }
-      } else {
-        symbolPath.removeTextContent();
-      }
-      removeElement(symbolPath, {
-        style: {
-          opacity: 0
-        },
-        scaleX: 0,
-        scaleY: 0
-      }, seriesModel, {
-        dataIndex,
-        cb,
-        removeOpt: animationOpt
-      });
-    };
-    Symbol2.getSymbolSize = function(data, idx) {
-      return normalizeSymbolSize(data.getItemVisual(idx, "symbolSize"));
-    };
-    Symbol2.getSymbolZ2 = function(data, idx) {
-      return data.getItemVisual(idx, "z2");
-    };
-    return Symbol2;
-  }(Group_default)
-);
-function driftSymbol(dx, dy) {
-  this.parent.drift(dx, dy);
-}
-var Symbol_default = Symbol;
-
-// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/SymbolDraw.js
-function symbolNeedsDraw(data, point, idx, opt) {
-  return point && !isNaN(point[0]) && !isNaN(point[1]) && !(opt.isIgnore && opt.isIgnore(idx)) && !(opt.clipShape && !opt.clipShape.contain(point[0], point[1])) && data.getItemVisual(idx, "symbol") !== "none";
-}
-function normalizeUpdateOpt(opt) {
-  if (opt != null && !isObject(opt)) {
-    opt = {
-      isIgnore: opt
-    };
-  }
-  return opt || {};
-}
-function makeSeriesScope(data) {
-  var seriesModel = data.hostModel;
-  var emphasisModel = seriesModel.getModel("emphasis");
-  return {
-    emphasisItemStyle: emphasisModel.getModel("itemStyle").getItemStyle(),
-    blurItemStyle: seriesModel.getModel(["blur", "itemStyle"]).getItemStyle(),
-    selectItemStyle: seriesModel.getModel(["select", "itemStyle"]).getItemStyle(),
-    focus: emphasisModel.get("focus"),
-    blurScope: emphasisModel.get("blurScope"),
-    emphasisDisabled: emphasisModel.get("disabled"),
-    hoverScale: emphasisModel.get("scale"),
-    labelStatesModels: getLabelStatesModels(seriesModel),
-    cursorStyle: seriesModel.get("cursor")
-  };
-}
-var SymbolDraw = (
-  /** @class */
-  function() {
-    function SymbolDraw2(SymbolCtor) {
-      this.group = new Group_default();
-      this._SymbolCtor = SymbolCtor || Symbol_default;
-    }
-    SymbolDraw2.prototype.updateData = function(data, opt) {
-      this._progressiveEls = null;
-      opt = normalizeUpdateOpt(opt);
-      var group = this.group;
-      var seriesModel = data.hostModel;
-      var oldData = this._data;
-      var SymbolCtor = this._SymbolCtor;
-      var disableAnimation = opt.disableAnimation;
-      var seriesScope = makeSeriesScope(data);
-      var symbolUpdateOpt = {
-        disableAnimation
-      };
-      var getSymbolPoint = opt.getSymbolPoint || function(idx) {
-        return data.getItemLayout(idx);
-      };
-      if (!oldData) {
-        group.removeAll();
-      }
-      data.diff(oldData).add(function(newIdx) {
-        var point = getSymbolPoint(newIdx);
-        if (symbolNeedsDraw(data, point, newIdx, opt)) {
-          var symbolEl = new SymbolCtor(data, newIdx, seriesScope, symbolUpdateOpt);
-          symbolEl.setPosition(point);
-          data.setItemGraphicEl(newIdx, symbolEl);
-          group.add(symbolEl);
-        }
-      }).update(function(newIdx, oldIdx) {
-        var symbolEl = oldData.getItemGraphicEl(oldIdx);
-        var point = getSymbolPoint(newIdx);
-        if (!symbolNeedsDraw(data, point, newIdx, opt)) {
-          group.remove(symbolEl);
-          return;
-        }
-        var newSymbolType = data.getItemVisual(newIdx, "symbol") || "circle";
-        var oldSymbolType = symbolEl && symbolEl.getSymbolType && symbolEl.getSymbolType();
-        if (!symbolEl || oldSymbolType && oldSymbolType !== newSymbolType) {
-          group.remove(symbolEl);
-          symbolEl = new SymbolCtor(data, newIdx, seriesScope, symbolUpdateOpt);
-          symbolEl.setPosition(point);
-        } else {
-          symbolEl.updateData(data, newIdx, seriesScope, symbolUpdateOpt);
-          var target = {
-            x: point[0],
-            y: point[1]
-          };
-          disableAnimation ? symbolEl.attr(target) : updateProps(symbolEl, target, seriesModel);
-        }
-        group.add(symbolEl);
-        data.setItemGraphicEl(newIdx, symbolEl);
-      }).remove(function(oldIdx) {
-        var el = oldData.getItemGraphicEl(oldIdx);
-        el && el.fadeOut(function() {
-          group.remove(el);
-        }, seriesModel);
-      }).execute();
-      this._getSymbolPoint = getSymbolPoint;
-      this._data = data;
-    };
-    ;
-    SymbolDraw2.prototype.updateLayout = function() {
-      var _this = this;
-      var data = this._data;
-      if (data) {
-        data.eachItemGraphicEl(function(el, idx) {
-          var point = _this._getSymbolPoint(idx);
-          el.setPosition(point);
-          el.markRedraw();
-        });
-      }
-    };
-    ;
-    SymbolDraw2.prototype.incrementalPrepareUpdate = function(data) {
-      this._seriesScope = makeSeriesScope(data);
-      this._data = null;
-      this.group.removeAll();
-    };
-    ;
-    SymbolDraw2.prototype.incrementalUpdate = function(taskParams, data, opt) {
-      this._progressiveEls = [];
-      opt = normalizeUpdateOpt(opt);
-      function updateIncrementalAndHover(el2) {
-        if (!el2.isGroup) {
-          el2.incremental = true;
-          el2.ensureState("emphasis").hoverLayer = true;
-        }
-      }
-      for (var idx = taskParams.start; idx < taskParams.end; idx++) {
-        var point = data.getItemLayout(idx);
-        if (symbolNeedsDraw(data, point, idx, opt)) {
-          var el = new this._SymbolCtor(data, idx, this._seriesScope);
-          el.traverse(updateIncrementalAndHover);
-          el.setPosition(point);
-          this.group.add(el);
-          data.setItemGraphicEl(idx, el);
-          this._progressiveEls.push(el);
-        }
-      }
-    };
-    ;
-    SymbolDraw2.prototype.eachRendered = function(cb) {
-      traverseElements(this._progressiveEls || this.group, cb);
-    };
-    SymbolDraw2.prototype.remove = function(enableAnimation) {
-      var group = this.group;
-      var data = this._data;
-      if (data && enableAnimation) {
-        data.eachItemGraphicEl(function(el) {
-          el.fadeOut(function() {
-            group.remove(el);
-          }, data.hostModel);
-        });
-      } else {
-        group.removeAll();
-      }
-    };
-    ;
-    return SymbolDraw2;
-  }()
-);
-var SymbolDraw_default = SymbolDraw;
-
-// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/CoordinateSystem.js
-function isCoordinateSystemType(coordSys, type) {
-  return coordSys.type === type;
-}
-
-// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/visual/VisualMapping.js
-var each3 = each;
-var isObject2 = isObject;
-var CATEGORY_DEFAULT_VISUAL_INDEX = -1;
-var VisualMapping = (
-  /** @class */
-  function() {
-    function VisualMapping2(option) {
-      var mappingMethod = option.mappingMethod;
-      var visualType = option.type;
-      var thisOption = this.option = clone(option);
-      this.type = visualType;
-      this.mappingMethod = mappingMethod;
-      this._normalizeData = normalizers[mappingMethod];
-      var visualHandler = VisualMapping2.visualHandlers[visualType];
-      this.applyVisual = visualHandler.applyVisual;
-      this.getColorMapper = visualHandler.getColorMapper;
-      this._normalizedToVisual = visualHandler._normalizedToVisual[mappingMethod];
-      if (mappingMethod === "piecewise") {
-        normalizeVisualRange(thisOption);
-        preprocessForPiecewise(thisOption);
-      } else if (mappingMethod === "category") {
-        thisOption.categories ? preprocessForSpecifiedCategory(thisOption) : normalizeVisualRange(thisOption, true);
-      } else {
-        assert(mappingMethod !== "linear" || thisOption.dataExtent);
-        normalizeVisualRange(thisOption);
-      }
-    }
-    VisualMapping2.prototype.mapValueToVisual = function(value) {
-      var normalized = this._normalizeData(value);
-      return this._normalizedToVisual(normalized, value);
-    };
-    VisualMapping2.prototype.getNormalizer = function() {
-      return bind(this._normalizeData, this);
-    };
-    VisualMapping2.listVisualTypes = function() {
-      return keys(VisualMapping2.visualHandlers);
-    };
-    VisualMapping2.isValidType = function(visualType) {
-      return VisualMapping2.visualHandlers.hasOwnProperty(visualType);
-    };
-    VisualMapping2.eachVisual = function(visual, callback, context) {
-      if (isObject(visual)) {
-        each(visual, callback, context);
-      } else {
-        callback.call(context, visual);
-      }
-    };
-    VisualMapping2.mapVisual = function(visual, callback, context) {
-      var isPrimary;
-      var newVisual = isArray(visual) ? [] : isObject(visual) ? {} : (isPrimary = true, null);
-      VisualMapping2.eachVisual(visual, function(v, key) {
-        var newVal = callback.call(context, v, key);
-        isPrimary ? newVisual = newVal : newVisual[key] = newVal;
-      });
-      return newVisual;
-    };
-    VisualMapping2.retrieveVisuals = function(obj) {
-      var ret = {};
-      var hasVisual;
-      obj && each3(VisualMapping2.visualHandlers, function(h, visualType) {
-        if (obj.hasOwnProperty(visualType)) {
-          ret[visualType] = obj[visualType];
-          hasVisual = true;
-        }
-      });
-      return hasVisual ? ret : null;
-    };
-    VisualMapping2.prepareVisualTypes = function(visualTypes) {
-      if (isArray(visualTypes)) {
-        visualTypes = visualTypes.slice();
-      } else if (isObject2(visualTypes)) {
-        var types_1 = [];
-        each3(visualTypes, function(item, type) {
-          types_1.push(type);
-        });
-        visualTypes = types_1;
-      } else {
-        return [];
-      }
-      visualTypes.sort(function(type1, type2) {
-        return type2 === "color" && type1 !== "color" && type1.indexOf("color") === 0 ? 1 : -1;
-      });
-      return visualTypes;
-    };
-    VisualMapping2.dependsOn = function(visualType1, visualType2) {
-      return visualType2 === "color" ? !!(visualType1 && visualType1.indexOf(visualType2) === 0) : visualType1 === visualType2;
-    };
-    VisualMapping2.findPieceIndex = function(value, pieceList, findClosestWhenOutside) {
-      var possibleI;
-      var abs = Infinity;
-      for (var i = 0, len = pieceList.length; i < len; i++) {
-        var pieceValue = pieceList[i].value;
-        if (pieceValue != null) {
-          if (pieceValue === value || isString(pieceValue) && pieceValue === value + "") {
-            return i;
-          }
-          findClosestWhenOutside && updatePossible(pieceValue, i);
-        }
-      }
-      for (var i = 0, len = pieceList.length; i < len; i++) {
-        var piece = pieceList[i];
-        var interval = piece.interval;
-        var close_1 = piece.close;
-        if (interval) {
-          if (interval[0] === -Infinity) {
-            if (littleThan(close_1[1], value, interval[1])) {
-              return i;
-            }
-          } else if (interval[1] === Infinity) {
-            if (littleThan(close_1[0], interval[0], value)) {
-              return i;
-            }
-          } else if (littleThan(close_1[0], interval[0], value) && littleThan(close_1[1], value, interval[1])) {
-            return i;
-          }
-          findClosestWhenOutside && updatePossible(interval[0], i);
-          findClosestWhenOutside && updatePossible(interval[1], i);
-        }
-      }
-      if (findClosestWhenOutside) {
-        return value === Infinity ? pieceList.length - 1 : value === -Infinity ? 0 : possibleI;
-      }
-      function updatePossible(val, index) {
-        var newAbs = Math.abs(val - value);
-        if (newAbs < abs) {
-          abs = newAbs;
-          possibleI = index;
-        }
-      }
-    };
-    VisualMapping2.visualHandlers = {
-      color: {
-        applyVisual: makeApplyVisual("color"),
-        getColorMapper: function() {
-          var thisOption = this.option;
-          return bind(thisOption.mappingMethod === "category" ? function(value, isNormalized) {
-            !isNormalized && (value = this._normalizeData(value));
-            return doMapCategory.call(this, value);
-          } : function(value, isNormalized, out) {
-            var returnRGBArray = !!out;
-            !isNormalized && (value = this._normalizeData(value));
-            out = fastLerp(value, thisOption.parsedVisual, out);
-            return returnRGBArray ? out : stringify(out, "rgba");
-          }, this);
-        },
-        _normalizedToVisual: {
-          linear: function(normalized) {
-            return stringify(fastLerp(normalized, this.option.parsedVisual), "rgba");
-          },
-          category: doMapCategory,
-          piecewise: function(normalized, value) {
-            var result = getSpecifiedVisual.call(this, value);
-            if (result == null) {
-              result = stringify(fastLerp(normalized, this.option.parsedVisual), "rgba");
-            }
-            return result;
-          },
-          fixed: doMapFixed
-        }
-      },
-      colorHue: makePartialColorVisualHandler(function(color, value) {
-        return modifyHSL(color, value);
-      }),
-      colorSaturation: makePartialColorVisualHandler(function(color, value) {
-        return modifyHSL(color, null, value);
-      }),
-      colorLightness: makePartialColorVisualHandler(function(color, value) {
-        return modifyHSL(color, null, null, value);
-      }),
-      colorAlpha: makePartialColorVisualHandler(function(color, value) {
-        return modifyAlpha(color, value);
-      }),
-      decal: {
-        applyVisual: makeApplyVisual("decal"),
-        _normalizedToVisual: {
-          linear: null,
-          category: doMapCategory,
-          piecewise: null,
-          fixed: null
-        }
-      },
-      opacity: {
-        applyVisual: makeApplyVisual("opacity"),
-        _normalizedToVisual: createNormalizedToNumericVisual([0, 1])
-      },
-      liftZ: {
-        applyVisual: makeApplyVisual("liftZ"),
-        _normalizedToVisual: {
-          linear: doMapFixed,
-          category: doMapFixed,
-          piecewise: doMapFixed,
-          fixed: doMapFixed
-        }
-      },
-      symbol: {
-        applyVisual: function(value, getter, setter) {
-          var symbolCfg = this.mapValueToVisual(value);
-          setter("symbol", symbolCfg);
-        },
-        _normalizedToVisual: {
-          linear: doMapToArray,
-          category: doMapCategory,
-          piecewise: function(normalized, value) {
-            var result = getSpecifiedVisual.call(this, value);
-            if (result == null) {
-              result = doMapToArray.call(this, normalized);
-            }
-            return result;
-          },
-          fixed: doMapFixed
-        }
-      },
-      symbolSize: {
-        applyVisual: makeApplyVisual("symbolSize"),
-        _normalizedToVisual: createNormalizedToNumericVisual([0, 1])
-      }
-    };
-    return VisualMapping2;
-  }()
-);
-function preprocessForPiecewise(thisOption) {
-  var pieceList = thisOption.pieceList;
-  thisOption.hasSpecialVisual = false;
-  each(pieceList, function(piece, index) {
-    piece.originIndex = index;
-    if (piece.visual != null) {
-      thisOption.hasSpecialVisual = true;
-    }
-  });
-}
-function preprocessForSpecifiedCategory(thisOption) {
-  var categories = thisOption.categories;
-  var categoryMap = thisOption.categoryMap = {};
-  var visual = thisOption.visual;
-  each3(categories, function(cate, index) {
-    categoryMap[cate] = index;
-  });
-  if (!isArray(visual)) {
-    var visualArr_1 = [];
-    if (isObject(visual)) {
-      each3(visual, function(v, cate) {
-        var index = categoryMap[cate];
-        visualArr_1[index != null ? index : CATEGORY_DEFAULT_VISUAL_INDEX] = v;
-      });
-    } else {
-      visualArr_1[CATEGORY_DEFAULT_VISUAL_INDEX] = visual;
-    }
-    visual = setVisualToOption(thisOption, visualArr_1);
-  }
-  for (var i = categories.length - 1; i >= 0; i--) {
-    if (visual[i] == null) {
-      delete categoryMap[categories[i]];
-      categories.pop();
-    }
-  }
-}
-function normalizeVisualRange(thisOption, isCategory) {
-  var visual = thisOption.visual;
-  var visualArr = [];
-  if (isObject(visual)) {
-    each3(visual, function(v) {
-      visualArr.push(v);
-    });
-  } else if (visual != null) {
-    visualArr.push(visual);
-  }
-  var doNotNeedPair = {
-    color: 1,
-    symbol: 1
-  };
-  if (!isCategory && visualArr.length === 1 && !doNotNeedPair.hasOwnProperty(thisOption.type)) {
-    visualArr[1] = visualArr[0];
-  }
-  setVisualToOption(thisOption, visualArr);
-}
-function makePartialColorVisualHandler(applyValue) {
-  return {
-    applyVisual: function(value, getter, setter) {
-      var colorChannel = this.mapValueToVisual(value);
-      setter("color", applyValue(getter("color"), colorChannel));
-    },
-    _normalizedToVisual: createNormalizedToNumericVisual([0, 1])
-  };
-}
-function doMapToArray(normalized) {
-  var visual = this.option.visual;
-  return visual[Math.round(linearMap(normalized, [0, 1], [0, visual.length - 1], true))] || {};
-}
-function makeApplyVisual(visualType) {
-  return function(value, getter, setter) {
-    setter(visualType, this.mapValueToVisual(value));
-  };
-}
-function doMapCategory(normalized) {
-  var visual = this.option.visual;
-  return visual[this.option.loop && normalized !== CATEGORY_DEFAULT_VISUAL_INDEX ? normalized % visual.length : normalized];
-}
-function doMapFixed() {
-  return this.option.visual[0];
-}
-function createNormalizedToNumericVisual(sourceExtent) {
-  return {
-    linear: function(normalized) {
-      return linearMap(normalized, sourceExtent, this.option.visual, true);
-    },
-    category: doMapCategory,
-    piecewise: function(normalized, value) {
-      var result = getSpecifiedVisual.call(this, value);
-      if (result == null) {
-        result = linearMap(normalized, sourceExtent, this.option.visual, true);
-      }
-      return result;
-    },
-    fixed: doMapFixed
-  };
-}
-function getSpecifiedVisual(value) {
-  var thisOption = this.option;
-  var pieceList = thisOption.pieceList;
-  if (thisOption.hasSpecialVisual) {
-    var pieceIndex = VisualMapping.findPieceIndex(value, pieceList);
-    var piece = pieceList[pieceIndex];
-    if (piece && piece.visual) {
-      return piece.visual[this.type];
-    }
-  }
-}
-function setVisualToOption(thisOption, visualArr) {
-  thisOption.visual = visualArr;
-  if (thisOption.type === "color") {
-    thisOption.parsedVisual = map(visualArr, function(item) {
-      var color = parse(item);
-      if (!color && true) {
-        warn("'" + item + "' is an illegal color, fallback to '#000000'", true);
-      }
-      return color || [0, 0, 0, 1];
-    });
-  }
-  return visualArr;
-}
-var normalizers = {
-  linear: function(value) {
-    return linearMap(value, this.option.dataExtent, [0, 1], true);
-  },
-  piecewise: function(value) {
-    var pieceList = this.option.pieceList;
-    var pieceIndex = VisualMapping.findPieceIndex(value, pieceList, true);
-    if (pieceIndex != null) {
-      return linearMap(pieceIndex, [0, pieceList.length - 1], [0, 1], true);
-    }
-  },
-  category: function(value) {
-    var index = this.option.categories ? this.option.categoryMap[value] : value;
-    return index == null ? CATEGORY_DEFAULT_VISUAL_INDEX : index;
-  },
-  fixed: noop
-};
-function littleThan(close, a, b) {
-  return close ? a <= b : a < b;
-}
-var VisualMapping_default = VisualMapping;
-
-// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/LinePath.js
-var straightLineProto = Line_default.prototype;
-var bezierCurveProto = BezierCurve_default.prototype;
-var StraightLineShape = (
-  /** @class */
-  /* @__PURE__ */ function() {
-    function StraightLineShape2() {
-      this.x1 = 0;
-      this.y1 = 0;
-      this.x2 = 0;
-      this.y2 = 0;
-      this.percent = 1;
-    }
-    return StraightLineShape2;
-  }()
-);
-var CurveShape = (
-  /** @class */
-  function(_super) {
-    __extends(CurveShape2, _super);
-    function CurveShape2() {
-      return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return CurveShape2;
-  }(StraightLineShape)
-);
-function isStraightLine(shape) {
-  return isNaN(+shape.cpx1) || isNaN(+shape.cpy1);
-}
-var ECLinePath = (
-  /** @class */
-  function(_super) {
-    __extends(ECLinePath2, _super);
-    function ECLinePath2(opts) {
-      var _this = _super.call(this, opts) || this;
-      _this.type = "ec-line";
-      return _this;
-    }
-    ECLinePath2.prototype.getDefaultStyle = function() {
-      return {
-        stroke: tokens_default.color.neutral99,
-        fill: null
-      };
-    };
-    ECLinePath2.prototype.getDefaultShape = function() {
-      return new StraightLineShape();
-    };
-    ECLinePath2.prototype.buildPath = function(ctx, shape) {
-      if (isStraightLine(shape)) {
-        straightLineProto.buildPath.call(this, ctx, shape);
-      } else {
-        bezierCurveProto.buildPath.call(this, ctx, shape);
-      }
-    };
-    ECLinePath2.prototype.pointAt = function(t) {
-      if (isStraightLine(this.shape)) {
-        return straightLineProto.pointAt.call(this, t);
-      } else {
-        return bezierCurveProto.pointAt.call(this, t);
-      }
-    };
-    ECLinePath2.prototype.tangentAt = function(t) {
-      var shape = this.shape;
-      var p = isStraightLine(shape) ? [shape.x2 - shape.x1, shape.y2 - shape.y1] : bezierCurveProto.tangentAt.call(this, t);
-      return normalize(p, p);
-    };
-    return ECLinePath2;
-  }(Path_default)
-);
-var LinePath_default = ECLinePath;
-
-// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/Line.js
-var SYMBOL_CATEGORIES = ["fromSymbol", "toSymbol"];
-function makeSymbolTypeKey(symbolCategory) {
-  return "_" + symbolCategory + "Type";
-}
-function makeSymbolTypeValue(name, lineData, idx) {
-  var symbolType = lineData.getItemVisual(idx, name);
-  if (!symbolType || symbolType === "none") {
-    return symbolType;
-  }
-  var symbolSize = lineData.getItemVisual(idx, name + "Size");
-  var symbolRotate = lineData.getItemVisual(idx, name + "Rotate");
-  var symbolOffset = lineData.getItemVisual(idx, name + "Offset");
-  var symbolKeepAspect = lineData.getItemVisual(idx, name + "KeepAspect");
-  var symbolSizeArr = normalizeSymbolSize(symbolSize);
-  var symbolOffsetArr = normalizeSymbolOffset(symbolOffset || 0, symbolSizeArr);
-  return symbolType + symbolSizeArr + symbolOffsetArr + (symbolRotate || "") + (symbolKeepAspect || "");
-}
-function createSymbol2(name, lineData, idx) {
-  var symbolType = lineData.getItemVisual(idx, name);
-  if (!symbolType || symbolType === "none") {
-    return;
-  }
-  var symbolSize = lineData.getItemVisual(idx, name + "Size");
-  var symbolRotate = lineData.getItemVisual(idx, name + "Rotate");
-  var symbolOffset = lineData.getItemVisual(idx, name + "Offset");
-  var symbolKeepAspect = lineData.getItemVisual(idx, name + "KeepAspect");
-  var symbolSizeArr = normalizeSymbolSize(symbolSize);
-  var symbolOffsetArr = normalizeSymbolOffset(symbolOffset || 0, symbolSizeArr);
-  var symbolPath = createSymbol(symbolType, -symbolSizeArr[0] / 2 + symbolOffsetArr[0], -symbolSizeArr[1] / 2 + symbolOffsetArr[1], symbolSizeArr[0], symbolSizeArr[1], null, symbolKeepAspect);
-  symbolPath.__specifiedRotation = symbolRotate == null || isNaN(symbolRotate) ? void 0 : +symbolRotate * Math.PI / 180 || 0;
-  symbolPath.name = name;
-  return symbolPath;
-}
-function createLine(points3) {
-  var line = new LinePath_default({
-    name: "line",
-    subPixelOptimize: true
-  });
-  setLinePoints(line.shape, points3);
-  return line;
-}
-function setLinePoints(targetShape, points3) {
-  targetShape.x1 = points3[0][0];
-  targetShape.y1 = points3[0][1];
-  targetShape.x2 = points3[1][0];
-  targetShape.y2 = points3[1][1];
-  targetShape.percent = 1;
-  var cp1 = points3[2];
-  if (cp1) {
-    targetShape.cpx1 = cp1[0];
-    targetShape.cpy1 = cp1[1];
-  } else {
-    targetShape.cpx1 = NaN;
-    targetShape.cpy1 = NaN;
-  }
-}
-var Line = (
-  /** @class */
-  function(_super) {
-    __extends(Line2, _super);
-    function Line2(lineData, idx, seriesScope) {
-      var _this = _super.call(this) || this;
-      _this._createLine(lineData, idx, seriesScope);
-      return _this;
-    }
-    Line2.prototype._createLine = function(lineData, idx, seriesScope) {
-      var seriesModel = lineData.hostModel;
-      var linePoints = lineData.getItemLayout(idx);
-      var z2 = lineData.getItemVisual(idx, "z2");
-      var line = createLine(linePoints);
-      line.shape.percent = 0;
-      initProps(line, {
-        z2: retrieve2(z2, 0),
-        shape: {
-          percent: 1
-        }
-      }, seriesModel, idx);
-      this.add(line);
-      each(SYMBOL_CATEGORIES, function(symbolCategory) {
-        var symbol = createSymbol2(symbolCategory, lineData, idx);
-        this.add(symbol);
-        this[makeSymbolTypeKey(symbolCategory)] = makeSymbolTypeValue(symbolCategory, lineData, idx);
-      }, this);
-      this._updateCommonStl(lineData, idx, seriesScope);
-    };
-    Line2.prototype.updateData = function(lineData, idx, seriesScope) {
-      var seriesModel = lineData.hostModel;
-      var line = this.childOfName("line");
-      var linePoints = lineData.getItemLayout(idx);
-      var target = {
-        shape: {}
-      };
-      setLinePoints(target.shape, linePoints);
-      updateProps(line, target, seriesModel, idx);
-      each(SYMBOL_CATEGORIES, function(symbolCategory) {
-        var symbolType = makeSymbolTypeValue(symbolCategory, lineData, idx);
-        var key = makeSymbolTypeKey(symbolCategory);
-        if (this[key] !== symbolType) {
-          this.remove(this.childOfName(symbolCategory));
-          var symbol = createSymbol2(symbolCategory, lineData, idx);
-          this.add(symbol);
-        }
-        this[key] = symbolType;
-      }, this);
-      this._updateCommonStl(lineData, idx, seriesScope);
-    };
-    ;
-    Line2.prototype.getLinePath = function() {
-      return this.childAt(0);
-    };
-    Line2.prototype._updateCommonStl = function(lineData, idx, seriesScope) {
-      var seriesModel = lineData.hostModel;
-      var line = this.childOfName("line");
-      var emphasisLineStyle = seriesScope && seriesScope.emphasisLineStyle;
-      var blurLineStyle = seriesScope && seriesScope.blurLineStyle;
-      var selectLineStyle = seriesScope && seriesScope.selectLineStyle;
-      var labelStatesModels = seriesScope && seriesScope.labelStatesModels;
-      var emphasisDisabled = seriesScope && seriesScope.emphasisDisabled;
-      var focus = seriesScope && seriesScope.focus;
-      var blurScope = seriesScope && seriesScope.blurScope;
-      if (!seriesScope || lineData.hasItemOption) {
-        var itemModel = lineData.getItemModel(idx);
-        var emphasisModel = itemModel.getModel("emphasis");
-        emphasisLineStyle = emphasisModel.getModel("lineStyle").getLineStyle();
-        blurLineStyle = itemModel.getModel(["blur", "lineStyle"]).getLineStyle();
-        selectLineStyle = itemModel.getModel(["select", "lineStyle"]).getLineStyle();
-        emphasisDisabled = emphasisModel.get("disabled");
-        focus = emphasisModel.get("focus");
-        blurScope = emphasisModel.get("blurScope");
-        labelStatesModels = getLabelStatesModels(itemModel);
-      }
-      var lineStyle = lineData.getItemVisual(idx, "style");
-      var visualColor = lineStyle.stroke;
-      line.useStyle(lineStyle);
-      line.style.fill = null;
-      line.style.strokeNoScale = true;
-      line.ensureState("emphasis").style = emphasisLineStyle;
-      line.ensureState("blur").style = blurLineStyle;
-      line.ensureState("select").style = selectLineStyle;
-      each(SYMBOL_CATEGORIES, function(symbolCategory) {
-        var symbol = this.childOfName(symbolCategory);
-        if (symbol) {
-          symbol.setColor(visualColor);
-          symbol.style.opacity = lineStyle.opacity;
-          for (var i = 0; i < SPECIAL_STATES.length; i++) {
-            var stateName = SPECIAL_STATES[i];
-            var lineState = line.getState(stateName);
-            if (lineState) {
-              var lineStateStyle = lineState.style || {};
-              var state = symbol.ensureState(stateName);
-              var stateStyle = state.style || (state.style = {});
-              if (lineStateStyle.stroke != null) {
-                stateStyle[symbol.__isEmptyBrush ? "stroke" : "fill"] = lineStateStyle.stroke;
-              }
-              if (lineStateStyle.opacity != null) {
-                stateStyle.opacity = lineStateStyle.opacity;
-              }
-            }
-          }
-          symbol.markRedraw();
-        }
-      }, this);
-      var rawVal = seriesModel.getRawValue(idx);
-      setLabelStyle(this, labelStatesModels, {
-        labelDataIndex: idx,
-        labelFetcher: {
-          getFormattedLabel: function(dataIndex, stateName) {
-            return seriesModel.getFormattedLabel(dataIndex, stateName, lineData.dataType);
-          }
-        },
-        inheritColor: visualColor || tokens_default.color.neutral99,
-        defaultOpacity: lineStyle.opacity,
-        defaultText: (rawVal == null ? lineData.getName(idx) : isFinite(rawVal) ? round(rawVal) : rawVal) + ""
-      });
-      var label = this.getTextContent();
-      if (label) {
-        var labelNormalModel = labelStatesModels.normal;
-        label.__align = label.style.align;
-        label.__verticalAlign = label.style.verticalAlign;
-        label.__position = labelNormalModel.get("position") || "middle";
-        var distance = labelNormalModel.get("distance");
-        if (!isArray(distance)) {
-          distance = [distance, distance];
-        }
-        label.__labelDistance = distance;
-      }
-      this.setTextConfig({
-        position: null,
-        local: true,
-        inside: false
-        // Can't be inside for stroke element.
-      });
-      toggleHoverEmphasis(this, focus, blurScope, emphasisDisabled);
-    };
-    Line2.prototype.highlight = function() {
-      enterEmphasis(this);
-    };
-    Line2.prototype.downplay = function() {
-      leaveEmphasis(this);
-    };
-    Line2.prototype.updateLayout = function(lineData, idx) {
-      this.setLinePoints(lineData.getItemLayout(idx));
-    };
-    Line2.prototype.setLinePoints = function(points3) {
-      var linePath = this.childOfName("line");
-      setLinePoints(linePath.shape, points3);
-      linePath.dirty();
-    };
-    Line2.prototype.beforeUpdate = function() {
-      var lineGroup = this;
-      var symbolFrom = lineGroup.childOfName("fromSymbol");
-      var symbolTo = lineGroup.childOfName("toSymbol");
-      var label = lineGroup.getTextContent();
-      if (!symbolFrom && !symbolTo && (!label || label.ignore)) {
-        return;
-      }
-      var invScale = 1;
-      var parentNode = this.parent;
-      while (parentNode) {
-        if (parentNode.scaleX) {
-          invScale /= parentNode.scaleX;
-        }
-        parentNode = parentNode.parent;
-      }
-      var line = lineGroup.childOfName("line");
-      if (!this.__dirty && !line.__dirty) {
-        return;
-      }
-      var percent = line.shape.percent;
-      var fromPos = line.pointAt(0);
-      var toPos = line.pointAt(percent);
-      var d = sub([], toPos, fromPos);
-      normalize(d, d);
-      function setSymbolRotation(symbol, percent2) {
-        var specifiedRotation = symbol.__specifiedRotation;
-        if (specifiedRotation == null) {
-          var tangent2 = line.tangentAt(percent2);
-          symbol.attr("rotation", (percent2 === 1 ? -1 : 1) * Math.PI / 2 - Math.atan2(tangent2[1], tangent2[0]));
-        } else {
-          symbol.attr("rotation", specifiedRotation);
-        }
-      }
-      if (symbolFrom) {
-        symbolFrom.setPosition(fromPos);
-        setSymbolRotation(symbolFrom, 0);
-        symbolFrom.scaleX = symbolFrom.scaleY = invScale * percent;
-        symbolFrom.markRedraw();
-      }
-      if (symbolTo) {
-        symbolTo.setPosition(toPos);
-        setSymbolRotation(symbolTo, 1);
-        symbolTo.scaleX = symbolTo.scaleY = invScale * percent;
-        symbolTo.markRedraw();
-      }
-      if (label && !label.ignore) {
-        label.x = label.y = 0;
-        label.originX = label.originY = 0;
-        var textAlign = void 0;
-        var textVerticalAlign = void 0;
-        var distance = label.__labelDistance;
-        var distanceX = distance[0] * invScale;
-        var distanceY = distance[1] * invScale;
-        var halfPercent = percent / 2;
-        var tangent = line.tangentAt(halfPercent);
-        var n = [tangent[1], -tangent[0]];
-        var cp = line.pointAt(halfPercent);
-        if (n[1] > 0) {
-          n[0] = -n[0];
-          n[1] = -n[1];
-        }
-        var dir = tangent[0] < 0 ? -1 : 1;
-        if (label.__position !== "start" && label.__position !== "end") {
-          var rotation = -Math.atan2(tangent[1], tangent[0]);
-          if (toPos[0] < fromPos[0]) {
-            rotation = Math.PI + rotation;
-          }
-          label.rotation = rotation;
-        }
-        var dy = void 0;
-        switch (label.__position) {
-          case "insideStartTop":
-          case "insideMiddleTop":
-          case "insideEndTop":
-          case "middle":
-            dy = -distanceY;
-            textVerticalAlign = "bottom";
-            break;
-          case "insideStartBottom":
-          case "insideMiddleBottom":
-          case "insideEndBottom":
-            dy = distanceY;
-            textVerticalAlign = "top";
-            break;
-          default:
-            dy = 0;
-            textVerticalAlign = "middle";
-        }
-        switch (label.__position) {
-          case "end":
-            label.x = d[0] * distanceX + toPos[0];
-            label.y = d[1] * distanceY + toPos[1];
-            textAlign = d[0] > 0.8 ? "left" : d[0] < -0.8 ? "right" : "center";
-            textVerticalAlign = d[1] > 0.8 ? "top" : d[1] < -0.8 ? "bottom" : "middle";
-            break;
-          case "start":
-            label.x = -d[0] * distanceX + fromPos[0];
-            label.y = -d[1] * distanceY + fromPos[1];
-            textAlign = d[0] > 0.8 ? "right" : d[0] < -0.8 ? "left" : "center";
-            textVerticalAlign = d[1] > 0.8 ? "bottom" : d[1] < -0.8 ? "top" : "middle";
-            break;
-          case "insideStartTop":
-          case "insideStart":
-          case "insideStartBottom":
-            label.x = distanceX * dir + fromPos[0];
-            label.y = fromPos[1] + dy;
-            textAlign = tangent[0] < 0 ? "right" : "left";
-            label.originX = -distanceX * dir;
-            label.originY = -dy;
-            break;
-          case "insideMiddleTop":
-          case "insideMiddle":
-          case "insideMiddleBottom":
-          case "middle":
-            label.x = cp[0];
-            label.y = cp[1] + dy;
-            textAlign = "center";
-            label.originY = -dy;
-            break;
-          case "insideEndTop":
-          case "insideEnd":
-          case "insideEndBottom":
-            label.x = -distanceX * dir + toPos[0];
-            label.y = toPos[1] + dy;
-            textAlign = tangent[0] >= 0 ? "right" : "left";
-            label.originX = distanceX * dir;
-            label.originY = -dy;
-            break;
-        }
-        label.scaleX = label.scaleY = invScale;
-        label.setStyle({
-          // Use the user specified text align and baseline first
-          verticalAlign: label.__verticalAlign || textVerticalAlign,
-          align: label.__align || textAlign
-        });
-      }
-    };
-    return Line2;
-  }(Group_default)
-);
-var Line_default2 = Line;
-
-// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/LineDraw.js
-var LineDraw = (
-  /** @class */
-  function() {
-    function LineDraw2(LineCtor) {
-      this.group = new Group_default();
-      this._LineCtor = LineCtor || Line_default2;
-    }
-    LineDraw2.prototype.updateData = function(lineData) {
-      var _this = this;
-      this._progressiveEls = null;
-      var lineDraw = this;
-      var group = lineDraw.group;
-      var oldLineData = lineDraw._lineData;
-      lineDraw._lineData = lineData;
-      if (!oldLineData) {
-        group.removeAll();
-      }
-      var seriesScope = makeSeriesScope2(lineData);
-      lineData.diff(oldLineData).add(function(idx) {
-        _this._doAdd(lineData, idx, seriesScope);
-      }).update(function(newIdx, oldIdx) {
-        _this._doUpdate(oldLineData, lineData, oldIdx, newIdx, seriesScope);
-      }).remove(function(idx) {
-        group.remove(oldLineData.getItemGraphicEl(idx));
-      }).execute();
-    };
-    ;
-    LineDraw2.prototype.updateLayout = function() {
-      var lineData = this._lineData;
-      if (!lineData) {
-        return;
-      }
-      lineData.eachItemGraphicEl(function(el, idx) {
-        el.updateLayout(lineData, idx);
-      }, this);
-    };
-    ;
-    LineDraw2.prototype.incrementalPrepareUpdate = function(lineData) {
-      this._seriesScope = makeSeriesScope2(lineData);
-      this._lineData = null;
-      this.group.removeAll();
-    };
-    ;
-    LineDraw2.prototype.incrementalUpdate = function(taskParams, lineData) {
-      this._progressiveEls = [];
-      function updateIncrementalAndHover(el2) {
-        if (!el2.isGroup && !isEffectObject(el2)) {
-          el2.incremental = true;
-          el2.ensureState("emphasis").hoverLayer = true;
-        }
-      }
-      for (var idx = taskParams.start; idx < taskParams.end; idx++) {
-        var itemLayout = lineData.getItemLayout(idx);
-        if (lineNeedsDraw(itemLayout)) {
-          var el = new this._LineCtor(lineData, idx, this._seriesScope);
-          el.traverse(updateIncrementalAndHover);
-          this.group.add(el);
-          lineData.setItemGraphicEl(idx, el);
-          this._progressiveEls.push(el);
-        }
-      }
-    };
-    ;
-    LineDraw2.prototype.remove = function() {
-      this.group.removeAll();
-    };
-    ;
-    LineDraw2.prototype.eachRendered = function(cb) {
-      traverseElements(this._progressiveEls || this.group, cb);
-    };
-    LineDraw2.prototype._doAdd = function(lineData, idx, seriesScope) {
-      var itemLayout = lineData.getItemLayout(idx);
-      if (!lineNeedsDraw(itemLayout)) {
-        return;
-      }
-      var el = new this._LineCtor(lineData, idx, seriesScope);
-      lineData.setItemGraphicEl(idx, el);
-      this.group.add(el);
-    };
-    LineDraw2.prototype._doUpdate = function(oldLineData, newLineData, oldIdx, newIdx, seriesScope) {
-      var itemEl = oldLineData.getItemGraphicEl(oldIdx);
-      if (!lineNeedsDraw(newLineData.getItemLayout(newIdx))) {
-        this.group.remove(itemEl);
-        return;
-      }
-      if (!itemEl) {
-        itemEl = new this._LineCtor(newLineData, newIdx, seriesScope);
-      } else {
-        itemEl.updateData(newLineData, newIdx, seriesScope);
-      }
-      newLineData.setItemGraphicEl(newIdx, itemEl);
-      this.group.add(itemEl);
-    };
-    return LineDraw2;
-  }()
-);
-function isEffectObject(el) {
-  return el.animators && el.animators.length > 0;
-}
-function makeSeriesScope2(lineData) {
-  var hostModel = lineData.hostModel;
-  var emphasisModel = hostModel.getModel("emphasis");
-  return {
-    lineStyle: hostModel.getModel("lineStyle").getLineStyle(),
-    emphasisLineStyle: emphasisModel.getModel(["lineStyle"]).getLineStyle(),
-    blurLineStyle: hostModel.getModel(["blur", "lineStyle"]).getLineStyle(),
-    selectLineStyle: hostModel.getModel(["select", "lineStyle"]).getLineStyle(),
-    emphasisDisabled: emphasisModel.get("disabled"),
-    blurScope: emphasisModel.get("blurScope"),
-    focus: emphasisModel.get("focus"),
-    labelStatesModels: getLabelStatesModels(hostModel)
-  };
-}
-function isPointNaN(pt) {
-  return isNaN(pt[0]) || isNaN(pt[1]);
-}
-function lineNeedsDraw(pts) {
-  return pts && !isPointNaN(pts[0]) && !isPointNaN(pts[1]);
-}
-var LineDraw_default = LineDraw;
-
-// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/helper/thumbnailBridge.js
-var inner3 = makeInner();
-function getThumbnailBridge(model) {
-  if (model) {
-    return inner3(model).bridge;
-  }
-}
-function injectThumbnailBridge(model, thumbnailBridge) {
-  if (model) {
-    inner3(model).bridge = thumbnailBridge;
-  }
-}
-
 // node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/util/styleCompat.js
 var deprecatedLogs = {};
 function isEC4CompatibleStyle(style, elType, hasOwnTextContentOption, hasOwnTextConfig) {
@@ -9491,12 +8138,1360 @@ function applyKeyframeAnimation(el, animationOpts, animatableModel) {
   });
 }
 
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/visual/VisualMapping.js
+var each3 = each;
+var isObject2 = isObject;
+var CATEGORY_DEFAULT_VISUAL_INDEX = -1;
+var VisualMapping = (
+  /** @class */
+  function() {
+    function VisualMapping2(option) {
+      var mappingMethod = option.mappingMethod;
+      var visualType = option.type;
+      var thisOption = this.option = clone(option);
+      this.type = visualType;
+      this.mappingMethod = mappingMethod;
+      this._normalizeData = normalizers[mappingMethod];
+      var visualHandler = VisualMapping2.visualHandlers[visualType];
+      this.applyVisual = visualHandler.applyVisual;
+      this.getColorMapper = visualHandler.getColorMapper;
+      this._normalizedToVisual = visualHandler._normalizedToVisual[mappingMethod];
+      if (mappingMethod === "piecewise") {
+        normalizeVisualRange(thisOption);
+        preprocessForPiecewise(thisOption);
+      } else if (mappingMethod === "category") {
+        thisOption.categories ? preprocessForSpecifiedCategory(thisOption) : normalizeVisualRange(thisOption, true);
+      } else {
+        assert(mappingMethod !== "linear" || thisOption.dataExtent);
+        normalizeVisualRange(thisOption);
+      }
+    }
+    VisualMapping2.prototype.mapValueToVisual = function(value) {
+      var normalized = this._normalizeData(value);
+      return this._normalizedToVisual(normalized, value);
+    };
+    VisualMapping2.prototype.getNormalizer = function() {
+      return bind(this._normalizeData, this);
+    };
+    VisualMapping2.listVisualTypes = function() {
+      return keys(VisualMapping2.visualHandlers);
+    };
+    VisualMapping2.isValidType = function(visualType) {
+      return VisualMapping2.visualHandlers.hasOwnProperty(visualType);
+    };
+    VisualMapping2.eachVisual = function(visual, callback, context) {
+      if (isObject(visual)) {
+        each(visual, callback, context);
+      } else {
+        callback.call(context, visual);
+      }
+    };
+    VisualMapping2.mapVisual = function(visual, callback, context) {
+      var isPrimary;
+      var newVisual = isArray(visual) ? [] : isObject(visual) ? {} : (isPrimary = true, null);
+      VisualMapping2.eachVisual(visual, function(v, key) {
+        var newVal = callback.call(context, v, key);
+        isPrimary ? newVisual = newVal : newVisual[key] = newVal;
+      });
+      return newVisual;
+    };
+    VisualMapping2.retrieveVisuals = function(obj) {
+      var ret = {};
+      var hasVisual;
+      obj && each3(VisualMapping2.visualHandlers, function(h, visualType) {
+        if (obj.hasOwnProperty(visualType)) {
+          ret[visualType] = obj[visualType];
+          hasVisual = true;
+        }
+      });
+      return hasVisual ? ret : null;
+    };
+    VisualMapping2.prepareVisualTypes = function(visualTypes) {
+      if (isArray(visualTypes)) {
+        visualTypes = visualTypes.slice();
+      } else if (isObject2(visualTypes)) {
+        var types_1 = [];
+        each3(visualTypes, function(item, type) {
+          types_1.push(type);
+        });
+        visualTypes = types_1;
+      } else {
+        return [];
+      }
+      visualTypes.sort(function(type1, type2) {
+        return type2 === "color" && type1 !== "color" && type1.indexOf("color") === 0 ? 1 : -1;
+      });
+      return visualTypes;
+    };
+    VisualMapping2.dependsOn = function(visualType1, visualType2) {
+      return visualType2 === "color" ? !!(visualType1 && visualType1.indexOf(visualType2) === 0) : visualType1 === visualType2;
+    };
+    VisualMapping2.findPieceIndex = function(value, pieceList, findClosestWhenOutside) {
+      var possibleI;
+      var abs = Infinity;
+      for (var i = 0, len = pieceList.length; i < len; i++) {
+        var pieceValue = pieceList[i].value;
+        if (pieceValue != null) {
+          if (pieceValue === value || isString(pieceValue) && pieceValue === value + "") {
+            return i;
+          }
+          findClosestWhenOutside && updatePossible(pieceValue, i);
+        }
+      }
+      for (var i = 0, len = pieceList.length; i < len; i++) {
+        var piece = pieceList[i];
+        var interval = piece.interval;
+        var close_1 = piece.close;
+        if (interval) {
+          if (interval[0] === -Infinity) {
+            if (littleThan(close_1[1], value, interval[1])) {
+              return i;
+            }
+          } else if (interval[1] === Infinity) {
+            if (littleThan(close_1[0], interval[0], value)) {
+              return i;
+            }
+          } else if (littleThan(close_1[0], interval[0], value) && littleThan(close_1[1], value, interval[1])) {
+            return i;
+          }
+          findClosestWhenOutside && updatePossible(interval[0], i);
+          findClosestWhenOutside && updatePossible(interval[1], i);
+        }
+      }
+      if (findClosestWhenOutside) {
+        return value === Infinity ? pieceList.length - 1 : value === -Infinity ? 0 : possibleI;
+      }
+      function updatePossible(val, index) {
+        var newAbs = Math.abs(val - value);
+        if (newAbs < abs) {
+          abs = newAbs;
+          possibleI = index;
+        }
+      }
+    };
+    VisualMapping2.visualHandlers = {
+      color: {
+        applyVisual: makeApplyVisual("color"),
+        getColorMapper: function() {
+          var thisOption = this.option;
+          return bind(thisOption.mappingMethod === "category" ? function(value, isNormalized) {
+            !isNormalized && (value = this._normalizeData(value));
+            return doMapCategory.call(this, value);
+          } : function(value, isNormalized, out) {
+            var returnRGBArray = !!out;
+            !isNormalized && (value = this._normalizeData(value));
+            out = fastLerp(value, thisOption.parsedVisual, out);
+            return returnRGBArray ? out : stringify(out, "rgba");
+          }, this);
+        },
+        _normalizedToVisual: {
+          linear: function(normalized) {
+            return stringify(fastLerp(normalized, this.option.parsedVisual), "rgba");
+          },
+          category: doMapCategory,
+          piecewise: function(normalized, value) {
+            var result = getSpecifiedVisual.call(this, value);
+            if (result == null) {
+              result = stringify(fastLerp(normalized, this.option.parsedVisual), "rgba");
+            }
+            return result;
+          },
+          fixed: doMapFixed
+        }
+      },
+      colorHue: makePartialColorVisualHandler(function(color, value) {
+        return modifyHSL(color, value);
+      }),
+      colorSaturation: makePartialColorVisualHandler(function(color, value) {
+        return modifyHSL(color, null, value);
+      }),
+      colorLightness: makePartialColorVisualHandler(function(color, value) {
+        return modifyHSL(color, null, null, value);
+      }),
+      colorAlpha: makePartialColorVisualHandler(function(color, value) {
+        return modifyAlpha(color, value);
+      }),
+      decal: {
+        applyVisual: makeApplyVisual("decal"),
+        _normalizedToVisual: {
+          linear: null,
+          category: doMapCategory,
+          piecewise: null,
+          fixed: null
+        }
+      },
+      opacity: {
+        applyVisual: makeApplyVisual("opacity"),
+        _normalizedToVisual: createNormalizedToNumericVisual([0, 1])
+      },
+      liftZ: {
+        applyVisual: makeApplyVisual("liftZ"),
+        _normalizedToVisual: {
+          linear: doMapFixed,
+          category: doMapFixed,
+          piecewise: doMapFixed,
+          fixed: doMapFixed
+        }
+      },
+      symbol: {
+        applyVisual: function(value, getter, setter) {
+          var symbolCfg = this.mapValueToVisual(value);
+          setter("symbol", symbolCfg);
+        },
+        _normalizedToVisual: {
+          linear: doMapToArray,
+          category: doMapCategory,
+          piecewise: function(normalized, value) {
+            var result = getSpecifiedVisual.call(this, value);
+            if (result == null) {
+              result = doMapToArray.call(this, normalized);
+            }
+            return result;
+          },
+          fixed: doMapFixed
+        }
+      },
+      symbolSize: {
+        applyVisual: makeApplyVisual("symbolSize"),
+        _normalizedToVisual: createNormalizedToNumericVisual([0, 1])
+      }
+    };
+    return VisualMapping2;
+  }()
+);
+function preprocessForPiecewise(thisOption) {
+  var pieceList = thisOption.pieceList;
+  thisOption.hasSpecialVisual = false;
+  each(pieceList, function(piece, index) {
+    piece.originIndex = index;
+    if (piece.visual != null) {
+      thisOption.hasSpecialVisual = true;
+    }
+  });
+}
+function preprocessForSpecifiedCategory(thisOption) {
+  var categories = thisOption.categories;
+  var categoryMap = thisOption.categoryMap = {};
+  var visual = thisOption.visual;
+  each3(categories, function(cate, index) {
+    categoryMap[cate] = index;
+  });
+  if (!isArray(visual)) {
+    var visualArr_1 = [];
+    if (isObject(visual)) {
+      each3(visual, function(v, cate) {
+        var index = categoryMap[cate];
+        visualArr_1[index != null ? index : CATEGORY_DEFAULT_VISUAL_INDEX] = v;
+      });
+    } else {
+      visualArr_1[CATEGORY_DEFAULT_VISUAL_INDEX] = visual;
+    }
+    visual = setVisualToOption(thisOption, visualArr_1);
+  }
+  for (var i = categories.length - 1; i >= 0; i--) {
+    if (visual[i] == null) {
+      delete categoryMap[categories[i]];
+      categories.pop();
+    }
+  }
+}
+function normalizeVisualRange(thisOption, isCategory) {
+  var visual = thisOption.visual;
+  var visualArr = [];
+  if (isObject(visual)) {
+    each3(visual, function(v) {
+      visualArr.push(v);
+    });
+  } else if (visual != null) {
+    visualArr.push(visual);
+  }
+  var doNotNeedPair = {
+    color: 1,
+    symbol: 1
+  };
+  if (!isCategory && visualArr.length === 1 && !doNotNeedPair.hasOwnProperty(thisOption.type)) {
+    visualArr[1] = visualArr[0];
+  }
+  setVisualToOption(thisOption, visualArr);
+}
+function makePartialColorVisualHandler(applyValue) {
+  return {
+    applyVisual: function(value, getter, setter) {
+      var colorChannel = this.mapValueToVisual(value);
+      setter("color", applyValue(getter("color"), colorChannel));
+    },
+    _normalizedToVisual: createNormalizedToNumericVisual([0, 1])
+  };
+}
+function doMapToArray(normalized) {
+  var visual = this.option.visual;
+  return visual[Math.round(linearMap(normalized, [0, 1], [0, visual.length - 1], true))] || {};
+}
+function makeApplyVisual(visualType) {
+  return function(value, getter, setter) {
+    setter(visualType, this.mapValueToVisual(value));
+  };
+}
+function doMapCategory(normalized) {
+  var visual = this.option.visual;
+  return visual[this.option.loop && normalized !== CATEGORY_DEFAULT_VISUAL_INDEX ? normalized % visual.length : normalized];
+}
+function doMapFixed() {
+  return this.option.visual[0];
+}
+function createNormalizedToNumericVisual(sourceExtent) {
+  return {
+    linear: function(normalized) {
+      return linearMap(normalized, sourceExtent, this.option.visual, true);
+    },
+    category: doMapCategory,
+    piecewise: function(normalized, value) {
+      var result = getSpecifiedVisual.call(this, value);
+      if (result == null) {
+        result = linearMap(normalized, sourceExtent, this.option.visual, true);
+      }
+      return result;
+    },
+    fixed: doMapFixed
+  };
+}
+function getSpecifiedVisual(value) {
+  var thisOption = this.option;
+  var pieceList = thisOption.pieceList;
+  if (thisOption.hasSpecialVisual) {
+    var pieceIndex = VisualMapping.findPieceIndex(value, pieceList);
+    var piece = pieceList[pieceIndex];
+    if (piece && piece.visual) {
+      return piece.visual[this.type];
+    }
+  }
+}
+function setVisualToOption(thisOption, visualArr) {
+  thisOption.visual = visualArr;
+  if (thisOption.type === "color") {
+    thisOption.parsedVisual = map(visualArr, function(item) {
+      var color = parse(item);
+      if (!color && true) {
+        warn("'" + item + "' is an illegal color, fallback to '#000000'", true);
+      }
+      return color || [0, 0, 0, 1];
+    });
+  }
+  return visualArr;
+}
+var normalizers = {
+  linear: function(value) {
+    return linearMap(value, this.option.dataExtent, [0, 1], true);
+  },
+  piecewise: function(value) {
+    var pieceList = this.option.pieceList;
+    var pieceIndex = VisualMapping.findPieceIndex(value, pieceList, true);
+    if (pieceIndex != null) {
+      return linearMap(pieceIndex, [0, pieceList.length - 1], [0, 1], true);
+    }
+  },
+  category: function(value) {
+    var index = this.option.categories ? this.option.categoryMap[value] : value;
+    return index == null ? CATEGORY_DEFAULT_VISUAL_INDEX : index;
+  },
+  fixed: noop
+};
+function littleThan(close, a, b) {
+  return close ? a <= b : a < b;
+}
+var VisualMapping_default = VisualMapping;
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/labelHelper.js
+function getDefaultLabel(data, dataIndex) {
+  var labelDims = data.mapDimensionsAll("defaultedLabel");
+  var len = labelDims.length;
+  if (len === 1) {
+    var rawVal = retrieveRawValue(data, dataIndex, labelDims[0]);
+    return rawVal != null ? rawVal + "" : null;
+  } else if (len) {
+    var vals = [];
+    for (var i = 0; i < labelDims.length; i++) {
+      vals.push(retrieveRawValue(data, dataIndex, labelDims[i]));
+    }
+    return vals.join(" ");
+  }
+}
+function getDefaultInterpolatedLabel(data, interpolatedValue) {
+  var labelDims = data.mapDimensionsAll("defaultedLabel");
+  if (!isArray(interpolatedValue)) {
+    return interpolatedValue + "";
+  }
+  var vals = [];
+  for (var i = 0; i < labelDims.length; i++) {
+    var dimIndex = data.getDimensionIndex(labelDims[i]);
+    if (dimIndex >= 0) {
+      vals.push(interpolatedValue[dimIndex]);
+    }
+  }
+  return vals.join(" ");
+}
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/Symbol.js
+var Symbol = (
+  /** @class */
+  function(_super) {
+    __extends(Symbol2, _super);
+    function Symbol2(data, idx, seriesScope, opts) {
+      var _this = _super.call(this) || this;
+      _this.updateData(data, idx, seriesScope, opts);
+      return _this;
+    }
+    Symbol2.prototype._createSymbol = function(symbolType, data, idx, symbolSize, z2, keepAspect) {
+      this.removeAll();
+      var symbolPath = createSymbol(symbolType, -1, -1, 2, 2, null, keepAspect);
+      symbolPath.attr({
+        z2: retrieve2(z2, 100),
+        culling: true,
+        scaleX: symbolSize[0] / 2,
+        scaleY: symbolSize[1] / 2
+      });
+      symbolPath.drift = driftSymbol;
+      this._symbolType = symbolType;
+      this.add(symbolPath);
+    };
+    Symbol2.prototype.stopSymbolAnimation = function(toLastFrame) {
+      this.childAt(0).stopAnimation(null, toLastFrame);
+    };
+    Symbol2.prototype.getSymbolType = function() {
+      return this._symbolType;
+    };
+    Symbol2.prototype.getSymbolPath = function() {
+      return this.childAt(0);
+    };
+    Symbol2.prototype.highlight = function() {
+      enterEmphasis(this.childAt(0));
+    };
+    Symbol2.prototype.downplay = function() {
+      leaveEmphasis(this.childAt(0));
+    };
+    Symbol2.prototype.setZ = function(zlevel, z) {
+      var symbolPath = this.childAt(0);
+      symbolPath.zlevel = zlevel;
+      symbolPath.z = z;
+    };
+    Symbol2.prototype.setDraggable = function(draggable, hasCursorOption) {
+      var symbolPath = this.childAt(0);
+      symbolPath.draggable = draggable;
+      symbolPath.cursor = !hasCursorOption && draggable ? "move" : symbolPath.cursor;
+    };
+    Symbol2.prototype.updateData = function(data, idx, seriesScope, opts) {
+      this.silent = false;
+      var symbolType = data.getItemVisual(idx, "symbol") || "circle";
+      var seriesModel = data.hostModel;
+      var symbolSize = Symbol2.getSymbolSize(data, idx);
+      var z2 = Symbol2.getSymbolZ2(data, idx);
+      var isInit = symbolType !== this._symbolType;
+      var disableAnimation = opts && opts.disableAnimation;
+      if (isInit) {
+        var keepAspect = data.getItemVisual(idx, "symbolKeepAspect");
+        this._createSymbol(symbolType, data, idx, symbolSize, z2, keepAspect);
+      } else {
+        var symbolPath = this.childAt(0);
+        symbolPath.silent = false;
+        var target = {
+          scaleX: symbolSize[0] / 2,
+          scaleY: symbolSize[1] / 2
+        };
+        disableAnimation ? symbolPath.attr(target) : updateProps(symbolPath, target, seriesModel, idx);
+        saveOldStyle(symbolPath);
+      }
+      this._updateCommon(data, idx, symbolSize, seriesScope, opts);
+      if (isInit) {
+        var symbolPath = this.childAt(0);
+        if (!disableAnimation) {
+          var target = {
+            scaleX: this._sizeX,
+            scaleY: this._sizeY,
+            style: {
+              // Always fadeIn. Because it has fadeOut animation when symbol is removed..
+              opacity: symbolPath.style.opacity
+            }
+          };
+          symbolPath.scaleX = symbolPath.scaleY = 0;
+          symbolPath.style.opacity = 0;
+          initProps(symbolPath, target, seriesModel, idx);
+        }
+      }
+      if (disableAnimation) {
+        this.childAt(0).stopAnimation("leave");
+      }
+    };
+    Symbol2.prototype._updateCommon = function(data, idx, symbolSize, seriesScope, opts) {
+      var symbolPath = this.childAt(0);
+      var seriesModel = data.hostModel;
+      var emphasisItemStyle;
+      var blurItemStyle;
+      var selectItemStyle;
+      var focus;
+      var blurScope;
+      var emphasisDisabled;
+      var labelStatesModels;
+      var hoverScale;
+      var cursorStyle;
+      if (seriesScope) {
+        emphasisItemStyle = seriesScope.emphasisItemStyle;
+        blurItemStyle = seriesScope.blurItemStyle;
+        selectItemStyle = seriesScope.selectItemStyle;
+        focus = seriesScope.focus;
+        blurScope = seriesScope.blurScope;
+        labelStatesModels = seriesScope.labelStatesModels;
+        hoverScale = seriesScope.hoverScale;
+        cursorStyle = seriesScope.cursorStyle;
+        emphasisDisabled = seriesScope.emphasisDisabled;
+      }
+      if (!seriesScope || data.hasItemOption) {
+        var itemModel = seriesScope && seriesScope.itemModel ? seriesScope.itemModel : data.getItemModel(idx);
+        var emphasisModel = itemModel.getModel("emphasis");
+        emphasisItemStyle = emphasisModel.getModel("itemStyle").getItemStyle();
+        selectItemStyle = itemModel.getModel(["select", "itemStyle"]).getItemStyle();
+        blurItemStyle = itemModel.getModel(["blur", "itemStyle"]).getItemStyle();
+        focus = emphasisModel.get("focus");
+        blurScope = emphasisModel.get("blurScope");
+        emphasisDisabled = emphasisModel.get("disabled");
+        labelStatesModels = getLabelStatesModels(itemModel);
+        hoverScale = emphasisModel.getShallow("scale");
+        cursorStyle = itemModel.getShallow("cursor");
+      }
+      var symbolRotate = data.getItemVisual(idx, "symbolRotate");
+      symbolPath.attr("rotation", (symbolRotate || 0) * Math.PI / 180 || 0);
+      var symbolOffset = normalizeSymbolOffset(data.getItemVisual(idx, "symbolOffset"), symbolSize);
+      if (symbolOffset) {
+        symbolPath.x = symbolOffset[0];
+        symbolPath.y = symbolOffset[1];
+      }
+      cursorStyle && symbolPath.attr("cursor", cursorStyle);
+      var symbolStyle = data.getItemVisual(idx, "style");
+      var visualColor = symbolStyle.fill;
+      if (symbolPath instanceof Image_default) {
+        var pathStyle = symbolPath.style;
+        symbolPath.useStyle(extend({
+          // TODO other properties like x, y ?
+          image: pathStyle.image,
+          x: pathStyle.x,
+          y: pathStyle.y,
+          width: pathStyle.width,
+          height: pathStyle.height
+        }, symbolStyle));
+      } else {
+        if (symbolPath.__isEmptyBrush) {
+          symbolPath.useStyle(extend({}, symbolStyle));
+        } else {
+          symbolPath.useStyle(symbolStyle);
+        }
+        symbolPath.style.decal = null;
+        symbolPath.setColor(visualColor, opts && opts.symbolInnerColor);
+        symbolPath.style.strokeNoScale = true;
+      }
+      var liftZ = data.getItemVisual(idx, "liftZ");
+      var z2Origin = this._z2;
+      if (liftZ != null) {
+        if (z2Origin == null) {
+          this._z2 = symbolPath.z2;
+          symbolPath.z2 += liftZ;
+        }
+      } else if (z2Origin != null) {
+        symbolPath.z2 = z2Origin;
+        this._z2 = null;
+      }
+      var useNameLabel = opts && opts.useNameLabel;
+      setLabelStyle(symbolPath, labelStatesModels, {
+        labelFetcher: seriesModel,
+        labelDataIndex: idx,
+        defaultText: getLabelDefaultText,
+        inheritColor: visualColor,
+        defaultOpacity: symbolStyle.opacity
+      });
+      function getLabelDefaultText(idx2) {
+        return useNameLabel ? data.getName(idx2) : getDefaultLabel(data, idx2);
+      }
+      this._sizeX = symbolSize[0] / 2;
+      this._sizeY = symbolSize[1] / 2;
+      var emphasisState = symbolPath.ensureState("emphasis");
+      emphasisState.style = emphasisItemStyle;
+      symbolPath.ensureState("select").style = selectItemStyle;
+      symbolPath.ensureState("blur").style = blurItemStyle;
+      var scaleRatio = hoverScale == null || hoverScale === true ? Math.max(1.1, 3 / this._sizeY) : isFinite(hoverScale) && hoverScale > 0 ? +hoverScale : 1;
+      emphasisState.scaleX = this._sizeX * scaleRatio;
+      emphasisState.scaleY = this._sizeY * scaleRatio;
+      this.setSymbolScale(1);
+      toggleHoverEmphasis(this, focus, blurScope, emphasisDisabled);
+    };
+    Symbol2.prototype.setSymbolScale = function(scale2) {
+      this.scaleX = this.scaleY = scale2;
+    };
+    Symbol2.prototype.fadeOut = function(cb, seriesModel, opt) {
+      var symbolPath = this.childAt(0);
+      var dataIndex = getECData(this).dataIndex;
+      var animationOpt = opt && opt.animation;
+      this.silent = symbolPath.silent = true;
+      if (opt && opt.fadeLabel) {
+        var textContent = symbolPath.getTextContent();
+        if (textContent) {
+          removeElement(textContent, {
+            style: {
+              opacity: 0
+            }
+          }, seriesModel, {
+            dataIndex,
+            removeOpt: animationOpt,
+            cb: function() {
+              symbolPath.removeTextContent();
+            }
+          });
+        }
+      } else {
+        symbolPath.removeTextContent();
+      }
+      removeElement(symbolPath, {
+        style: {
+          opacity: 0
+        },
+        scaleX: 0,
+        scaleY: 0
+      }, seriesModel, {
+        dataIndex,
+        cb,
+        removeOpt: animationOpt
+      });
+    };
+    Symbol2.getSymbolSize = function(data, idx) {
+      return normalizeSymbolSize(data.getItemVisual(idx, "symbolSize"));
+    };
+    Symbol2.getSymbolZ2 = function(data, idx) {
+      return data.getItemVisual(idx, "z2");
+    };
+    return Symbol2;
+  }(Group_default)
+);
+function driftSymbol(dx, dy) {
+  this.parent.drift(dx, dy);
+}
+var Symbol_default = Symbol;
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/SymbolDraw.js
+function symbolNeedsDraw(data, point, idx, opt) {
+  return point && !isNaN(point[0]) && !isNaN(point[1]) && !(opt.isIgnore && opt.isIgnore(idx)) && !(opt.clipShape && !opt.clipShape.contain(point[0], point[1])) && data.getItemVisual(idx, "symbol") !== "none";
+}
+function normalizeUpdateOpt(opt) {
+  if (opt != null && !isObject(opt)) {
+    opt = {
+      isIgnore: opt
+    };
+  }
+  return opt || {};
+}
+function makeSeriesScope(data) {
+  var seriesModel = data.hostModel;
+  var emphasisModel = seriesModel.getModel("emphasis");
+  return {
+    emphasisItemStyle: emphasisModel.getModel("itemStyle").getItemStyle(),
+    blurItemStyle: seriesModel.getModel(["blur", "itemStyle"]).getItemStyle(),
+    selectItemStyle: seriesModel.getModel(["select", "itemStyle"]).getItemStyle(),
+    focus: emphasisModel.get("focus"),
+    blurScope: emphasisModel.get("blurScope"),
+    emphasisDisabled: emphasisModel.get("disabled"),
+    hoverScale: emphasisModel.get("scale"),
+    labelStatesModels: getLabelStatesModels(seriesModel),
+    cursorStyle: seriesModel.get("cursor")
+  };
+}
+var SymbolDraw = (
+  /** @class */
+  function() {
+    function SymbolDraw2(SymbolCtor) {
+      this.group = new Group_default();
+      this._SymbolCtor = SymbolCtor || Symbol_default;
+    }
+    SymbolDraw2.prototype.updateData = function(data, opt) {
+      this._progressiveEls = null;
+      opt = normalizeUpdateOpt(opt);
+      var group = this.group;
+      var seriesModel = data.hostModel;
+      var oldData = this._data;
+      var SymbolCtor = this._SymbolCtor;
+      var disableAnimation = opt.disableAnimation;
+      var seriesScope = makeSeriesScope(data);
+      var symbolUpdateOpt = {
+        disableAnimation
+      };
+      var getSymbolPoint = opt.getSymbolPoint || function(idx) {
+        return data.getItemLayout(idx);
+      };
+      if (!oldData) {
+        group.removeAll();
+      }
+      data.diff(oldData).add(function(newIdx) {
+        var point = getSymbolPoint(newIdx);
+        if (symbolNeedsDraw(data, point, newIdx, opt)) {
+          var symbolEl = new SymbolCtor(data, newIdx, seriesScope, symbolUpdateOpt);
+          symbolEl.setPosition(point);
+          data.setItemGraphicEl(newIdx, symbolEl);
+          group.add(symbolEl);
+        }
+      }).update(function(newIdx, oldIdx) {
+        var symbolEl = oldData.getItemGraphicEl(oldIdx);
+        var point = getSymbolPoint(newIdx);
+        if (!symbolNeedsDraw(data, point, newIdx, opt)) {
+          group.remove(symbolEl);
+          return;
+        }
+        var newSymbolType = data.getItemVisual(newIdx, "symbol") || "circle";
+        var oldSymbolType = symbolEl && symbolEl.getSymbolType && symbolEl.getSymbolType();
+        if (!symbolEl || oldSymbolType && oldSymbolType !== newSymbolType) {
+          group.remove(symbolEl);
+          symbolEl = new SymbolCtor(data, newIdx, seriesScope, symbolUpdateOpt);
+          symbolEl.setPosition(point);
+        } else {
+          symbolEl.updateData(data, newIdx, seriesScope, symbolUpdateOpt);
+          var target = {
+            x: point[0],
+            y: point[1]
+          };
+          disableAnimation ? symbolEl.attr(target) : updateProps(symbolEl, target, seriesModel);
+        }
+        group.add(symbolEl);
+        data.setItemGraphicEl(newIdx, symbolEl);
+      }).remove(function(oldIdx) {
+        var el = oldData.getItemGraphicEl(oldIdx);
+        el && el.fadeOut(function() {
+          group.remove(el);
+        }, seriesModel);
+      }).execute();
+      this._getSymbolPoint = getSymbolPoint;
+      this._data = data;
+    };
+    ;
+    SymbolDraw2.prototype.updateLayout = function() {
+      var _this = this;
+      var data = this._data;
+      if (data) {
+        data.eachItemGraphicEl(function(el, idx) {
+          var point = _this._getSymbolPoint(idx);
+          el.setPosition(point);
+          el.markRedraw();
+        });
+      }
+    };
+    ;
+    SymbolDraw2.prototype.incrementalPrepareUpdate = function(data) {
+      this._seriesScope = makeSeriesScope(data);
+      this._data = null;
+      this.group.removeAll();
+    };
+    ;
+    SymbolDraw2.prototype.incrementalUpdate = function(taskParams, data, opt) {
+      this._progressiveEls = [];
+      opt = normalizeUpdateOpt(opt);
+      function updateIncrementalAndHover(el2) {
+        if (!el2.isGroup) {
+          el2.incremental = true;
+          el2.ensureState("emphasis").hoverLayer = true;
+        }
+      }
+      for (var idx = taskParams.start; idx < taskParams.end; idx++) {
+        var point = data.getItemLayout(idx);
+        if (symbolNeedsDraw(data, point, idx, opt)) {
+          var el = new this._SymbolCtor(data, idx, this._seriesScope);
+          el.traverse(updateIncrementalAndHover);
+          el.setPosition(point);
+          this.group.add(el);
+          data.setItemGraphicEl(idx, el);
+          this._progressiveEls.push(el);
+        }
+      }
+    };
+    ;
+    SymbolDraw2.prototype.eachRendered = function(cb) {
+      traverseElements(this._progressiveEls || this.group, cb);
+    };
+    SymbolDraw2.prototype.remove = function(enableAnimation) {
+      var group = this.group;
+      var data = this._data;
+      if (data && enableAnimation) {
+        data.eachItemGraphicEl(function(el) {
+          el.fadeOut(function() {
+            group.remove(el);
+          }, data.hostModel);
+        });
+      } else {
+        group.removeAll();
+      }
+    };
+    ;
+    return SymbolDraw2;
+  }()
+);
+var SymbolDraw_default = SymbolDraw;
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/LinePath.js
+var straightLineProto = Line_default.prototype;
+var bezierCurveProto = BezierCurve_default.prototype;
+var StraightLineShape = (
+  /** @class */
+  /* @__PURE__ */ function() {
+    function StraightLineShape2() {
+      this.x1 = 0;
+      this.y1 = 0;
+      this.x2 = 0;
+      this.y2 = 0;
+      this.percent = 1;
+    }
+    return StraightLineShape2;
+  }()
+);
+var CurveShape = (
+  /** @class */
+  function(_super) {
+    __extends(CurveShape2, _super);
+    function CurveShape2() {
+      return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return CurveShape2;
+  }(StraightLineShape)
+);
+function isStraightLine(shape) {
+  return isNaN(+shape.cpx1) || isNaN(+shape.cpy1);
+}
+var ECLinePath = (
+  /** @class */
+  function(_super) {
+    __extends(ECLinePath2, _super);
+    function ECLinePath2(opts) {
+      var _this = _super.call(this, opts) || this;
+      _this.type = "ec-line";
+      return _this;
+    }
+    ECLinePath2.prototype.getDefaultStyle = function() {
+      return {
+        stroke: tokens_default.color.neutral99,
+        fill: null
+      };
+    };
+    ECLinePath2.prototype.getDefaultShape = function() {
+      return new StraightLineShape();
+    };
+    ECLinePath2.prototype.buildPath = function(ctx, shape) {
+      if (isStraightLine(shape)) {
+        straightLineProto.buildPath.call(this, ctx, shape);
+      } else {
+        bezierCurveProto.buildPath.call(this, ctx, shape);
+      }
+    };
+    ECLinePath2.prototype.pointAt = function(t) {
+      if (isStraightLine(this.shape)) {
+        return straightLineProto.pointAt.call(this, t);
+      } else {
+        return bezierCurveProto.pointAt.call(this, t);
+      }
+    };
+    ECLinePath2.prototype.tangentAt = function(t) {
+      var shape = this.shape;
+      var p = isStraightLine(shape) ? [shape.x2 - shape.x1, shape.y2 - shape.y1] : bezierCurveProto.tangentAt.call(this, t);
+      return normalize(p, p);
+    };
+    return ECLinePath2;
+  }(Path_default)
+);
+var LinePath_default = ECLinePath;
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/Line.js
+var SYMBOL_CATEGORIES = ["fromSymbol", "toSymbol"];
+function makeSymbolTypeKey(symbolCategory) {
+  return "_" + symbolCategory + "Type";
+}
+function makeSymbolTypeValue(name, lineData, idx) {
+  var symbolType = lineData.getItemVisual(idx, name);
+  if (!symbolType || symbolType === "none") {
+    return symbolType;
+  }
+  var symbolSize = lineData.getItemVisual(idx, name + "Size");
+  var symbolRotate = lineData.getItemVisual(idx, name + "Rotate");
+  var symbolOffset = lineData.getItemVisual(idx, name + "Offset");
+  var symbolKeepAspect = lineData.getItemVisual(idx, name + "KeepAspect");
+  var symbolSizeArr = normalizeSymbolSize(symbolSize);
+  var symbolOffsetArr = normalizeSymbolOffset(symbolOffset || 0, symbolSizeArr);
+  return symbolType + symbolSizeArr + symbolOffsetArr + (symbolRotate || "") + (symbolKeepAspect || "");
+}
+function createSymbol2(name, lineData, idx) {
+  var symbolType = lineData.getItemVisual(idx, name);
+  if (!symbolType || symbolType === "none") {
+    return;
+  }
+  var symbolSize = lineData.getItemVisual(idx, name + "Size");
+  var symbolRotate = lineData.getItemVisual(idx, name + "Rotate");
+  var symbolOffset = lineData.getItemVisual(idx, name + "Offset");
+  var symbolKeepAspect = lineData.getItemVisual(idx, name + "KeepAspect");
+  var symbolSizeArr = normalizeSymbolSize(symbolSize);
+  var symbolOffsetArr = normalizeSymbolOffset(symbolOffset || 0, symbolSizeArr);
+  var symbolPath = createSymbol(symbolType, -symbolSizeArr[0] / 2 + symbolOffsetArr[0], -symbolSizeArr[1] / 2 + symbolOffsetArr[1], symbolSizeArr[0], symbolSizeArr[1], null, symbolKeepAspect);
+  symbolPath.__specifiedRotation = symbolRotate == null || isNaN(symbolRotate) ? void 0 : +symbolRotate * Math.PI / 180 || 0;
+  symbolPath.name = name;
+  return symbolPath;
+}
+function createLine(points3) {
+  var line = new LinePath_default({
+    name: "line",
+    subPixelOptimize: true
+  });
+  setLinePoints(line.shape, points3);
+  return line;
+}
+function setLinePoints(targetShape, points3) {
+  targetShape.x1 = points3[0][0];
+  targetShape.y1 = points3[0][1];
+  targetShape.x2 = points3[1][0];
+  targetShape.y2 = points3[1][1];
+  targetShape.percent = 1;
+  var cp1 = points3[2];
+  if (cp1) {
+    targetShape.cpx1 = cp1[0];
+    targetShape.cpy1 = cp1[1];
+  } else {
+    targetShape.cpx1 = NaN;
+    targetShape.cpy1 = NaN;
+  }
+}
+var Line = (
+  /** @class */
+  function(_super) {
+    __extends(Line2, _super);
+    function Line2(lineData, idx, seriesScope) {
+      var _this = _super.call(this) || this;
+      _this._createLine(lineData, idx, seriesScope);
+      return _this;
+    }
+    Line2.prototype._createLine = function(lineData, idx, seriesScope) {
+      var seriesModel = lineData.hostModel;
+      var linePoints = lineData.getItemLayout(idx);
+      var z2 = lineData.getItemVisual(idx, "z2");
+      var line = createLine(linePoints);
+      line.shape.percent = 0;
+      initProps(line, {
+        z2: retrieve2(z2, 0),
+        shape: {
+          percent: 1
+        }
+      }, seriesModel, idx);
+      this.add(line);
+      each(SYMBOL_CATEGORIES, function(symbolCategory) {
+        var symbol = createSymbol2(symbolCategory, lineData, idx);
+        this.add(symbol);
+        this[makeSymbolTypeKey(symbolCategory)] = makeSymbolTypeValue(symbolCategory, lineData, idx);
+      }, this);
+      this._updateCommonStl(lineData, idx, seriesScope);
+    };
+    Line2.prototype.updateData = function(lineData, idx, seriesScope) {
+      var seriesModel = lineData.hostModel;
+      var line = this.childOfName("line");
+      var linePoints = lineData.getItemLayout(idx);
+      var target = {
+        shape: {}
+      };
+      setLinePoints(target.shape, linePoints);
+      updateProps(line, target, seriesModel, idx);
+      each(SYMBOL_CATEGORIES, function(symbolCategory) {
+        var symbolType = makeSymbolTypeValue(symbolCategory, lineData, idx);
+        var key = makeSymbolTypeKey(symbolCategory);
+        if (this[key] !== symbolType) {
+          this.remove(this.childOfName(symbolCategory));
+          var symbol = createSymbol2(symbolCategory, lineData, idx);
+          this.add(symbol);
+        }
+        this[key] = symbolType;
+      }, this);
+      this._updateCommonStl(lineData, idx, seriesScope);
+    };
+    ;
+    Line2.prototype.getLinePath = function() {
+      return this.childAt(0);
+    };
+    Line2.prototype._updateCommonStl = function(lineData, idx, seriesScope) {
+      var seriesModel = lineData.hostModel;
+      var line = this.childOfName("line");
+      var emphasisLineStyle = seriesScope && seriesScope.emphasisLineStyle;
+      var blurLineStyle = seriesScope && seriesScope.blurLineStyle;
+      var selectLineStyle = seriesScope && seriesScope.selectLineStyle;
+      var labelStatesModels = seriesScope && seriesScope.labelStatesModels;
+      var emphasisDisabled = seriesScope && seriesScope.emphasisDisabled;
+      var focus = seriesScope && seriesScope.focus;
+      var blurScope = seriesScope && seriesScope.blurScope;
+      if (!seriesScope || lineData.hasItemOption) {
+        var itemModel = lineData.getItemModel(idx);
+        var emphasisModel = itemModel.getModel("emphasis");
+        emphasisLineStyle = emphasisModel.getModel("lineStyle").getLineStyle();
+        blurLineStyle = itemModel.getModel(["blur", "lineStyle"]).getLineStyle();
+        selectLineStyle = itemModel.getModel(["select", "lineStyle"]).getLineStyle();
+        emphasisDisabled = emphasisModel.get("disabled");
+        focus = emphasisModel.get("focus");
+        blurScope = emphasisModel.get("blurScope");
+        labelStatesModels = getLabelStatesModels(itemModel);
+      }
+      var lineStyle = lineData.getItemVisual(idx, "style");
+      var visualColor = lineStyle.stroke;
+      line.useStyle(lineStyle);
+      line.style.fill = null;
+      line.style.strokeNoScale = true;
+      line.ensureState("emphasis").style = emphasisLineStyle;
+      line.ensureState("blur").style = blurLineStyle;
+      line.ensureState("select").style = selectLineStyle;
+      each(SYMBOL_CATEGORIES, function(symbolCategory) {
+        var symbol = this.childOfName(symbolCategory);
+        if (symbol) {
+          symbol.setColor(visualColor);
+          symbol.style.opacity = lineStyle.opacity;
+          for (var i = 0; i < SPECIAL_STATES.length; i++) {
+            var stateName = SPECIAL_STATES[i];
+            var lineState = line.getState(stateName);
+            if (lineState) {
+              var lineStateStyle = lineState.style || {};
+              var state = symbol.ensureState(stateName);
+              var stateStyle = state.style || (state.style = {});
+              if (lineStateStyle.stroke != null) {
+                stateStyle[symbol.__isEmptyBrush ? "stroke" : "fill"] = lineStateStyle.stroke;
+              }
+              if (lineStateStyle.opacity != null) {
+                stateStyle.opacity = lineStateStyle.opacity;
+              }
+            }
+          }
+          symbol.markRedraw();
+        }
+      }, this);
+      var rawVal = seriesModel.getRawValue(idx);
+      setLabelStyle(this, labelStatesModels, {
+        labelDataIndex: idx,
+        labelFetcher: {
+          getFormattedLabel: function(dataIndex, stateName) {
+            return seriesModel.getFormattedLabel(dataIndex, stateName, lineData.dataType);
+          }
+        },
+        inheritColor: visualColor || tokens_default.color.neutral99,
+        defaultOpacity: lineStyle.opacity,
+        defaultText: (rawVal == null ? lineData.getName(idx) : isFinite(rawVal) ? round(rawVal) : rawVal) + ""
+      });
+      var label = this.getTextContent();
+      if (label) {
+        var labelNormalModel = labelStatesModels.normal;
+        label.__align = label.style.align;
+        label.__verticalAlign = label.style.verticalAlign;
+        label.__position = labelNormalModel.get("position") || "middle";
+        var distance = labelNormalModel.get("distance");
+        if (!isArray(distance)) {
+          distance = [distance, distance];
+        }
+        label.__labelDistance = distance;
+      }
+      this.setTextConfig({
+        position: null,
+        local: true,
+        inside: false
+        // Can't be inside for stroke element.
+      });
+      toggleHoverEmphasis(this, focus, blurScope, emphasisDisabled);
+    };
+    Line2.prototype.highlight = function() {
+      enterEmphasis(this);
+    };
+    Line2.prototype.downplay = function() {
+      leaveEmphasis(this);
+    };
+    Line2.prototype.updateLayout = function(lineData, idx) {
+      this.setLinePoints(lineData.getItemLayout(idx));
+    };
+    Line2.prototype.setLinePoints = function(points3) {
+      var linePath = this.childOfName("line");
+      setLinePoints(linePath.shape, points3);
+      linePath.dirty();
+    };
+    Line2.prototype.beforeUpdate = function() {
+      var lineGroup = this;
+      var symbolFrom = lineGroup.childOfName("fromSymbol");
+      var symbolTo = lineGroup.childOfName("toSymbol");
+      var label = lineGroup.getTextContent();
+      if (!symbolFrom && !symbolTo && (!label || label.ignore)) {
+        return;
+      }
+      var invScale = 1;
+      var parentNode = this.parent;
+      while (parentNode) {
+        if (parentNode.scaleX) {
+          invScale /= parentNode.scaleX;
+        }
+        parentNode = parentNode.parent;
+      }
+      var line = lineGroup.childOfName("line");
+      if (!this.__dirty && !line.__dirty) {
+        return;
+      }
+      var percent = line.shape.percent;
+      var fromPos = line.pointAt(0);
+      var toPos = line.pointAt(percent);
+      var d = sub([], toPos, fromPos);
+      normalize(d, d);
+      function setSymbolRotation(symbol, percent2) {
+        var specifiedRotation = symbol.__specifiedRotation;
+        if (specifiedRotation == null) {
+          var tangent2 = line.tangentAt(percent2);
+          symbol.attr("rotation", (percent2 === 1 ? -1 : 1) * Math.PI / 2 - Math.atan2(tangent2[1], tangent2[0]));
+        } else {
+          symbol.attr("rotation", specifiedRotation);
+        }
+      }
+      if (symbolFrom) {
+        symbolFrom.setPosition(fromPos);
+        setSymbolRotation(symbolFrom, 0);
+        symbolFrom.scaleX = symbolFrom.scaleY = invScale * percent;
+        symbolFrom.markRedraw();
+      }
+      if (symbolTo) {
+        symbolTo.setPosition(toPos);
+        setSymbolRotation(symbolTo, 1);
+        symbolTo.scaleX = symbolTo.scaleY = invScale * percent;
+        symbolTo.markRedraw();
+      }
+      if (label && !label.ignore) {
+        label.x = label.y = 0;
+        label.originX = label.originY = 0;
+        var textAlign = void 0;
+        var textVerticalAlign = void 0;
+        var distance = label.__labelDistance;
+        var distanceX = distance[0] * invScale;
+        var distanceY = distance[1] * invScale;
+        var halfPercent = percent / 2;
+        var tangent = line.tangentAt(halfPercent);
+        var n = [tangent[1], -tangent[0]];
+        var cp = line.pointAt(halfPercent);
+        if (n[1] > 0) {
+          n[0] = -n[0];
+          n[1] = -n[1];
+        }
+        var dir = tangent[0] < 0 ? -1 : 1;
+        if (label.__position !== "start" && label.__position !== "end") {
+          var rotation = -Math.atan2(tangent[1], tangent[0]);
+          if (toPos[0] < fromPos[0]) {
+            rotation = Math.PI + rotation;
+          }
+          label.rotation = rotation;
+        }
+        var dy = void 0;
+        switch (label.__position) {
+          case "insideStartTop":
+          case "insideMiddleTop":
+          case "insideEndTop":
+          case "middle":
+            dy = -distanceY;
+            textVerticalAlign = "bottom";
+            break;
+          case "insideStartBottom":
+          case "insideMiddleBottom":
+          case "insideEndBottom":
+            dy = distanceY;
+            textVerticalAlign = "top";
+            break;
+          default:
+            dy = 0;
+            textVerticalAlign = "middle";
+        }
+        switch (label.__position) {
+          case "end":
+            label.x = d[0] * distanceX + toPos[0];
+            label.y = d[1] * distanceY + toPos[1];
+            textAlign = d[0] > 0.8 ? "left" : d[0] < -0.8 ? "right" : "center";
+            textVerticalAlign = d[1] > 0.8 ? "top" : d[1] < -0.8 ? "bottom" : "middle";
+            break;
+          case "start":
+            label.x = -d[0] * distanceX + fromPos[0];
+            label.y = -d[1] * distanceY + fromPos[1];
+            textAlign = d[0] > 0.8 ? "right" : d[0] < -0.8 ? "left" : "center";
+            textVerticalAlign = d[1] > 0.8 ? "bottom" : d[1] < -0.8 ? "top" : "middle";
+            break;
+          case "insideStartTop":
+          case "insideStart":
+          case "insideStartBottom":
+            label.x = distanceX * dir + fromPos[0];
+            label.y = fromPos[1] + dy;
+            textAlign = tangent[0] < 0 ? "right" : "left";
+            label.originX = -distanceX * dir;
+            label.originY = -dy;
+            break;
+          case "insideMiddleTop":
+          case "insideMiddle":
+          case "insideMiddleBottom":
+          case "middle":
+            label.x = cp[0];
+            label.y = cp[1] + dy;
+            textAlign = "center";
+            label.originY = -dy;
+            break;
+          case "insideEndTop":
+          case "insideEnd":
+          case "insideEndBottom":
+            label.x = -distanceX * dir + toPos[0];
+            label.y = toPos[1] + dy;
+            textAlign = tangent[0] >= 0 ? "right" : "left";
+            label.originX = distanceX * dir;
+            label.originY = -dy;
+            break;
+        }
+        label.scaleX = label.scaleY = invScale;
+        label.setStyle({
+          // Use the user specified text align and baseline first
+          verticalAlign: label.__verticalAlign || textVerticalAlign,
+          align: label.__align || textAlign
+        });
+      }
+    };
+    return Line2;
+  }(Group_default)
+);
+var Line_default2 = Line;
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/chart/helper/LineDraw.js
+var LineDraw = (
+  /** @class */
+  function() {
+    function LineDraw2(LineCtor) {
+      this.group = new Group_default();
+      this._LineCtor = LineCtor || Line_default2;
+    }
+    LineDraw2.prototype.updateData = function(lineData) {
+      var _this = this;
+      this._progressiveEls = null;
+      var lineDraw = this;
+      var group = lineDraw.group;
+      var oldLineData = lineDraw._lineData;
+      lineDraw._lineData = lineData;
+      if (!oldLineData) {
+        group.removeAll();
+      }
+      var seriesScope = makeSeriesScope2(lineData);
+      lineData.diff(oldLineData).add(function(idx) {
+        _this._doAdd(lineData, idx, seriesScope);
+      }).update(function(newIdx, oldIdx) {
+        _this._doUpdate(oldLineData, lineData, oldIdx, newIdx, seriesScope);
+      }).remove(function(idx) {
+        group.remove(oldLineData.getItemGraphicEl(idx));
+      }).execute();
+    };
+    ;
+    LineDraw2.prototype.updateLayout = function() {
+      var lineData = this._lineData;
+      if (!lineData) {
+        return;
+      }
+      lineData.eachItemGraphicEl(function(el, idx) {
+        el.updateLayout(lineData, idx);
+      }, this);
+    };
+    ;
+    LineDraw2.prototype.incrementalPrepareUpdate = function(lineData) {
+      this._seriesScope = makeSeriesScope2(lineData);
+      this._lineData = null;
+      this.group.removeAll();
+    };
+    ;
+    LineDraw2.prototype.incrementalUpdate = function(taskParams, lineData) {
+      this._progressiveEls = [];
+      function updateIncrementalAndHover(el2) {
+        if (!el2.isGroup && !isEffectObject(el2)) {
+          el2.incremental = true;
+          el2.ensureState("emphasis").hoverLayer = true;
+        }
+      }
+      for (var idx = taskParams.start; idx < taskParams.end; idx++) {
+        var itemLayout = lineData.getItemLayout(idx);
+        if (lineNeedsDraw(itemLayout)) {
+          var el = new this._LineCtor(lineData, idx, this._seriesScope);
+          el.traverse(updateIncrementalAndHover);
+          this.group.add(el);
+          lineData.setItemGraphicEl(idx, el);
+          this._progressiveEls.push(el);
+        }
+      }
+    };
+    ;
+    LineDraw2.prototype.remove = function() {
+      this.group.removeAll();
+    };
+    ;
+    LineDraw2.prototype.eachRendered = function(cb) {
+      traverseElements(this._progressiveEls || this.group, cb);
+    };
+    LineDraw2.prototype._doAdd = function(lineData, idx, seriesScope) {
+      var itemLayout = lineData.getItemLayout(idx);
+      if (!lineNeedsDraw(itemLayout)) {
+        return;
+      }
+      var el = new this._LineCtor(lineData, idx, seriesScope);
+      lineData.setItemGraphicEl(idx, el);
+      this.group.add(el);
+    };
+    LineDraw2.prototype._doUpdate = function(oldLineData, newLineData, oldIdx, newIdx, seriesScope) {
+      var itemEl = oldLineData.getItemGraphicEl(oldIdx);
+      if (!lineNeedsDraw(newLineData.getItemLayout(newIdx))) {
+        this.group.remove(itemEl);
+        return;
+      }
+      if (!itemEl) {
+        itemEl = new this._LineCtor(newLineData, newIdx, seriesScope);
+      } else {
+        itemEl.updateData(newLineData, newIdx, seriesScope);
+      }
+      newLineData.setItemGraphicEl(newIdx, itemEl);
+      this.group.add(itemEl);
+    };
+    return LineDraw2;
+  }()
+);
+function isEffectObject(el) {
+  return el.animators && el.animators.length > 0;
+}
+function makeSeriesScope2(lineData) {
+  var hostModel = lineData.hostModel;
+  var emphasisModel = hostModel.getModel("emphasis");
+  return {
+    lineStyle: hostModel.getModel("lineStyle").getLineStyle(),
+    emphasisLineStyle: emphasisModel.getModel(["lineStyle"]).getLineStyle(),
+    blurLineStyle: hostModel.getModel(["blur", "lineStyle"]).getLineStyle(),
+    selectLineStyle: hostModel.getModel(["select", "lineStyle"]).getLineStyle(),
+    emphasisDisabled: emphasisModel.get("disabled"),
+    blurScope: emphasisModel.get("blurScope"),
+    focus: emphasisModel.get("focus"),
+    labelStatesModels: getLabelStatesModels(hostModel)
+  };
+}
+function isPointNaN(pt) {
+  return isNaN(pt[0]) || isNaN(pt[1]);
+}
+function lineNeedsDraw(pts) {
+  return pts && !isPointNaN(pts[0]) && !isPointNaN(pts[1]);
+}
+var LineDraw_default = LineDraw;
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/coord/CoordinateSystem.js
+function isCoordinateSystemType(coordSys, type) {
+  return coordSys.type === type;
+}
+
+// node_modules/.pnpm/echarts@6.0.0/node_modules/echarts/lib/component/helper/thumbnailBridge.js
+var inner3 = makeInner();
+function getThumbnailBridge(model) {
+  if (model) {
+    return inner3(model).bridge;
+  }
+}
+function injectThumbnailBridge(model, thumbnailBridge) {
+  if (model) {
+    inner3(model).bridge = thumbnailBridge;
+  }
+}
+
 export {
-  getDefaultLabel,
-  getDefaultInterpolatedLabel,
-  Symbol_default,
-  SymbolDraw_default,
-  isCoordinateSystemType,
   getAxisBreakHelper,
   axisModelCreator,
   AxisBuilder_default,
@@ -9509,21 +9504,15 @@ export {
   rectCoordAxisHandleRemove,
   install,
   install2,
-  RoamController_default,
   updateViewOnPan,
   updateViewOnZoom,
   updateController,
   updateCenterAndZoomInAction,
-  geoSourceManager_default,
-  MapDraw_default,
   View_default,
+  geoSourceManager_default,
+  RoamController_default,
+  MapDraw_default,
   install3,
-  VisualMapping_default,
-  LinePath_default,
-  Line_default2 as Line_default,
-  LineDraw_default,
-  getThumbnailBridge,
-  injectThumbnailBridge,
   sliderMove,
   BrushController_default,
   makeRectPanelClipPath,
@@ -9539,6 +9528,17 @@ export {
   applyLeaveTransition,
   isTransitionAll,
   stopPreviousKeyframeAnimationAndRestore,
-  applyKeyframeAnimation
+  applyKeyframeAnimation,
+  VisualMapping_default,
+  getDefaultLabel,
+  getDefaultInterpolatedLabel,
+  Symbol_default,
+  SymbolDraw_default,
+  LinePath_default,
+  Line_default2 as Line_default,
+  LineDraw_default,
+  isCoordinateSystemType,
+  getThumbnailBridge,
+  injectThumbnailBridge
 };
-//# sourceMappingURL=chunk-XIUHXDG4.js.map
+//# sourceMappingURL=chunk-LZPHZUWJ.js.map
