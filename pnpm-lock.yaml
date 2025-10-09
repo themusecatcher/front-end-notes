@@ -15,8 +15,8 @@ importers:
         specifier: ^3.5.20
         version: 3.5.20
       vue-amazing-ui:
-        specifier: ^2.4.20
-        version: 2.4.20(vue@3.5.20)
+        specifier: ^2.4.21
+        version: 2.4.21(vue@3.5.20)
       vue3-lazyload:
         specifier: ^0.3.8
         version: 0.3.8(vue@3.5.20)
@@ -133,8 +133,8 @@ packages:
     resolution: {integrity: sha512-ruv7Ae4J5dUYULmeXw1gmb7rYRz57OWCPM57pHojnLq/3Z1CK2lNSLTCVjxVk1F/TZHwOZZrOWi0ur95BbLxNQ==}
     engines: {node: '>=6.9.0'}
 
-  '@ctrl/tinycolor@4.1.0':
-    resolution: {integrity: sha512-WyOx8cJQ+FQus4Mm4uPIZA64gbk3Wxh0so5Lcii0aJifqwoVOlfFtorjLE0Hen4OYyHZMXDWqMmaQemBhgxFRQ==}
+  '@ctrl/tinycolor@4.2.0':
+    resolution: {integrity: sha512-kzyuwOAQnXJNLS9PSyrk0CWk35nWJW/zl/6KvnTBMFK65gm7U1/Z5BqjxeapjZCIhQcM/DsrEmcbRwDyXyXK4A==}
     engines: {node: '>=14'}
 
   '@docsearch/css@3.8.2':
@@ -1000,8 +1000,8 @@ packages:
       postcss:
         optional: true
 
-  vue-amazing-ui@2.4.20:
-    resolution: {integrity: sha512-DNYEq0M9FPw42gFVZ6dXSvZSkj+QqlLBzyb9f9EzHQzArbqnT6nkQxtCrmWgYzOswxrGTeiehjEXg3X6J7Mj0g==}
+  vue-amazing-ui@2.4.21:
+    resolution: {integrity: sha512-gfaxqigA1++da20DNO3/5RnPVIVsaeYvZvx0bNRHn07Xd0isTAs8NeQ/LzMK7f3NFaDpRqUlbSAYI/lIEW+cZQ==}
 
   vue-demi@0.12.5:
     resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}
@@ -1193,7 +1193,7 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
 
-  '@ctrl/tinycolor@4.1.0': {}
+  '@ctrl/tinycolor@4.2.0': {}
 
   '@docsearch/css@3.8.2': {}
 
@@ -2048,10 +2048,10 @@ snapshots:
       - typescript
       - universal-cookie
 
-  vue-amazing-ui@2.4.20(vue@3.5.20):
+  vue-amazing-ui@2.4.21(vue@3.5.20):
     dependencies:
       '@ant-design/colors': 8.0.0
-      '@ctrl/tinycolor': 4.1.0
+      '@ctrl/tinycolor': 4.2.0
       '@vuepic/vue-datepicker': 11.0.2(vue@3.5.20)
       '@vueuse/core': 13.9.0(vue@3.5.20)
       date-fns: 4.1.0
