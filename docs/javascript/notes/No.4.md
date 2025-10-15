@@ -595,5 +595,6 @@ function onWheel (e: WheelEvent) {
   } else {
     scrollLeft.value += scrollX
   }
+  // scrollLeft.value = Math.min(Math.max(scrollLeft.value + scrollX, 0), scrollMax.value)
 }
 ```
