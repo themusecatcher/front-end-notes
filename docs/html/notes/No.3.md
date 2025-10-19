@@ -131,3 +131,81 @@ BFC 的应用场景：
 4. **避免元素被覆盖**：当一个元素需要避免被浮动元素覆盖时，可以给该元素创建 BFC。
 
 BFC 是 CSS 布局中的一个重要概念，理解 BFC 的工作原理和特点，对于进行高效的布局设计和解决布局问题非常有帮助。
+
+## 跨域标签
+
+在 `HTML` 中，有几个标签可以加载跨域资源，但它们的跨域行为和处理方式各不相同：
+
+### 1. `<img>` 图片标签
+
+```html
+<img src="https://other-domain.com/image.jpg" crossorigin="anonymous">
+```
+
+- 默认允许跨域
+- 使用 `crossorigin` 属性可控制 `CORS` 行为
+
+### 2. `<script>` 脚本标签
+
+```html
+<script src="https://other-domain.com/script.js"></script>
+```
+
+- 默认允许跨域加载
+- 但受同源策略限制，无法读取跨域脚本的错误信息
+- 使用 `crossorigin` 属性可获取更详细的错误信息
+
+### 3. `<link>` 样式表标签
+
+```html
+<link rel="stylesheet" href="https://other-domain.com/style.css">
+```
+
+- 默认允许跨域加载 `CSS`
+- 但通过 `@font-face` 加载字体时可能受 `CORS` 限制
+
+### 4. `<iframe>` 内嵌框架
+
+```html
+<iframe src="https://other-domain.com/page.html"></iframe>
+```
+
+- 可以加载跨域内容
+- 但受同源策略限制，父页面无法访问 `iframe` 内容
+
+### 5. `<audio>`、`<video>` 媒体标签
+
+```html
+<audio src="https://other-domain.com/audio.mp3" crossorigin="anonymous"></audio>
+<video src="https://other-domain.com/video.mp4" crossorigin="anonymous"></video>
+```
+
+- 默认允许跨域加载
+- 使用 `crossorigin` 属性控制 `CORS`
+
+### 6. `<object>`、`<embed>` 嵌入对象
+
+```html
+<object data="https://other-domain.com/document.pdf"></object>
+<embed src="https://other-domain.com/swf.swf">
+```
+
+- 可以加载跨域资源
+
+### 跨域属性说明
+
+<br/>
+
+**crossorigin 属性值：**
+
+- `anonymous`：匿名跨域请求，不发送凭据
+- `use-credentials`：带凭据的跨域请求
+- 不设置：不使用 `CORS`
+
+### 注意事项
+
+- 跨域请求需要服务器设置正确的 `CORS` 头部
+- 某些资源（如字体、Canvas 图像数据）有更严格的跨域限制
+- 实际使用时要注意浏览器的安全策略限制
+
+这些标签为网页提供了丰富的跨域资源加载能力，但需要合理配置以确保安全和功能正常。

@@ -245,6 +245,8 @@ field.addEventListener('change', function () {
 
 ### better方案
 
+<br/>
+
 一般都是输入网址，访问一个html文件，html文件引入js、css和图片等资源。
 方案：**禁止html文件缓存，每次访问html都去请求服务器，这样每次浏览器都能拿到最新的html资源。当js内容更新时，修改html引入的js文件的版本号**。
 
@@ -262,6 +264,8 @@ field.addEventListener('change', function () {
 
 ### 应用实例
 
+<br/>
+
 在实际的网站开发中，线上环境通常会有出现 CSS、JS 更新，若服务器端已更新，而浏览器还是在使用缓存而不同步，将出现页面展示或 JS 异常等问题，为了保证浏览器能及时同步资源，我们可以这样做：
 
 - 将 `Expires` 设置为 `-1，`意思是**立即超时**，即每次加载资源都会请求 URL，通过 `Last Modification` 和 `ETag` 来由服务器来判断是否更新。这样就保证了服务器与浏览器资源文件同步。
@@ -269,9 +273,167 @@ field.addEventListener('change', function () {
 
 ### 改进如下
 
+<br/>
+
 将 `Expires` 设为一年或者更长 ，则浏览器不会主动请求 URL。但在 URL 后面加上类似时间戳的参数
 例如：`https://www.test.com?time=1676257395166`，后面跟的参数其实是没有实际意义的，但是，**每次在我们需要客户端同步对应文件时，仅需要修改对应文件 URL 的 time 参数即可，浏览器发现 URL 为新 URL，将即刻更新**。
 
 百度、淘宝等对 JS、CSS 缓存处理用的基本都是上面的策略，这样做的好处是：
 
 - **浏览器默认任何时候都仅使用缓存，加快了加载。而当文件需要更新时，通过修改参数又能让浏览器及时更新**。
+
+### 核心原理：URL 作为缓存键
+
+<br/>
+
+浏览器缓存的核心机制是：**将完整的 URL 作为缓存的键(key)**。
+
+- `https://www.test.com/app.js` 和 `https://www.test.com/app.js?time=123456`
+- 在浏览器看来，这是**两个完全不同的资源**
+
+### 具体实现流程
+
+#### 1. 长期缓存设置
+
+```http
+# 服务器响应头
+Cache-Control: max-age=31536000  # 一年
+Expires: Mon, 01 Jan 2024 00:00:00 GMT
+```
+
+#### 2. 文件更新机制
+
+**情况A：文件内容不变，只想强制更新**
+
+```html
+<!-- 旧版本 -->
+<script src="https://www.test.com/app.js?v=1.0.0"></script>
+
+<!-- 新版本 - 只改变参数 -->
+<script src="https://www.test.com/app.js?v=1.0.1"></script>
+```
+
+**情况B：基于内容生成哈希（更优方案）**
+
+```html
+<!-- 文件内容：function hello() { return "hello"; } -->
+<script src="https://www.test.com/app.a1b2c3d4.js"></script>
+
+<!-- 文件更新后：function hello() { return "hello world"; } -->
+<script src="https://www.test.com/app.e5f6g7h8.js"></script>
+```
+
+### 现代前端构建工具的实践
+
+#### Webpack 示例
+
+```javascript
+// webpack.config.js
+module.exports = {
+  output: {
+    filename: '[name].[hash].js', // 根据内容生成哈希
+    chunkFilename: '[name].[hash].js'
+  },
+};
+```
+
+#### 构建结果
+
+```
+dist/
+├── app.3a4b5c6d.js    # 内容改变，哈希就变
+├── vendor.7e8f9a0b.js
+└── index.html
+```
+
+### 服务器配置
+
+#### Nginx 配置
+
+```nginx
+location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+    expires 1y;
+    add_header Cache-Control "public, immutable";
+}
+```
+
+#### 关键点：`immutable` 标记
+
+```http
+Cache-Control: public, max-age=31536000, immutable
+```
+
+告诉浏览器：在缓存有效期内，这个资源**永远不会改变**，无需验证。
+
+### 更新传播流程
+
+1. **开发阶段**：文件修改 → 构建工具生成新的哈希文件名
+2. **部署阶段**：上传新文件，更新 `HTML` 中的引用
+3. **用户访问**：
+   - 首次访问或缓存过期：下载所有新资源
+   - 已有缓存：继续使用旧版本，直到访问更新后的 `HTML`
+
+### 优势分析
+
+#### 性能优势
+
+- **缓存命中率极高**：未变更的资源永远从缓存读取
+- **减少网络请求**：无需 `304` 验证，直接使用缓存
+- **并行下载**：浏览器可以同时下载多个永久缓存资源
+
+#### 更新优势
+
+- **精确更新**：只有实际变更的文件需要重新下载
+- **零延迟切换**：`HTML` 更新后立即生效
+- **版本控制**：通过 `URL` 参数天然支持多版本共存
+
+### 实际应用场景
+
+#### 单页应用(SPA)
+
+```html
+<!-- 版本 1.2.3 -->
+<script src="/static/js/runtime~main.a1b2c3.js"></script>
+<script src="/static/js/main.d4e5f6.js"></script>
+
+<!-- 版本 1.2.4 - 只有 main 文件更新 -->
+<script src="/static/js/runtime~main.a1b2c3.js"></script> <!-- 缓存命中 -->
+<script src="/static/js/main.g7h8i9.js"></script> <!-- 重新下载 -->
+```
+
+#### 第三方库 CDN
+
+```html
+<!-- jQuery 固定版本 -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+```
+
+### 注意事项
+
+1. **HTML 文件不能长期缓存**
+   ```nginx
+   location / {
+       index index.html;
+       try_files $uri $uri/ =404;
+       # HTML 不设置长期缓存或缓存时间很短
+       expires 1h;
+   }
+   ```
+
+2. **确保旧版本清理**
+   - 定期清理服务器上的旧哈希文件
+   - 使用 CI/CD 自动化清理
+
+3. **回滚策略**
+   - 保留最近几个版本的文件
+   - 快速回滚时只需回退 HTML 引用
+
+### 总结
+
+这种策略的精妙之处在于：
+
+- **利用 URL 作为缓存键**，通过改变 `URL` 来"欺骗"浏览器下载新内容
+- **将缓存控制从 HTTP 头转移到文件名/URL**，实现更精确的控制
+- **完美平衡了缓存效率与更新及时性**
+
+这就是为什么现代大型网站（百度、淘宝、Google 等）都能在保持极快加载速度的同时，确保用户总能获得最新版本的原因。
