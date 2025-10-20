@@ -130,7 +130,7 @@
 
 #### 2. **请求取消**
 
-- **`axios`**（使用 AbortController）：
+- **`axios`**（使用 `AbortController`）：
 
   ```js
   const controller = new AbortController()

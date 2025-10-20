@@ -10,7 +10,7 @@
 
 <br/>
 
-**目标**：将 JS 文本转换为可执行的中间表示形式。
+**目标**：将 `JS` 文本转换为可执行的中间表示形式。
 
 #### 1.1 词法分析（Lexical Analysis）
 
@@ -21,7 +21,7 @@
   const a = 1 + 2
   ```
 
-  → 拆分为 `const`, `a`, `=`, `1`, `+`, `2`, `;` 等 Tokens。
+  → 拆分为 `const`, `a`, `=`, `1`, `+`, `2`, `;` 等 `Tokens`。
 - **作用**：识别关键字、变量名、运算符等。
 
 #### 1.2 语法分析（Syntax Analysis）
@@ -158,13 +158,15 @@ function sumOptimized(arr) {
 
 ### 工具与调试
 
-- **查看字节码**：使用 Node.js 的 `--print-bytecode` 标志。
+- **查看字节码**：使用 `Node.js` 的 `--print-bytecode` 标志。
 - **分析优化/反优化**：使用 `--trace-opt` 和 `--trace-deopt` 标志。
-- **性能分析**：Chrome DevTools 的 **Performance** 和 **Memory** 面板。
+- **性能分析**：`Chrome DevTools` 的 **Performance** 和 **Memory** 面板。
 
 ---
 
 ### 总结
+
+<br/>
 
 `JavaScript` 的编译解析过程通过 **词法分析 → 语法分析 → 解释执行 → JIT 优化** 的流程，结合高效的垃圾回收和运行时优化，平衡了开发灵活性与执行性能。理解这一过程有助于编写高性能代码，避免触发反优化或内存泄漏。
 
@@ -333,5 +335,7 @@ console.log(obj.a)
 - 定期检查打包结果：通过分析工具（如 `Webpack Bundle Analyzer`）验证优化效果。
 
 ### 结论
+
+<br/>
 
 `Tree shaking` 虽能显著减少代码体积，但其效果受代码结构、工具配置及第三方依赖的影响。通过遵循模块化最佳实践、合理配置工具链，可最大化优化效果，但仍需结合实际场景验证和调整。
