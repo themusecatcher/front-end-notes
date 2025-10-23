@@ -229,7 +229,7 @@ class Person {
 
 微服务通过解耦和自治提升系统灵活性与可维护性，但需应对分布式系统的复杂性。成功实施依赖强大的基础设施（如Kubernetes）、成熟的DevOps实践及团队协作模式。适用于中大型项目，小型项目需权衡复杂度与收益。
 
-## [垃圾回收 Garbage Collection](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Memory_management#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6)与内存泄漏
+## [垃圾回收 Garbage Collection](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Memory_management#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6)与[内存管理](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Memory_management)
 
 ### 一、`JavaScript` 的垃圾回收（GC）
 
@@ -274,7 +274,9 @@ class Person {
 
 #### `GC` 的触发时机
 
-- 分配新对象时，如果新生代空间不足，触发新生代 `GC`。- 老生代空间达到某个阈值时，触发老生代 `GC`。- 脚本主动调用 `global.gc()`（非标准，主要用于调试，如 `Node.js` 的 `--expose-gc`）。- 浏览器/Node.js 在空闲时。
+- 分配新对象时，如果新生代空间不足，触发新生代 `GC`。- 老生代空间达到某个阈值时，触发老生代 `GC`。
+- 脚本主动调用 `global.gc()`（非标准，主要用于调试，如 `Node.js` 的 `--expose-gc`）。
+- 浏览器/Node.js 在空闲时。
 
 ### 二、JavaScript 中的内存泄露（Memory Leak）
 
@@ -321,7 +323,7 @@ class Person {
   // 如果 myButton 被移除出 DOM，并且没有移除事件监听器，onButtonClick 及其作用域链上的变量不会被释放
   ```
 
-  - **修复：** 在不需要定时器时调用 `clearInterval` / `clearTimeout`；在 `DOM` 元素被移除前（或在组件卸载生命周期钩子中 - `React`: `useEffect` `cleanup`, `Vue`: `beforeUnmount`）移除事件监听器。使用 `AbortController` 管理事件监听器移除。
+  - **修复：** 在不需要定时器时调用 `clearInterval` / `clearTimeout`；在 `DOM` 元素被移除前（或在组件卸载生命周期钩子中 `React`: `useEffect` `cleanup`, `Vue`: `beforeUnmount`）移除事件监听器。使用 `AbortController` 管理事件监听器移除。
 
 3. **闭包（Closures）：**
   - 闭包是函数及其创建时的词法作用域的组合。这是 `JavaScript` 的强大特性。
@@ -380,6 +382,9 @@ class Person {
 
 6.  **控制台日志（Console Logs）：**
   - 在开发过程中，`console.log` 输出到控制台的对象不会被 `GC` 回收，因为浏览器需要保持它们在控制台中可查看（即使代码本身已不再引用它们）。
+    ::: tip 备注
+    经过验证，只有 `devtools` 打开时，`console` 打印才会引起内存泄漏的，如果不打开控制台，`console` 是不会引起内存变化的。
+    :::
   - **影响：** 主要在开发阶段可能导致内存占用偏高。生产环境的控制台日志通常会被移除或压缩，影响较小，但仍建议避免在生产中无节制地 `console.log` 大对象。
 
     ```javascript

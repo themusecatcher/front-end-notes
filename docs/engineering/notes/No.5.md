@@ -2,7 +2,7 @@
 
 ## `Sass` & `Vue Props` & `CSS 变量(var)`
 
-### 1. `Sass` 编译时态
+### 1. `Sass` 编译时态（编译时确定）
 
 <br/>
 
@@ -33,7 +33,7 @@ $primary: #3498db;
 }
 ```
 
-### 2. `Vue Props` 运行时态
+### 2. `Vue Props` 运行时态（运行时确定）
 
 <br/>
 
@@ -60,7 +60,7 @@ const props = defineProps({
 </template>
 ```
 
-### 3. CSS 变量运行时态
+### 3. CSS 变量运行时态（渲染时确定）
 
 <br/>
 
