@@ -275,7 +275,7 @@ eventBus.emit('greet', 'Bob')   // 无输出
 #### **1. 数据劫持**
 
 - **实现方式**：  
-  通过 `Object.defineProperty` 递归遍历对象的每个属性，将其转换为 getter/setter。
+  通过 `Object.defineProperty` 递归遍历对象的每个属性，将其转换为 `getter/setter`。
 
   ```js
   function defineReactive(obj, key) {
@@ -341,7 +341,7 @@ eventBus.emit('greet', 'Bob')   // 无输出
 
 #### **3. 局限**
 
-- **对于对象，无法属性的添加/删除**：需通过 `Vue.set`/`Vue.delete` 手动处理。
+- **对于对象，无法检测属性的添加/删除**：需通过 `Vue.set`/`Vue.delete` 手动处理。
 - **对于数组，不能检测以下数组的变动**：
   - 当你利用索引直接设置一个数组项时，例如：`vm.items[indexOfItem] = newValue`，需使用 `Vue.set(vm.items, indexOfItem, newValue)`
   - 当你修改数组的长度时，例如：`vm.items.length = newLength`，需使用 `vm.items.splice(newLength)` 来代替。
