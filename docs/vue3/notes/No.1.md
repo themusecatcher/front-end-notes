@@ -30,7 +30,7 @@
 
 使用地图示例：
 
-- 在 index.html 中引入
+- 在 `index.html` 中引入
 
   ```html
   <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=GPs9yDno13oKRnKmTCvxf0B17FaGicj5"></script>
@@ -156,30 +156,31 @@ app.use(VueUeditorWrap).mount('#app')
 
 ```vue
 <script setup lang="ts">
-  import { ref, watchEffect, watch } from 'vue'
-  import { config } from './editorConfig'
+import { ref, watchEffect, watch } from 'vue'
+import { config } from './editorConfig'
 
-  interface Props {
-    value: string
-  }
-  const props = withDefaults(defineProps<Props>(), {
-    value: ''
-  })
-  const content = ref('')
-  watchEffect(() => {
-    content.value = props.value
-  })
-  const emits = defineEmits(['update:value', 'change'])
-  watch(content, (to) => {
-    console.log('to', to)
-    emits('update:value', to)
-  })
+interface Props {
+  value: string
+}
+const props = withDefaults(defineProps<Props>(), {
+  value: ''
+})
+const content = ref('')
+watchEffect(() => {
+  content.value = props.value
+})
+const emits = defineEmits(['update:value', 'change'])
+watch(content, (to) => {
+  console.log('to', to)
+  emits('update:value', to)
+})
 </script>
 <template>
   <VueUeditorWrap
     v-model="content"
     :config="config"
-    v-bind="$attrs" />
+    v-bind="$attrs"
+  />
 </template>
 ```
 

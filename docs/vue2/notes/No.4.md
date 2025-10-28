@@ -2,7 +2,7 @@
 
 <BackTop />
 
-## Vue登录后，无操作半小时后自动清除登录状态
+## `Vue`登录后，无操作半小时后自动清除登录状态
 
 > 在项目的页面入口文件 `App.vue` 文件中监听用户最后一次操作鼠标、键盘或滚动事件
 
@@ -114,14 +114,14 @@ onDetail (id) {
 
 ## [npm link](https://npm.nodejs.cn/cli/v10/commands/npm-link)
 
-- 没有参数的包文件夹中的 `npm link` 将在全局文件夹 `{prefix}/lib/node_modules/<package>` 中创建一个符号链接，该符号链接链接到执行 `npm link` 命令的包。它还将封装中的任何垃圾箱链接到 {prefix}/bin/{name}。 请注意，npm link 使用全局前缀（参见 npm prefix -g 的值）
+- 没有参数的包文件夹中的 `npm link` 将在全局文件夹 `{prefix}/lib/node_modules/<package>` 中创建一个符号链接，该符号链接链接到执行 `npm link` 命令的包。它还将封装中的任何垃圾箱链接到 `{prefix}/bin/{name}`。 请注意，`npm link` 使用全局前缀（参见 `npm prefix -g` 的值）
 
 - 在某个其他位置，`npm link package-name` 将创建一个从全局安装的 `package-name` 到当前文件夹的 `node_modules/` 的符号链接。
 
 ::: tip
 注意，`package-name` 取自 `package.json`，而不是目录名称。
 
-包名称可以选择以范围为前缀。 见 scope。 范围必须以 @ 符号开头，后跟斜杠
+包名称可以选择以范围为前缀。 见 scope。 范围必须以 `@` 符号开头，后跟斜杠
 :::
 
 ### 例如：
@@ -214,11 +214,11 @@ aliases: unlink, remove, rm, r, un
 
 ## Vue2响应式原理
 
-当你把一个普通的 `JavaScript` 对象传入 `Vue` 实例作为 `data` 选项，`Vue` 将遍历此对象所有的 `property`，并使用 `Object.defineProperty` 把这些 `property` 全部转为 `getter/setter`。`Object.defineProperty` 是 `ES5` 中一个无法 shim 的特性，这也就是 Vue 不支持 IE8 以及更低版本浏览器的原因。
+当你把一个普通的 `JavaScript` 对象传入 `Vue` 实例作为 `data` 选项，`Vue` 将遍历此对象所有的 `property`，并使用 `Object.defineProperty` 把这些 `property` 全部转为 `getter/setter`。`Object.defineProperty` 是 `ES5` 中一个无法 `shim` 的特性，这也就是 `Vue` 不支持 `IE8` 以及更低版本浏览器的原因。
 
 这些 `getter/setter` 对用户来说是不可见的，但是在内部它们让 `Vue` 能够追踪依赖，在 `property` 被访问和修改时通知变更。
 
-### Vue中的template是如何渲染成页面的：
+### Vue 中的 template 是如何渲染成页面的：
 
 - `template`解析成抽象语法树`Abstract Syntax Tree`；
 - `AST`编译成`render`函数；
@@ -231,6 +231,8 @@ aliases: unlink, remove, rm, r, un
 
 ### Vue 无法检测 property 的添加或移除
 
+<br/>
+
 由于 `Vue` 会在初始化实例时对 `property` 执行 `getter/setter` 转化，所以 `property` 必须在 `data` 对象上存在才能让 `Vue` 将它转换为响应式的。
 
 对于已经创建的实例，`Vue` 不允许动态添加根级别的响应式 `property`。但是，可以使用 `Vue.set(object, propertyName, value)` 方法向嵌套对象添加响应式 `property`。
@@ -242,9 +244,13 @@ aliases: unlink, remove, rm, r, un
 
 ### 声明响应式 property
 
-由于 Vue 不允许动态添加根级响应式 property，所以你**必须在初始化实例前声明所有根级响应式 property，哪怕只是一个空值**
+<br/>
+
+由于 `Vue` 不允许动态添加根级响应式 `property`，所以你**必须在初始化实例前声明所有根级响应式 property，哪怕只是一个空值**
 
 ### 异步更新队列（vue.$nextTick()）
+
+<br/>
 
 `Vue` 在更新 `DOM` 时是异步执行的。只要侦听到数据变化，`Vue` 将开启一个队列，并缓冲在同一事件循环中发生的所有数据变更。如果同一个 `watcher` 被多次触发，只会被推入到队列中一次。这种在缓冲时去除重复数据对于避免不必要的计算和 `DOM` 操作是非常重要的。然后，在下一个的事件循环`“tick”`中，`Vue` 刷新队列并执行实际 (已去重的) 工作。`Vue` 在内部对异步队列尝试使用原生的 `Promise.then`、`MutationObserver` 和 `setImmediate`，如果执行环境不支持，则会采用 `setTimeout(fn, 0)` 代替。
 

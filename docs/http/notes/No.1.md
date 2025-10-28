@@ -13,22 +13,22 @@
     - `localStorage`：除非被手动清除，否则将会永久保存。
     - `sessionStorage`： 仅在当前网页会话下有效，关闭页面或浏览器后就会被清除。
 2. 存放数据大小：
-    - `cookie`：4KB左右
-    - `localStorage`和`sessionStorage`：可以保存5MB的信息。
+    - `cookie`：`4KB` 左右
+    - `localStorage`和`sessionStorage`：可以保存 `5MB` 的信息。
 3. http请求：
-    - `cookie`：每次都会携带在HTTP头中，如果使用cookie保存过多数据会带来性能问题
+    - `cookie`：每次都会携带在 `HTTP` 头中，如果使用 `cookie` 保存过多数据会带来性能问题
     - `localStorage`和`sessionStorage`：仅在客户端（即浏览器）中保存，不参与和服务器的通信
 4. 易用性：
-    - `cookie`：需要程序员自己封装，源生的Cookie接口不友好
-    - `localStorage`和`sessionStorage`：源生接口可以接受，亦可再次封装来对Object和Array有更好的支持
+    - `cookie`：需要程序员自己封装，源生的 `Cookie` 接口不友好
+    - `localStorage`和`sessionStorage`：源生接口可以接受，亦可再次封装来对 `Object` 和 `Array` 有更好的支持
 5. 应用场景：
-    - 从安全性来说，因为每次http请求都会携带cookie信息，这样无形中浪费了带宽，所以cookie应该尽可能少的使用，另外cookie还需要指定作用域，不可以跨域调用，限制比较多。但是用来识别用户登录来说，cookie还是比storage更好用的。其他情况下，可以使用storage，就用storage。
-    - storage在存储数据的大小上面秒杀了cookie，现在基本上很少使用cookie了，因为更大总是更好的。
-    - **localStorage和sessionStorage唯一的差别一个是永久保存在浏览器里面，一个是关闭网页就清除了信息**。localStorage可以用来跨页面传递参数，sessionStorage用来保存一些临时的数据，防止用户刷新页面之后丢失了一些参数。
+    - 从安全性来说，因为每次 `http` 请求都会携带 `cookie` 信息，这样无形中浪费了带宽，所以 `cookie` 应该尽可能少的使用，另外 `cookie` 还需要指定作用域，不可以跨域调用，限制比较多。但是用来识别用户登录来说，`cookie` 还是比 `storage` 更好用的。其他情况下，可以使用 `storage`，就用 `storage`。
+    - `storage` 在存储数据的大小上面秒杀了 `cookie`，现在基本上很少使用 `cookie` 了，因为更大总是更好的。
+    - **localStorage和sessionStorage唯一的差别一个是永久保存在浏览器里面，一个是关闭网页就清除了信息**。`localStorage` 可以用来跨页面传递参数，`sessionStorage` 用来保存一些临时的数据，防止用户刷新页面之后丢失了一些参数。
 
 ## HTTP Cookie
 
-`HTTP Cookie`（也叫 Web Cookie 或浏览器 Cookie）是服务器发送到用户浏览器并保存在本地的一小块数据。浏览器会存储 cookie 并在下次向同一服务器再发起请求时携带并发送到服务器上。通常，它用于告知服务端两个请求是否来自同一浏览器——如保持用户的登录状态。Cookie 使基于无状态的 HTTP 协议记录稳定的状态信息成为了可能。
+`HTTP Cookie`（也叫 `Web Cookie` 或浏览器 `Cookie`）是服务器发送到用户浏览器并保存在本地的一小块数据。浏览器会存储 `cookie` 并在下次向同一服务器再发起请求时携带并发送到服务器上。通常，它用于告知服务端两个请求是否来自同一浏览器——如保持用户的登录状态。`Cookie` 使基于无状态的 `HTTP` 协议记录稳定的状态信息成为了可能。
 
 ### Cookie 主要用于以下三个方面：
 
@@ -43,7 +43,7 @@
 
 ### 定义 Cookie 的生命周期
 
-Cookie 的生命周期可以通过两种方式定义：
+`Cookie` 的生命周期可以通过两种方式定义：
 - 会话期 `Cookie` 会在当前的会话结束之后删除。浏览器定义了“当前会话”结束的时间，一些浏览器重启时会使用会话恢复。这可能导致会话 cookie 无限延长。
 - 持久性 `Cookie` 在过期时间（`Expires`）指定的日期或有效期（`Max-Age`）指定的一段时间后被删除。
 
@@ -66,7 +66,7 @@ console.log(document.cookie)
 
 ## [Window.localStorage](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage)
 
-只读的 `localStorage` 属性允许你访问一个Document 源（origin）的对象 Storage；存储的数据将保存在浏览器会话中。localStorage 类似 sessionStorage，但其区别在于：**存储在 localStorage 的数据可以长期保留**；而当页面会话结束——也就是说，**当页面被关闭时，存储在 sessionStorage 的数据会被清除**。
+只读的 `localStorage` 属性允许你访问一个 `Document` 源（origin）的对象 `Storage`；存储的数据将保存在浏览器会话中。`localStorage` 类似 `sessionStorage`，但其区别在于：**存储在 localStorage 的数据可以长期保留**；而当页面会话结束——也就是说，**当页面被关闭时，存储在 sessionStorage 的数据会被清除**。
 
 应注意，无论数据存储在 `localStorage` 还是 `sessionStorage` ，它们都特定于页面的协议。
 
@@ -111,7 +111,7 @@ localStorage.clear()
 
 - 页面会话在浏览器打开期间一直保持，并且重新加载或恢复页面仍会保持原来的页面会话。
 - **在新标签或窗口打开一个页面时会复制顶级浏览会话的上下文作为新会话的上下文，这点和 session cookie 的运行方式不同**。
-- 打开多个相同的 URL 的 Tabs 页面，会创建各自的 `sessionStorage`。
+- 打开多个相同的 `URL` 的 `Tabs` 页面，会创建各自的 `sessionStorage`。
 - 关闭对应浏览器标签或窗口，会清除对应的 `sessionStorage`。
 
 ### 语法
@@ -136,8 +136,9 @@ sessionStorage.clear()
 
 ```js
 sessionStorage.setItem('myCat', 'Tom')
-下面的示例会自动保存一个文本输入框的内容，如果浏览器因偶然因素被刷新了，文本输入框里面的内容会被恢复，因此写入的内容不会丢失。
 ```
+
+下面的示例会自动保存一个文本输入框的内容，如果浏览器因偶然因素被刷新了，文本输入框里面的内容会被恢复，因此写入的内容不会丢失。
 
 ```js
 // 获取文本输入框

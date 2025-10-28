@@ -50,23 +50,22 @@
 
 ### [Vue 2 的响应式原理](https://v2.cn.vuejs.org/v2/guide/reactivity.html)
 
-> Vue 2 使用 `Object.defineProperty` 来实现响应式系统，这个方法只是众多基本方法之一，只能拦截对已有属性的读写。这个方法把传入 `data` 选项的 `JavaScript` 对象所有 `property` 转为 `getter` 和 `setter`，从而让 `Vue` 能够追踪依赖，在 `property` 被访问和修改时通知变更。
+> Vue 2 使用基于 ES5 的 `Object.defineProperty` 来实现响应式系统，这个方法只是众多基本方法之一，在拦截上功能很局限，只能拦截对已有属性的读写。这个方法把传入 `data` 选项的 `JavaScript` 对象所有 `property` 转为 `getter` 和 `setter`，从而让 `Vue` 能够追踪依赖，在 `property` 被访问和修改时通知变更。
 
 1. **基于 `Object.defineProperty`**：`Vue 2` 在初始化时会递归遍历数据对象的所有属性，并对每个属性使用 `Object.defineProperty` 来添加 `getter` 和 `setter` 拦截器。当属性被访问（`getter` 被调用）或修改（`setter` 被调用）时，`Vue` 可以知道并作出相应的处理。
 2. **数组的响应式处理**：由于 `Object.defineProperty` 不能检测到**数组索引**和**长度**的变化，`Vue 2` 通过重写数组原型的方法（如 `push`、`pop`、`splice` 等）来实现数组的响应式。
-3. **属性添加和删除的局限**：Vue 2 的响应式系统**无法检测到对象属性的添加或删除**。为了解决这个问题，Vue 提供了全局方法 `Vue.set` 来确保新属性也是响应式的。
-4. **深度监听**：Vue 2 需要递归地对每个嵌套对象进行 `Object.defineProperty` 处理，这可能会对性能产生影响。
+3. **属性添加和删除的局限**：`Vue 2` 的响应式系统**无法检测到对象属性的添加或删除**。为了解决这个问题，`Vue` 提供了全局方法 `Vue.set` 来确保新属性也是响应式的。
+4. **深度监听**：`Vue 2` 需要递归地对每个嵌套对象进行 `Object.defineProperty` 处理，这可能会对性能产生影响。
+5. **兼容性问题**： 由于 `Object.defineProperty` 是 ES5 的特性，因此支持 `IE9+`
 
 - [`Object.defineProperty()`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty)（algorithm/Object.property.js）
   该方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象。
   - 语法：`Object.defineProperty(obj, prop, descriptor)`
   - 参数：
     - `obj`：要定义属性的对象。
-    - `prop`：要定义或修改的属性的名称或 Symbol 。
+    - `prop`：要定义或修改的属性的名称或 `Symbol`。
     - `descriptor`：要定义或修改的属性描述符。
   - 返回值：被传递给函数的对象。
-
-::: details Show Code
 
 ```js
 let player = {
@@ -118,13 +117,11 @@ player.career.height = 190 // 添加新属性
 console.log(player.career.height) // 190
 ```
 
-:::
-
 ### [Vue 3 的响应式原理](https://cn.vuejs.org/guide/extras/reactivity-in-depth.html)
 
-> Vue 3 引入了基于 ES6 的 `Proxy` 作为实现响应式系统的主要方式。`Proxy` 是一个更为强大的拦截机制，它可以拦截对象的更多操作。
+> Vue 3 引入了基于 ES6 的 `Proxy` 作为实现响应式系统的主要方式。`Proxy` 可以拦截和重定义对象的基本方法（所有的基本操作方法），基于 Proxy 实现响应式，代理整个对象。
 
-1. **基于 `Proxy` 和 `Reflect`**：Vue 3 使用 `Proxy` 来创建一个响应式对象，可以拦截和重定义对象的基本方法（所有的基本操作方法）。`Proxy` 可以拦截对象的几乎所有操作，包括属性的读取、设置、删除等，而 `Reflect` API 提供了与操作对象属性相关的操作，如 `Reflect.get` 和 `Reflect.set`。
+1. **基于 `Proxy` 和 `Reflect`**：`Vue 3` 使用 `Proxy` 来创建一个响应式对象，可以拦截和重定义对象的基本方法（所有的基本操作方法）。`Proxy` 可以拦截对象的几乎所有操作，包括属性的读取、设置、删除等，而 `Reflect` API 提供了与操作对象属性相关的操作，如 `Reflect.get` 和 `Reflect.set`。
 
 2. **原生支持数组**：与 `Vue2` 不同，`Vue3` 不需要重写数组原型，因为 `Proxy` 可以原生地拦截数组的各种操作。
 
@@ -132,7 +129,7 @@ console.log(player.career.height) // 190
 
 4. **性能优化**：`Vue3` 的响应式系统在性能上进行了优化，包括批量处理依赖项和缓存，减少了不必要的依赖收集和更新。
 
-5. **兼容性问题**：由于 `Proxy` 是 `ES6` 的特性，`Vue3` 不能在不支持 `Proxy` 的环境中运行（如 IE11 之前的浏览器）。不过，`Vue3` 提供了兼容构建版本，可以在不支持 `Proxy` 的环境中使用。
+5. **兼容性问题**：由于 `Proxy` 是 `ES6` 的特性，`Vue3` 不能在不支持 `Proxy` 的环境中运行（如 `IE11` 之前的浏览器）。不过，`Vue3` 提供了兼容构建版本，可以在不支持 `Proxy` 的环境中使用。
 
 总结来说，`Vue3` 的响应式系统在功能和性能上都有显著的提升，但同时也带来了对现代浏览器环境的要求。开发者需要根据项目需求和目标用户的浏览器使用情况来选择合适的 `Vue` 版本。
 
@@ -141,9 +138,7 @@ console.log(player.career.height) // 190
   - 语法：`const p = new Proxy(target, handler)`
   - 参数：
     - `target`：要使用 `Proxy` 包装的目标对象（可以是任何类型的对象，包括原生数组，函数，甚至另一个代理）。
-    - `handler`：一个通常以函数作为属性的对象，各属性中的函数分别定义了在执行各种操作时代理 p 的行为。
-
-::: details Show Code
+    - `handler`：一个通常以函数作为属性的对象，各属性中的函数分别定义了在执行各种操作时代理 `p` 的行为。
 
 ```js
 // 检查一个值是否为对象类型
@@ -208,8 +203,6 @@ console.log('reactiveData:', reactiveData)
 delete reactiveData.career.sports // 输出: "'sports' has been deleted"
 console.log('reactiveData:', reactiveData)
 ```
-
-:::
 
 ## [Reflect](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect)
 

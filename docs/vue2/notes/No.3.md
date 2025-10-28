@@ -4,7 +4,7 @@
 
 ## 父组件监听子组件生命周期
 
-1. hook监听
+1. `hook` 监听
     - 在父组件 `Parent.vue` 中
 
     ```html
@@ -25,7 +25,7 @@
       }
     ```
 
-2. $emit触发：
+2. `$emit` 触发：
     - 在父组件 `Parent.vue` 中
 
     ```html
@@ -50,10 +50,10 @@
 ## `Vue.use(plugin)`
 
 - 参数：{Object | Function} plugin
-- 用法：安装 Vue.js 插件。如果**插件是一个对象，必须提供 install 方法**。如果**插件是一个函数，它会被作为 install 方法**。install 方法调用时，会将 Vue 作为参数传入。
+- 用法：安装 `Vue.js` 插件。如果**插件是一个对象，必须提供 install 方法**。如果**插件是一个函数，它会被作为 install 方法**。`install` 方法调用时，会将 `Vue` 作为参数传入。
 
 ::: tip 提示
-该方法需要在调用 new Vue() 之前被调用。
+该方法需要在调用 `new Vue()` 之前被调用。
 **当 install 方法被同一个插件多次调用，插件将只会被安装一次**。
 :::
 
@@ -156,7 +156,7 @@ watch: {
 
 [mixin](https://v2.cn.vuejs.org/v2/guide/mixins.html)
 
-混入 (mixin) 提供了一种非常灵活的方式，来分发 Vue 组件中的可复用功能。一个混入对象可以包含任意组件选项。
+混入 (mixin) 提供了一种非常灵活的方式，来分发 `Vue` 组件中的可复用功能。一个混入对象可以包含任意组件选项。
 当组件使用混入对象时，所有混入对象的选项将被“混合”进入该组件本身的选项。
 
 ```js
@@ -182,22 +182,22 @@ var Component = Vue.extend({
 var component = new Component() // => "hello from mixin!"
 ```
 
-## vue组件中引入外部JS和CSS
+## `Vue` 组件中引入外部 `JS` 和 `CSS`
 
 [参考文档](https://zhuanlan.zhihu.com/p/379504188)
 
-- 引入外部JS文件资源
+- 引入外部 `JS` 文件资源
 
   在 `public/index.html` 入口文件中全局引入：
 
   ```html
   <body>
     …
-    <script type='text/javascript' src='https://www.***.com/min.js'></script>
+    <script type="text/javascript" src="https://www.***.com/min.js"></script>
   </body>
   ```
 
-- 引入外部CSS文件资源
+- 引入外部 `CSS` 文件资源
 
   **1. 使用 `@import` 在 `app.vue` 中全局引入外部css资源：**
 
@@ -264,7 +264,7 @@ var component = new Component() // => "hello from mixin!"
 
 ## 路由切换时滚动到页面顶部
 
-- scrollTo()
+- `scrollTo()`
 
   把内容滚动到指定的坐标
 
@@ -272,8 +272,8 @@ var component = new Component() // => "hello from mixin!"
   
   参数：
 
-  - `xpos`：必需。要在窗口文档显示区左上角显示的文档的 x 坐标。
-  - `ypos`：必需。要在窗口文档显示区左上角显示的文档的 y 坐标。
+  - `xpos`：必需。要在窗口文档显示区左上角显示的文档的 `x` 坐标。
+  - `ypos`：必需。要在窗口文档显示区左上角显示的文档的 `y` 坐标。
 
   ```js
   router.afterEach(() => {
@@ -282,7 +282,7 @@ var component = new Component() // => "hello from mixin!"
   })
   ```
 
-- scrollBehavior()
+- `scrollBehavior()`
 
   [参考文档](https://router.vuejs.org/zh/guide/advanced/scroll-behavior.html)
 
