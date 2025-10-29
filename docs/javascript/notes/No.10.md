@@ -277,15 +277,15 @@ element.appendChild(fragment) // 一次性插入。可以避免每次插入时�
 
 `Worker` 是一个使用构造函数创建的对象（例如 `Worker()`），它运行一个具名 `JavaScript` 文件——该文件包含将在 `worker` 线程中运行的代码。
 
-除了标准的 `JavaScript` 函数集（如 `String`、`Array`、`Object`、`JSON` 等），你可以在 worker 线程中运行任何你喜欢的代码，有一些例外：**你不能直接在 worker 线程中操作 DOM 元素，或使用 window 对象中的某些方法和属性**。有关你可以运行的代码的信息，请参见下面的 `Worker` 全局上下文和函数和支持的 Web API 。
+除了标准的 `JavaScript` 函数集（如 `String`、`Array`、`Object`、`JSON` 等），你可以在 `worker` 线程中运行任何你喜欢的代码，有一些例外：**你不能直接在 worker 线程中操作 DOM 元素，或使用 window 对象中的某些方法和属性**。有关你可以运行的代码的信息，请参见下面的 [`Worker` 全局上下文和函数](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API#worker_%E5%85%A8%E5%B1%80%E4%B8%8A%E4%B8%8B%E6%96%87%E5%92%8C%E5%87%BD%E6%95%B0)和[支持的 Web API](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API#%E6%94%AF%E6%8C%81%E7%9A%84_web_api)。
 
-**数据通过消息系统在 worker 和主线程之间发送**——双方都使用 `postMessage()` 方法发送消息，并通过 `onmessage` 事件处理程序响应消息（消息包含在 `message` 事件的 data 属性中）。**数据是复制的，而不是共享的**。
+**数据通过消息系统在 worker 和主线程之间发送**——双方都使用 `postMessage()` 方法发送消息，并通过 `onmessage` 事件处理程序响应消息（消息包含在 `message` 事件的 `data` 属性中）。**数据是复制的，而不是共享的**。
 
-worker 可以依次生成新的 worker，只要这些 worker 与父页面托管在同一个 origin 中。此外，worker 可以通过 XMLHttpRequest 来访问网络，但 XMLHttpRequest 的 responseXML 和 channel 属性始终返回 null。
+`worker` 可以依次生成新的 `worker`，只要这些 `worker` 与父页面托管在同一个 `origin` 中。此外，`worker` 可以通过 `XMLHttpRequest` 来访问网络，但 `XMLHttpRequest` 的 `responseXML` 和 `channel` 属性始终返回 `null`。
 
 ### Web Worker 使用场景
 
-- 定时器场景，`setinterval`、`requestAnimationFrame`，需要在用户切换tab栏的时候仍然执行 `requestAnimationFrame` 或 `setinterval`
+- 定时器场景，`setInterval`、`requestAnimationFrame`，需要在用户切换 `tab` 栏的时候仍然执行 `requestAnimationFrame` 或 `setInterval`
 
 ### 示例
 
@@ -347,11 +347,22 @@ postMessage(message)
 postMessage(message, transfer)
 ```
 
+- 参数
+  - `message` <br/>
+    要传递给 `worker` 的对象；这将在传递给 `DedicatedWorkerGlobalScope.message_event` 事件的 `data` 字段中。这可以是任何值或可以通过结构化克隆算法处理的 `JavaScript` 对象（可以包含循环引用）。
+
+    如果未提供 `message` 参数，则解析器将抛出 `SyntaxError`。如果要传递给 `worker` 的数据不重要，可以显式传递 `null` 或 `undefined`。
+
+  - `transfer` <Tag :bordered="false" color="cyan">可选</Tag> <br/>
+    一个可选的、会被转移所有权的可转移对象数组。如果一个对象的所有权被转移，它将在发送它的上下文中变为不可用（中止），而仅在接收方的 `worker` 中可用。
+
+    像 `ArrayBuffer`、`MessagePort` 或 `ImageBitmap` 类的实例才是可转移对象，才能够被转移。不能将 `null` 作为 `transfer` 的值。
+
 ### [Worker：message 事件](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/message_event)
 
 <br/>
 
-当 `worker` 的父级接收到来自其 `worker` 的消息时（也就是说，当 `worker` 通过 DedicatedWorkerGlobalScope.postMessage() (en-US) 发送消息时），会在 `Worker` 对象上触发 `message` 事件。此事件不能取消，也不会冒泡。
+当 `worker` 的父级接收到来自其 `worker` 的消息时（也就是说，当 `worker` 通过 `DedicatedWorkerGlobalScope.postMessage()` (en-US) 发送消息时），会在 `Worker` 对象上触发 `message` 事件。此事件不能取消，也不会冒泡。
 
 - 语法
 
@@ -360,11 +371,39 @@ addEventListener('message', (event) => {})
 onmessage = (event) => {}
 ```
 
+- 示例
+
+下面的代码创建了一个 `worker` 并使用 `addEventListener()` 监听从 `worker` 发来的消息：
+
+```js
+const worker = new Worker("static/scripts/worker.js")
+
+worker.addEventListener("message", (event) => {
+  console.log(`Received message from worker: ${event.data}`)
+})
+```
+
+另外，也可以使用 `onmessage` 事件处理器属性进行监听：
+
+```js
+const worker = new Worker("static/scripts/worker.js")
+
+worker.onmessage = (event) => {
+  console.log(`Received message from worker: ${event.data}`)
+}
+```
+
 ### [Worker.terminate()](https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/terminate)
 
 <br/>
 
 `Worker` 接口中的 `terminate()` 方法用于**立即终止 Worker 的行为**。本方法并**不会等待 worker 去完成它剩余的操作；worker 将会被立刻停止**。
+
+```js
+var myWorker = new Worker("worker.js")
+
+myWorker.terminate()
+```
 
 ## [importScripts()](https://developer.mozilla.org/zh-CN/docs/Web/API/WorkerGlobalScope/importScripts)
 
