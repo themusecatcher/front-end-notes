@@ -42,6 +42,7 @@
 | `DOM` 事件回调（交互事件） | `click`, `scroll` | 浏览器 |
 | `setImmediate` | `setImmediate(() => {})` | `Node.js` |
 | `requestAnimationFrame` | 动画帧回调 | 浏览器 |
+| `requestIdleCallback` | 空闲回调，在主线程空闲时执行 | 浏览器 |
 
 #### 3. 示例
 
@@ -78,6 +79,7 @@ console.log("同步任务 2")
 | `Fetch API` 的回调（通过 `Promise` 触发） | `fetch("https://api.example.com/data").then(() => {   console.log("Fetch 回调（微任务）") })` | 浏览器 |
 | `process.nextTick` | `process.nextTick(() => {})` | `Node.js` |
 | `MutationObserver` | `DOM` 变更观察回调 | 浏览器 |
+| `queueMicrotask` | 将微任务（microtask）加入队列 | 浏览器、`Node.js（v11+）`
 
 :::tip 备注
 `async/await` 是 `Promise` 的语法糖，两者的行为在微任务层面完全一致
@@ -108,11 +110,13 @@ function foo() {
 async function example() {
   console.log(1)
   await Promise.resolve() // 将后续代码包装为微任务
-  console.log(2)
+  console.log(2) // 微任务 1
 }
 
 example()
-Promise.resolve().then(() => console.log(3))
+Promise.resolve().then(() => {
+  console.log(3) // 微任务 2
+})
 console.log(4)
 
 // 输出顺序：1 → 4 → 2 → 3
