@@ -268,7 +268,7 @@ emitter
 getData(a => emitter.emit("dataA", a))
 ```
 
-- **适用场景**：松散耦合的异步操作，如 GUI 事件或复杂状态机。
+- **适用场景**：松散耦合的异步操作，如 `GUI` 事件或复杂状态机。
 
 #### **(5) 使用工具库**
 
@@ -294,8 +294,8 @@ async.waterfall([
 
 ### **4. 总结**
 
-- **优先使用 `async/await`**：现代 JavaScript 的首选方案，代码简洁易维护。
-- **Promise 作为基础**：理解 Promise 是使用 `async/await` 的前提。
+- **优先使用 `async/await`**：现代 `JavaScript` 的首选方案，代码简洁易维护。
+- **Promise 作为基础**：理解 `Promise` 是使用 `async/await` 的前提。
 - **其他场景灵活选择**：如事件驱动、工具库等，根据项目需求决定。
 
 通过合理选择异步编程模式，可以彻底避免回调地狱，提升代码质量和开发效率。
