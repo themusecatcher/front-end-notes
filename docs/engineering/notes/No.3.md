@@ -20,7 +20,7 @@
 
 2. 使用 `TypeScript` 编译器选项
 
-- 对于 TypeScript 项目，可以在 `tsconfig.json` 文件中启用 `"noUnusedLocals": true` 和 `"noUnusedParameters"` 选项，以识别未使用的本地变量和函数参数。
+- 对于 `TypeScript` 项目，可以在 `tsconfig.json` 文件中启用 `"noUnusedLocals": true` 和 `"noUnusedParameters"` 选项，以识别未使用的本地变量和函数参数。
 
 ```json
 {
@@ -33,7 +33,9 @@
 
 3. 利用 `Webpack` 或 `Rollup` 的 `Tree Shaking` 功能
 
-- 打包构建工具（如 `Webpack`、`Rollup`）的树摇优化（`Tree Shaking`）功能：读取源码文件 -> 分析模块依赖关系 -> 生成新的 `AST` 并进行优化 -> 生成新的代码 -> ...<br/>也只能支持 `JS` 或 `TS`（编译后也是 `JS`）不支持 `CSS`，且必须是 `ESM` 的模块化标准（不支持 `CommonJS`），支持多模块（多文件），例如一个模块导出，单另一个模块未使用，这种情况也可以处理。   不支持动态导入，比如：`require()（虽然是同步加载，但可以动态调用，如条件语句）` 或 `ESM` 的 `import()` 方式。因为它是静态分析，即只能在编译时态进行静态分析。
+- 打包构建工具（如 `Webpack`、`Rollup`）的树摇优化（`Tree Shaking`）功能：<br/>
+  读取源码文件 -> 分析模块依赖关系 -> 生成新的 `AST` 并进行优化 -> 生成新的代码 -> ...<br/>也只能支持 `JS` 或 `TS`（编译后也是 `JS`）不支持 `CSS`，且必须是 `ESM` 的模块化标准（不支持 `CommonJS`），支持多模块（多文件），例如一个模块导出，但另一个模块未使用，这种情况也可以处理。<br/>
+  不支持动态导入，比如：`require()（虽然是同步加载，但可以动态调用，如条件语句）` 或 `ESM` 的 `import()` 方式。因为它是静态分析，即只能在编译时态进行静态分析。
 
 ### 针对 `CSS` 代码
 
