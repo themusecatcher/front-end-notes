@@ -43,11 +43,15 @@
 
 ### 定义 Cookie 的生命周期
 
+<br/>
+
 `Cookie` 的生命周期可以通过两种方式定义：
 - 会话期 `Cookie` 会在当前的会话结束之后删除。浏览器定义了“当前会话”结束的时间，一些浏览器重启时会使用会话恢复。这可能导致会话 cookie 无限延长。
 - 持久性 `Cookie` 在过期时间（`Expires`）指定的日期或有效期（`Max-Age`）指定的一段时间后被删除。
 
 ### JavaScript 通过 Document.cookie 访问 Cookie
+
+<br/>
 
 通过 `Document.cookie` 属性可创建新的 `Cookie`。如果未设置 `HttpOnly` 标记，你也可以从 `JavaScript` 访问现有的 `Cookie`。
 
@@ -61,6 +65,8 @@ console.log(document.cookie)
 ```
 
 ### Request Headers：
+
+<br/>
 
 ![alt text](image.png)
 
@@ -79,6 +85,8 @@ myStorage = localStorage
 ```
 
 ### 示例
+
+<br/>
 
 下面的代码片段访问了当前域名下的本地 `Storage` 对象，并通过 `Storage.setItem()` 增加了一个数据项目。
 
@@ -131,6 +139,8 @@ sessionStorage.clear()
 ```
 
 ### 示例
+
+<br/>
 
 下面的代码访问当前域名的 `session Storage` 对象，并使用 `Storage.setItem()` 访问往里面添加一个数据条目。
 
@@ -303,6 +313,8 @@ Expires: Mon, 01 Jan 2024 00:00:00 GMT
 ```
 
 #### 2. 文件更新机制
+
+<br/>
 
 **情况A：文件内容不变，只想强制更新**
 

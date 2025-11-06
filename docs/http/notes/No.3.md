@@ -93,11 +93,13 @@ Server: Apache
 
 #### 1. **开发服务器代理（主流方案）**
 
+  > vue2 + webpack 解决方案
+  - `webpack-dev-server` 代理配置， 在 `vue.config.js` 中配置代理
   - **实现方式**：通过 `webpack-dev-server`、`Vite` 等工具的代理配置，将 `API` 请求转发到后端服务器。
   - **技术原理**：
   
     ```js
-    // vite.config.js
+    // vue.config.js
     export default {
       server: {
         proxy: {
@@ -111,7 +113,36 @@ Server: Apache
     }
     ```
 
-  - **效果**：浏览器认为请求发往 `localhost:5173/api` → 实际被代理到 `backend-server:3000`，实现同源。
+  - **工作原理**：
+    1. 浏览器请求 `http://localhost:3000/api/users`
+    2. `webpack-dev-server` 拦截该请求
+    3. 转发到 `http://backend-server:3000/users`
+    4. 将响应返回给浏览器
+
+  - **效果**：浏览器认为请求发往 `localhost:3000/api/users` → 实际被代理到 `backend-server:3000/users`，实现同源。
+
+  > Vue3 + Vite 的解决方案
+
+  - `Vite` 开发服务器代理，在 `vite.config.js` 中配置：
+
+  ````js
+  export default defineConfig({
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://localhost:8080',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, '')
+        }
+      }
+    }
+  })
+  ```
+
+  > 代理机制的核心优势：
+    1. 请求同源：浏览器始终向本地开发服务器发送请求
+    2. 服务器间无跨域：开发服务器与后端服务器通信不受同源策略限制
+    3. 透明转发：对前端代码完全透明，无需特殊处理
 
 #### 2. **后端启用 CORS（开发环境专用）**
 
