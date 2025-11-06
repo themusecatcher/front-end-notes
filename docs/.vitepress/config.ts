@@ -434,6 +434,10 @@ export default defineConfig({
             {
               text: 'No.4',
               link: '/vue3/notes/No.4'
+            },
+            {
+              text: 'No.5',
+              link: '/vue3/notes/No.5'
             }
           ]
         }

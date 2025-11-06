@@ -125,7 +125,7 @@ Server: Apache
 
   - `Vite` 开发服务器代理，在 `vite.config.js` 中配置：
 
-  ````js
+  ```js
   export default defineConfig({
     server: {
       proxy: {
@@ -140,6 +140,7 @@ Server: Apache
   ```
 
   > 代理机制的核心优势：
+
     1. 请求同源：浏览器始终向本地开发服务器发送请求
     2. 服务器间无跨域：开发服务器与后端服务器通信不受同源策略限制
     3. 透明转发：对前端代码完全透明，无需特殊处理
