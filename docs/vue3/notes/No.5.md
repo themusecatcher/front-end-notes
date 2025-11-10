@@ -20,7 +20,7 @@
 - [vue-virtual-scroll-grid](https://github.com/rocwang/vue-virtual-scroll-grid)
 - [vueuc/VVirtualList](https://github.com/07akioni/vueuc)
 
-虚拟滚动的本质是通过 按需渲染 和 `DOM` 复用 优化性能，核心在于**动态计算可视区域范围并精准更新内容**。实现时需权衡固定行高与动态行高的复杂度，并结合实际场景选择合适的优化策略。
+虚拟滚动的本质是通过 **按需渲染** 和 **`DOM` 复用** 优化性能，核心在于**动态计算可视区域范围并精准更新内容**。实现时需权衡固定行高与动态行高的复杂度，并结合实际场景选择合适的优化策略。
 
 表格虚拟滚动（Virtual Scrolling）是一种优化大量数据渲染性能的技术，其核心思想是 **仅渲染可视区域内的内容，而非完整渲染所有数据**。
 
