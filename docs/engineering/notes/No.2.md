@@ -40,7 +40,7 @@ import React, { useState } from 'react'
 
 通过将 `lodash-es` 预构建成单个模块，现在我们只需要一个`HTTP`请求！
 
-::: tips 注意
+::: tip 注意
 依赖预构建仅适用于开发模式，并使用 `esbuild` 将依赖项转换为 `ES` 模块。在生产构建中，将使用 `@rollup/plugin-commonjs`
 :::
 
