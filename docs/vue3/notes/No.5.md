@@ -93,3 +93,124 @@ shallowArray.value = [
    ```
 
 由于这些限制，我们建议使用 `ref()` 作为声明响应式状态的主要 API。
+
+## Vuex 和 Pinia 的区别
+
+`Vuex` 和 `Pinia` 都是 `Vue.js` 的状态管理库，但它们有一些重要区别：
+
+### 1. **设计理念**
+
+- **Vuex**: 更严格、更结构化的状态管理模式
+- **Pinia**: 更轻量、更灵活的 `Composition API` 风格
+
+### 2. **API 设计**
+
+> Vuex 示例
+
+```js
+// store.js
+export default new Vuex.Store({
+  state: {
+    count: 0
+  },
+  mutations: {
+    increment(state) {
+      state.count++
+    }
+  },
+  actions: {
+    incrementAsync({ commit }) {
+      setTimeout(() => {
+        commit('increment')
+      }, 1000)
+    }
+  },
+  getters: {
+    doubleCount: state => state.count * 2
+  }
+})
+```
+
+> Pinia 示例
+
+```js
+// stores/counter.js
+export const useCounterStore = defineStore('counter', {
+  state: () => ({ count: 0 }),
+  getters: {
+    doubleCount: (state) => state.count * 2,
+  },
+  actions: {
+    increment() {
+      this.count++
+    },
+    async incrementAsync() {
+      setTimeout(() => {
+        this.increment()
+      }, 1000)
+    }
+  }
+})
+```
+
+### 3. **主要区别**
+
+| 特性 | Vuex | Pinia |
+|------|------|-------|
+| **Vue 版本** | `Vue 2 & 3` | 专为 `Vue 3` 设计 |
+| **Mutation** | 必须使用 `mutation` 修改 `state` | 可以直接修改或使用 `action` |
+| **TypeScript 支持** | 需要额外配置 | 原生支持，类型推断更好 |
+| **模块系统** | 命名空间模块 | 多个独立的(扁平化) `store` |
+| **代码组织** | 相对复杂 | 更简洁直观 |
+| **体积** | 较大 | 更轻量 (约 `1KB`) |
+| **Composition API** | 需要额外适配 | 原生支持 |
+| **DevTools** | 支持 | 支持 |
+
+### 4. **使用方式对比**
+
+> Vuex 在组件中使用
+
+```js
+// Options API
+computed: {
+  ...mapState(['count']),
+  ...mapGetters(['doubleCount'])
+},
+methods: {
+  ...mapActions(['incrementAsync'])
+}
+
+// Composition API
+import { useStore } from 'vuex'
+setup() {
+  const store = useStore()
+  return {
+    count: computed(() => store.state.count),
+    increment: () => store.dispatch('incrementAsync')
+  }
+}
+```
+
+> Pinia 在组件中使用
+
+```js
+import { useCounterStore } from '@/stores/counter'
+
+setup() {
+  const counter = useCounterStore()
+  
+  return {
+    count: computed(() => counter.count),
+    doubleCount: computed(() => counter.doubleCount),
+    increment: () => counter.incrementAsync()
+  }
+}
+```
+
+### 5. **推荐使用**
+
+- **新项目**: 推荐使用 `Pinia`
+- **Vue 3 项目**: 强烈推荐 `Pinia`
+- **现有 Vuex 项目**: 可以继续使用，或逐步迁移到 `Pinia`
+
+`Pinia` 现在是 `Vue` 官方推荐的状态管理库，它提供了更好的开发体验和更简洁的 API。
