@@ -130,3 +130,79 @@ fetchUserAndOrders()
 在实际开发中，你应该：
 * **优先使用 `async/await`** 来编写主要的异步逻辑，因为它更清晰、更易维护。
 * 同时，**必须深入理解 `Promise`**，因为 `async/await` 是基于它的，而且在处理并行异步任务（`Promise.all`）等场景时，仍然需要直接使用 `Promise`。
+
+## [Object.create()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/create)
+
+`Object.create()` 静态方法以一个现有对象作为原型，创建一个新对象。
+
+### 语法
+
+```js
+Object.create(proto)
+Object.create(proto, propertiesObject)
+```
+
+### 参数
+
+- `proto`<br/>
+  新创建对象的原型对象。
+- `propertiesObject` <Tag :bordered="false" color="cyan">可选</Tag><br/>
+  如果该参数被指定且不为 `undefined`，则该传入对象可枚举的自有属性将为新创建的对象添加具有对应属性名称的属性描述符。这些属性对应于 `Object.defineProperties()` 的第二个参数。
+
+### 返回值
+
+<br/>
+
+根据指定的原型对象和属性创建的新对象。
+
+### 异常
+
+> TypeError
+
+如果 `proto` 既不是 `null`，也不是 `Object`，则抛出此错误。
+
+### 示例
+
+用 `Object.create()` 实现类式继承
+下面的例子演示了如何使用 `Object.create()` 来实现类式继承。这是一个所有版本 `JavaScript` 都支持的单继承。
+
+```js
+// Shape——父类
+function Shape() {
+  this.x = 0
+  this.y = 0
+}
+
+// 父类方法
+Shape.prototype.move = function (x, y) {
+  this.x += x
+  this.y += y
+  console.info("Shape moved.")
+}
+
+// Rectangle——子类
+function Rectangle() {
+  Shape.call(this) // 调用父类构造函数。
+}
+
+// 子类继承父类
+Rectangle.prototype = Object.create(Shape.prototype, {
+  // 如果不将 Rectangle.prototype.constructor 设置为 Rectangle，
+  // 它将采用 Shape（父类）的 prototype.constructor。
+  // 为避免这种情况，我们将 prototype.constructor 设置为 Rectangle（子类）。
+  constructor: {
+    value: Rectangle,
+    enumerable: false,
+    writable: true,
+    configurable: true,
+  },
+})
+
+const rect = new Rectangle()
+
+console.log("rect 是 Rectangle 类的实例吗？", rect instanceof Rectangle) // true
+console.log("rect 是 Shape 类的实例吗？", rect instanceof Shape) // true
+rect.move(1, 1) // 打印 'Shape moved.'
+```
+
+> 需要注意的是，使用 `create()` 也有一些要注意的地方，比如重新添加 `constructor` 属性以确保正确的语义。虽然 `Object.create()` 被认为比使用 `Object.setPrototypeOf()` 修改原型更具有性能优势，但如果没有创建实例并且属性访问还没有被优化，它们之间的差异实际上是可以忽略不计的。在现代代码中，无论如何都应该优先使用类语法。
