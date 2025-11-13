@@ -523,6 +523,10 @@ export default defineConfig({
             {
               text: 'No.5',
               link: '/engineering/notes/No.5'
+            },
+            {
+              text: 'No.6',
+              link: '/engineering/notes/No.6'
             }
           ]
         }
