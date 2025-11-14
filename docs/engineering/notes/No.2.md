@@ -7,7 +7,7 @@
 - 对 `ES Module` 的支持<br/>
   现代浏览器本身就支持 `ES Module`，会主动发起请求去获取所需文件，`Vite` 充分利用了这一点，将开发环境下的模块文件直接作为浏览器要执行的文件，而不是像 `Webpack` 那样先打包，再交给浏览器执行，这种方式减少了中间环节，提高了效率。<br/>
   **ES Module**：通过使用 `export` 和 `import` 语句，`ES Module` 允许在浏览器端导入和导出模块。当使用 `ES Module` 进行开发时，开发者实际上是在构建一个依赖关系图，不同依赖项之间通过导入语句进行关联。
-  主流浏览器（除 IE 外）均支持 `ES Module`，并且可以通过在 `<script>` 标签中设置 `type = "module"` 来加载模块，默认情况下，模块会延迟加载，执行时机在文档解析之后，触发 `DOMContentLoaded` 事件前。
+  主流浏览器（除 `IE` 外）均支持 `ES Module`，并且可以通过在 `<script>` 标签中设置 `type = "module"` 来加载模块，默认情况下，模块会延迟加载，执行时机在文档解析之后，触发 `DOMContentLoaded` 事件前。
 - 低层语言的差异<br/>
   `Webpack` 是基于 `Node.js` 构建的，而 `Vite` 是基于 `esbuild` 进行预构建依赖，`esbuild` 是采用 `Go` 语言编写的，`Go` 语言是纳秒级别的，而 `Node.js` 是毫秒级别的。因此，`Vite` 在打包速度上相比 `Webpack` 有 `10-100` 倍的提升。
 - 热更新的处理<br/>
