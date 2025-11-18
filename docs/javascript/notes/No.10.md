@@ -289,7 +289,7 @@ element.appendChild(fragment) // 一次性插入。可以避免每次插入时�
 
 ### 示例
 
-*work.js 代码*
+*`work.js` 代码*
 
 ```js
 // self.onmessage = (event) => { ... }

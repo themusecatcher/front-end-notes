@@ -245,6 +245,10 @@ export default defineConfig({
             {
               text: 'No.19',
               link: '/javascript/notes/No.19'
+            },
+            {
+              text: 'No.20',
+              link: '/javascript/notes/No.20'
             }
           ]
         }
@@ -442,6 +446,10 @@ export default defineConfig({
             {
               text: 'No.5',
               link: '/vue3/notes/No.5'
+            },
+            {
+              text: 'No.6',
+              link: '/vue3/notes/No.6'
             }
           ]
         }
