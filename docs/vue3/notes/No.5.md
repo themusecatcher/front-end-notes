@@ -94,6 +94,139 @@ shallowArray.value = [
 
 由于这些限制，我们建议使用 `ref()` 作为声明响应式状态的主要 API。
 
+## `ref` & `reactive`
+
+### 核心关系
+
+<br/>
+
+`ref` 和 `reactive` 都是 `Vue3` 的响应式 `API`，用于创建响应式数据，但它们在实现方式和适用场景上有所不同。
+
+### 主要区别
+
+| 特性 | `ref` | `reactive` |
+|------|-----|----------|
+| **数据类型** | 任意类型（基本类型、对象、数组） | 仅限对象类型 |
+| **访问方式** | 需要通过 `.value` 访问 | 直接访问属性 |
+| **模板中使用** | 自动解包（无需 `.value`） | 直接使用 |
+| **重新赋值** | 可以重新赋值整个对象 | 不能重新赋值整个响应式对象 |
+
+### 代码示例
+
+```vue
+<template>
+  <div>
+    <!-- ref 在模板中自动解包 -->
+    <p>Count: {{ count }}</p>
+    <p>Name: {{ user.name }}</p>
+    <p>Age: {{ user.age }}</p>
+    
+    <button @click="increment">Increment</button>
+    <button @click="updateUser">Update User</button>
+  </div>
+</template>
+
+<script setup>
+import { ref, reactive } from 'vue'
+
+// ref 示例 - 可以处理基本类型
+const count = ref(0)
+
+// reactive 示例 - 只能处理对象
+const user = reactive({
+  name: 'Alice',
+  age: 25
+})
+
+// ref 也可以处理对象（内部使用 reactive）
+const userRef = ref({
+  name: 'Bob',
+  age: 30
+})
+
+const increment = () => {
+  // ref 需要 .value
+  count.value++
+  
+  // reactive 直接访问
+  user.age++
+  
+  // ref 对象也需要 .value
+  userRef.value.age++
+}
+
+const updateUser = () => {
+  // reactive 可以修改属性，但不能重新赋值整个对象
+  user.name = 'Carol'
+  
+  // ref 可以重新赋值整个对象
+  userRef.value = { name: 'David', age: 35 }
+}
+</script>
+```
+
+### 底层关系
+
+<br/>
+
+实际上，`ref` 在内部使用了 `reactive`：
+
+```javascript
+// 简化的 ref 实现原理
+function ref(value) {
+  return {
+    get value() {
+      // 跟踪依赖
+      track()
+      // 如果是对象，用 reactive 包装
+      return isObject(value) ? reactive(value) : value
+    },
+    set value(newVal) {
+      value = newVal
+      // 触发更新
+      trigger()
+    }
+  }
+}
+```
+
+### 转换关系
+
+<br/>
+
+两者可以相互转换：
+
+```js
+import { ref, reactive, toRef, toRefs } from 'vue'
+
+// reactive 转 ref
+const state = reactive({ x: 1, y: 2 })
+const xRef = toRef(state, 'x') // 创建单个 ref
+const refs = toRefs(state) // 创建所有属性的 ref
+
+// ref 转 reactive（直接使用 .value）
+const countRef = ref(10)
+const reactiveObj = reactive({ count: countRef.value })
+```
+
+### 使用场景建议
+
+- **使用 ref**：
+  - 基本类型数据
+  - 需要重新赋值的对象
+  - 模板中需要直接使用的数据
+
+- **使用 reactive**：
+  - 复杂的对象结构
+  - 不需要重新赋值的对象
+  - 组合式函数中返回状态对象
+
+### 总结
+
+<br/>
+
+`ref` 和 `reactive` 都是 `Vue3` 响应式系统的核心，`ref` 更通用且可以处理所有数据类型，而 `reactive` 专门用于对象类型。
+
 ## Vuex 和 Pinia 的区别
 
 `Vuex` 和 `Pinia` 都是 `Vue.js` 的状态管理库，但它们有一些重要区别：
