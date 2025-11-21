@@ -367,100 +367,154 @@ console.log(__moduleA_exports.b)
 
 **最佳实践**：无需担心多次 `import` 同一模块的性能问题，打包工具会优化冗余代码。但需避免无意义的重复导入以保持代码可读性。
 
-## CommonJS、ESM 和 AMD 的对比
+## ESM & CommonJS & AMD & UMD
 
-在 `JavaScript` 生态中，**CommonJS**、**ESM（ES Modules）** 和 **AMD（Asynchronous Module Definition）** 是三种主流的模块化规范，它们解决了代码组织、依赖管理和加载的问题，但设计目标和适用场景有所不同。
+### 核心概念：为什么需要模块化？
 
-### **1. CommonJS**
+<br/>
 
-#### 特点：
+在早期，没有模块系统，代码通常写在一个或多个全局文件里，导致**全局变量污染**、**依赖关系不明确**、**难以维护**等问题。模块化就是为了解决这些问题而诞生的，它允许我们将代码拆分成独立的小模块，每个模块有独立的作用域，并能明确地导入和导出功能。
 
-- **同步加载**：模块在运行时**同步加载**（适合服务端）。
-- **语法**：`require()` 引入模块，`module.exports` 或 `exports` 导出模块。
-- **适用场景**：`Node.js` 的默认模块系统，主要用于服务端开发。
-- **示例**：
+### 1. ESM（ECMAScript Modules）
 
-  ```js
-  // 导入
-  const fs = require('fs')
-  // 导出
-  module.exports = { myFunction }
-  ```
+* **全称**：`ECMAScript Modules`
+* **简介**：这是 **JavaScript 语言的官方标准**，在现代浏览器和 `Node.js` 中得到了原生支持。
+* **语法**：
+    * **导出**：使用 `export` 或 `export default` 关键字。
+    * **导入**：使用 `import` 关键字。
+* **特点**：
+    * **静态**：模块的依赖关系在代码执行前（编译时）就确定了，这使得**摇树优化（Tree-shaking）** 成为可能，打包工具可以移除未使用的代码。
+    * **异步**：在浏览器环境中，`ESM` 默认是异步加载的，不会阻塞 `HTML` 解析。
+    * **严格模式**：`ESM` 模块默认在严格模式下运行。
+    * **顶级作用域**：每个模块都有自己的顶级作用域，而非全局作用域。
+    * **引用传递**：导入的是值的**只读引用**，而不是值的拷贝。
+* **使用场景**：
+    * 现代前端框架（`React`, `Vue`, `Angular`）项目的标配。
+    * 所有支持原生 `ESM` 的现代浏览器环境。
+    * `Node.js`（从 `v12` 开始稳定支持，通常在 `package.json` 中设置 `"type": "module"`）。
 
-#### 关键点：
+**示例**：
 
-- **模块缓存**：模块首次加载后会被缓存，后续调用 `require()` 直接读取缓存。
-- **动态性**：依赖关系在运行时确定，支持条件加载。
-- **局限性**：同步加载不适合浏览器环境（会阻塞渲染）。
+```js
+// math.mjs (或 .js 在 package.json 设置了 "type": "module" 时)
+export const add = (a, b) => a + b
+export default function multiply(a, b) { return a * b }
 
-### **2. ESM（ES Modules）**
+// app.mjs
+import multiply, { add } from './math.mjs' // 引入默认导出和命名导出
+console.log(add(2, 3)) // 5
+console.log(multiply(2, 3)) // 6
+```
 
-#### 特点：
+### 2. CommonJS
 
-- **静态分析**：依赖在编译时确定，支持**静态优化**（如 `Tree Shaking`）。
-- **语法**：`import` 和 `export` 关键字。
-- **适用场景**：现代浏览器和构建工具（如 `Webpack、Rollup`）的官方标准。
-- **示例**：
+* **简介**：主要为 **服务器端**（`Node.js`）设计的一种模块规范。`Node.js` 默认的模块系统就是 `CommonJS`。
+* **语法**：
+    * **导出**：使用 `module.exports` 或 `exports` 对象。
+    * **导入**：使用 `require()` 函数。
+* **特点**：
+    * **动态**：`require()` 可以在代码的任何地方（包括条件语句中）调用，依赖关系是在**运行时**确定的。
+    * **同步加载**：由于服务器端文件在本地磁盘，加载速度极快，所以采用同步方式。但这不适合浏览器，因为网络请求是异步的。
+    * **值拷贝**：`require()` 得到的是导出对象的**一份拷贝**（对于基本数据类型是值拷贝，对于对象是浅拷贝）。
+* **使用场景**：
+    * **Node.js 生态系统**的绝大多数包。
+    * 使用构建工具（如 `Webpack`、`Parcel`）打包的后端或前端项目。
 
-  ```js
-  // 导入
-  import { func } from './module.js'
-  // 导出
-  export const myVar = 42
-  ```
+**示例**：
 
-#### 关键点：
+```js
+// math.js
+const add = (a, b) => a + b
+module.exports = { add } // 或者 exports.add = add
 
-- **异步加载**：浏览器中通过 `<script type="module">` 异步加载。
-- **严格模式**：默认启用严格模式。
-- **浏览器兼容性**：现代浏览器原生支持，旧浏览器需通过构建工具转译。
-- **Node.js 支持**：`Node v12+` 通过 `.mjs` 扩展名或 `package.json` 的 `"type": "module"` 启用。
+// app.js
+const math = require('./math.js') // 引入整个模块
+console.log(math.add(2, 3)) // 5
 
-### **3. AMD（Asynchronous Module Definition）**
+// 动态条件导入
+if (condition) {
+  const dynamicModule = require('./dynamic');
+}
+```
 
-#### 特点：
+### 3. AMD（Asynchronous Module Definition）
 
-- **异步加载**：专为浏览器设计，**非阻塞加载**模块。
-- **语法**：通过 `define()` 定义模块，`require()` 异步加载。
-- **适用场景**：传统浏览器端项目（如 `RequireJS` 库）。
-- **示例**：
+* **全称**：`Asynchronous Module Definition`
+* **简介**：专门为**浏览器环境**设计，因为浏览器需要异步加载脚本，而 `CommonJS` 的同步加载会阻塞页面。
+* **语法**：其最流行的实现是 **RequireJS**。
+    * **定义模块**：`define(id?, dependencies?, factory)`
+    * **加载模块**：`require(dependencies, factory)`
+* **特点**：
+    * **异步加载**：不会阻塞浏览器渲染，依赖的模块加载完毕后，回调函数才会执行。
+    * **显式声明依赖**：依赖在模块定义时就明确列出。
+* **使用场景**：
+    * 在现代前端构建工具流行之前，被广泛用于老式的前端项目。
+    * 现在已逐渐被 `ESM` 取代，但在一些遗留系统中仍能看到。
 
-  ```js
-  // 定义模块
-  define(['dep1', 'dep2'], function (dep1, dep2) {
-    return { myFunction }
-  })
-  // 加载模块
-  require(['module'], function (module) {})
-  ```
+**示例** (使用 `RequireJS`)：
 
-#### 关键点：
+```js
+// 定义一个依赖 jQuery 的模块
+define(['jquery'], function($) {
+  // 使用 $
+  function createButton() {
+    $('body').append('<button>Click me</button>')
+  }
+  // 导出功能
+  return { createButton }
+})
 
-- **依赖前置**：模块依赖需提前声明。
-- **动态加载**：适合按需加载的复杂前端应用。
-- **复杂性**：配置和语法相对繁琐。
+// 加载并使用模块
+require(['myModule'], function(myModule) {
+  myModule.createButton()
+})
+```
 
-### **对比总结**
+### 4. UMD（Universal Module Definition）
 
-| 特性 | `CommonJS` | `ESM` | `AMD` |
-|--|--|--|--|
-| **加载方式** | 同步（服务端）| 静态/异步（浏览器）| 异步（浏览器）|
-| **语法** | `require/exports` | `import/export` | `define/require`  |
-| **运行环境** | `Node.js` | 浏览器/`Node.js` | 浏览器 |
-| **静态分析** | 不支持 | 支持（`Tree Shaking`）| 不支持 |
-| **循环依赖处理** | 支持 | 支持 | 复杂 |
-| **典型工具/库** | `Node.js` | `Webpack`, `Rollup` | `RequireJS` |
+* **全称**：`Universal Module Definition`
+* **简介**：**不是一个独立的模块规范，而是一种兼容模式**。它旨在让一个模块文件能够在多种环境中工作（如 `CommonJS`、`AMD` 和全局变量）。
+* **原理**：通过一系列条件判断，检测当前环境支持哪种模块系统，然后使用相应的语法导出模块。
+* **使用场景**：
+    * 开发希望**同时兼容浏览器和 `Node.js`** 的库（例如 `React`、`Lodash` 等）。当你查看这些库的源码时，通常会找到一个 `UMD` 格式的打包文件（如 `react.umd.js`）。
 
-### **演进与现状**
+**示例** (一个典型的 `UMD` 包裹模式)：
 
-1. **ESM 是未来**：作为 `ECMAScript` 标准，`ESM` 逐渐统一浏览器和 `Node.js` 的模块化方案。
-2. **Node.js 的双模块**：`Node.js` 同时支持 `CommonJS` 和 `ESM`（需配置），但两者混用需谨慎（如 `import` 无法直接引入 `CommonJS` 模块的具名导出）。
-3. **AMD 的淡出**：随着 `ESM` 的普及和构建工具的成熟，`AMD` 主要用于旧项目维护。
+```js
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD 环境 (如 RequireJS)
+    define(['jquery'], factory)
+  } else if (typeof module === 'object' && module.exports) {
+    // CommonJS 环境 (如 Node.js)
+    module.exports = factory(require('jquery'))
+  } else {
+    // 浏览器全局变量
+    root.myLibrary = factory(root.jQuery)
+  }
+}(this, function ($) {
+  // 模块的真正逻辑
+  function myFunction() {
+    console.log($)
+  }
+  // 导出模块
+  return { myFunction }
+}))
+```
 
-### **如何选择？**
+### 总结对比表格
 
-- **现代前端项目**：优先使用 **ESM**（通过 `Webpack/Rollup` 打包）。
-- **Node.js 服务端**：`CommonJS` 仍是主流，但新项目推荐逐步迁移到 `ESM`。
-- **旧浏览器兼容**：`AMD` 或 `ESM +` 构建工具降级处理。
+| 特性 | `ESM`（官方标准） | `CommonJS`（`Node.js`） | `AMD`（`RequireJS`） | `UMD`（兼容方案） |
+| :--- | :--- | :--- | :--- | :--- |
+| **加载方式** | 异步（浏览器） | 同步 | 异步 | 根据环境而定 |
+| **语法** | `import/export` | `require/module.exports` | `define/require` | 条件判断包裹 |
+| **环境** | 现代浏览器、`Node.js` | **主要 `Node.js`** | **主要浏览器** | 所有环境 |
+| **确定依赖时机** | **静态（编译时）** | 动态（运行时） | 静态（定义时） | 根据环境而定 |
+| **关键优势** | 官方标准、静态分析、`Tree-shaking` | 简单、`Node.js` 生态成熟 | 异步加载、不阻塞浏览器 | 跨环境通用 |
+| **现状** | **未来和现在的标准** | **`Node.js` 后端主流** | **逐渐淘汰** | **库开发的常用输出格式** |
 
-理解这些规范的差异，有助于在不同场景下合理组织代码和优化加载性能。
+### 现代开发中的选择
+
+1. **新项目**：**无条件选择 ESM**。它是语言标准，也是未来。
+2. **开发 npm 库**：使用 `ESM` 编写源码，然后通过构建工具（如 `Rollup`、`Webpack`）打包生成 **UMD** 和 **CommonJS** 等多种格式，通过 `package.json` 的 `main`（`CommonJS`）、`module`（`ESM`）等字段指定不同入口，以最大化兼容性。
+3. **维护老项目**：可能会遇到 `AMD` 或 `CommonJS`，理解它们有助于维护和迁移。
