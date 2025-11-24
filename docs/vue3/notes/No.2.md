@@ -208,33 +208,37 @@ console.log('reactiveData:', reactiveData)
 
 `Reflect` 是一个内置的对象，它提供拦截 `JavaScript` 操作的方法。这些方法与 `proxy handler` (en-US) 的方法相同。`Reflect` 不是一个函数对象，因此它是不可构造的。
 
+> 用于调用对象的基本操作方法（内部方法）
+
 ### 静态方法
 
-- `Reflect.apply(target, thisArgument, argumentsList)`：对一个函数进行调用操作，同时可以传入一个数组作为调用参数。和 `Function.prototype.apply()` 功能类似。
+- `Reflect.apply(target, thisArgument, argumentsList)`：<br/>
+  对一个函数进行调用操作，同时可以传入一个数组作为调用参数。和 `Function.prototype.apply()` 功能类似。
+- `Reflect.construct(target, argumentsList[, newTarget])`：<br/>
+  对构造函数进行 `new` 操作，相当于执行 `new target(...args)`。
+- `Reflect.defineProperty(target, propertyKey, attributes)`：<br/>
+  和 `Object.defineProperty()` 类似。如果设置成功就会返回 `true`
+- `Reflect.deleteProperty(target, propertyKey)`：<br/>
+  作为函数的 `delete` 操作符，相当于执行 `delete target[name]`。
+- `Reflect.get(target, propertyKey[, receiver])`：<br/>
+  获取对象身上某个属性的值，类似于 `target[name]`。
 
-- `Reflect.construct(target, argumentsList[, newTarget])`：对构造函数进行 `new` 操作，相当于执行 `new target(...args)`。
-
-- `Reflect.defineProperty(target, propertyKey, attributes)`：和 `Object.defineProperty()` 类似。如果设置成功就会返回 `true`
-
-- `Reflect.deleteProperty(target, propertyKey)`：作为函数的 `delete` 操作符，相当于执行 `delete target[name]`。
-
-- `Reflect.get(target, propertyKey[, receiver])`：获取对象身上某个属性的值，类似于 `target[name]`。
-
-- `Reflect.getOwnPropertyDescriptor(target, propertyKey)`：类似于 `Object.getOwnPropertyDescriptor()`。如果对象中存在该属性，则返回对应的属性描述符，否则返回 `undefined`。
-
-- `Reflect.getPrototypeOf(target)`：类似于 `Object.getPrototypeOf()`。
-
-- `Reflect.has(target, propertyKey)`：判断一个对象是否存在某个属性，和 `in` 运算符 的功能完全相同。
-
-- `Reflect.isExtensible(target)`：类似于 `Object.isExtensible()`.
-
-- `Reflect.ownKeys(target)`：返回一个包含所有自身属性（不包含继承属性）的数组。(类似于 `Object.keys()`, 但不会受 `enumerable` 影响).
-
-- `Reflect.preventExtensions(target)`：类似于 `Object.preventExtensions()`。返回一个 `Boolean`。
-
-- `Reflect.set(target, propertyKey, value[, receiver])`：将值分配给属性的函数。返回一个 `Boolean`，如果更新成功，则返回 `true`。
-
-- `Reflect.setPrototypeOf(target, prototype)`：设置对象原型的函数。返回一个 `Boolean`，如果更新成功，则返回 `true`。
+- `Reflect.getOwnPropertyDescriptor(target, propertyKey)`：<br/>
+  类似于 `Object.getOwnPropertyDescriptor()`。如果对象中存在该属性，则返回对应的属性描述符，否则返回 `undefined`。
+- `Reflect.getPrototypeOf(target)`：<br/>
+  类似于 `Object.getPrototypeOf()`。
+- `Reflect.has(target, propertyKey)`：<br/>
+  判断一个对象是否存在某个属性，和 `in` 运算符 的功能完全相同。
+- `Reflect.isExtensible(target)`：<br/>
+  类似于 `Object.isExtensible()`.
+- `Reflect.ownKeys(target)`：<br/>
+  返回一个包含所有自身属性（不包含继承属性）的数组。(类似于 `Object.keys()`, 但不会受 `enumerable` 影响).
+- `Reflect.preventExtensions(target)`：<br/>
+  类似于 `Object.preventExtensions()`。返回一个 `Boolean`。
+- `Reflect.set(target, propertyKey, value[, receiver])`：<br/>
+  将值分配给属性的函数。返回一个 `Boolean`，如果更新成功，则返回 `true`。
+- `Reflect.setPrototypeOf(target, prototype)`：<br/>
+  设置对象原型的函数。返回一个 `Boolean`，如果更新成功，则返回 `true`。
 
 ### 示例
 
@@ -271,6 +275,84 @@ console.log('reactiveData:', reactiveData)
   // "duck" now contains the property "eyes: 'black'"
   ```
 
+### 实例解析
+
+1. 实例一
+
+```js
+const obj = {}
+
+obj.a = 1 // (间接)在内部会调用内部方法 [[SET]]
+Reflect.set(obj, 'a', 2) // (直接)调用内部方法 [[SET]]
+obj.a // [[GET]]
+
+console.log(obj) // { a: 2 }
+```
+
+2. 实例二
+
+```js
+const obj = {
+  a: 1,
+  b: 2,
+  get c () { // 语法糖写法，相当于 Object.defineProperty(obj, 'c', 
+    return this.a + this.b
+  }
+}
+console.log(obj.c) // 3 间接调用内部方法 [[GET]]
+// 7 (直接)调用内部方法 [[GET]]  get(target, propertyKey, receiver) receiver(可选)：用于指定调用时的 this 指向
+Reflect.get(obj2, 'c', { a: 3, b: 4 })
+```
+
+3. 实例三
+
+```js
+const obj = {
+  a: 1,
+  b: 2,
+  get c () { // 语法糖写法，相当于 Object.defineProperty(obj, 'c', 
+    return this.a + this.b
+  }
+}
+const proxy1 = new Proxy(obj, {
+  get (target, property) {
+    console.log('get1', property)
+    return target[property]
+  },
+  set (target, property, value) {
+    console.log('set1', property, value)
+    return target[property] = value
+  }
+})
+
+console.log(proxy1.a)
+// get1 a
+// 1
+console.log(proxy1.c)
+// 因为此时 this 指向 obj，而不是 proxy1，因此没有触发 get1 a、get1 b
+// get1 c
+// 3
+
+const proxy2 = new Proxy(obj, {
+  get (target, property, receiver) { // receiver 主要用于指定 this 指向
+    console.log('get2', property)
+    return Reflect.get(target, property, receiver) // 或者 Reflect.get(target, property, proxy2)
+  },
+  set (target, property, value, receiver) {
+    console.log('set2', property, value)
+    return Reflect.set(target, property, value, receiver)
+  }
+})
+
+console.log(proxy2.a)
+// get2 a
+// 1
+console.log(proxy2.c)
+// get2 c
+// get2 a
+// get2 b
+// 3
+```
 ## vue3 登录拦截与跳转相关
 
 - 登录跳转逻辑
