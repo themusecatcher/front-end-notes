@@ -100,6 +100,69 @@
 3. **单点故障风险**：源站成为唯一的出入口，一旦出现问题，整个网站完全无法访问。
 4. **成本可能更高**：为了应对峰值流量，你可能需要购买更高配置的服务器和更昂贵的带宽，但大部分时间这些资源是闲置的。
 
+**不放CDN时，同一域名下更容易出现并发请求限制问题，从而影响页面加载性能。**
+
+#### 浏览器并发请求限制机制
+
+<br/>
+
+浏览器为了**防止对单个服务器的过度请求**和**避免网络拥堵**，对**同一域名**的并发`HTTP/1.1`请求数量有严格限制。
+
+* **HTTP/1.1**：现代浏览器对**同一域名**的并发请求数通常是 **6个**。这意味着，如果页面需要加载超过`6`个来自同一个域名的资源，第`7`个及以后的请求必须**排队等待**，直到前面的请求完成一个，空出一个“位置”。
+* **HTTP/2**：这个限制被大大缓解了。`HTTP/2`支持**多路复用**，可以在同一个`TCP`连接上同时进行多个请求和响应，且互不阻塞。因此，理论上对同一域名的并发请求数限制不再是问题。
+
+#### 不放CDN时的情况
+
+<br/>
+
+当你不使用 `CDN`，所有静态资源（`JS`, `CSS`, 图片, 字体等）都从你的**源站域名**（例如 `www.example.com`）加载时：
+
+1. **HTTP/1.1 环境下问题严重**
+    * 假设你的页面有`20`个静态资源（`10`个`JS/CSS`，`10`张图片）。
+    * 浏览器会同时发起最多`6`个请求到 `www.example.com`。
+    * 剩下的`14`个请求必须排队等待。这会**显著增加后续资源的等待时间**，从而拖慢整个页面的加载速度，尤其是在高延迟的网络环境下。
+
+    **视觉表现就是：** 图片和内容会分批、一块一块地显示出来，而不是流畅地加载。
+
+2. **HTTP/2 环境下问题缓解，但仍有缺陷**
+    * 虽然`HTTP/2`的多路复用解决了队头阻塞和并发数限制，**但所有请求仍然共享同一个`TCP`连接，并且全部指向你的源站服务器**。
+    * **服务器压力集中**：所有并发请求的压力都集中在源站服务器上。
+    * **失去地理优势**：对于离你服务器很远的用户，所有资源的网络延迟都很高，`HTTP/2`也无法解决物理距离带来的延迟问题。
+
+#### CDN是如何解决这个问题的？
+
+<br/>
+
+使用`CDN`后，你实际上是在创建**多个域名或子域名**来分发资源，这被称为**域名分片**。
+
+* **场景**：你的主站在 `www.example.com`，但你把静态资源放在了`CDN`上，地址可能是 `static.cdn-example.com` 或 `img.cdn-example.com`。
+
+* **在HTTP/1.1下的工作原理**：
+    * 浏览器对 `www.example.com`（主站HTML）有`6`个并发限制。
+    * 同时，浏览器对 `static.cdn-example.com`（`JS/CSS`）也有**另外的`6`个**并发限制。
+    * 同时，浏览器对 `img.cdn-example.com`（图片）还有**另外的`6`个**并发限制。
+    * 这样，总的并发请求能力就从6个提升到了 **`6 + 6 + 6 = 18`个**，资源可以并行下载，大大减少了排队时间。
+
+* **在HTTP/2下的优势**：
+    * 即使`HTTP/2`本身不严格需要域名分片，但使用`CDN`带来的**地理就近访问**优势是巨大的。用户从`CDN`节点加载资源，延迟极低，这使得每个请求的完成速度都更快。
+    * 同时，将静态资源流量从源站分离，避免了源站服务器的连接数过载。
+
+#### 对比总结表
+
+| 场景 | `HTTP/1.1` 下的影响 | `HTTP/2` 下的影响 |
+| :--- | :--- | :--- |
+| **不放CDN**<br>(所有资源同域名) | **严重影响**<br>并发请求被限制在~`6`个，资源加载严重排队，页面加载慢。 | **影响较小但存在**<br>解决了并发限制，但所有请求延迟高，且源站压力大。 |
+| **放CDN**<br>(资源在不同`CDN`域名) | **显著改善**<br>通过域名分片，有效突破并发限制，资源并行加载。 | **显著改善**<br>利用`CDN`的低延迟节点，每个请求速度更快，源站无压力。 |
+
+#### 结论与最佳实践
+
+1. **不放CDN，在HTTP/1.1环境下肯定会遇到严重的并发请求限制问题**，这是前端性能的一个主要瓶颈。
+2. 即使全站升级到`HTTP/2`，**不使用CDN也意味着你放弃了降低网络延迟和分散服务器压力这两个最重要的性能优化手段**。
+3. **最佳实践是结合使用**：
+    * **使用CDN**来托管静态资源，获得低延迟和高并发的好处。
+    * 在构建时，可以为不同类型的资源（如图片、`JS/CSS`）分配不同的`CDN`子域名，以在必要时兼容`HTTP/1.1`。
+    * 确保你的服务器和CDN都支持并启用了`HTTP/2`，以获得最佳性能。
+
 ### 全放CDN上又有什么问题？（不放CDN的“反向”问题）
 
 <br/>
@@ -263,3 +326,276 @@
 * **如果是新项目**：优先考虑 **Next.js（React）** 或 **Nuxt.js（Vue）**。它们默认支持 `SSG/SSR`，开箱即用，能让你在享受 `SPA` 开发体验的同时，无缝获得优秀的 `SEO` 能力。
 * **如果是现有 SPA 项目**：评估重构成本。如果 `SEO` 至关重要，建议逐步迁移到 `Next.js/Nuxt.js`。如果只是需要快速提升，可以尝试 **动态渲染** 作为临时方案。
 * **如果完全不需要 SEO**：比如公司内部后台系统，那么纯 `SPA` 是完全没问题的。
+
+## `SPA` & `SSR` & `SSG`
+
+### 1. SPA（单页应用 Single-Page Application）
+
+#### 概念
+
+<br/>
+
+`SPA` 是在客户端动态渲染的应用程序，初始加载后，所有的页面切换都在浏览器中完成，不需要重新加载整个页面。
+
+#### 特点
+
+- **客户端渲染**：在浏览器中通过 `JavaScript` 动态生成内容
+- **前后端分离**：前端负责 `UI` 渲染，后端提供 `API` 接口
+- **交互体验好**：页面切换流畅，无刷新体验
+- **首次加载慢**：需要下载所有必要的 `JavaScript` 文件
+
+#### 代码示例
+
+> Vue3 SPA 示例
+
+```vue
+<template>
+  <div>
+    <h1>Vue SPA 应用</h1>
+    <nav>
+      <router-link to="/">首页</router-link>
+      <router-link to="/about">关于</router-link>
+    </nav>
+    <router-view />
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+
+const data = ref(null)
+const route = useRoute()
+
+onMounted(async () => {
+  // 客户端获取数据
+  try {
+    const response = await fetch('/api/data')
+    data.value = await response.json()
+  } catch (error) {
+    console.error('获取数据失败:', error)
+  }
+})
+</script>
+```
+
+### 2. SSR（服务端渲染 Server-Side Rendering）
+
+#### 概念
+
+<br/>
+
+`SSR` 是在服务器端生成完整的 `HTML` 页面，然后发送到客户端显示。
+
+#### 特点
+
+- **服务端渲染**：`HTML` 在服务器端生成
+- **首屏加载快**：用户直接看到完整内容
+- **SEO 友好**：搜索引擎可以直接抓取内容
+- **服务器压力大**：每次请求都需要服务器渲染
+
+#### 代码示例
+
+> Nuxt.js SSR 示例
+
+```vue
+<!-- pages/blog/[id].vue -->
+<template>
+  <div>
+    <h1>{{ post.title }}</h1>
+    <div>{{ post.content }}</div>
+    <p>发布于: {{ post.date }}</p>
+  </div>
+</template>
+
+<script setup>
+// 服务端数据获取
+const { data: post } = await useAsyncData('post', () => 
+  $fetch(`/api/posts/${route.params.id}`)
+)
+
+// 或者使用 useFetch 简写
+const { data: post } = await useFetch(`/api/posts/${route.params.id}`)
+
+// SEO 配置
+useSeoMeta({
+  title: post.value?.title,
+  description: post.value?.description
+})
+</script>
+```
+
+#### 服务端渲染流程
+
+```js
+// 1. 接收请求
+app.get('*', async (req, res) => {
+  // 2. 数据获取（不涉及 DOM）
+  const data = await fetchData(req.url)
+  
+  // 3. 创建 Redux store（纯 JavaScript）
+  const store = createStore(reducer, data)
+  
+  // 4. 虚拟 DOM 渲染（无真实 DOM）
+  const appVirtualTree = (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
+  
+  // 5. 虚拟 DOM 转 HTML 字符串
+  const htmlContent = ReactDOMServer.renderToString(appVirtualTree)
+  
+  // 6. 组装完整 HTML
+  const fullHTML = `
+    <!DOCTYPE html>
+    <html>
+      <body>
+        <div id="root">${htmlContent}</div>
+        <script>
+          // 将数据传递给客户端
+          window.__PRELOADED_STATE__ = ${JSON.stringify(store.getState())}
+        </script>
+      </body>
+    </html>
+  `
+  
+  res.send(fullHTML)
+})
+```
+
+#### 为什么需要客户端注水？
+
+```js
+// 服务端渲染结果：
+// <button>点击我</button>  ← 静态 HTML，没有事件
+
+// 客户端注水后：
+// <button onclick="handleClick">点击我</button>  ← 添加了交互能力
+```
+
+#### SSR 渲染的本质
+
+- ✅ 不是操作真实 `DOM` - 服务端没有 `DOM` `API`
+- ✅ 是虚拟 `DOM` 到字符串的序列化 - 纯字符串操作
+- ✅ 只执行渲染相关的生命周期 - 不执行 `DOM` 依赖的方法
+- ✅ 结果是静态 `HTML` 字符串 - 没有事件绑定等交互功能
+
+#### 总结
+
+<br/>
+
+`SSR` 在服务端能够渲染 `HTML` 的秘诀就是：
+
+1. 虚拟 `DOM` 技术 - 用 `JavaScript` 对象描述 `UI` 结构
+2. 字符串序列化 - 将虚拟 `DOM` 转换为 `HTML` 字符串
+3. 最小环境模拟 - 只模拟渲染必需的环境，不实现完整 `DOM`
+4. 纯计算过程 - 整个过程都是 `JavaScript` 计算，不依赖浏览器 `API`
+
+### 3. SSG（静态站点生成 Static Site Generation）
+
+#### 概念
+
+<br/>
+
+`SSG` 在构建时预渲染页面，生成静态 `HTML` 文件，直接部署到 `CDN`。
+
+#### 特点
+
+- **构建时渲染**：在构建阶段生成静态页面
+- **访问速度极快**：直接服务静态文件
+- **SEO 友好**：内容完全预渲染
+- **内容更新需要重新构建**：不适合频繁更新的内容
+
+#### 代码示例
+
+> Nuxt.js SSG 示例
+
+```vue
+<!-- pages/blog/index.vue -->
+<template>
+  <div>
+    <h1>博客文章</h1>
+    <div v-for="post in posts" :key="post.id" class="post">
+      <h2>
+        <NuxtLink :to="`/blog/${post.slug}`">{{ post.title }}</NuxtLink>
+      </h2>
+      <p>{{ post.excerpt }}</p>
+    </div>
+  </div>
+</template>
+
+<script setup>
+// 构建时获取数据
+const { data: posts } = await useAsyncData('posts', () => 
+  queryContent('blog')
+    .sort({ date: -1 })
+    .find()
+)
+
+// 配置静态生成
+definePageMeta({
+  // 可以添加页面元信息
+})
+</script>
+```
+
+### 三者的详细对比
+
+| 特性 | SPA | SSR | SSG |
+|------|-----|-----|-----|
+| **渲染位置** | 客户端 | 服务端 | 构建时 |
+| **渲染方式** | 在浏览器中动态渲染 | 在服务器端渲染成`HTML` | 在构建时预渲染成`HTML` |
+| **首屏加载** | 较慢 | 快 | 极快 |
+| **SEO** | 差 | 好 | 好 |
+| **服务器压力** | 小 | 大 | 无 |
+| **内容更新** | 实时 | 实时 | 需重新构建 |
+| **开发复杂度** | 低 | 中 | 低 |
+| **适用场景** | 后台系统、交互应用 | 电商、新闻、社交 | 博客、文档、官网 |
+
+### 选择建议
+
+#### 使用 SPA 当：
+
+- 需要丰富的交互体验
+- 对 `SEO` 要求不高
+- 主要是用户后台管理系统
+- 团队熟悉前端框架
+
+#### 使用 `SSR` 当：
+
+- 需要良好的 `SEO`
+- 内容频繁更新
+- 需要首屏快速加载
+- 用户访问分布广泛
+
+#### 使用 `SSG` 当：
+
+- 内容相对固定
+- 需要极快的访问速度
+- 对 `SEO` 要求高
+- 希望降低服务器成本
+
+### 现代框架的混合使用
+
+<br/>
+
+现代框架如 `Next.js`、`Nuxt.js` 支持混合模式：
+
+```js
+// Next.js 混合示例
+export default function HybridPage({ data }) {
+  return <div>{data}</div>
+}
+
+// 部分页面使用 SSG
+export async function getStaticProps() { /* ... */ }
+
+// 部分页面使用 SSR  
+export async function getServerSideProps() { /* ... */ }
+
+// 部分页面使用客户端渲染
+// 不导出任何 getStaticProps 或 getServerSideProps
+```
+
+这样可以根据不同页面的需求选择最合适的渲染策略，在性能、`SEO` 和用户体验之间取得最佳平衡。
