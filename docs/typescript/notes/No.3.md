@@ -6,44 +6,7 @@
 
 在 `TypeScript` 中，`Extract<T, U>` 和 `Exclude<T, U>` 是两个内置的实用工具类型（Utility Types），用于对联合类型进行过滤操作。它们的核心区别在于：**`Exclude` 是排除符合条件（可赋值给 `U`）的类型成员，而 `Extract` 是提取符合条件（可赋值给 `U`）的类型成员**。
 
-### 1. **`Exclude<T, U>`**
-
-#### 作用
-
-<br/>
-
-从类型 `T` 中排除所有可以赋值给 `U` 的类型成员，生成一个新的联合类型。
-
-#### 源码
-
-```ts
-type Exclude<T, U> = T extends U ? never : T;
-```
-
-#### 解释
-
-- **条件类型**：`T extends U ? never : T` 是一个条件类型，它会对联合类型 `T` 的每个成员逐一进行判断。
-- **分布式条件类型**：如果 `T` 是一个联合类型（如 `A | B | C`），则条件类型会对每个成员单独执行：
-  - 如果某个成员可以赋值给 `U`，则返回 `never`（表示排除该成员）。
-  - 否则保留该成员。
-- **`never` 的作用**：`never` 是 `TypeScript` 的底层类型，表示“不可能存在的值”。在联合类型中，`never` 会被自动忽略。
-
-#### 示例
-
-```ts
-type T = "a" | "b" | "c" | 1 | 2
-type Result = Exclude<T, string> // 等价于 1 | 2
-```
-
-- 分析过程：
-  - `"a"` 是 `string` → 排除 → `never`
-  - `"b"` 是 `string` → 排除 → `never`
-  - `"c"` 是 `string` → 排除 → `never`
-  - `1` 不是 `string` → 保留 → `1`
-  - `2` 不是 `string` → 保留 → `2`
-- 最终结果：`1 | 2`
-
-### 2. **`Extract<T, U>`**
+### 1. **`Extract<T, U>`**
 
 #### 作用
 
@@ -151,6 +114,43 @@ type SafeApiResponse = NonNullProps<ApiResponse>
 // { data: string; error: Exclude<Error | null, null>; code: number }
 // → { data: string; error: Error; code: number }
 ```
+
+### 2. **`Exclude<T, U>`**
+
+#### 作用
+
+<br/>
+
+从类型 `T` 中排除所有可以赋值给 `U` 的类型成员，生成一个新的联合类型。
+
+#### 源码
+
+```ts
+type Exclude<T, U> = T extends U ? never : T;
+```
+
+#### 解释
+
+- **条件类型**：`T extends U ? never : T` 是一个条件类型，它会对联合类型 `T` 的每个成员逐一进行判断。
+- **分布式条件类型**：如果 `T` 是一个联合类型（如 `A | B | C`），则条件类型会对每个成员单独执行：
+  - 如果某个成员可以赋值给 `U`，则返回 `never`（表示排除该成员）。
+  - 否则保留该成员。
+- **`never` 的作用**：`never` 是 `TypeScript` 的底层类型，表示“不可能存在的值”。在联合类型中，`never` 会被自动忽略。
+
+#### 示例
+
+```ts
+type T = "a" | "b" | "c" | 1 | 2
+type Result = Exclude<T, string> // 等价于 1 | 2
+```
+
+- 分析过程：
+  - `"a"` 是 `string` → 排除 → `never`
+  - `"b"` 是 `string` → 排除 → `never`
+  - `"c"` 是 `string` → 排除 → `never`
+  - `1` 不是 `string` → 保留 → `1`
+  - `2` 不是 `string` → 保留 → `2`
+- 最终结果：`1 | 2`
 
 ### 总结
 
