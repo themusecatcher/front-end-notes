@@ -39,14 +39,14 @@
 - 浏览器行为跟踪
   如跟踪分析用户行为等
 
-`Cookie` 曾一度用于客户端数据的存储，因当时并没有其他合适的存储办法而作为唯一的存储手段，但现在推荐使用现代存储 API。由于服务器指定 `Cookie` 后，浏览器的每次请求都会携带 `Cookie` 数据，会带来额外的性能开销（尤其是在移动环境下）。新的浏览器 API 已经允许开发者直接将数据存储到本地，如使用 Web storage API（`localStorage` 和 `sessionStorage`）或 `IndexedDB` 。
+`Cookie` 曾一度用于客户端数据的存储，因当时并没有其他合适的存储办法而作为唯一的存储手段，但现在推荐使用现代存储 API。由于服务器指定 `Cookie` 后，浏览器的每次请求都会携带 `Cookie` 数据，会带来额外的性能开销（尤其是在移动环境下）。新的浏览器 `API` 已经允许开发者直接将数据存储到本地，如使用 `Web storage API`（`localStorage` 和 `sessionStorage`）或 `IndexedDB` 。
 
 ### 定义 Cookie 的生命周期
 
 <br/>
 
 `Cookie` 的生命周期可以通过两种方式定义：
-- 会话期 `Cookie` 会在当前的会话结束之后删除。浏览器定义了“当前会话”结束的时间，一些浏览器重启时会使用会话恢复。这可能导致会话 cookie 无限延长。
+- 会话期 `Cookie` 会在当前的会话结束之后删除。浏览器定义了“当前会话”结束的时间，一些浏览器重启时会使用会话恢复。这可能导致会话 `cookie` 无限延长。
 - 持久性 `Cookie` 在过期时间（`Expires`）指定的日期或有效期（`Max-Age`）指定的一段时间后被删除。
 
 ### JavaScript 通过 Document.cookie 访问 Cookie
@@ -72,7 +72,7 @@ console.log(document.cookie)
 
 ## [Window.localStorage](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/localStorage)
 
-只读的 `localStorage` 属性允许你访问一个 `Document` 源（origin）的对象 `Storage`；存储的数据将保存在浏览器会话中。`localStorage` 类似 `sessionStorage`，但其区别在于：**存储在 localStorage 的数据可以长期保留**；而当页面会话结束——也就是说，**当页面被关闭时，存储在 sessionStorage 的数据会被清除**。
+只读的 `localStorage` 属性允许你访问一个 `Document` 源（`origin`）的对象 `Storage`；存储的数据将保存在浏览器会话中。`localStorage` 类似 `sessionStorage`，但其区别在于：**存储在 localStorage 的数据可以长期保留**；而当页面会话结束——也就是说，**当页面被关闭时，存储在 sessionStorage 的数据会被清除**。
 
 应注意，无论数据存储在 `localStorage` 还是 `sessionStorage` ，它们都特定于页面的协议。
 
@@ -170,7 +170,7 @@ field.addEventListener('change', function () {
 
 ## [IndexedDB](https://developer.mozilla.org/zh-CN/docs/Web/API/IndexedDB_API)
 
-`IndexedDB` 是一种底层 API，**用于在客户端存储大量的结构化数据（也包括文件/二进制大型对象（blobs））**。该 API **使用索引实现对数据的高性能搜索**。虽然 `Web Storage` **在存储较少量的数据很有用，但对于存储更大量的结构化数据来说力不从心**。而 `IndexedDB` 提供了这种场景的解决方案。本页面 MDN IndexedDB 的主要引导页 - 这里，我们提供了完整的 API 参考和使用指南，浏览器支持细节，以及关键概念的一些解释的链接。
+`IndexedDB` 是一种底层 `API`，**用于在客户端存储大量的结构化数据（也包括文件/二进制大型对象（blobs））**。该 `API` **使用索引实现对数据的高性能搜索**。虽然 `Web Storage` **在存储较少量的数据很有用，但对于存储更大量的结构化数据来说力不从心**。而 `IndexedDB` 提供了这种场景的解决方案。本页面 `MDN IndexedDB` 的主要引导页 - 这里，我们提供了完整的 `API` 参考和使用指南，浏览器支持细节，以及关键概念的一些解释的链接。
 
 ### 关键概念和用法
 
@@ -190,8 +190,8 @@ field.addEventListener('change', function () {
   })
   ```
 
-- `Load`：页面加载完毕。 DOM树构建完成后，继续加载 `html/css` 中的图片等外部资源，加载完成后视为页面加载完毕。
-  `window.onload()` 方法用于在网页加载完毕后立刻执行的操作，即当 HTML 文档加载完毕后，立刻执行某个方法。通常用于 `<body>` 元素，在页面完全载入后(包括图片、css文件等等)执行脚本代码。
+- `Load`：页面加载完毕。`DOM` 树构建完成后，继续加载 `html/css` 中的图片等外部资源，加载完成后视为页面加载完毕。
+  `window.onload()` 方法用于在网页加载完毕后立刻执行的操作，即当 `HTML` 文档加载完毕后，立刻执行某个方法。通常用于 `<body>` 元素，在页面完全载入后(包括图片、`css`文件等等)执行脚本代码。
 
   ```js
   window.onload = () => { // 对于首页底部某些元素比如地图，大量图片等情况，可以在load之后进行渲染
@@ -203,19 +203,19 @@ field.addEventListener('change', function () {
   })
   ```
 
-  **DOMContentLoaded 会比 Load 时间小，两者时间差大致等于外部资源加载的时间。**
+  **`DOMContentLoaded` 会比 `Load` 时间小，两者时间差大致等于外部资源加载的时间。**
 
-- `Finish`： 是页面上所有 `http` 请求发送到响应完成的时间，**HTTP1.0/1.1 协议限定，单个域名的请求并发量是 6 个，即 Finish 是所有请求（不只是XHR请求，还包括doc，img，js，css等资源的请求）在并发量为6的限制下完成的时间**。
+- `Finish`： 是页面上所有 `http` 请求发送到响应完成的时间，**`HTTP1.0/1.1` 协议限定，单个域名的请求并发量是 `6` 个，即 `Finish` 是所有请求（不只是 `XHR` 请求，还包括 `doc`、`img`、`js`、`css`等资源的请求）在并发量为`6` 的限制下完成的时间**。
 
-`Finish` 的时间比 `Load` 大，意味着页面有相当部分的请求量，`Finish` 的时间比 `Load` 小，意味着页面请求量很少，如果页面是只有一个 html文档请求的静态页面，**Finish时间基本就等于HTML文档请求的时间**。
+`Finish` 的时间比 `Load` 大，意味着页面有相当部分的请求量，`Finish` 的时间比 `Load` 小，意味着页面请求量很少，如果页面是只有一个 `html` 文档请求的静态页面，**`Finish`时间基本就等于`HTML`文档请求的时间**。
 
-页面发送请求和页面解析文档结构，分属两个不同的线程，所以 Finish 时间与DOMContentLoaded 和 Load 并无直接关系。
+页面发送请求和页面解析文档结构，分属两个不同的线程，所以 `Finish` 时间与 `DOMContentLoaded` 和 `Load` 并无直接关系。
 
 ## [HTTP缓存](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching)
 
 **HTTP 缓存会存储与请求关联的响应，并将存储的响应复用于后续请求**。
 可复用性有几个优点。首先，由于不需要将请求传递到源服务器，因此客户端和缓存越近，响应速度就越快。最典型的例子是浏览器本身为浏览器请求存储缓存。
-此外，当响应可复用时，源服务器不需要处理请求——因为它不需要解析和路由请求、根据 cookie 恢复会话、查询数据库以获取结果或渲染模板引擎。这减少了服务器上的负载。
+此外，当响应可复用时，源服务器不需要处理请求——因为它不需要解析和路由请求、根据 `cookie` 恢复会话、查询数据库以获取结果或渲染模板引擎。这减少了服务器上的负载。
 缓存的正确操作对系统的稳定运行至关重要。
 
 ### 强制缓存
