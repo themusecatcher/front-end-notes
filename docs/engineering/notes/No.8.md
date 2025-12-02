@@ -7,8 +7,8 @@
 | 特性 | `Webpack` | `Vite` |
 | :--- | :--- | :--- |
 | **实现原理** | 通过打包工具在构建时分析并拆分 | 开发阶段依赖**浏览器原生ES模块**，生产阶段使用 **Rollup** 打包 |
-| **分割方式** | 1. 动态 `import()` 语法<br>2. 配置 `optimization.splitChunks`<br>3. 多入口点 | 1. 动态 `import()` 语法<br>2. **自动依赖拆分** (`vendor chunk`)<br>3. 多入口点 (`MPA`) |
-| **输出结果** | 生成独立的 `.js` `chunk` 文件，可通过魔法注释命名 | 生成独立的 `.js` `chunk` 文件，遵循 `ES` 模块标准 |
+| **分割方式** | 1. 动态 `import()` 语法<br>2. 配置 `optimization.splitChunks`<br>3. 多入口点 | 1. 动态 `import()` 语法<br>2. **自定义依赖拆分** (`vendor chunk`)<br>3. 多入口点 (`MPA`) |
+| **输出结果** | 生成独立的 `.js` `chunk` 文件，可通过魔法注释(`/* webpackChunkName: "my-chunk" */`)命名 | 生成独立的 `.js` `chunk` 文件，遵循 `ES` 模块标准 |
 | **优势** | 生态成熟，插件丰富，配置灵活度高 | **开发环境无需打包**，依赖原生`ESM`，加载速度快 |
 
 ### 🔧 Webpack 的代码分割机制
@@ -154,7 +154,7 @@
       rollupOptions: {
         output: {
           manualChunks: {
-            // 将 React 相关库打包成单独的 chunk 中
+            // 将 React 相关库打包到单独的 chunk 中
             'react-vendor': ['react', 'react-dom'],
             // 将 Lodash 库的代码单独打包
             'lodash': ['lodash-es'],
@@ -167,7 +167,7 @@
   })
   ```
 
-#### 🚀 Vite配置优化建议
+#### 🚀 Vite 配置优化建议
 
 1. **优化依赖预构建**：对于某些未能被 `Vite` 自动识别的依赖，你可以使用 `optimizeDeps.include` 强制其预构建。
   ```js
@@ -223,27 +223,28 @@
         build: {
           minify: 'terser',
           terserOptions: {
-          // 在打包代码时移除 console、debugger 和 注释
-          compress: {
-            /* (default: false) -- Pass true to discard calls to console.* functions.
-              If you wish to drop a specific function call such as console.info and/or
-              retain side effects from function arguments after dropping the function
-              call then use pure_funcs instead
-            */
-           /**
-            * 如果在调试控制台中打印了某个对象，则调试控制台就持有了对该对象的引用，该对象就无法被回收了，会导致内存泄露
-            * 经过验证，只有 devtools 打开时，console 打印才会引起内存泄漏的，如果不打开控制台，console 是不会引起内存变化的。
-            */
-            drop_console: isBuild, // 生产环境时移除 console
-            drop_debugger: isBuild
-          },
-          format: {
-            comments: isBuild // 生产环境时删除注释 comments
+            // 在打包代码时移除 console、debugger 和 注释
+            compress: {
+              /* (default: false) -- Pass true to discard calls to console.* functions.
+                If you wish to drop a specific function call such as console.info and/or
+                retain side effects from function arguments after dropping the function
+                call then use pure_funcs instead
+              */
+            /**
+              * 如果在调试控制台中打印了某个对象，则调试控制台就持有了对该对象的引用，该对象就无法被回收了，会导致内存泄露
+              * 经过验证，只有 devtools 打开时，console 打印才会引起内存泄漏的，如果不打开控制台，console 是不会引起内存变化的。
+              */
+              drop_console: isBuild, // 生产环境时移除 console
+              drop_debugger: isBuild
+            },
+            format: {
+              comments: isBuild // 生产环境时删除注释 comments
+            }
           }
-        },
         }
       })
       ```
+
     * **资源内联与压缩**：小资源自动转 `Base64` 减少请求；使用 `vite-plugin-compression` 生成 `Gzip` 或 `Brotli` 压缩文件。
 
 3. **开发阶段优化**
