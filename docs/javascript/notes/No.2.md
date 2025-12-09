@@ -45,7 +45,7 @@ addEventListener(type, listener, useCapture)
       一个布尔值，表示 `listener` 在添加之后最多只调用一次。如果为 `true`，`listener` 会在其被调用之后自动移除。
     - `passive` <Tag :bordered="false" color="cyan">可选</Tag>
 
-      一个布尔值，设置为 `true` 时，表示 `listener` 永远不会调用 `preventDefault()`。如果 `listener` 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告。查看使用 `passive` 改善滚屏性能以了解更多。
+      一个布尔值，设置为 `true` 时，表示 `listener` 永远不会调用 `preventDefault()`。如果 `listener` 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告。查看[使用 `passive` 改善滚屏性能](#使用-passive-改善滚屏性能)以了解更多。
     - `signal` <Tag :bordered="false" color="cyan">可选</Tag>
 
       [`AbortSignal`](https://developer.mozilla.org/zh-CN/docs/Web/API/AbortSignal)，该 `AbortSignal` 的 `abort()` 方法被调用时，监听器会被移除。
@@ -54,6 +54,36 @@ addEventListener(type, listener, useCapture)
     一个布尔值，表示在 `DOM` 树中注册了 `listener` 的元素，是否要先于它下面的 `EventTarget` 调用该 `listener`。当 `useCapture`（设为 `true`）时，沿着 `DOM` 树向上冒泡的事件不会触发 `listener`。当一个元素嵌套了另一个元素，并且两个元素都对同一事件注册了一个处理函数时，所发生的事件冒泡和事件捕获是两种不同的事件传播方式。事件传播模式决定了元素以哪个顺序接收事件。进一步的解释可以查看 `DOM Level 3` 事件及 `JavaScript` 事件顺序文档。如果没有指定，`useCapture` 默认为 `false`。
 
 `document.addEventListener()` 方法用于向文档添加事件句柄。
+
+### 使用 passive 改善滚屏性能
+
+> 将 `passive` 设为 `true` 可以启用性能优化，并可大幅改善应用性能，正如下面这个例子：
+
+```js
+/* 检测浏览器是否支持该特性 */
+let passiveIfSupported = false
+
+try {
+  window.addEventListener(
+    "test",
+    null,
+    Object.defineProperty({}, "passive", {
+      get() {
+        passiveIfSupported = { passive: true }
+      }
+    })
+  )
+} catch (err) {}
+
+window.addEventListener(
+  "scroll",
+  (event) => {
+    /* do something */
+    // 不能使用 event.preventDefault()
+  },
+  passiveIfSupported
+)
+```
 
 ### `option` 支持的安全检测
 
@@ -86,7 +116,7 @@ try {
 
 ### 示例
 
-添加一个可被移除的监听器
+> 添加一个可被移除的监听器
 
 这个例子用来展示如何使用 `addEventListenter()` 添加一个可被 `AbortSignal` 移除的侦听器。
 
@@ -241,6 +271,179 @@ mouseOverTarget.addEventListener('mouseover', () => {
   clickTarget.removeEventListener('click', makeBackgroundYellow, false)
 })
 ```
+
+## 使用 passive 改善滚屏性能
+
+将 `addEventListener` 的 `passive` 选项设为 `true`，其性能优化的核心原理是：**它通过向浏览器做出一个不可撤销的承诺——“我绝不会调用 `event.preventDefault()` 来阻止事件的默认行为”，从而允许浏览器跳过等待JavaScript执行的步骤，立即启动事件的默认行为（如滚动、触摸）。**
+
+这解决了滚动等连续事件中最关键的 **“阻塞”问题**。
+
+### 🔧 工作原理：从“阻塞等待”到“并行执行”
+
+1. **正常模式（未设置 `passive: true`）**
+    * **浏览器的困境**：当用户开始滚动时，浏览器会触发 `touchmove` 或 `wheel` 事件。但在执行事件的默认行为（实际滚动页面）**之前**，浏览器必须**等待**以确认绑定的事件监听器**是否会调用 `event.preventDefault()`** 来取消滚动。
+    * **造成的后果**：即使你的监听器什么也不做，浏览器也必须花时间检查。对于像滚动这样每秒可能触发数十次的高频事件，这种“等待-检查”的微小延迟累积起来，就会导致滚动的响应变得**卡顿、不跟手**，尤其是在移动端。
+
+2. **Passive 模式（设置 `passive: true`）**
+    * **开发者的承诺**：当你设置 `{ passive: true }` 时，你等于向浏览器承诺：“我注册的这个监听器永远不会调用 `event.preventDefault()`”。
+    * **浏览器的响应**：浏览器获得这个保证后，就可以完全**信任你**。当事件触发时，它会**立即、同步地**开始执行默认行为（如滚动页面），同时**异步地**去执行你的`JavaScript`事件处理函数。
+    * **关键改变**：滚动行为不再需要等待`JavaScript`。从用户感知上，页面会立刻响应触摸或滚轮操作，变得极其流畅。
+
+### 📈 带来的性能收益
+
+1. **消除滚动卡顿**：这是最直接的收益。移动端的 `touchmove` 事件和桌面的 `wheel` 事件是最大受益者。谷歌的开发者文档曾指出，将这类事件的监听器设置为 `passive`，可以将**滚动性能提升高达20倍**。
+2. **减少主线程压力**：浏览器的主线程需要处理 `JavaScript`、样式计算、布局、绘制等多项任务。`Passive`模式通过避免“滚动等待JS”这种阻塞，解放了主线程，使其能更高效地处理其他任务，提升了应用的整体响应能力。
+3. **符合现代浏览器优化策略**：正因为被动事件监听器的性能优势如此显著，**Chrome、Firefox等现代浏览器从某个版本开始，已经将 `touchstart` 和 `touchmove` 事件的 `passive` 选项默认为 `true`**。如果你在需要调用 `preventDefault()` 的监听器上不显式设置 `{ passive: false }`，在控制台甚至会看到警告。
+
+### 💡 实践建议与代码示例
+
+* **何时使用 `passive: true`**
+    * 所有**不需要阻止默认滚动**的 `touchstart`、`touchmove`、`wheel` 事件监听器。
+    * 主要用于**滚动性能优化**、**触摸手势分析**（如记录轨迹）等场景。
+
+* **何时必须使用 `passive: false`**
+    * 当你**确实需要**调用 `event.preventDefault()` 时，例如实现一个**自定义的全屏横向画板**（需要阻止页面纵向滚动）。
+
+* **代码示例**
+
+  ```js
+  // ✅ 优化：用于改善滚动性能的监听器，无需阻止滚动
+  element.addEventListener('touchmove', handleTouchMove, { passive: true })
+
+  // ❗ 注意：需要阻止滚动的监听器，必须明确声明
+  element.addEventListener('touchmove', function(e) {
+      e.preventDefault() // 阻止滚动，实现自定义拖拽
+      // ... 自定义逻辑
+  }, { passive: false }) // 必须显式设置为 false
+
+  // ⚠️ 警告：在默认被强制为 passive 的事件上尝试阻止默认行为，会触发控制台错误
+  element.addEventListener('touchmove', function(e) {
+      e.preventDefault() // 这里会报错：Unable to preventDefault inside passive event listener
+  })
+  ```
+
+总结来说，`passive: true` 是前端性能优化中一个“低投入、高回报”的典范。它通过改变浏览器对事件的处理流程，从根本上解决了滚动等连续事件的延迟问题，是构建流畅用户体验的关键技术之一。
+
+## 与 requestAnimationFrame 结合优化滚动渲染
+
+将 `requestAnimationFrame`（简称 **rAF**）与滚动渲染相结合，是解决滚动卡顿、实现“如丝般顺滑”`60FPS`体验的核心技术。其根本原理是：**将由滚动事件驱动的、不可预测的高频JS计算，强制对齐到浏览器下一次绘制之前执行，实现“计算”与“渲染”的同步，从而避免掉帧。**
+
+### 🎯 核心问题：滚动事件的“失控”
+
+<br/>
+
+在不使用 `rAF` 时，典型的滚动渲染流程存在严重问题：
+
+```js
+element.addEventListener('scroll', () => {
+    // 1. 在这里直接计算样式或布局（可能触发强制同步布局/重排）
+    // 2. 紧接着操作DOM，修改样式
+})
+```
+
+**风险**：滚动事件触发频率极高（可能一帧内触发多次），若在其中直接进行`DOM`读写，极易引起**布局抖动**（频繁的强制重排），且执行时机与浏览器渲染管线不同步，极易导致掉帧。
+
+### ✨ rAF 的解决方案：与浏览器渲染周期锁步
+
+<br/>
+
+`rAF` 的设计是浏览器提供的“信号”，它会在**下一次屏幕重绘（通常是每`16.7ms`(60fps)一次）之前**调用你传入的回调函数。这是渲染前进行视觉变更的理想时机。
+
+### 💡 关键实现模式
+
+<br/>
+
+以下是如何在实践中应用这一原理的几种模式：
+
+**1. 基础模式：节流 + rAF**<br/>
+这是最常用、最有效的组合。用 `rAF` 替代 `setTimeout` 或 `_.throttle` 进行节流，**确保滚动处理函数每帧最多执行一次**。
+
+```js
+let ticking = false // 锁，确保一帧内只注册一次rAF
+
+element.addEventListener('scroll', () => {
+  if (!ticking) {
+    ticking = true
+    requestAnimationFrame(() => {
+      // 在这里安全地进行DOM读取和写入
+      updateElementPosition() // 你的渲染逻辑
+      ticking = false
+    })
+  }
+})
+```
+
+**2. 防抖模式：rAF 用于最终状态**<br/>
+适用于滚动结束后需要更新一次的场景（如触发加载更多）。
+
+```js
+let frameId = null
+element.addEventListener('scroll', () => {
+  if (frameId) {
+    cancelAnimationFrame(frameId) // 取消未执行的更新
+  }
+  frameId = requestAnimationFrame(() => {
+    // 只在滚动“喘息”后的下一帧执行
+    doHeavyWork()
+  })
+})
+```
+
+**3. 终极优化：虚拟滚动 + rAF**<br/>
+这直接回答了你之前关于白屏的问题。在快速滚动时，将**可见区域计算**和**DOM更新**放在 `rAF` 中执行，可以确保浏览器在渲染前获得最新的视图状态，最大程度减少白屏。
+
+```js
+// 结合虚拟滚动的伪代码思路
+const virtualScroll = (scrollTop) => {
+  if (!ticking) {
+    ticking = true
+    requestAnimationFrame(() => {
+      // 1. 根据 scrollTop 计算新的起止索引
+      const { startIndex, endIndex } = calculateRange(scrollTop)
+      // 2. 更新DOM（这是最耗时的部分）
+      updateVisibleItems(startIndex, endIndex)
+      ticking = false
+    })
+  }
+}
+```
+
+### ⚠️ 重要的注意事项与陷阱
+
+1. **不要在 rAF 回调中进行耗时操作**：`rAF` 是渲染前的最后机会，如果在此处进行复杂计算（如大型数组排序、复杂布局查询），会直接延迟渲染，**本末倒置**。应将复杂计算提前或移至 `requestIdleCallback` 或 `Web Worker`。
+2. **分离“读”和“写”**：即使在 `rAF` 中，也应遵循“**先读取所有需要的布局属性，再统一进行写入**”的最佳实践，避免布局抖动。
+3. **配合 CSS `will-change` 或 `transform` 使用**：对需要频繁更新的元素（如跟随滚动的元素），使用 `transform: translate3d(x, y, z)` 可以**开启GPU加速**，让动画由合成器线程处理，完全避开主线程的重排重绘，性能最佳。
+
+    ```css
+    .positioned-element {
+      will-change: transform; /* 或直接使用 transform */
+    }
+    ```
+
+4. **考虑兼容性与降级**：使用函数包装以确保兼容性。
+
+    ```js
+    const raf = window.requestAnimationFrame || 
+                window.webkitRequestAnimationFrame || 
+                function(cb) { return setTimeout(cb, 16) }
+    ```
+
+### 🚀 进阶：使用 `requestIdleCallback` 处理非关键任务
+
+<br/>
+
+对于虚拟滚动中**非关键**的任务（如预加载不可见区域的数据、记录日志），可以放在 `requestIdleCallback` 中，在浏览器空闲时执行。
+
+```js
+requestIdleCallback((deadline) => {
+  // 如果还有空闲时间，就执行一些低优先级任务
+  if (deadline.timeRemaining() > 0) {
+    prefetchData()
+  }
+})
+```
+
+**总结来说**，`requestAnimationFrame` 是连接滚动事件与浏览器渲染管线的“黄金桥梁”。它通过将`JS`执行与屏幕刷新率同步，从根本上解决了滚动处理中的时序混乱问题。结合 `passive: true` 消除滚动延迟，再通过 **rAF 确保渲染更新在最正确的时机发生**，你就能构建出真正流畅的滚动体验。
 
 ## window.location对象
 
