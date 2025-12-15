@@ -220,9 +220,9 @@ if (typeof curry === 'undefined') {
 
 - 描述
 
-  `DocumentFragments` (en-US) 是 DOM 节点。它们不是主 DOM 树的一部分。通常的用例是创建文档片段，将元素附加到文档片段，然后将文档片段附加到 DOM 树。在 DOM 树中，文档片段被其所有的子元素所代替。
+  `DocumentFragments` (en-US) 是 `DOM` 节点。它们不是主 `DOM` 树的一部分。通常的用例是创建文档片段，将元素附加到文档片段，然后将文档片段附加到 `DOM` 树。在 `DOM` 树中，文档片段被其所有的子元素所代替。
 
-  **因为文档片段存在于内存中，并不在 DOM 树中，所以将子元素插入到文档片段时不会引起页面回流（对元素位置和几何上的计算）。因此，使用文档片段通常会带来更好的性能。**
+  **因为文档片段存在于内存中，并不在 `DOM` 树中，所以将子元素插入到文档片段时不会引起页面回流（对元素位置和几何上的计算）。因此，使用文档片段通常会带来更好的性能。**
 
 ### 示例
 
@@ -246,7 +246,7 @@ element.appendChild(fragment) // 一次性插入。可以避免每次插入时�
 
 ## [Web Worker](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API)
 
-`Web Worker` 使得**在一个独立于 Web 应用程序主执行线程的后台线程中运行脚本**操作成为可能。这样做的好处是**可以在独立线程中执行费时的处理任务，使主线程（通常是 UI 线程）的运行不会被阻塞/放慢**。(解决javascript单线程执行的一些弊端)
+`Web Worker` 使得**在一个独立于 `Web` 应用程序主执行线程的后台线程中运行脚本**操作成为可能。这样做的好处是**可以在独立线程中执行费时的处理任务，使主线程（通常是 `UI` 线程）的运行不会被阻塞/放慢**。(解决 `javascript` 单线程执行的一些弊端)
 
 ### 语法
 
@@ -277,7 +277,7 @@ element.appendChild(fragment) // 一次性插入。可以避免每次插入时�
 
 `Worker` 是一个使用构造函数创建的对象（例如 `Worker()`），它运行一个具名 `JavaScript` 文件——该文件包含将在 `worker` 线程中运行的代码。
 
-除了标准的 `JavaScript` 函数集（如 `String`、`Array`、`Object`、`JSON` 等），你可以在 `worker` 线程中运行任何你喜欢的代码，有一些例外：**你不能直接在 worker 线程中操作 DOM 元素，或使用 window 对象中的某些方法和属性**。有关你可以运行的代码的信息，请参见下面的 [`Worker` 全局上下文和函数](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API#worker_%E5%85%A8%E5%B1%80%E4%B8%8A%E4%B8%8B%E6%96%87%E5%92%8C%E5%87%BD%E6%95%B0)和[支持的 Web API](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API#%E6%94%AF%E6%8C%81%E7%9A%84_web_api)。
+除了标准的 `JavaScript` 函数集（如 `String`、`Array`、`Object`、`JSON` 等），你可以在 `worker` 线程中运行任何你喜欢的代码，有一些例外：**你不能直接在 `worker` 线程中操作 `DOM` 元素，或使用 `window` 对象中的某些方法和属性**。有关你可以运行的代码的信息，请参见下面的 [`Worker` 全局上下文和函数](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API#worker_%E5%85%A8%E5%B1%80%E4%B8%8A%E4%B8%8B%E6%96%87%E5%92%8C%E5%87%BD%E6%95%B0)和[支持的 Web API](https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API#%E6%94%AF%E6%8C%81%E7%9A%84_web_api)。
 
 **数据通过消息系统在 worker 和主线程之间发送**——双方都使用 `postMessage()` 方法发送消息，并通过 `onmessage` 事件处理程序响应消息（消息包含在 `message` 事件的 `data` 属性中）。**数据是复制的，而不是共享的**。
 
