@@ -2,14 +2,6 @@
 
 <BackTop />
 
-## [HTMLElement.dataset](https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/dataset)
-
-`HTMLElement` 接口的只读属性 `dataset` 提供了对元素上自定义数据属性（`data-*`）读/写访问。它暴露了一个字符串映射（`DOMStringMap`），其中包含每个` data-*` 属性条目。
-
-::: tip 备注：
-`dataset` 属性本身可以被读取，但是不能直接写入。相反，所有写入都必须是写入 `dataset` 的单个属性，而 `dataset` 又表示这些数据的属性。
-:::
-
 ## [isNaN()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/isNaN)
 
 `isNaN()` 函数用来确定一个值是否为 `NaN` 。注：isNaN函数内包含一些非常有趣的规则；你也可以使用 `ECMAScript 2015` 中定义的 `Number.isNaN()` 来判断
@@ -183,6 +175,8 @@ if (y === void 0) {
 相比将 `element.className` 作为`以空格分隔的字符串`来使用，`classList` 是一种更方便的访问元素的类列表的方法。
 
 ### 值
+
+<br/>
 
 一个 [`DOMTokenList`](https://developer.mozilla.org/zh-CN/docs/Web/API/DOMTokenList)，表示元素的 `class` 属性的集合。如果 `class` 属性没有设置或者为空，它将返回一个空的 `DOMTokenList`，即 `length` 属性等于 `0` 的 `DOMTokenList`。
 

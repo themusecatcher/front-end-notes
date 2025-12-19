@@ -551,6 +551,10 @@ export default defineConfig({
             {
               text: 'No.9',
               link: '/engineering/notes/No.9'
+            },
+            {
+              text: 'No.10',
+              link: '/engineering/notes/No.10'
             }
           ]
         }
