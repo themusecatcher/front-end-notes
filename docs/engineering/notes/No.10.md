@@ -247,3 +247,67 @@ class MyComponent extends HTMLElement {
 2. **技术栈**：使用的框架对哪种方案支持更好？
 3. **团队熟悉度**：团队成员对哪种技术更熟悉？
 4. **性能要求**：是否可以接受运行时开销？
+
+## [Element.attachShadow()](https://developer.mozilla.org/zh-CN/docs/Web/API/Element/attachShadow)
+
+`Element.attachShadow()` 方法给指定的元素挂载一个 `Shadow DOM`，并且返回对 `ShadowRoot` 的引用。
+
+### 可以被挂载的 `shadow DOM` 元素
+
+<br/>
+
+要注意的是，不是每一种类型的元素都可以附加到 `shadow root`（影子根）下面。出于安全考虑，一些元素不能使用 `shadow DOM`（例如`<a>`），以及许多其他的元素。下面是一个可以挂载 `shadow root` 的元素列表：
+
+- 任何带有有效的名称且可独立存在的（`autonomous`）自定义元素
+- `<article>`
+- `<aside>`
+- `<blockquote>`
+- `<body>`
+- `<div>`
+- `<footer>`
+- `<h1>`
+- `<h2>`
+- `<h3>`
+- `<h4>`
+- `<h5>`
+- `<h6>`
+- `<header>`
+- `<main>`
+- `<nav>`
+- `<p>`
+- `<section>`
+- `<span>`
+
+### 语法
+
+```js
+attachShadow(options)
+```
+
+### 参数
+
+`options`: 一个包括下列字段的对象：
+  - `mode`<br/>
+    指定 `Shadow DOM` 树封装模式的字符串，可以是以下值：
+    - `open`: `shadow root` 元素可以从 `js` 外部访问根节点，例如使用 `Element.shadowRoot`:
+
+    ```js
+    element.attachShadow({ mode: "open" })
+    element.shadowRoot // 返回一个 ShadowRoot 对象
+    ```
+
+    - `closed`: 拒绝从 `js` 外部访问关闭的 `shadow root` 节点
+
+    ```js
+    element.attachShadow({ mode: "closed" })
+    element.shadowRoot // 返回 null
+    ```
+
+  - `delegatesFocus` <Tag :bordered="false" color="cyan">可选</Tag><br/>
+    一个布尔值，当设置为 `true` 时，指定减轻自定义元素的聚焦性能问题行为。当 `shadow DOM` 中不可聚焦的部分被点击时，让第一个可聚焦的部分成为焦点，并且 `shadow host`（影子主机）将提供所有可用的 `:focus` 样式。
+
+### 返回值
+
+<br/>
+
+返回一个 `ShadowRoot` 对象或者 `null`。
