@@ -108,7 +108,7 @@ insertBefore(newNode, referenceNode)
 ### 参数
 
 - `newNode`：要插入的节点。
-- `referenceNode`：在其之前插入 `newNode` 的节点。。如果为 `null`，`newNode` 将被插入到节点的子节点列表末尾。
+- `referenceNode`：在其之前插入 `newNode` 的节点。如果为 `null`，`newNode` 将被插入到节点的子节点列表末尾。
 
 ::: tip 备注
 `referenceNode` 不是可选参数。你必须显式传递 `Node` 或 `null`。未能提供它或传递无效值，可能会在不同的浏览器版本中具有不同的表现。
