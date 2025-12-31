@@ -229,7 +229,7 @@
 
 下面我们来详细看看每种方案：
 
-#### 方案一：服务器端渲染（SSR - Server-Side Rendering）
+#### 方案一：服务器端渲染（SSR - `Server-Side Rendering`）
 
 <br/>
 
@@ -247,7 +247,7 @@
     * **Nuxt.js**（Vue）：`Vue` 生态中最主流的 `SSR` 框架。
     * **Angular Universal**（Angular）：`Angular` 的 `SSR` 解决方案。
 
-#### 方案二：静态站点生成（SSG - Static Site Generation）
+#### 方案二：静态站点生成（SSG - `Static Site Generation`）
 
 <br/>
 
@@ -329,7 +329,7 @@
 
 ## `SPA` & `SSR` & `SSG`
 
-### 1. SPA（单页应用 Single-Page Application）
+### 1. SPA（单页应用 `Single-Page Application`）
 
 #### 概念
 
@@ -379,7 +379,7 @@ onMounted(async () => {
 </script>
 ```
 
-### 2. SSR（服务端渲染 Server-Side Rendering）
+### 2. SSR（服务端渲染 `Server-Side Rendering`）
 
 #### 概念
 
@@ -492,7 +492,7 @@ app.get('*', async (req, res) => {
 3. 最小环境模拟 - 只模拟渲染必需的环境，不实现完整 `DOM`
 4. 纯计算过程 - 整个过程都是 `JavaScript` 计算，不依赖浏览器 `API`
 
-### 3. SSG（静态站点生成 Static Site Generation）
+### 3. SSG（静态站点生成 `Static Site Generation`）
 
 #### 概念
 
