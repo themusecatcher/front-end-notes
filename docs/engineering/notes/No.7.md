@@ -464,7 +464,7 @@ app.get('*', async (req, res) => {
 })
 ```
 
-#### 为什么需要客户端注水？
+#### 为什么需要客户端注水（水合 hydration）？
 
 ```js
 // 服务端渲染结果：
@@ -474,7 +474,7 @@ app.get('*', async (req, res) => {
 // <button onclick="handleClick">点击我</button>  ← 添加了交互能力
 ```
 
-#### SSR 渲染的本质
+#### `SSR` 渲染的本质
 
 - ✅ 不是操作真实 `DOM` - 服务端没有 `DOM` `API`
 - ✅ 是虚拟 `DOM` 到字符串的序列化 - 纯字符串操作
