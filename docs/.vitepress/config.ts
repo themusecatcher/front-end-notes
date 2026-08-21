@@ -3,7 +3,6 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: `Front-end Notes`,
   description: '前端笔记文档',
-  base: '/front-end-notes/',
 
   head: [ // 网站图标
     ['link', { rel: 'icon', href: '/front-end-notes/amazing-icon.svg' }]
