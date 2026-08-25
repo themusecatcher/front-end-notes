@@ -3,6 +3,9 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: `Front-end Notes`,
   description: '前端笔记文档',
+  // 部署到 https://<username>.github.io/<repo>/ 时，必须将 base 配置为仓库名
+  // 否则打包后的资源会以 /assets/... 引用，导致样式/脚本 404
+  base: '/front-end-notes/',
 
   head: [ // 网站图标
     ['link', { rel: 'icon', href: '/front-end-notes/amazing-icon.svg' }]
