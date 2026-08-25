@@ -72,6 +72,7 @@ export default defineConfig({
           { text: 'My Github', link: 'https://github.com/themusecatcher' },
           { text: 'My CSDN', link: 'https://themusecatcher.blog.csdn.net' },
           { text: 'Amazing UI', link: 'https://themusecatcher.github.io/vue-amazing-ui/' },
+          { text: 'AI Coding Kit', link: 'https://themusecatcher.github.io/ai-coding-kit/' },
           { text: 'Naive UI', link: 'https://www.naiveui.com/zh-CN/dark' },
           { text: 'Naive Admin', link: 'https://www.naiveadmin.com/' },
           { text: 'Naive Ui Admin', link: 'https://docs.naiveadmin.com/' },
