@@ -1,0 +1,5 @@
+allowBuilds:
+  esbuild: true
+  vue-demi: true
+minimumReleaseAgeExclude:
+  - vue-amazing-ui

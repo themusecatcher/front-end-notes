@@ -13,30 +13,41 @@ link() {
 
 commitDesc=$1
 
+# 强制要求传入语义化的提交描述，避免产生无信息量的 commit
+if [ -z "$commitDesc" ]; then
+  echo "❌ 缺少提交描述。用法: pnpm docs:deploy \"<type>: <描述>\"（如 pnpm docs:deploy \"docs: update guide\"）"
+  exit 1
+fi
+
 # 打包生成静态文件
 pnpm docs:build
 
 # 进入待发布的 dist/ 目录
 cd docs/.vitepress/dist
 
+# GitHub Pages 默认走 Jekyll，加 .nojekyll 跳过（保留下划线开头的资源目录，如 VitePress 的 _assets）
+touch .nojekyll
+
 # 提交打包静态网站到 github-pages 分支
 git init
+git branch -M main
 git add .
-git commit -m 'deploy'
+git commit -m 'docs: deploy site'
 
-# 部署到 https://<username>.github.io/<repo>
-git push -f git@github.com:themusecatcher/front-end-notes.git master:github-pages
+# 部署到 https://themusecatcher.github.io/front-end-notes/
+git push -f git@github.com:themusecatcher/front-end-notes.git main:github-pages
 
-# 提交所有代码到github
-cd ../../../
+# 回到仓库根，清理临时 git 仓库，避免嵌套 .git 干扰主仓库（否则会被当作 gitlink 导致主仓库提交异常）
+rm -rf .git
+cd ../../..
+
+# 提交所有源码到 github
 git add .
-
-if [ -z "$commitDesc" ]; then
-  git commit -m 'update'
-else
+if [ -n "$(git status --porcelain)" ]; then
   git commit -m "$commitDesc"
+else
+  echo "No changes to commit. Skipping git commit."
 fi
-
 git push
 
 printf '✅ 部署完成：%s\n' "$(link 'https://themusecatcher.github.io/front-end-notes/')"

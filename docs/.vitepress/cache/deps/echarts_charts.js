@@ -37,7 +37,7 @@ import {
   updateViewOnPan,
   updateViewOnZoom,
   warnDeprecated
-} from "./chunk-LZPHZUWJ.js";
+} from "./chunk-XIUHXDG4.js";
 import {
   BezierCurve_default,
   Chart_default,
